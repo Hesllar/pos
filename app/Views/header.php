@@ -145,7 +145,9 @@
                                             <!-- Home Version Dropdown Start -->
                                             <!-- Home Version Dropdown End -->
                                         </li>
-                                        <li><a href="<?php echo base_url(); ?>/Productos">Productos<i class="fa fa-angle-down"></i></a>
+
+                                        <li><a href="<?php echo base_url(); ?>/Productos">Productos<i class="fa fa-angle-down"></
+
                                             <!-- Home Version Dropdown Start -->
                                             <ul class="ht-dropdown dropdown-style-two">
                                                 <li><a href="shop.html">Comprar</a>
