@@ -1,4 +1,4 @@
-                                <div id="usuarios" class="tab-pane active">
+                                <div id="usuarios" class="tab-pane <?php echo $e_usuario; ?>">
                                     <h3>Control de Usuarios </h3>
                                     <div class="table-responsive">
                                         <table class="table">

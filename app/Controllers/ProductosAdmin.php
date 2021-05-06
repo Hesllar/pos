@@ -20,8 +20,15 @@ class ProductosAdmin extends BaseController
         $productos = $this->productos->findAll();
         $data = ['titulo' => 'Productos', 'datos' => $productos]; */
 
+		$estados = ['e_venta' => '',
+		'e_producto' => 'active',
+		'e_ordencompra' => '',
+		'e_usuario' => '',
+		'e_notacredito' => '',
+		'e_config' => ''];
+
         echo view('header');
-        echo view('administrador/panel_header');
+        echo view('administrador/panel_header', $estados);
         echo view('administrador/productos_admin');
         echo view('administrador/panel_footer');
         echo view('footer');

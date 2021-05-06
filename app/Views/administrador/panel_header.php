@@ -12,13 +12,13 @@
                         <div class="col-lg-2">
                             <!-- Nav tabs -->
                             <ul class="nav flex-column dashboard-list" role="tablist">
-                                <li><a class="active" data-toggle="tab" href="#dashboard">Tablero</a></li>
-                                <li><a data-toggle="tab" href="<?php echo base_url() ?>/productosadmin">Productos</a></li>
-                                <li><a data-toggle="tab" href="<?php echo base_url() ?>/ventas">Ventas</a></li>
-                                <li><a data-toggle="tab" href="<?php echo base_url() ?>/ordenescompra">Ordenes de compra</a></li>
-                                <li><a data-toggle="tab" href="<?php echo base_url() ?>/usuarios">Usuarios</a></li>
-                                <li><a data-toggle="tab" href="<?php echo base_url() ?>/notascredito">Notas de cr&eacute;dito</a></li>
-                                <li><a data-toggle="tab" href="<?php echo base_url() ?>/configuracion">Configuraci&oacute;n</a></li>
+                                <li><a data-toggle="tab" href="#dashboard">Tablero</a></li>
+                                <li><a class="<?php echo $e_producto; ?>" data-toggle="tab" href="<?php echo base_url() ?>/productosadmin">Productos</a></li>
+                                <li><a class="<?php echo $e_venta; ?>" class="<?php echo $e_venta; ?>" data-toggle="tab" href="<?php echo base_url() ?>/ventas">Ventas</a></li>
+                                <li><a class="<?php echo $e_ordencompra; ?>" data-toggle="tab" href="<?php echo base_url() ?>/ordenescompra">Ordenes de compra</a></li>
+                                <li><a class="<?php echo $e_usuario; ?>" data-toggle="tab" href="<?php echo base_url() ?>/usuarios">Usuarios</a></li>
+                                <li><a class="<?php echo $e_notacredito; ?>" data-toggle="tab" href="<?php echo base_url() ?>/notascredito">Notas de cr&eacute;dito</a></li>
+                                <li><a class="<?php echo $e_config; ?>" data-toggle="tab" href="<?php echo base_url() ?>/configuracion">Configuraci&oacute;n</a></li>
                                 <li><a href="login.html" href="<?php echo base_url() ?>/desconexion">Cerrar Sesión</a></li>
                             </ul>
                         </div>
