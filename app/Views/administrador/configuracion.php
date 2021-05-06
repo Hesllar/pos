@@ -1,38 +1,7 @@
-        <!-- Header Area End --> 
-        <!-- Breadcrumb Start -->
-        <div class="breadcrumb-area ptb-10 ptb-sm-2">
-            <!-- Container End -->
-        </div>
-        <!-- Breadcrumb End -->
-        <!-- My Account Page Start Here -->
-        <div class="my-account white-bg pb-60">
-            <div class="container">
-                <div class="account-dashboard">
-                    <div class="row">
-                        <div class="col-lg-2">
-                            <!-- Nav tabs -->
-                            <ul class="nav flex-column dashboard-list" role="tablist">
-                                <li><a class="active" data-toggle="tab" href="#dashboard">Tablero</a></li>
-                                <li><a data-toggle="tab" href="#productos">Productos</a></li>
-                                <li><a data-toggle="tab" href="#ventas">Ventas</a></li>
-                                <li><a data-toggle="tab" href="#ordenescompra">Ordenes de compra</a></li>
-                                <li><a data-toggle="tab" href="#usuarios">Usuarios</a></li>
-                                <li><a data-toggle="tab" href="#notascredito">Notas de cr&eacute;dito</a></li>
-                                <li><a data-toggle="tab" href="#account-details">Configuraci&oacute;n</a></li>
-                                <li><a href="login.html" href="#logout">Cerrar Sesión</a></li>
-                                <li><a data-toggle="tab" href="#address1">TEest</a></li>
-                            </ul>
-                        </div>
                         <div class="col-lg-10">
                             <!-- Tab panes -->
                             <div class="tab-content dashboard-content mt-all-40">
-                                <div id="dashboard" class="tab-pane active">
-                                    <h3>Sistema de Ventas - Ferme </h3>
-                                    <p>Aquí tienen que ir las estadisticas</p>
-                                </div>
-
-
-                                <div id="productos" class="tab-pane fade">
+                                <div id="productos" class="tab-pane active">
                                     <h3>Productos</h3>
                                     <div class="table-responsive">
                                         <table class="table">
@@ -455,48 +424,3 @@
 
                             </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- My Account Page End Here -->
-        <!-- Brand Logo Start -->
-        <div class="brand-area pb-60">
-            <div class="container">
-                <!-- Brand Banner Start -->
-                <div class="brand-banner owl-carousel">
-                    <div class="single-brand">
-                        <a href="#"><img class="img" src="img/brand/1.png" alt="brand-image"></a>
-                    </div>
-                    <div class="single-brand">
-                        <a href="#"><img src="img/brand/2.png" alt="brand-image"></a>
-                    </div>
-                    <div class="single-brand">
-                        <a href="#"><img src="img/brand/3.png" alt="brand-image"></a>
-                    </div>
-                    <div class="single-brand">
-                        <a href="#"><img src="img/brand/4.png" alt="brand-image"></a>
-                    </div>
-                    <div class="single-brand">
-                        <a href="#"><img src="img/brand/5.png" alt="brand-image"></a>
-                    </div>
-                    <div class="single-brand">
-                        <a href="#"><img class="img" src="img/brand/1.png" alt="brand-image"></a>
-                    </div>
-                    <div class="single-brand">
-                        <a href="#"><img src="img/brand/2.png" alt="brand-image"></a>
-                    </div>
-                    <div class="single-brand">
-                        <a href="#"><img src="img/brand/3.png" alt="brand-image"></a>
-                    </div>
-                    <div class="single-brand">
-                        <a href="#"><img src="img/brand/4.png" alt="brand-image"></a>
-                    </div>
-                    <div class="single-brand">
-                        <a href="#"><img src="img/brand/5.png" alt="brand-image"></a>
-                    </div>
-                </div>
-                <!-- Brand Banner End -->                
-            </div>
-        </div>
-        <!-- Brand Logo End -->

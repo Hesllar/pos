@@ -1,4 +1,4 @@
-                                <div id="usuarios" class="tab-pane fade">
+                                <div id="usuarios" class="tab-pane active">
                                     <h3>Control de Usuarios </h3>
                                     <div class="table-responsive">
                                         <table class="table">
