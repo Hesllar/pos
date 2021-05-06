@@ -10,11 +10,5 @@ class Home extends BaseController
 		echo view('index');
 		echo view('footer');
 	}
-
-	public function contacto()
-	{
-		echo view('header');
-		echo view('contacto');
-		echo view('footer');
-	}
+	
 }
