@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
@@ -6,22 +7,20 @@ use App\Models\ProductosModel;
 
 class Productos extends BaseController
 {
-	protected $productos;
+    protected $productos;
 
-	public function __construct()
-	{
-		$this->productos = new ProductosModel;
-	}
+    public function __construct()
+    {
+        $this->productos = new ProductosModel();
+    }
 
-	public function index()
-	{
-		/*$usuarios = $this->usuario->findAll();
-		$data = ['titulo' => 'Usuarios', 'datos' => $usuarios];*/
+    public function index()
+    {
+        $productos = $this->productos->findAll();
+        $data = ['titulo' => 'Productos', 'datos' => $productos];
 
-		echo view('header');
-		echo view('administrador/panel_header');
-		echo view('administrador/productos');
-		echo view('administrador/panel_footer');
-		echo view('footer');
-	}
+        echo view('header');
+        echo view('Productos/Productos', $data);
+        echo view('footer');
+    }
 }
