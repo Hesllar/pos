@@ -13,7 +13,7 @@
                             <!-- Nav tabs -->
                             <ul class="nav flex-column dashboard-list" role="tablist">
                                 <li><a class="active" data-toggle="tab" href="#dashboard">Tablero</a></li>
-                                <li><a data-toggle="tab" href="<?php echo base_url() ?>/productos">Productos</a></li>
+                                <li><a data-toggle="tab" href="<?php echo base_url() ?>/productosadmin">Productos</a></li>
                                 <li><a data-toggle="tab" href="<?php echo base_url() ?>/ventas">Ventas</a></li>
                                 <li><a data-toggle="tab" href="<?php echo base_url() ?>/ordenescompra">Ordenes de compra</a></li>
                                 <li><a data-toggle="tab" href="<?php echo base_url() ?>/usuarios">Usuarios</a></li>
