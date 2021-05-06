@@ -1,17 +1,8 @@
 <!-- Header Area End -->
-<!-- Breadcrumb Start -->
-<div class="breadcrumb-area ptb-60 ptb-sm-30">
-    <div class="container">
-        <div class="breadcrumb">
-            <ul>
-                <li><a href="index.html">Home</a></li>
-                <li class="active"><a href="contact.html">Contact</a></li>
-            </ul>
+        <!-- Breadcrumb Start -->
+        <div class="breadcrumb-area ptb-10 ptb-sm-5">
         </div>
-    </div>
-    <!-- Container End -->
-</div>
-<!-- Breadcrumb End -->
+        <!-- Breadcrumb End -->
 <!-- Google Map Start -->
 <div class="container">
     <div id="map"></div>
@@ -103,34 +94,10 @@
 <!-- Brand Logo End -->
 </div>
 <!-- Wrapper End -->
-<!-- jquery 3.12.4 -->
-<script src="js/vendor/jquery-1.12.4.min.js"></script>
-<!-- mobile menu js  -->
-<script src="js/jquery.meanmenu.min.js"></script>
-<!-- scroll-up js -->
-<script src="js/jquery.scrollUp.js"></script>
-<!-- owl-carousel js -->
-<script src="js/owl.carousel.min.js"></script>
-<!-- slick js -->
-<script src="js/slick.min.js"></script>
-<!-- wow js -->
-<script src="js/wow.min.js"></script>
-<!-- price slider js -->
-<script src="js/jquery-ui.min.js"></script>
-<script src="js/jquery.countdown.min.js"></script>
-<!-- nivo slider js -->
-<script src="js/jquery.nivo.slider.js"></script>
-<!-- fancybox js -->
-<script src="js/jquery.fancybox.min.js"></script>
-<!-- bootstrap -->
-<script src="js/bootstrap.min.js"></script>
-<!-- popper -->
-<script src="js/popper.js"></script>
-<!-- plugins -->
-<script src="js/plugins.js"></script>
 
 <!-- google map js -->
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDAq7MrCR1A2qIShmjbtLHSKjcEIEBEEwM"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBAqw-3jkKmI1gUPgwC8pyxecBz_B992BE&callback=initMap"
+  type="text/javascript"></script>
 <script>
     // When the window has finished loading create our google map below
     google.maps.event.addDomListener(window, 'load', init);
@@ -145,8 +112,8 @@
             scrollwheel: false,
 
             // The latitude and longitude to center the map (always required)
-            center: new google.maps.LatLng(23.761226, 90.420766), // New York
-
+            center: new google.maps.LatLng(-33.0338237, -71.5357057), // New York
+            
             // How you would like to style the map. 
             // This is where you would paste any style found on Snazzy Maps.
             styles: [{
@@ -239,14 +206,12 @@
 
         // Let's also add a marker while we're at it
         var marker = new google.maps.Marker({
-            position: new google.maps.LatLng(23.761226, 90.420766),
+            position: new google.maps.LatLng(-33.0338237, -71.5357057),
             map: map,
             title: 'Snazzy!'
         });
     }
 </script>
-<!-- main js -->
-<script src="js/main.js"></script>
 </body>
 
 </html>
