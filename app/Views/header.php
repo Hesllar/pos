@@ -43,6 +43,8 @@
 </head>
 
 <body>
+    <!-- Wrapper Start -->
+    <div class="wrapper homepage">
     <header>
         <!-- Header Top Start -->
         <div class="header-top">
@@ -124,7 +126,7 @@
                                         </ul>
                                         <!-- Home Version Dropdown End -->
                                     </li>
-                                    <li><a href="about.html">acerca de nosotros</a></li>
+                                    <li><a href="<?php echo base_url(); ?>/acerca">acerca de nosotros</a></li>
                                     <li><a href="<?php echo base_url(); ?>/contacto">contacto</a></li>
                                 </ul>
                             </nav>
@@ -135,13 +137,24 @@
                     <div class="col-lg-3 col-sm-7 col-7">
                         <div class="cart-box text-right">
                             <ul>
-                                <li><a href="compare.html"><i class="fa fa-cog"></i></a>
+                                <?php 
+                                $tipo_sesion = true;
+                                if($tipo_sesion){
+                                ?>
+                                <li><a href="compare.html"><i class="fa fa-sign-in"></i></a>
                                     <ul class="ht-dropdown">
-                                        <li><a href="login.html">Acceder</a></li>
-                                        <li><a href="register.html">Registrarme</a></li>
-                                        <li><a href="account.html">Cuenta</a></li>
+                                        <li><a href="<?php echo base_url() ?>/acceder">Acceder</a></li>
+                                        <li><a href="<?php echo base_url() ?>/registro">Registrarme</a></li>
                                     </ul>
                                 </li>
+                                <?php
+                                }else{
+                                ?>
+                                <li><a href="compare.html"><i class="fa fa-cog"></i></a></li>
+                                <?php
+                                }
+                                ?>
+
                                 <li><a href="#"><i class="fa fa-shopping-basket"></i><span class="cart-counter">2</span></a>
                                     <ul class="ht-dropdown main-cart-box">
                                         <li>
