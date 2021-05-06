@@ -17,11 +17,16 @@ class Ventas extends BaseController
 	{
 		/*$usuarios = $this->usuario->findAll();
 		$data = ['titulo' => 'Usuarios', 'datos' => $usuarios];*/
-		
-		$data = ['titulo' => 'Usuarios', 'ventas' => 'active'];
+
+		$estados = ['e_venta' => 'active',
+		'e_producto' => '',
+		'e_ordencompra' => '',
+		'e_usuario' => '',
+		'e_notacredito' => '',
+		'e_config' => ''];
 
 		echo view('header');
-		echo view('administrador/panel_header');
+		echo view('administrador/panel_header',$estados);
 		echo view('administrador/ventas');
 		echo view('administrador/panel_footer');
 		echo view('footer');

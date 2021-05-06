@@ -1,5 +1,5 @@
 
-                                         <div id="ventas" class="tab-pane <?php echo $ventas; ?>">
+                                         <div id="ventas" class="tab-pane <?php echo $e_venta; ?>">
                                             <h3>Ventas diarias</h3>
                                             <div class="thumnail-desc pb-60">
                                                 <div class="container">
