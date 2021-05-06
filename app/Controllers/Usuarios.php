@@ -15,11 +15,11 @@ class Usuarios extends BaseController
 
 	public function index()
 	{
-		$usuarios = $this->usuario->findAll();
-		$data = ['titulo' => 'Usuarios', 'datos' => $usuarios];
+		/*$usuarios = $this->usuario->findAll();
+		$data = ['titulo' => 'Usuarios', 'datos' => $usuarios];*/
 
 		echo view('header');
-		echo view('administrador/panel');
+		echo view('administrador/panel_header');
 		echo view('administrador/usuarios');
 		echo view('administrador/panel_footer');
 		echo view('footer');
