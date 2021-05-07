@@ -1,7 +1,9 @@
 <?php
+
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
+use App\Models\ConfiguracionModel;
 use App\Models\VentaModel;
 
 class Ventas extends BaseController
@@ -11,26 +13,27 @@ class Ventas extends BaseController
 	public function __construct()
 	{
 		$this->ventas = new VentaModel;
+		$this->configuracion = new ConfiguracionModel;
 	}
 
 	public function index()
 	{
-		/*$usuarios = $this->usuario->findAll();
-		$data = ['titulo' => 'Usuarios', 'datos' => $usuarios];*/
+		$configuracion = $this->configuracion->First();
+		$data = ['titulo' => 'Usuarios', 'configuracion' => $configuracion];
 
-		$estados = ['e_venta' => 'active',
-		'e_producto' => '',
-		'e_ordencompra' => '',
-		'e_usuario' => '',
-		'e_notacredito' => '',
-		'e_config' => ''];
+		$estados = [
+			'e_venta' => 'active',
+			'e_producto' => '',
+			'e_ordencompra' => '',
+			'e_usuario' => '',
+			'e_notacredito' => '',
+			'e_config' => ''
+		];
 
-		echo view('header');
-		echo view('administrador/panel_header',$estados);
+		echo view('header', $data);
+		echo view('administrador/panel_header', $estados);
 		echo view('administrador/ventas');
 		echo view('administrador/panel_footer');
-		echo view('footer');
+		echo view('footer', $data);
 	}
-	
-	
 }

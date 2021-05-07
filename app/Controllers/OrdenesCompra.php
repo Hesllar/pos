@@ -1,8 +1,10 @@
 <?php
+
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use App\Models\OrdenCompraModel;
+use App\Models\ConfiguracionModel;
 
 class OrdenesCompra extends BaseController
 {
@@ -11,24 +13,27 @@ class OrdenesCompra extends BaseController
 	public function __construct()
 	{
 		$this->ordenescompra = new OrdenCompraModel;
+		$this->configuracion = new ConfiguracionModel;
 	}
 
 	public function index()
 	{
-		/*$usuarios = $this->usuario->findAll();
-		$data = ['titulo' => 'Usuarios', 'datos' => $usuarios];*/
-		
-		$estados = ['e_venta' => '',
-		'e_producto' => '',
-		'e_ordencompra' => 'active',
-		'e_usuario' => '',
-		'e_notacredito' => '',
-		'e_config' => ''];
+		$configuracion = $this->configuracion->First();
+		$data = ['titulo' => 'configuracion', 'configuracion' => $configuracion];
 
-		echo view('header');
+		$estados = [
+			'e_venta' => '',
+			'e_producto' => '',
+			'e_ordencompra' => 'active',
+			'e_usuario' => '',
+			'e_notacredito' => '',
+			'e_config' => ''
+		];
+
+		echo view('header', $data);
 		echo view('administrador/panel_header', $estados);
 		echo view('administrador/ordenes_compra');
 		echo view('administrador/panel_footer');
-		echo view('footer');
+		echo view('footer', $data);
 	}
 }
