@@ -11,6 +11,8 @@ class Productos extends BaseController
 {
     protected $productos;
     protected $categorias;
+    protected $producto_dispo;
+
 
     public function __construct()
     {
@@ -21,7 +23,8 @@ class Productos extends BaseController
 
     public function index()
     {
-        $productos = $this->productos->findAll();
+        #Condicion para mostrar los productos mayor al stock critico
+        $productos = $this->productos->where('stock > stock_critico')->findall();
         $categorias = $this->categorias->findAll();
         $configuracion = $this->configuracion->First();
         $data = ['titulo' => 'Productos', 'datos' => $productos, 'categorias' => $categorias, 'configuracion' => $configuracion];

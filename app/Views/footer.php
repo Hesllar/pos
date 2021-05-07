@@ -83,32 +83,32 @@
  </div>
  <!-- Wrapper End -->
  <!-- jquery 3.12.4 -->
- <script src="js/vendor/jquery-1.12.4.min.js"></script>
+ <script src="<?php echo base_url(); ?>/js/vendor/jquery-1.12.4.min.js"></script>
  <!-- mobile menu js  -->
- <script src="js/jquery.meanmenu.min.js"></script>
+ <script src="<?php echo base_url(); ?>/js/jquery.meanmenu.min.js"></script>
  <!-- scroll-up js -->
- <script src="js/jquery.scrollUp.js"></script>
+ <script src="<?php echo base_url(); ?>/js/jquery.scrollUp.js"></script>
  <!-- owl-carousel js -->
- <script src="js/owl.carousel.min.js"></script>
+ <script src="<?php echo base_url(); ?>/js/owl.carousel.min.js"></script>
  <!-- slick js -->
- <script src="js/slick.min.js"></script>
+ <script src="<?php echo base_url(); ?>/js/slick.min.js"></script>
  <!-- wow js -->
- <script src="js/wow.min.js"></script>
+ <script src="<?php echo base_url(); ?>/js/wow.min.js"></script>
  <!-- price slider js -->
- <script src="js/jquery-ui.min.js"></script>
- <script src="js/jquery.countdown.min.js"></script>
+ <script src="<?php echo base_url(); ?>/js/jquery-ui.min.js"></script>
+ <script src="<?php echo base_url(); ?>/js/jquery.countdown.min.js"></script>
  <!-- nivo slider js -->
- <script src="js/jquery.nivo.slider.js"></script>
+ <script src="<?php echo base_url(); ?>/js/jquery.nivo.slider.js"></script>
  <!-- fancybox js -->
- <script src="js/jquery.fancybox.min.js"></script>
+ <script src="<?php echo base_url(); ?>/js/jquery.fancybox.min.js"></script>
  <!-- bootstrap -->
- <script src="js/bootstrap.min.js"></script>
+ <script src="<?php echo base_url(); ?>/js/bootstrap.min.js"></script>
  <!-- popper -->
- <script src="js/popper.js"></script>
+ <script src="<?php echo base_url(); ?>/js/popper.js"></script>
  <!-- plugins -->
- <script src="js/plugins.js"></script>
+ <script src="<?php echo base_url(); ?>/js/plugins.js"></script>
  <!-- main js -->
- <script src="js/main.js"></script>
+ <script src="<?php echo base_url(); ?>/js/main.js"></script>
  </body>
 
  </html>
