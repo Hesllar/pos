@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use App\Models\ProductosAdminModel;
+use App\Models\ConfiguracionModel;
 
 class ProductosAdmin extends BaseController
 {
@@ -12,6 +13,7 @@ class ProductosAdmin extends BaseController
     public function __construct()
     {
         $this->productos = new ProductosAdminModel();
+        $this->configuracion = new ConfiguracionModel;
     }
 
     public function index()
@@ -19,18 +21,24 @@ class ProductosAdmin extends BaseController
         /*
         $productos = $this->productos->findAll();
         $data = ['titulo' => 'Productos', 'datos' => $productos]; */
+        $productos = $this->productos->findAll();
+        $configuracion = $this->configuracion->First();
+        $data = ['titulo' => 'Productos', 'datos' => $productos];
 
-		$estados = ['e_venta' => '',
-		'e_producto' => 'active',
-		'e_ordencompra' => '',
-		'e_usuario' => '',
-		'e_notacredito' => '',
-		'e_config' => ''];
 
-        echo view('header');
+        $estados = [
+            'e_venta' => '',
+            'e_producto' => 'active',
+            'e_ordencompra' => '',
+            'e_usuario' => '',
+            'e_notacredito' => '',
+            'e_config' => ''
+        ];
+
+        echo view('header',$configuracion);
         echo view('administrador/panel_header', $estados);
-        echo view('administrador/productos_admin');
+        echo view('administrador/productos_admin',$data);
         echo view('administrador/panel_footer');
-        echo view('footer');
+        echo view('footer',$configuracion);
     }
 }

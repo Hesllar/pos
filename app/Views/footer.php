@@ -27,10 +27,9 @@
                          <h3>Contacto</h3>
                          <div class="footer-content">
                              <div class="loc-address">
-                                 <span><i class="fa fa-map-marker"></i>Álvarez 2336, Viña del Mar,
-                                     Valparaíso.</span>
-                                 <span><i class="fa fa-envelope-o"></i>Correo : contacto@ferme.cl</span>
-                                 <span><i class="fa fa-phone"></i>Tel&eacute;fono : [TELEFONO]</span>
+                                 <span><i class="fa fa-map-marker"></i><?php echo $configuracion['direccion'] ?></span>
+                                 <span><i class="fa fa-envelope-o"></i><?php echo $configuracion['correo_principal'] ?></span>
+                                 <span><i class="fa fa-phone"></i>Tel&eacute;fono : +56 (9)<?php echo $configuracion['telefono'] ?></span>
                              </div>
                              <div class="payment-mth"><a href="#"><img class="img" src="img/footer/1.png" alt="payment-image"></a></div>
                          </div>
@@ -64,7 +63,7 @@
      <div class="footer-bottom off-white-bg2">
          <div class="container">
              <div class="footer-bottom-content">
-                 <p class="copy-right-text">Copyright © <a href="#">Ferme</a> Todos los derechos reservados.</p>
+                 <p class="copy-right-text">Copyright © <a href="<?php echo base_url() ?>/home">Ferme</a> Todos los derechos reservados.</p>
                  <div class="footer-social-content">
                      <ul class="social-content-list">
                          <li><a href="#"><i class="fa fa-twitter"></i></a></li>

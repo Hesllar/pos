@@ -10,5 +10,4 @@ class Acerca extends BaseController
 		echo view('acerca');
 		echo view('footer');
 	}
-	
 }
