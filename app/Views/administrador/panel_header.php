@@ -19,7 +19,7 @@
                                 <li><a class="<?php echo $e_usuario; ?>" href="<?php echo base_url() ?>/usuarios">Usuarios</a></li>
                                 <li><a class="<?php echo $e_notacredito; ?>" href="<?php echo base_url() ?>/notascredito">Notas de cr&eacute;dito</a></li>
                                 <li><a class="<?php echo $e_config; ?>" href="<?php echo base_url() ?>/configuracion">Configuraci&oacute;n</a></li>
-                                <li><a href="login.html" href="<?php echo base_url() ?>/desconexion">Cerrar Sesión</a></li>
+                                <li><a href="<?php echo base_url() ?>/CerrarSesion">Cerrar Sesión</a></li>
                             </ul>
                         </div>
                         <div class="col-lg-10">

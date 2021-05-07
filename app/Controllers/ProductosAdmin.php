@@ -23,7 +23,7 @@ class ProductosAdmin extends BaseController
         $data = ['titulo' => 'Productos', 'datos' => $productos]; */
         $productos = $this->productos->findAll();
         $configuracion = $this->configuracion->First();
-        $data = ['titulo' => 'Productos', 'datos' => $productos];
+        $data = ['titulo' => 'Productos', 'datos' => $productos, 'configuracion' => $configuracion];
 
 
         $estados = [
@@ -35,10 +35,10 @@ class ProductosAdmin extends BaseController
             'e_config' => ''
         ];
 
-        echo view('header',$configuracion);
+        echo view('header', $data);
         echo view('administrador/panel_header', $estados);
-        echo view('administrador/productos_admin',$data);
+        echo view('administrador/productos_admin', $data);
         echo view('administrador/panel_footer');
-        echo view('footer',$configuracion);
+        echo view('footer', $data);
     }
 }
