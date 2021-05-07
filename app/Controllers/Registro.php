@@ -2,12 +2,13 @@
 
 namespace App\Controllers;
 
-class Acerca extends BaseController
+class Registro extends BaseController
 {
 	public function index()
 	{
 		echo view('header');
-		echo view('acerca');
+		echo view('registro');
 		echo view('footer');
 	}
+	
 }

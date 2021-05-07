@@ -53,7 +53,7 @@
                     <!-- Header Top left Start -->
                     <div class="col-lg-4 col-md-12 d-center">
                         <div class="header-top-left">
-                            <img src="img/icon/call.png" alt="">Llámanos : [N TELEFONO]
+                            <img src="img/icon/call.png" alt="">Llámanos : +56 (9) <?php echo $configuracion['telefono'] ?>
                         </div>
                     </div>
                     <!-- Header Top left End -->

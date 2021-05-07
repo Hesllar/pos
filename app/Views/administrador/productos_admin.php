@@ -13,27 +13,18 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
+                                            <?php  foreach ($datos as $producto) { ?>
                                                 <tr>
-                                                    <td>7802200266193</td>
-                                                    <td>Kit Desatornilladores 5 en 1</td>
-                                                    <td>$15.990</td>
-                                                    <td>153</td>
-                                                    <td>Herramientas de mano</td>
+                                                    <td><?php echo $producto['id_producto']; ?></td>
+                                                    <td><?php echo $producto['nombre']; ?></td>
+                                                    <td>$<?php echo $producto['precio_venta']; ?></td>
+                                                    <td><?php echo $producto['stock']; ?></td>
+                                                    <td><?php echo $producto['detalle_fk']; ?></td>
                                                     <td><a class="view" href="cart.html">
                                                         <i class="fas fa-bars"></i></a>
                                                     </td>
                                                 </tr>
-                                                <tr>
-                                                    <td>8888890333277</td>
-                                                    <td>Esmalte Sipa secado r&aacute;pido Azul</td>
-                                                    <td>$22.390</td>
-                                                    <td>61</td>
-                                                    <td>Pinturas</td>
-                                                    <td><a class="view" href="cart.html">
-                                                        <i class="fas fa-bars"></i>
-                                                    </a></td>
-
-                                                </tr>
+                                            <?php } ?>
                                             </tbody>
                                         </table>
                                     </div>

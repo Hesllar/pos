@@ -17,9 +17,16 @@ class OrdenesCompra extends BaseController
 	{
 		/*$usuarios = $this->usuario->findAll();
 		$data = ['titulo' => 'Usuarios', 'datos' => $usuarios];*/
+		
+		$estados = ['e_venta' => '',
+		'e_producto' => '',
+		'e_ordencompra' => 'active',
+		'e_usuario' => '',
+		'e_notacredito' => '',
+		'e_config' => ''];
 
 		echo view('header');
-		echo view('administrador/panel_header');
+		echo view('administrador/panel_header', $estados);
 		echo view('administrador/ordenes_compra');
 		echo view('administrador/panel_footer');
 		echo view('footer');
