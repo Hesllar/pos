@@ -18,8 +18,16 @@ class Ventas extends BaseController
 
 	public function index()
 	{
+
+		$ventas = $this->ventas->findAll();
+		$boletas = $this->ventas->where('tipo_comprobante', 'bolet')->findAll();
+		$facturas = $this->ventas->where('tipo_comprobante', 'factu')->findAll();
 		$configuracion = $this->configuracion->First();
-		$data = ['titulo' => 'Usuarios', 'configuracion' => $configuracion];
+		$data = [
+			'titulo' => 'Usuarios', 'datos' => $ventas,
+			'boletas' => $boletas, 'facturas' => $facturas,
+			'configuracion' => $configuracion
+		];
 
 		$estados = [
 			'e_venta' => 'active',
