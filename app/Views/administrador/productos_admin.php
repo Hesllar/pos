@@ -1,5 +1,48 @@
                                 <div id="productos" class="tab-pane active">
                                     <h3>Productos</h3>
+
+                                    <div class="pull-right">
+                                        <button type="button" class="btn-submit" data-toggle="modal" data-target="#exampleModal2">
+                                            +Categoria
+                                        </button>
+                                    </div>
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">Datos categoria</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <form class="form-horizontal" method="Post" action="<?php echo base_url() ?>/productosadmin/NuevaCategoria">
+                                                    <div class="modal-body">
+                                                        <div class="row">
+                                                            <div class="col-sm-12">
+
+                                                                <fieldset>
+                                                                    <div class="form-group">
+                                                                        <label class="control-label" for="nombre_categoria"><span class="require">*</span>Nombre categoria</label>
+                                                                        <div class="col-sm-10">
+                                                                            <input type="text" class="form-control" id="nombre_categoria" name="nombre_categoria" placeholder="Ingrese nombre categoria">
+                                                                        </div>
+                                                                    </div>
+                                                                </fieldset>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary newsletter-btn" data-dismiss="modal">Cancelar</button>
+                                                        <button type="submit" class="newsletter-btn">Guardar</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
                                     <div class="pull-right">
                                         <button type="button" class="btn-submit" data-toggle="modal" data-target="#exampleModal">
                                             +Agregar
@@ -16,81 +59,88 @@
                                                         <span aria-hidden="true">&times;</span>
                                                     </button>
                                                 </div>
-                                                <div class="modal-body">
-                                                    <div class="row">
-                                                        <div class="col-sm-12">
-                                                            <form class="form-horizontal" action="#">
+                                                <form class="form-horizontal" method="Post" enctype="multipart/form-data" action="<?php echo base_url() ?>/productosadmin/NuevoProducto">
+                                                    <div class="modal-body">
+                                                        <div class="row">
+                                                            <div class="col-sm-12">
+
                                                                 <fieldset>
                                                                     <div class="form-group">
-                                                                        <label class="control-label" for="f-name"><span class="require">*</span>Codigo de barra</label>
+                                                                        <label class="control-label" for="nombre_producto"><span class="require">*</span>Nombre producto</label>
                                                                         <div class="col-sm-10">
-                                                                            <input type="text" class="form-control" id="f-name" placeholder="Ingrese codigo de barra" require>
+                                                                            <input type="text" class="form-control" id="nombre_producto" name="nombre_producto" placeholder="Ingese nombre producto" require>
                                                                         </div>
                                                                     </div>
                                                                     <div class="form-group">
-                                                                        <label class="control-label" for="l-name"><span class="require">*</span>Nombre producto</label>
+                                                                        <label class="control-label" for="marca"><span class="require">*</span>Marca</label>
                                                                         <div class="col-sm-10">
-                                                                            <input type="text" class="form-control" id="l-name" placeholder="Ingese nombre producto" require>
+                                                                            <input type="text" class="form-control" id="marca" name="marca" placeholder="Ingrese nombre marca" require>
                                                                         </div>
                                                                     </div>
                                                                     <div class="form-group">
-                                                                        <label class="control-label" for="email"><span class="require">*</span>Marca</label>
-                                                                        <div class="col-sm-10">
-                                                                            <input type="email" class="form-control" id="email" placeholder="Ingrese nombre marca" require>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="form-group">
-                                                                        <label class="control-label" for="number"><span class="require">*</span>Categoria</label require>
+                                                                        <label class="control-label" for="categoria"><span class="require">*</span>Categoria</label require>
                                                                         <div class=" checkbox-form col-sm-10">
-                                                                            <select require>
-                                                                                <option value="volvo">Selecciones</option>
+                                                                            <select name="categoria" require>
+                                                                                <option value="categoria">Selecciones</option>
                                                                                 <?php foreach ($categorias as $categoria) { ?>
                                                                                     <option value="<?php echo $categoria['id_categoria']; ?>"><?php echo $categoria['nombre_categoria']; ?></option>
                                                                                 <?php } ?>
-
                                                                             </select>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <div class="col-sm-10">
+                                                                            <img src="" class="img-responsive" />
+                                                                            <input type="file" class="form-control" id="imagen" name="imagen" accept="image/png" require>
                                                                         </div>
                                                                     </div>
                                                                     <div class="form-group">
                                                                         <label class="control-label" for="number"><span class="require">*</span>Precio venta</label>
                                                                         <div class="col-sm-10">
-                                                                            <input type="email" class="form-control" id="number" placeholder="Ingreso precio venta" require>
+                                                                            <input type="number" class="form-control" id="precio_venta" name="precio_venta" placeholder="Ingreso precio venta" require>
                                                                         </div>
                                                                     </div>
                                                                     <div class="form-group">
                                                                         <label class="control-label" for="number"><span class="require">*</span>Prectio costo</label>
                                                                         <div class="col-sm-10">
-                                                                            <input type="email" class="form-control" id="number" placeholder="Ingrese precio costo" require>
+                                                                            <input type="number" class="form-control" id="precio_costo" name="precio_costo" placeholder="Ingrese precio costo" require>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <label class="control-label" for="number"><span class="require">*</span>Fecha de vencimiento</label>
+                                                                        <div class="col-sm-10">
+                                                                            <input type="date" class="form-control" id="fecha_vencimiento" name="fecha_vencimiento" placeholder="Fecha de vencimiento" require>
                                                                         </div>
                                                                     </div>
                                                                     <div class="form-group">
                                                                         <label class="control-label" for="number"><span class="require">*</span>Stock</label>
                                                                         <div class="col-sm-10">
-                                                                            <input type="email" class="form-control" id="number" placeholder="Ingrese existencia" require>
+                                                                            <input type="number" class="form-control" id="stock" name="stock" placeholder="Ingrese existencia" require>
                                                                         </div>
                                                                     </div>
                                                                     <div class="form-group">
                                                                         <label class="control-label" for="number"><span class="require">*</span>Stock critico</label>
                                                                         <div class="col-sm-10">
-                                                                            <input type="email" class="form-control" id="number" placeholder="Ingrese existencia criticas" require>
+                                                                            <input type="number" class="form-control" id="stock_critico" name="stock_critico" placeholder="Ingrese existencia criticas" require>
                                                                         </div>
                                                                     </div>
                                                                     <div class="form-group">
                                                                         <label class="control-label" for="number"><span class="require">*</span>Descripcion</label>
                                                                         <div class="col-sm-10">
-                                                                            <label for="exampleFormControlTextarea1" class="form-label"></label>
-                                                                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea require>
+                                                                            <label for="descripcion" class="form-label"></label>
+                                                                            <textarea class="form-control" id="descripcion" name="descripcion" rows="3"></textarea require>
                                                                         </div>
                                                                     </div>
                                                                 </fieldset>
-                                                            </form>
+                                                           
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary newsletter-btn" data-dismiss="modal">Cancelar</button>
-                                                    <button type="button" class="newsletter-btn">Guardar</button>
+                                                    <button type="submit" class="newsletter-btn">Guardar</button>
                                                 </div>
+                                                 </form>
                                             </div>
                                         </div>
                                     </div>

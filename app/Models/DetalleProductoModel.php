@@ -7,7 +7,7 @@ class DetalleProductoModel extends Model
 {
 
     protected $table      = 'detalle_producto';
-    protected $primaryKey = 'id_detalle';
+    protected $primaryKey = 'id_detalle_prod';
 
     protected $useAutoIncrement = true;
 
@@ -27,4 +27,3 @@ class DetalleProductoModel extends Model
     protected $validationMessages = [];
     protected $skipValidation     = false;
 }
-?>

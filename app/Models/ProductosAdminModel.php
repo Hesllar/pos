@@ -15,11 +15,11 @@ class ProductosAdminModel extends Model
     protected $returnType     = 'array';
     protected $useSoftDeletes = false;
 
-    protected $allowedFields = ['n_registro', 'imagen', 'nombre', 'marca', 'descripcion', 'precio_venta', 'precio_costo', 'stock', 'stock_critico', 'categoria'];
+    protected $allowedFields = ['n_registro', 'imagen', 'nombre', 'marca', 'descripcion', 'precio_venta', 'precio_costo', 'stock', 'stock_critico', 'categoria', 'detalle_fk'];
 
     protected $useTimestamps = false;
-    protected $createdField  = 'fecha_creacion';
-    /*protected $updatedField  = 'updated_at';
+    /*protected $createdField  = 'fecha_creacion';
+    protected $updatedField  = 'updated_at';
     protected $deletedField  = 'deleted_at';*/
 
     protected $validationRules    = [];
