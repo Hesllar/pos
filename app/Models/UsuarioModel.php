@@ -18,7 +18,9 @@ class UsuarioModel extends Model
                                 'contrasena',
                                 'estado_usuario',
                                 'avatar',
-                                'ultima_conexion'
+                                'ultima_conexion',
+                                'nivel_acceso_fk',
+                                'rut'
                                 ];
 
     protected $useTimestamps = false;
