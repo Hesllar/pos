@@ -50,4 +50,22 @@ class Usuarios extends BaseController
 		return redirect()->to(base_url().'usuarios');
 		*/
 	}
+
+	public function listar()
+	{
+		$usuarios = $this->usuarios->FindAll();
+		return $usuarios;
+	}
+
+	public function buscarPorId($id_usuario)
+	{
+		$usuarios = $this->usuarios->where('id_usuario',$id_usuario)->First();
+		return $usuarios;
+	}
+
+	public function buscarPorRut($rut_fk)
+	{
+		$usuarios = $this->usuarios->where('rut_fk',$rut_fk)->First();
+		return $usuarios;
+	}
 }

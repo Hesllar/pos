@@ -3,21 +3,20 @@
 namespace App\Models;
 use CodeIgniter\Model;
 
-class EmpleadoModel extends Model
+class FormaPagoModel extends Model
 {
 
-    protected $table      = 'empleado';
-    protected $primaryKey = 'id_empleado';
+    protected $table      = 'forma_pago';
+    protected $primaryKey = 'id_forma_pago';
 
     protected $useAutoIncrement = true;
 
     protected $returnType     = 'array';
     protected $useSoftDeletes = false;
 
-    protected $allowedFields = ['cargo_fk','usuario_fk'];
+    protected $allowedFields = ['tipo_pago'];
 
     protected $useTimestamps = false;
-    
     /*
     protected $createdField  = 'fecha_registro';
     protected $updatedField  = 'fecha_entrega';

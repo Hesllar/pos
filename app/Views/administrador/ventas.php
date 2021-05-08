@@ -11,8 +11,7 @@
                 </div>
 
                 <!-- Ventana Emergente -->
-                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
-                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -27,8 +26,7 @@
                                         <form class="form-horizontal" action="#">
                                             <fieldset>
                                                 <div class="form-group">
-                                                    <label class="control-label" for="number"><span
-                                                            class="require">*</span>Tipo Comprobante</label require>
+                                                    <label class="control-label" for="number"><span class="require">*</span>Tipo Comprobante</label require>
                                                     <div class=" checkbox-form col-sm-10">
                                                         <select require>
                                                             <option value="0">Seleccione comprobante</option>
@@ -38,25 +36,20 @@
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label class="control-label" for="l-name"><span
-                                                            class="require">*</span>Rut del Cliente</label>
+                                                    <label class="control-label" for="l-name"><span class="require">*</span>Rut del Cliente</label>
                                                     <div class="col-sm-10">
-                                                        <input type="text" class="form-control" id="l-name"
-                                                            placeholder="12345678-9" require>
+                                                        <input type="text" class="form-control" id="l-name" placeholder="12345678-9" require>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label class="control-label" for="f-name"><span
-                                                            class="require">*</span>Codigo
+                                                    <label class="control-label" for="f-name"><span class="require">*</span>Codigo
                                                         de barras</label>
                                                     <div class="col-sm-10">
-                                                        <input type="text" class="form-control" id="f-name"
-                                                            placeholder="Ingrese o escanee codigo de barras" require>
+                                                        <input type="text" class="form-control" id="f-name" placeholder="Ingrese o escanee codigo de barras" require>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label class="control-label" for="f-name"><span
-                                                            class="require">*</span>Productos</label>
+                                                    <label class="control-label" for="f-name"><span class="require">*</span>Productos</label>
                                                     <div class="col-sm-10">
                                                         <div class="table-responsive">
                                                             <table class="table">
@@ -92,20 +85,18 @@
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn-estilo btn-cancelar"
-                                    data-dismiss="modal">Cancelar</button>
+                                <button type="button" class="btn-estilo btn-cancelar" data-dismiss="modal">Cancelar</button>
                                 <button type="button" class="btn-estilo btn-aceptar">Generar venta</button>
                             </div>
                         </div>
                     </div>
                 </div>
                 <!-- Ventana Emergente -->
-                <div class="modal" id="detalle" tabindex="-1" role="dialog" aria-labelledby="detalle"
-                    aria-hidden="true">
+                <div class="modal" id="detalle" tabindex="-1" role="dialog" aria-labelledby="detalle" aria-hidden="true">
                     <div class="modal-dialog modal-lg" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Datos de la venta</h5>
+                                <h5 class="modal-title" id="exampleModalLabel">Datos de la venta N° [id_venta]</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
@@ -114,133 +105,188 @@
                                 <div class="container-fluid">
                                     <form class="form-horizontal" action="#">
                                         <fieldset>
-                                            <div class="row">
-                                                <div class="form-group col-sm-6">
-                                                    <label class="control-label" for="l-name">Fecha de Emision</label>
-                                                    <div class="col-sm-10">
-                                                        <h6>05/05/2021 05:55:55</h6>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="form-group col-sm-6">
-                                                    <label class="control-label" for="f-name">Nombre del Cliente</label>
-                                                    <div class="col-sm-10">
-                                                        <h6>Bastian Barraza Diaz</h6>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group col-sm-6">
-                                                    <label class="control-label" for="l-name">Rut del Cliente</label>
-                                                    <div class="col-sm-10">
-                                                        <h6>19.168.632-0</h6>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="form-group col-sm-6">
-                                                    <label class="control-label" for="f-name">Raz&oacute;n
-                                                        Social</label>
-                                                    <div class="col-sm-10">
-                                                        <h6>Bastian Barraza Diaz</h6>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group col-sm-6">
-                                                    <label class="fuente-titulo" for="l-name">Rut Empresa</label>
-                                                    <div class="col-sm-10">
-                                                    <p class="fuente-parrafo">79.168.632-0</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="form-group col-sm-6">
-                                                    <label class="col-sm-5 fuente-titulo" for="f-name">Nombre del
-                                                        Empleado</label>
-                                                    <div class="col-sm-5">
-                                                        <label class="fuente-parrafo">Gino Baez Silva</label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="control-label" for="f-name">Productos</label>
-                                                <div class="col-sm-12">
-                                                    <div class="table-responsive">
-                                                        <table class="table">
-                                                            <thead>
-                                                                <tr>
-                                                                    <th>Nombre</th>
-                                                                    <th>Cantidad</th>
-                                                                    <th>Neto</th>
-                                                                    <th>IVA</th>
-                                                                    <th>Costo unitario</th>
-                                                                    <th>Total</th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                <tr>
-                                                                    <td>523</td>
-                                                                    <td>29/04/2021 18:03</td>
-                                                                    <td>$15.990</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>522</td>
-                                                                    <td>29/04/2021 17:53</td>
-                                                                    <td>$22.390</td>
-                                                                </tr>
-                                                            </tbody>
-                                                        </table>
-                                                    </div>
-                                                </div>
-                                            </div>
                                             <div id="accordion">
                                                 <div class="card">
                                                     <div class="card-header" id="headingOne">
                                                         <h5 class="mb-0">
-                                                            <a href="#despacho" class="middle-menu-list" data-toggle="collapse"
-                                                                data-target="#despacho" aria-expanded="true"
-                                                                aria-controls="collapseOne">Datos del despacho</a>
+                                                            <a href="#" class="middle-menu-list" >Detalle de la venta</a>
                                                         </h5>
                                                     </div>
 
-                                                    <div id="despacho" class="collapse"
-                                                        aria-labelledby="headingOne" data-parent="#accordion">
+                                                    <div id="venta" class="collapse show">
                                                         <div class="card-body">
-                                                            Anim pariatur cliche reprehenderit, enim eiusmod high life
-                                                            accusamus terry richardson ad squid. 3 wolf moon officia
-                                                            aute, non cupidatat skateboard dolor brunch. Food truck
-                                                            quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor,
-                                                            sunt aliqua put a bird on it squid single-origin coffee
-                                                            nulla assumenda shoreditch et. Nihil anim keffiyeh
-                                                            helvetica, craft beer labore wes anderson cred nesciunt
-                                                            sapiente ea proident. Ad vegan excepteur butcher vice lomo.
-                                                            Leggings occaecat craft beer farm-to-table, raw denim
-                                                            aesthetic synth nesciunt you probably haven't heard of them
-                                                            accusamus labore sustainable VHS.
+                                                            <div class="row">
+                                                                <div class="form-group col-sm-6">
+                                                                    <span class="fuente-titulo">Fecha de Emision</span>
+                                                                    <div class="col-sm-12">
+                                                                        <span class="fuente-parrafo">05/05/2021 05:55:55</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="form-group col-sm-4">
+                                                                    <span class="fuente-titulo">Rut del Cliente</span>
+                                                                    <div class="col-sm-12">
+                                                                        <span class="fuente-parrafo">19.168.632-0</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group col-sm-5">
+                                                                    <span class="fuente-titulo">Nombre del Cliente</span>
+                                                                    <div class="col-sm-12">
+                                                                        <span class="fuente-parrafo">Kimberly Aleen Pellizzari Villavicencio</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="form-group col-sm-4">
+                                                                    <span class="fuente-titulo">Rut Empresa</span>
+                                                                    <div class="col-sm-12">
+                                                                        <span class="fuente-parrafo">79.168.632-0</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group col-sm-4">
+                                                                    <span class="fuente-titulo">Raz&oacute;n
+                                                                        Social</span>
+                                                                    <div class="col-sm-12">
+                                                                        <span class="fuente-parrafo">Empresa de Fierros</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group col-sm-4">
+                                                                    <span class="fuente-titulo">Giro</span>
+                                                                    <div class="col-sm-12">
+                                                                        <span class="fuente-parrafo">Venta de fierros</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="form-group col-sm-6">
+                                                                    <span class="fuente-titulo">Nombre del Empleado</span>
+                                                                    <div class="col-sm-12">
+                                                                        <span class="fuente-parrafo">Gino Baez Silva</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="control-label" for="f-name">Productos</label>
+                                                                <div class="col-sm-12">
+                                                                    <div class="table-responsive">
+                                                                        <table class="table">
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th>Nombre</th>
+                                                                                    <th>Cantidad</th>
+                                                                                    <th>Neto</th>
+                                                                                    <th>IVA</th>
+                                                                                    <th>Costo unitario</th>
+                                                                                    <th>Total</th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody>
+                                                                                <tr>
+                                                                                    <td>523</td>
+                                                                                    <td>29/04/2021 18:03</td>
+                                                                                    <td>$15.990</td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td>522</td>
+                                                                                    <td>29/04/2021 17:53</td>
+                                                                                    <td>$22.390</td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="cart_totals h2 col-sm-12">
+                                                    <div class="form-group">
+                                                        <span class="fuente-parrafo">Sub Total</span>
+                                                        <span class="fuente-titulo">$999.999</span>
+                                                    </div>
+                                                </div>
+                                                <div class="card">
+                                                    <div class="card-header" id="headingTwo">
+                                                        <h5 class="mb-0">
+                                                            <a href="#" class="middle-menu-list collapsed" data-toggle="collapse" data-target="#despacho" aria-expanded="false" aria-controls="despacho">Detalle del despacho</a>
+                                                        </h5>
+                                                    </div>
+                                                    <div id="despacho" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                                                        <div class="card-body">
+                                                            <div class="row">
+                                                                <div class="form-group col-sm-4">
+                                                                    <span class="fuente-titulo">Estado del env&iacute;o</span>
+                                                                    <div class="col-sm-12">
+                                                                        <span class="fuente-parrafo">Recibido</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group col-sm-4">
+                                                                    <span class="fuente-titulo">Fecha de entrega</span>
+                                                                    <div class="col-sm-12">
+                                                                        <span class="fuente-parrafo">00/00/00 00:00:00</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group col-sm-4">
+                                                                    <span class="fuente-titulo">Recibido por</span>
+                                                                    <div class="col-sm-12">
+                                                                        <span class="fuente-parrafo">Ricardo Muñoz Jorquera</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group col-sm-4">
+                                                                    <span class="fuente-titulo">Rut quien recibe</span>
+                                                                    <div class="col-sm-12">
+                                                                        <span class="fuente-parrafo">+56981854566</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group col-sm-4">
+                                                                    <span class="fuente-titulo">Peso del paquete</span>
+                                                                    <div class="col-sm-12">
+                                                                        <span class="fuente-parrafo">20kg</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group col-sm-4">
+                                                                    <span class="fuente-titulo">Comuna de env&iacute;o</span>
+                                                                    <div class="col-sm-12">
+                                                                        <span class="fuente-parrafo">San Antonio</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group col-sm-4">
+                                                                    <span class="fuente-titulo">Costo de env&iacute;o</span>
+                                                                    <div class="col-sm-12">
+                                                                        <span class="fuente-parrafo">$5460</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-
-
-                                        </fieldset>
-                                    </form>
-
-
+                                <div class="row pull-right billing-address">
+                                    <div class="form-group col-sm-9">
+                                        <span class="fuente-parrafo">Total</span>
+                                        <span class="fuente-titulo">$999.999</span>
+                                    </div>
                                 </div>
+
+                                </fieldset>
+                                </form>
+
+
                             </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn-estilo btn-cancelar"
-                                    data-dismiss="modal">Cancelar</button>
-                                <button type="button" class="btn-estilo btn-cancelar" data-dismiss="modal">Anular
-                                    venta</button>
-                                <button type="button" class="btn-estilo btn-aceptar"
-                                    data-dismiss="modal">Aceptar</button>
-                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn-estilo btn-cancelar" data-dismiss="modal">Cancelar</button>
+                            <button type="button" class="btn-estilo btn-cancelar" data-dismiss="modal">Anular
+                                venta</button>
+                            <button type="button" class="btn-estilo btn-aceptar" data-dismiss="modal">Aceptar</button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 </div>
 <div class="container">
     <div class="row">
@@ -266,21 +312,21 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php foreach ($boletas as $boleta){ ?>
-                                <tr>
-                                    <td><?php echo $boleta['id_venta']; ?></td>
-                                    <td><?php echo $boleta['fecha_venta']; ?></td>
-                                    <td><?php echo $configuracion['signo_moneda']; ?><?php echo $boleta['total']; ?>
-                                    </td>
-                                    <td><?php echo $boleta['despacho']; ?></td>
-                                    <td><?php echo $boleta['estado_venta']; ?></td>
-                                    <td><a href="#"><?php echo $boleta['empleado_fk']; ?></a></td>
-                                    <td>
-                                        <a class="view" data-toggle="modal" href="#detalle">
-                                            <i class="fa fa-bars"></i>
-                                        </a>
-                                    </td>
-                                </tr>
+                                <?php foreach ($boletas as $boleta) { ?>
+                                    <tr>
+                                        <td><?php echo $boleta['id_venta']; ?></td>
+                                        <td><?php echo $boleta['fecha_venta']; ?></td>
+                                        <td><?php echo $configuracion['signo_moneda']; ?><?php echo $boleta['total']; ?>
+                                        </td>
+                                        <td><?php echo $boleta['despacho_str']; ?></td>
+                                        <td><?php echo $boleta['estado_str']; ?></td>
+                                        <td><a href="#"><?php echo $boleta['nom_empleado']; ?></a></td>
+                                        <td>
+                                            <a class="view" data-toggle="modal" href="#detalle">
+                                                <i class="fa fa-bars"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
                                 <?php } ?>
                             </tbody>
                         </table>
@@ -301,21 +347,21 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php foreach ($facturas as $factura){ ?>
-                                <tr>
-                                    <td><?php echo $factura['id_venta']; ?></td>
-                                    <td><?php echo $factura['fecha_venta']; ?></td>
-                                    <td><?php echo $configuracion['signo_moneda']; ?><?php echo $factura['total']; ?>
-                                    </td>
-                                    <td><?php echo $factura['despacho']; ?></td>
-                                    <td><?php echo $factura['estado_venta']; ?></td>
-                                    <td><a href="#"><?php echo $factura['empleado_fk']; ?></a></td>
-                                    <td>
-                                        <a class="view" data-toggle="modal" href="#detalle">
-                                            <i class="fa fa-bars"></i>
-                                        </a>
-                                    </td>
-                                </tr>
+                                <?php foreach ($facturas as $factura) { ?>
+                                    <tr>
+                                        <td><?php echo $factura['id_venta']; ?></td>
+                                        <td><?php echo $factura['fecha_venta']; ?></td>
+                                        <td><?php echo $configuracion['signo_moneda']; ?><?php echo $factura['total']; ?>
+                                        </td>
+                                        <td><?php echo $factura['despacho']; ?></td>
+                                        <td><?php echo $factura['estado_venta']; ?></td>
+                                        <td><a href="#"><?php echo $factura['empleado_fk']; ?></a></td>
+                                        <td>
+                                            <a class="view" data-toggle="modal" href="#detalle">
+                                                <i class="fa fa-bars"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
                                 <?php } ?>
                             </tbody>
                         </table>
