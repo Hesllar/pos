@@ -6,17 +6,22 @@ use App\Controllers\BaseController;
 use App\Models\ProductosAdminModel;
 use App\Models\ConfiguracionModel;
 use App\Models\CategoriaModel;
+use App\Models\DetalleProductoModel;
+
 
 class ProductosAdmin extends BaseController
 {
     protected $productos;
     protected $categorias;
+    protected $request;
+    protected $detalle_producto;
 
     public function __construct()
     {
-        $this->productos = new ProductosAdminModel();
+        $this->productos = new ProductosAdminModel;
         $this->configuracion = new ConfiguracionModel;
-        $this->categorias = new CategoriaModel();
+        $this->categorias = new CategoriaModel;
+        $this->detalle_producto = new DetalleProductoModel;
     }
 
     public function index()
@@ -48,5 +53,37 @@ class ProductosAdmin extends BaseController
 
     public function NuevoProducto()
     {
+
+        $this->request = \Config\Services::request();
+
+        $this->detalle_producto->save(['fecha_vencimiento' => $this->request->getPost('fecha_vencimiento')]);
+
+        $ultimo_detalle = $this->detalle_producto->orderby('id_detalle_prod', 'DESC')->First();
+
+        $this->productos->save([
+            'imagen' => $this->request->getfile('imagen'),
+            'nombre' => $this->request->getPost('nombre_producto'),
+            'marca' => $this->request->getPost('marca'),
+            'descripcion' => $this->request->getPost('descripcion'),
+            'precio_venta' => $this->request->getPost('precio_venta'),
+            'precio_costo' => $this->request->getPost('precio_costo'),
+            'stock' => $this->request->getPost('stock'),
+            'stock_critico' => $this->request->getPost('stock_critico'),
+            'categoria' => $this->request->getPost('categoria'),
+            'detalle_fk' => $ultimo_detalle['id_detalle_prod']
+
+        ]);
+
+
+        return redirect()->to(base_url() . '/productosadmin');
+    }
+    public function NuevaCategoria()
+    {
+
+        $this->request = \Config\Services::request();
+        $this->categorias->save([
+            'nombre_categoria' => $this->request->getPost('nombre_categoria')
+        ]);
+        return redirect()->to(base_url() . '/productosadmin');
     }
 }
