@@ -2,12 +2,12 @@
                                     <h3>Productos</h3>
 
                                     <div class="pull-right">
-                                        <button type="button" class="btn-submit" data-toggle="modal" data-target="#exampleModal2">
+                                        <button type="button" class="btn-submit" data-toggle="modal" data-target="#categoria">
                                             +Categoria
                                         </button>
                                     </div>
-                                    <!-- Modal -->
-                                    <div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <!-- Modal ingresar categoria -->
+                                    <div class="modal fade" id="categoria" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                         <div class="modal-dialog" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">
@@ -44,13 +44,13 @@
 
 
                                     <div class="pull-right">
-                                        <button type="button" class="btn-submit" data-toggle="modal" data-target="#exampleModal">
+                                        <button type="button" class="btn-submit" data-toggle="modal" data-target="#AgregarProducto">
                                             +Agregar
                                         </button>
                                     </div>
 
-                                    <!-- Modal -->
-                                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <!-- Modal ingreso producto -->
+                                    <div class="modal fade" id="AgregarProducto" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                         <div class="modal-dialog" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">
@@ -164,8 +164,14 @@
                                                         <td>$<?php echo $producto['precio_venta']; ?></td>
                                                         <td><?php echo $producto['stock']; ?></td>
                                                         <td><?php echo $producto['detalle_fk']; ?></td>
-                                                        <td><a class="view" href="cart.html">
-                                                                <i class="fas fa-bars"></i></a>
+                                                        <td><a class="view" href="<?php echo base_url() . '/productosadmin/editar/' . $producto['id_producto']; ?>"
+                                                         > <i class="fa fa-pencil"></i></a>
+                                                        </td>
+                                                        
+                                                        <td><a class="view" href="<?php echo base_url() ?>/productosadmin/eliminar"
+                                                        <?php echo $producto['id_producto']; ?>>
+                                                                <i class="fa fa-trash"></i></a>
+    
                                                         </td>
                                                     </tr>
                                                 <?php } ?>
