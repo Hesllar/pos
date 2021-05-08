@@ -15,7 +15,6 @@ class ProductosAdmin extends BaseController
     protected $categorias;
     protected $request;
     protected $detalle_producto;
-
     public function __construct()
     {
         $this->productos = new ProductosAdminModel;
@@ -26,6 +25,7 @@ class ProductosAdmin extends BaseController
 
     public function index()
     {
+
         /*
         $productos = $this->productos->findAll();
         $data = ['titulo' => 'Productos', 'datos' => $productos]; */
@@ -53,15 +53,15 @@ class ProductosAdmin extends BaseController
 
     public function NuevoProducto()
     {
-
         $this->request = \Config\Services::request();
 
         $this->detalle_producto->save(['fecha_vencimiento' => $this->request->getPost('fecha_vencimiento')]);
 
         $ultimo_detalle = $this->detalle_producto->orderby('id_detalle_prod', 'DESC')->First();
-
+        $img = $this->request->getFile('imagen');
+        $nom = 'img/' . $img->getRandonName();
         $this->productos->save([
-            'imagen' => $this->request->getfile('imagen'),
+            'imagen' => $nom,
             'nombre' => $this->request->getPost('nombre_producto'),
             'marca' => $this->request->getPost('marca'),
             'descripcion' => $this->request->getPost('descripcion'),
@@ -73,6 +73,7 @@ class ProductosAdmin extends BaseController
             'detalle_fk' => $ultimo_detalle['id_detalle_prod']
 
         ]);
+        $img->move('./img');
 
 
         return redirect()->to(base_url() . '/productosadmin');
@@ -85,5 +86,19 @@ class ProductosAdmin extends BaseController
             'nombre_categoria' => $this->request->getPost('nombre_categoria')
         ]);
         return redirect()->to(base_url() . '/productosadmin');
+    }
+
+    public function editar($id)
+    {
+        $detalle_producto = $this->detalle_producto->First();
+        $productos = $this->productos->where('id_producto', $id)->first();
+        $configuracion = $this->configuracion->First();
+        $categorias = $this->categorias->findAll();
+        $data = ['info' => $productos, 'configuracion' => $configuracion, 'categorias' => $categorias, 'detalle_pro' => $detalle_producto];
+
+        #$this->load->view('administrador/productos_admin', $data);
+        echo view('header', $data);
+        echo view('administrador/editar_producto', $data);
+        echo view('footer', $data);
     }
 }
