@@ -24,7 +24,7 @@ class Productos extends BaseController
     public function index()
     {
         #Condicion para mostrar los productos mayor al stock critico
-        $productos = $this->productos->where('stock > stock_critico')->findall();
+        $productos = $this->productos->where('stock > 0')->findall();
         $categorias = $this->categorias->findAll();
         $configuracion = $this->configuracion->First();
         $data = ['titulo' => 'Productos', 'datos' => $productos, 'categorias' => $categorias, 'configuracion' => $configuracion];
