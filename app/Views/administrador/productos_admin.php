@@ -2,12 +2,12 @@
                                     <h3>Productos</h3>
 
                                     <div class="pull-right">
-                                        <button type="button" class="btn-submit" data-toggle="modal" data-target="#exampleModal2">
+                                        <button type="button" class="btn-submit" data-toggle="modal" data-target="#categoria">
                                             +Categoria
                                         </button>
                                     </div>
-                                    <!-- Modal -->
-                                    <div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <!-- Modal ingresar categoria -->
+                                    <div class="modal fade" id="categoria" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                         <div class="modal-dialog" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">
@@ -44,14 +44,14 @@
 
 
                                     <div class="pull-right">
-                                        <button type="button" class="btn-submit" data-toggle="modal" data-target="#exampleModal">
+                                        <button type="button" class="btn-submit" data-toggle="modal" data-target="#AgregarProducto">
                                             +Agregar
                                         </button>
                                     </div>
 
-                                    <!-- Modal -->
-                                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog" role="document">
+                                    <!-- Modal ingreso producto -->
+                                    <div class="modal fade" id="AgregarProducto" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-lg" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">
                                                     <h5 class="modal-title" id="exampleModalLabel">Datos del producto</h5>
@@ -59,7 +59,7 @@
                                                         <span aria-hidden="true">&times;</span>
                                                     </button>
                                                 </div>
-                                                <form class="form-horizontal" method="Post" enctype="multipart/form-data" action="<?php echo base_url() ?>/productosadmin/NuevoProducto">
+                                                <form class="form-horizontal" method="POST" enctype="multipart/form-data" action="<?php echo base_url() ?>/productosadmin/NuevoProducto">
                                                     <div class="modal-body">
                                                         <div class="row">
                                                             <div class="col-sm-12">
@@ -68,20 +68,20 @@
                                                                     <div class="form-group">
                                                                         <label class="control-label" for="nombre_producto"><span class="require">*</span>Nombre producto</label>
                                                                         <div class="col-sm-10">
-                                                                            <input type="text" class="form-control" id="nombre_producto" name="nombre_producto" placeholder="Ingese nombre producto" require>
+                                                                            <input type="text" class="form-control" id="nombre_producto" name="nombre_producto" placeholder="Ingese nombre producto" required>
                                                                         </div>
                                                                     </div>
                                                                     <div class="form-group">
                                                                         <label class="control-label" for="marca"><span class="require">*</span>Marca</label>
                                                                         <div class="col-sm-10">
-                                                                            <input type="text" class="form-control" id="marca" name="marca" placeholder="Ingrese nombre marca" require>
+                                                                            <input type="text" class="form-control" id="marca" name="marca" placeholder="Ingrese nombre marca" required>
                                                                         </div>
                                                                     </div>
                                                                     <div class="form-group">
-                                                                        <label class="control-label" for="categoria"><span class="require">*</span>Categoria</label require>
+                                                                        <label class="control-label" for="categoria"><span class="require">*</span>Categoria</label>
                                                                         <div class=" checkbox-form col-sm-10">
                                                                             <select name="categoria" require>
-                                                                                <option value="categoria">Selecciones</option>
+                                                                                <option value="categoria" required>Selecciones</option>
                                                                                 <?php foreach ($categorias as $categoria) { ?>
                                                                                     <option value="<?php echo $categoria['id_categoria']; ?>"><?php echo $categoria['nombre_categoria']; ?></option>
                                                                                 <?php } ?>
@@ -91,44 +91,44 @@
                                                                     <div class="form-group">
                                                                         <div class="col-sm-10">
                                                                             <img src="" class="img-responsive" />
-                                                                            <input type="file" class="form-control" id="imagen" name="imagen" accept="image/png" require>
+                                                                            <input type="file" class="form-control" id="imagen" name="imagen" required>
                                                                         </div>
                                                                     </div>
                                                                     <div class="form-group">
                                                                         <label class="control-label" for="number"><span class="require">*</span>Precio venta</label>
                                                                         <div class="col-sm-10">
-                                                                            <input type="number" class="form-control" id="precio_venta" name="precio_venta" placeholder="Ingreso precio venta" require>
+                                                                            <input type="number" class="form-control" id="precio_venta" name="precio_venta" placeholder="Ingreso precio venta" required>
                                                                         </div>
                                                                     </div>
                                                                     <div class="form-group">
                                                                         <label class="control-label" for="number"><span class="require">*</span>Prectio costo</label>
                                                                         <div class="col-sm-10">
-                                                                            <input type="number" class="form-control" id="precio_costo" name="precio_costo" placeholder="Ingrese precio costo" require>
+                                                                            <input type="number" class="form-control" id="precio_costo" name="precio_costo" placeholder="Ingrese precio costo" required>
                                                                         </div>
                                                                     </div>
                                                                     <div class="form-group">
                                                                         <label class="control-label" for="number"><span class="require">*</span>Fecha de vencimiento</label>
                                                                         <div class="col-sm-10">
-                                                                            <input type="date" class="form-control" id="fecha_vencimiento" name="fecha_vencimiento" placeholder="Fecha de vencimiento" require>
+                                                                            <input type="date" class="form-control" id="fecha_vencimiento" name="fecha_vencimiento" placeholder="Fecha de vencimiento" required>
                                                                         </div>
                                                                     </div>
                                                                     <div class="form-group">
                                                                         <label class="control-label" for="number"><span class="require">*</span>Stock</label>
                                                                         <div class="col-sm-10">
-                                                                            <input type="number" class="form-control" id="stock" name="stock" placeholder="Ingrese existencia" require>
+                                                                            <input type="number" class="form-control" id="stock" name="stock" placeholder="Ingrese existencia" required>
                                                                         </div>
                                                                     </div>
                                                                     <div class="form-group">
                                                                         <label class="control-label" for="number"><span class="require">*</span>Stock critico</label>
                                                                         <div class="col-sm-10">
-                                                                            <input type="number" class="form-control" id="stock_critico" name="stock_critico" placeholder="Ingrese existencia criticas" require>
+                                                                            <input type="number" class="form-control" id="stock_critico" name="stock_critico" placeholder="Ingrese existencia criticas" required>
                                                                         </div>
                                                                     </div>
                                                                     <div class="form-group">
                                                                         <label class="control-label" for="number"><span class="require">*</span>Descripcion</label>
                                                                         <div class="col-sm-10">
                                                                             <label for="descripcion" class="form-label"></label>
-                                                                            <textarea class="form-control" id="descripcion" name="descripcion" rows="3"></textarea require>
+                                                                            <textarea class="form-control" id="descripcion" name="descripcion" rows="3"></textarea required>
                                                                         </div>
                                                                     </div>
                                                                 </fieldset>
@@ -163,9 +163,15 @@
                                                         <td><?php echo $producto['nombre']; ?></td>
                                                         <td>$<?php echo $producto['precio_venta']; ?></td>
                                                         <td><?php echo $producto['stock']; ?></td>
-                                                        <td><?php echo $producto['detalle_fk']; ?></td>
-                                                        <td><a class="view" href="cart.html">
-                                                                <i class="fas fa-bars"></i></a>
+                                                        <td><?php echo $producto['categoria']; ?></td>
+                                                        <td><a class="view" href="<?php echo base_url() . '/productosadmin/editar/' . $producto['id_producto']; ?>"
+                                                         > <i class="fa fa-pencil"></i></a>
+                                                        </td>
+                                                        
+                                                        <td><a class="view" href="<?php echo base_url() ?>/productosadmin/eliminar"
+                                                        <?php echo $producto['id_producto']; ?>>
+                                                                <i class="fa fa-trash"></i></a>
+    
                                                         </td>
                                                     </tr>
                                                 <?php } ?>
