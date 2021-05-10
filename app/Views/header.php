@@ -116,7 +116,7 @@
                                     <ul class="middle-menu-list">
                                         <li><a href="<?php echo base_url(); ?>/home">inicio</a>
                                         </li>
-                                        <li><a href="<?php echo base_url(); ?>/productos">Productos<i class="fa fa-angle-down"></i></a>
+                                        <li><a href="<?php echo base_url(); ?>/Productos">Productos<i class="fa fa-angle-down"></i></a>
                                             <!-- Home Version Dropdown Start -->
                                             <ul class="ht-dropdown dropdown-style-two">
                                                 <li><a href="product.html">Herramientas de mano</a></li>
