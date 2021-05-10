@@ -69,8 +69,7 @@
                                             <!-- Product Image Start -->
                                             <div class="pro-img">
                                                 <a href="product.html">
-                                                    <img class="primary-img" src="<?php echo $dato['imagen'] ?>" alt="single-product">
-                                                    <img class="secondary-img" src="img/products/1.jpg" alt="single-product">
+                                                    <img class="primary-img" src="<?php echo base_url() . '/img/productos/' . $dato['imagen']; ?>" alt="imagen">
                                                 </a>
                                             </div>
                                             <!-- Product Image End -->
@@ -108,11 +107,12 @@
                                 <div class="single-product">
                                     <!-- Product Image Start -->
                                     <div class="pro-img">
-                                        <a href="product.html">
+                                        <a href="#">
                                             <img class="primary-img" src="<?php echo $dato['imagen'] ?>" alt="single-product">
                                         </a>
                                     </div>
                                     <!-- Product Image End -->
+
                                     <!-- Product Content Start -->
 
                                     <div class="pro-content">

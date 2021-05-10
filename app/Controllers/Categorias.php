@@ -28,4 +28,11 @@ class Categorias extends BaseController
 	{
 		/* $this->cargo->save(['nombre_cargo']) */
 	}
+
+	public function buscarId($id)
+	{
+
+		$categoria = $this->categorias->where('id_categoria', $id)->first();
+		return $categoria;
+	}
 }
