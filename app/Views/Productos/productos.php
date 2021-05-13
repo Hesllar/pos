@@ -86,8 +86,8 @@
                                                 <p><span class="price"><?php echo $configuracion['signo_moneda']; ?><?php echo $dato['precio_venta']; ?></span><del class="prev-price"><?php echo $configuracion['signo_moneda']; ?><?php echo $dato['precio_venta'] + 2000; ?></del></p>
                                                 <div class="pro-actions">
                                                     <div class="actions-secondary">
-                                                        <a href="wishlist.html" data-toggle="tooltip" title="Añadir a favoritos"><i class="fa fa-heart"></i></a>
-                                                        <a class="add-cart" href="cart.html" data-toggle="tooltip" title="Añadir al carro">Añadir al carro</a>
+                                                        <a href="wishlist.html" title="Añadir a favoritos"><i class="fa fa-heart"></i></a>
+                                                        <a class="add-cart" href="<?php echo base_url(); ?>/DetalleCarrito" title="Añadir al carro">Añadir carro</a>
                                                     </div>
                                                 </div>
                                             </div>

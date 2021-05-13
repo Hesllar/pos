@@ -1,11 +1,25 @@
                                 <div id="productos" class="tab-pane active">
                                     <h3>Productos</h3>
+                                    <div class="d-flex justify-content-between margin-top 15">
+                                        <div class="pull-right">
+                                            <button type="button" class="btn-submit" data-toggle="modal" data-target="#AgregarProducto">
+                                                +Agregar
+                                            </button>
+                                        </div>
+                                        <div class="pull-right ">
+                                            <button type="button" class="btn-submit" data-toggle="modal" data-target="#categoria">
+                                                +Categoria
+                                            </button>
+                                        </div>
 
-                                    <div class="pull-right">
-                                        <button type="button" class="btn-submit" data-toggle="modal" data-target="#categoria">
-                                            +Categoria
-                                        </button>
+                                        <div class="pull-right ">
+                                            <a href="<?php echo base_url(); ?>/productosadmin/pagEliminarPro"> <button type="button" class="btn-submit">
+                                                    Pro. eliminados </button> </a>
+
+                                        </div>
                                     </div>
+
+
                                     <!-- Modal ingresar categoria -->
                                     <div class="modal fade" id="categoria" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                         <div class="modal-dialog" role="document">
@@ -33,7 +47,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary newsletter-btn" data-dismiss="modal">Cancelar</button>
+                                                        <button type="button" class="btn btn-secondary newsletter-btn">Cancelar</button>
                                                         <button type="submit" class="newsletter-btn">Guardar</button>
                                                     </div>
                                                 </form>
@@ -41,13 +55,6 @@
                                         </div>
                                     </div>
 
-
-
-                                    <div class="pull-right">
-                                        <button type="button" class="btn-submit" data-toggle="modal" data-target="#AgregarProducto">
-                                            +Agregar
-                                        </button>
-                                    </div>
 
                                     <!-- Modal ingreso producto -->
                                     <div class="modal fade" id="AgregarProducto" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -65,6 +72,12 @@
                                                             <div class="col-sm-12">
 
                                                                 <fieldset>
+                                                                    <div class="form-group">
+                                                                        <label class="control-label" for="nombre_producto"><span class="require">*</span>Codigo de barra</label>
+                                                                        <div class="col-sm-10">
+                                                                            <input type="text" class="form-control" id="Codigo_barra" name="Codigo_barra" placeholder="Ingese nombre producto" required>
+                                                                        </div>
+                                                                    </div>
                                                                     <div class="form-group">
                                                                         <label class="control-label" for="nombre_producto"><span class="require">*</span>Nombre producto</label>
                                                                         <div class="col-sm-10">
@@ -137,8 +150,8 @@
                                                     </div>
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary newsletter-btn" data-dismiss="modal">Cancelar</button>
-                                                    <button type="submit" class="newsletter-btn">Guardar</button>
+                                                    <button type="button" class="btn btn-secondary newsletter-btn" id="botton1" data-dismiss="modal">Cancelar</button>
+                                                    <button type="submit" class="newsletter-btn" onclick="success_toast()">Guardar</button>
                                                 </div>
                                                  </form>
                                             </div>
@@ -167,9 +180,8 @@
                                                         <td><a class="view" href="<?php echo base_url() . '/productosadmin/editar/' . $producto['id_producto']; ?>"
                                                          > <i class="fa fa-pencil"></i></a>
                                                         </td>
-                                                        
-                                                        <td><a class="view" href="<?php echo base_url() ?>/productosadmin/eliminar"
-                                                        <?php echo $producto['id_producto']; ?>>
+                                                        <td><a class="view" data-href="<?php echo base_url() . '/productosadmin/eliminarProducto/' . $producto['id_producto']; ?>"
+                                                            data-toggle="modal" data-target="#Eliminar">
                                                                 <i class="fa fa-trash"></i></a>
     
                                                         </td>
@@ -179,3 +191,23 @@
                                         </table>
                                     </div>
                                 </div>
+                                <!-- Modal -->
+<div class="modal fade" id="Eliminar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-md" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Eliminar producto</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>¿Desea dar de baja este producto?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+        <a class="btn btn-danger btn-ok">Aceptar</a>
+      </div>
+    </div>
+  </div>
+</div>

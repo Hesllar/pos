@@ -109,6 +109,54 @@
  <script src="<?php echo base_url(); ?>/js/plugins.js"></script>
  <!-- main js -->
  <script src="<?php echo base_url(); ?>/js/main.js"></script>
+ <!-- mensajes flash-->
+ <script src="<?php echo base_url(); ?>/js/toastr.min.js"></script>
+ <!-- Modal de alerta-->
+ <script>
+     $('#Eliminar').on('show.bs.modal', function(e) {
+         $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'))
+     });
+ </script>
+ <!-- codigo mensajes flash-->
+ <script>
+     toastr.options = {
+         "closeButton": false,
+         "debug": false,
+         "newestOnTop": false,
+         "progressBar": false,
+         "positionClass": "toast-top-center",
+         "preventDuplicates": false,
+         "onclick": null,
+         "showDuration": "300",
+         "hideDuration": "1000",
+         "timeOut": "2000",
+         "extendedTimeOut": "1000",
+         "showEasing": "swing",
+         "hideEasing": "linear",
+         "showMethod": "fadeIn",
+         "hideMethod": "fadeOut"
+     }
+
+     function success_toast() {
+         toastr.success("Producto agregado correctamente")
+     }
+ </script>
+ <!-- Funciones de la vista detalle carrito-->
+ <script>
+     $(function() {
+         $(document).on("click", "#btn-delete", function() {
+             $(this).parent().parent().remove();
+         });
+
+         $(document).on("keyup", "input[name*=cantidad]", function() {
+
+             var subTotal = $(this).val() * $(this).closest("tr").find("td:eq(2)").html();
+             $(this).closest("tr").find("td:eq(4)").html(subTotal.toFixed(2));
+         });
+
+
+     });
+ </script>
  </body>
 
  </html>
