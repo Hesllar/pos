@@ -15,7 +15,19 @@ class ProductosModel extends Model
     protected $returnType     = 'array';
     protected $useSoftDeletes = false;
 
-    protected $allowedFields = ['n_registro', 'imagen', 'nombre', 'marca', 'descripcion', 'precio_venta', 'precio_costo', 'stock', 'stock_critico', 'categoria'];
+    protected $allowedFields = [
+        'n_registro',
+        'imagen',
+        'nombre',
+        'marca',
+        'descripcion',
+        'precio_venta',
+        'precio_costo',
+        'stock',
+        'stock_critico',
+        'categoria',
+        'estado'
+    ];
 
     protected $useTimestamps = false;
     protected $createdField  = 'fecha_creacion';
