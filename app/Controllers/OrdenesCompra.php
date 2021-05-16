@@ -36,4 +36,23 @@ class OrdenesCompra extends BaseController
 		echo view('administrador/panel_footer');
 		echo view('footer', $data);
 	}
+
+	public function traerOrden()
+	{
+
+		$configuracion = $this->configuracion->First();
+		$ordenescompra = $this->ordenescompra->findAll();
+		$data = ['ordenCompra' => $ordenescompra, 'configuracion' => $configuracion];
+		$estados = [
+			'e_producto' => '',
+			'e_ordencompra' => '',
+			'e_proveedor' => '',
+			'e_config' => 'active'
+		];
+		echo view('header', $data);
+		echo view('Empleado/panel_header_emp', $estados);
+		echo view('administrador/ordenes_compra');
+		echo view('administrador/panel_footer');
+		echo view('footer');
+	}
 }
