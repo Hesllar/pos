@@ -4,6 +4,7 @@
     <div class="container">
         <!-- Row End -->
         <div class="row">
+
             <!-- Sidebar Shopping Option Start -->
             <div class="col-lg-3  order-2">
                 <div class="sidebar white-bg">
@@ -83,11 +84,14 @@
                                                     <i class="fa fa-star"></i>
                                                 </div>
                                                 <h4><a href="product.html"><?php echo $dato['nombre']; ?></a></h4>
-                                                <p><span class="price"><?php echo $configuracion['signo_moneda']; ?><?php echo $dato['precio_venta']; ?></span><del class="prev-price"><?php echo $configuracion['signo_moneda']; ?><?php echo $dato['precio_venta'] + 2000; ?></del></p>
+                                                <p><span id="precio" id="precio"><?php echo $configuracion['signo_moneda']; ?><?php echo $dato['precio_venta']; ?>
+                                                    </span>
+                                                    <del class="prev-price"><?php echo $configuracion['signo_moneda']; ?><?php echo $dato['precio_venta'] + 2000; ?></del>
+                                                </p>
                                                 <div class="pro-actions">
                                                     <div class="actions-secondary">
                                                         <a href="wishlist.html" title="Añadir a favoritos"><i class="fa fa-heart"></i></a>
-                                                        <a class="add-cart" href="<?php echo base_url(); ?>/DetalleCarrito" title="Añadir al carro">Añadir carro</a>
+                                                        <button id="<?php echo $dato['id_producto']; ?>" class="btn-add" title="Añadir al carro">Añadir carro</button>
                                                     </div>
                                                 </div>
                                             </div>

@@ -112,6 +112,8 @@
  <!-- mensajes flash-->
  <script src="<?php echo base_url(); ?>/js/toastr.min.js"></script>
  <!-- Modal de alerta-->
+ <!-- ajax-->
+ <script src="<?php echo base_url() ?>/js/ajax-mail.js"></script>
  <script>
      $('#Eliminar').on('show.bs.modal', function(e) {
          $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'))
@@ -140,22 +142,6 @@
      function success_toast() {
          toastr.success("Producto agregado correctamente")
      }
- </script>
- <!-- Funciones de la vista detalle carrito-->
- <script>
-     $(function() {
-         $(document).on("click", "#btn-delete", function() {
-             $(this).parent().parent().remove();
-         });
-
-         $(document).on("keyup", "input[name*=cantidad]", function() {
-
-             var subTotal = $(this).val() * $(this).closest("tr").find("td:eq(2)").html();
-             $(this).closest("tr").find("td:eq(4)").html(subTotal.toFixed(2));
-         });
-
-
-     });
  </script>
  </body>
 
