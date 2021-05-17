@@ -56,9 +56,6 @@ class DetalleProducto extends BaseController
             ]
         );
     }
-
-
-
     public function obtFechaVenci($id)
     {
         $this->detalle_producto->select('fecha_vencimiento');

@@ -86,8 +86,12 @@ body {
     text-transform: capitalize;
 }
 .title-border {
-    border-bottom: 1px solid #dcdcdc;
+    border-bottom: 1px solid #0e0e0e;
     padding-bottom: 10px;
+}
+#border-formi{
+    padding: 15px;
+    border: #000;
 }
 .zoom {
     position: relative;
