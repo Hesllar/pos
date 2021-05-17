@@ -20,7 +20,7 @@ class UsuarioModel extends Model
                                 'avatar',
                                 'ultima_conexion',
                                 'nvl_acceso_fk',
-                                'rut'
+                                'rut_fk'
                                 ];
 
     protected $useTimestamps = false;
