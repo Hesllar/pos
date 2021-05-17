@@ -38,6 +38,9 @@
     <!-- responsive css -->
     <link rel="stylesheet" href="<?php echo base_url(); ?>/css/responsive.css">
 
+    
+ <!-- jquery 3.12.4 -->
+ <script src="<?php echo base_url(); ?>/js/vendor/jquery-1.12.4.min.js"></script>
     <!-- modernizr js -->
     <script src="<?php echo base_url(); ?>/js/vendor/modernizr-2.8.3.min.js"></script>
 </head>

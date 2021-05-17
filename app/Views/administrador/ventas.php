@@ -1,4 +1,8 @@
-<div id="ventas" class="tab-pane <?php echo $e_venta; ?>">
+<div id="ventas" class="tab-pane <?php
+
+use App\Controllers\Ventas;
+
+echo $e_venta; ?>">
     <h3>Ventas diarias</h3>
     <div class="container">
         <div class="row">
@@ -297,7 +301,7 @@
             </ul>
             <!-- Product Thumbnail Tab Content Start -->
             <div class="tab-content thumb-content border-default">
-                <div id="boletas" class="tab-pane in active">
+                <div id="boletas" class="tab-pane">
                     <div class="table-responsive">
                         <table class="table">
                             <thead>
@@ -332,7 +336,7 @@
                         </table>
                     </div>
                 </div>
-                <div id="facturas" class="tab-pane">
+                <div id="facturas" class="tab-pane in active">
                     <div class="table-responsive">
                         <table class="table">
                             <thead>
@@ -357,9 +361,18 @@
                                         <td><?php echo $factura['estado_venta']; ?></td>
                                         <td><a href="#"><?php echo $factura['empleado_fk']; ?></a></td>
                                         <td>
-                                            <a class="view" data-toggle="modal" href="#detalle">
+                                        <a class="view" data-toggle="modal" href="#detalle">
                                                 <i class="fa fa-bars"></i>
                                             </a>
+                                            <a class="view-alerta" href="" 
+                                                onclick="anular(<?php echo $factura['id_venta'] ?>)">
+                                                <i class="fa fa-bars"></i>
+                                            </a>
+                                            <a class="view-alerta" href="" 
+                                                onclick="bpp(<?php echo $factura['id_venta'] ?>)">
+                                                <i class="fa fa-bars"></i>
+                                            </a>
+                                            <button id="anular" name="anular" type="button" class="btn btn-danger btn-sm delete" data-id="<?php $factura['id_venta'] ?>">Anular</button>
                                         </td>
                                     </tr>
                                 <?php } ?>
@@ -376,3 +389,47 @@
 </div>
 <!-- Product Thumbnail Description End -->
 </div>
+<div id="resultado">Nada</div>
+
+ <!-- jquery 3.12.4 -->
+ <script src="<?php echo base_url(); ?>/js/vendor/jquery-1.12.4.min.js"></script>
+<script>
+    $(document).ready(function(){
+
+    });
+
+    function bpp(codigo){
+        
+        alert('Run function bpp');
+        $.ajax({
+            url: "<?php echo base_url() ?>/ventas/anularventa/"+codigo,
+            datatype: 'json',
+            success: function(resultado){
+             alert('FInishes');
+             alert(resultado.datos.id_venta);
+                $("#resultado").html(resultado.datos.id_venta);
+            }
+        })
+    };
+</script>
+
+
+<script>
+    
+    //jQuery("#resultado").html('response');
+    function anular(id_venta)
+    {
+        alert('Si');
+        if(id_venta != null) {
+         $.ajax({
+            url:"<?php echo base_url('/ventas/anularventa/') ?>"+id_venta,
+            type:"POST",
+            dataType: 'json',
+            data: {'id_venta': id_venta},
+            success:function(respuesta){
+             alert('FInishes');
+           }
+         });
+   }
+    }
+</script>
