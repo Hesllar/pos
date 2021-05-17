@@ -45,7 +45,7 @@
                     </div>
                     <div class="form-group">
                         <div class="col-sm-10">
-                            <input type="file" value="<?php echo  $datos['imagen']; ?>" class="form-control" id="imagen" name="imagen">
+                            <input type="file" value="<?php echo  $datos['imagen']; ?>" class="form-control" id="imagen" name="imagen" required>
                             <img class="primary-img" src="<?php echo base_url() . '/img/productos/' . $datos['imagen']; ?>" alt="imagen">
                         </div>
                     </div>
