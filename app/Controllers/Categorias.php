@@ -32,6 +32,7 @@ class Categorias extends BaseController
 	public function buscarId($id)
 	{
 
+
 		$categoria = $this->categorias->where('id_categoria', $id)->first();
 		return $categoria;
 	}

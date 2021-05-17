@@ -39,7 +39,7 @@ class DetalleProducto extends BaseController
 
     public function buscarId()
     {
-        $buscarid =  $this->detalle_producto->orderBy('id_detalle_prod')->First();
+        $buscarid =  $this->detalle_producto->orderBy('id_detalle_prod', 'DESC')->First();
         return $buscarid['id_detalle_prod'];
     }
 

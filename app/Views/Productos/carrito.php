@@ -8,38 +8,30 @@
                 <form action="#">
                     <!-- Table Content Start -->
                     <div class="table-content table-responsive mb-50">
-                        <table>
+                        <table id="table-carritos">
                             <thead>
                                 <tr>
-                                    <th class="product-thumbnail">Image</th>
-                                    <th class="product-name">Product</th>
-                                    <th class="product-price">Price</th>
-                                    <th class="product-quantity">Quantity</th>
+                                    <th class="product-thumbnail">Imagen</th>
+                                    <th class="product-name">Producto</th>
+                                    <th class="product-price">Precio</th>
+                                    <th class="product-quantity">Cantidad</th>
                                     <th class="product-subtotal">Total</th>
-                                    <th class="product-remove">Remove</th>
+                                    <th class="product-remove">Remover</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td class="product-thumbnail">
-                                        <a href="#"><img src="img/products/1.jpg" alt="cart-image" /></a>
-                                    </td>
-                                    <td class="product-name"><a href="#">Products Name Here</a></td>
-                                    <td class="product-price">165.000</td>
-                                    <td class="product-quantity"><input type="number" name="cantidad" value="1" /></td>
-                                    <td class="product-subtotal">165.000</td>
-                                    <td class="product-remove"> <button id="btn-delete"><i class="fa fa-times"></i></button> </td>
-                                </tr>
-                                <tr>
-                                    <td class="product-thumbnail">
-                                        <a href="#"><img src="img/products/2.jpg" alt="cart-image" /></a>
-                                    </td>
-                                    <td class="product-name"><a href="#">Products Name Here</a></td>
-                                    <td class="product-price">500.000</td>
-                                    <td class="product-quantity"><input type="number" name="cantidad" value="1" /></td>
-                                    <td class="product-subtotal">500.000</td>
-                                    <td class="product-remove"> <button id="btn-delete"> <i class="fa fa-times"></i></button></td>
-                                </tr>
+                                <?php foreach ($this->session->userdata() as $producto) : ?>
+                                    <?php if (is_object($producto)) : ?>
+                                        <tr>
+                                            <td><img class="primary-img" src="<?php echo base_url() . '/img/productos/' . $producto->id; ?>" alt="imagen"></td>
+                                            <td><?php echo $producto['nombre']; ?></td>
+                                            <td class="product-price"><?php echo $producto->precio_venta; ?></td>
+                                            <td class="product-quantity"><input id="<?php echo $producto->id; ?>" type="number" name="cantidad" value="<?php echo $producto->cantidad; ?>" /></td>
+                                            <td class="product-subtotal"><?php echo is_numeric($producto->cantidad * $producto->precio_venta); ?> ?></td>
+                                            <td class="product-remove"><button id="<?php echo $producto->id; ?>"> <i class="fa fa-times btn-eliminar" aria-hidden="true"></i></button> </td>
+                                        </tr>
+                                    <?php endif; ?>
+                                <?php endforeach; ?>
                             </tbody>
                         </table>
                     </div>
@@ -60,14 +52,10 @@
                                 <br />
                                 <table>
                                     <tbody>
-                                        <tr class="cart-subtotal">
-                                            <th>Subtotal</th>
-                                            <td><span class="amount">$215.00</span></td>
-                                        </tr>
                                         <tr class="order-total">
                                             <th>Total</th>
                                             <td>
-                                                <strong><span class="amount">$215.00</span></strong>
+                                                <span id="total" name="total" class="amount">0</span>
                                             </td>
                                         </tr>
                                     </tbody>
