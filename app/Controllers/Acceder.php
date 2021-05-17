@@ -61,7 +61,6 @@ class Acceder extends BaseController
 						'contrasena' => $datosUsuario['contrasena'],
 						'estado_usuario' => $datosUsuario['estado_usuario'],
 						'avatar' => $datosUsuario['avatar'],
-						'fecha_registro' => $datosUsuario['fecha_registro'],
 						'ultima_conexion' => $datosUsuario['ultima_conexion'],
 						'rut_fk' => $datosUsuario['rut_fk'],
 						'nvl_acceso_fk' => $datosUsuario['nvl_acceso_fk']
@@ -71,13 +70,13 @@ class Acceder extends BaseController
 					$session->set($datosSesion);
 					if ($datosUsuario['nvl_acceso_fk'] == 10) {
 						return redirect()->to(base_url() . '/productosadmin');
-					}elseif ($datosUsuario['nvl_acceso_fk'] == 20){
+					} elseif ($datosUsuario['nvl_acceso_fk'] == 20) {
 						return redirect()->to(base_url() . '/proveedor');
-					}elseif ($datosUsuario['nvl_acceso_fk'] == 30){
+					} elseif ($datosUsuario['nvl_acceso_fk'] == 30) {
 						return redirect()->to(base_url() . '/#');
-					}elseif($datosUsuario['nvl_acceso_fk'] == 40){
+					} elseif ($datosUsuario['nvl_acceso_fk'] == 40) {
 						return redirect()->to(base_url() . '/productos');
-					}elseif($datosUsuario['nvl_acceso_fk'] == 50){
+					} elseif ($datosUsuario['nvl_acceso_fk'] == 50) {
 						return redirect()->to(base_url() . '/#');
 					}
 				} else {

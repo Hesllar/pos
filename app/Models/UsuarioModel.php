@@ -28,10 +28,8 @@ class UsuarioModel extends Model
 
 
     protected $useTimestamps = false;
-
-    protected $createdField  = 'fecha_registro';
-    /*
-    protected $updatedField  = 'updated_at';
+    protected $createdField  = 'fecha_creacion';
+    /* protected $updatedField  = 'updated_at';
     protected $deletedField  = 'deleted_at';
     */
 
@@ -47,6 +45,7 @@ class UsuarioModel extends Model
         d.rut AS rut, d.correo AS correo, n.nivel_acceso AS nivel_acceso');
         $this->join('datos_personales AS d', 'usuario.rut_fk = d.rut');
         $this->join('nivel_acceso AS n', 'usuario.nvl_acceso_fk = n.id_nivel');
+        $this->orderBy('id_usuario', 'DESC');
         $datos = $this->findAll();
         return $datos;
     }

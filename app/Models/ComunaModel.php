@@ -14,7 +14,7 @@ class ComunaModel extends Model
     protected $returnType     = 'array';
     protected $useSoftDeletes = false;
 
-    protected $allowedFields = ['nombre_comuna'];
+    protected $allowedFields = ['nombre_comuna','region_fk'];
 
     protected $useTimestamps = false;
     /*
@@ -27,4 +27,3 @@ class ComunaModel extends Model
     protected $validationMessages = [];
     protected $skipValidation     = false;
 }
-?>

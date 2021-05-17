@@ -8,6 +8,7 @@ use App\Models\ProductosAdminModel;
 use App\Models\ConfiguracionModel;
 use App\Models\CategoriaModel;
 use App\Controllers\Categorias;
+use App\Models\DetalleProductoModel;
 
 class ProductosAdmin extends BaseController
 {
@@ -15,11 +16,12 @@ class ProductosAdmin extends BaseController
     protected $categorias;
     protected $request;
     protected $detalle_producto;
+    protected $detalle_productoModel;
     protected $categoria;
     protected $reglas;
     public function __construct()
     {
-
+        $this->detalle_productoModel = new DetalleProductoModel;
         $this->productos = new ProductosAdminModel;
         $this->configuracion = new ConfiguracionModel;
         $this->categorias = new CategoriaModel;
@@ -133,9 +135,6 @@ class ProductosAdmin extends BaseController
         $this->detalle_producto->agregarFecha(
             $this->request->getPost('fecha_vencimiento')
         );
-
-
-
 
 
         $validacion = $this->validate([
@@ -293,7 +292,8 @@ class ProductosAdmin extends BaseController
     }
     public function eliminar($id)
     {
-        $this->productos->delete($id);
+        $this->request = \Config\Services::request();
+        $this->productos->where('id_producto', $id)->delete();
         return redirect()->to(base_url() . '/productosadmin/pagEliminarPro ');
     }
 }
