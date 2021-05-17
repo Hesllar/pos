@@ -5,10 +5,10 @@
 <?php }
 ?>
 
-<form class="form-horizontal " d-flex justify-content-center method="Post" enctype="multipart/form-data" action="<?php echo base_url() ?>/productosadmin/actualizar">
+<form class="form-horizontal " method="Post" enctype="multipart/form-data" action="<?php echo base_url() ?>/productosadmin/actualizar">
     <div class="modal-body d-flex justify-content-center">
         <div class="row  ">
-            <div class="col-sm-12  ">
+            <div class="col-sm-12 ">
 
                 <fieldset class="border border-dark universal-padding-border-edit">
                     <input type="hidden" value="<?php echo $datos['id_producto']; ?> " name="id_producto">
