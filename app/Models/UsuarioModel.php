@@ -19,7 +19,7 @@ class UsuarioModel extends Model
                                 'estado_usuario',
                                 'avatar',
                                 'ultima_conexion',
-                                'nivel_acceso_fk',
+                                'nvl_acceso_fk',
                                 'rut'
                                 ];
 
