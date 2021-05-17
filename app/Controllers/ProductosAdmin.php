@@ -10,6 +10,8 @@ use App\Models\CategoriaModel;
 use App\Controllers\Categorias;
 use App\Models\DetalleProductoModel;
 
+
+
 class ProductosAdmin extends BaseController
 {
     protected $productos;
@@ -19,8 +21,10 @@ class ProductosAdmin extends BaseController
     protected $detalle_productoModel;
     protected $categoria;
     protected $reglas;
+
     public function __construct()
     {
+
         $this->detalle_productoModel = new DetalleProductoModel;
         $this->productos = new ProductosAdminModel;
         $this->configuracion = new ConfiguracionModel;
@@ -123,7 +127,6 @@ class ProductosAdmin extends BaseController
             'detalle_fk' => $this->detalle_producto->buscarId(),
             'estado' => 1,
         ]);
-
         return redirect()->to(base_url() . '/productosadmin');
     }
     // Funcion del empleado
@@ -191,7 +194,7 @@ class ProductosAdmin extends BaseController
         ]);
         return redirect()->to(base_url() . '/Productos/productoEmp');
     }
-
+    //Editar admin
     public function editar($id, $valid = null)
     {
 

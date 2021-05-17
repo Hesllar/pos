@@ -27,4 +27,14 @@ class DetalleProductoModel extends Model
     protected $validationRules    = [];
     protected $validationMessages = [];
     protected $skipValidation     = false;
+
+    /* public function EliminarIdDetalle($id)
+    {
+
+        $this->select('p.detalle_fk AS detalle, id_detalle_prod');
+        $this->join('producto AS p', 'detalle_producto.id_detalle_prod = p.detalle_fk');
+        $this->where('id_detalle_prod', $id);
+        $datos = $this->first();
+        return $datos;
+    }*/
 }

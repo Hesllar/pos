@@ -66,7 +66,7 @@
  </div>
  <!-- Wrapper End -->
  <!-- jquery 3.12.4 -->
- <script src="<?php echo base_url(); ?>/js/vendor/jquery-1.12.4.min.js"></script>
+ <script src="<?php echo base_url(); ?>/js/vendor/jquery-3.6.0.min.js"></script>
  <!-- mobile menu js  -->
  <script src="<?php echo base_url(); ?>/js/jquery.meanmenu.min.js"></script>
  <!-- scroll-up js -->
@@ -95,8 +95,6 @@
  <!-- mensajes flash-->
  <script src="<?php echo base_url(); ?>/js/toastr.min.js"></script>
  <!-- Modal de alerta-->
- <!-- ajax-->
- <script src="<?php echo base_url() ?>/js/ajax-mail.js"></script>
  <script>
      $('#Eliminar').on('show.bs.modal', function(e) {
          $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'))
