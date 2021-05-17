@@ -292,15 +292,8 @@ class ProductosAdmin extends BaseController
     }
     public function eliminar($id)
     {
-        //$this->eliminarProducto();
         $this->request = \Config\Services::request();
         $this->productos->where('id_producto', $id)->delete();
         return redirect()->to(base_url() . '/productosadmin/pagEliminarPro ');
-    }
-
-    public function eliminarDetalle($id)
-    {
-        $this->request = \Config\Services::request();
-        $this->detalle_productoModel->where('id_detalle_prod', $id)->delete();
     }
 }
