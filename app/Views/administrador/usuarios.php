@@ -29,7 +29,7 @@
                         <td><?php echo $usuario['rut']; ?></td>
                         <td><?php echo $usuario['correo']; ?></td>
                         <td><?php echo $usuario['nivel_acceso']; ?></td>
-                        <td><a class="view" href="#"><i class="fa fa-pencil"></i></a></td>
+                        <td><a class="view" href="<?php echo base_url() . '/Usuarios/editarUsuario/' . $usuario['id_usuario']; ?>"> <i class="fa fa-pencil"></i></a>
                         <td><a class="view" href="#"><i class="fa fa-trash"></i></a></td>
                     </tr>
                 <?php } ?>

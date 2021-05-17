@@ -4,6 +4,7 @@
     </div>
 <?php }
 ?>
+<input type="hidden" value="<?php echo $datos['id_usuario']; ?> " name="id_producto">
 <div class="d-flex justify-content-center ">
     <form class="border border-dark universal-padding-border-edit" method="POST" enctype="multipart/form-data" action="<?php echo base_url() ?>/Usuarios/insertar">
         <div class=" form-row ">
@@ -56,7 +57,7 @@
                 <select name="region" id="region" require>
                     <option value="0" required>Seleccione</option>
                     <?php foreach ($region as $Region) { ?>
-                        <option value="<?php echo $Region['id_region'] ?>" required><?php echo $Region['nombre_region'] ?> </option>
+                        <option value="<?php $Region['id_region'] ?>" required><?php echo $Region['nombre_region'] ?> </option>
                     <?php } ?>
                 </select>
             </div>
