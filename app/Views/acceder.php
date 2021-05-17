@@ -37,20 +37,31 @@
                                         <div class="well">
                                             <div class="return-customer">
                                                 <h3 class="mb-10">Iniciar Sesion</h3>
-                                                <form action="<?php echo base_url('/login')?>" method="POST">
+                                                <form action="<?php echo base_url('acceder/valida')?>" method="POST">
                                                     <div class="form-group">
                                                         <label for="nom_usuario" >Nombre de usuario</label>
                                                         <input required type="text" name="nom_usuario" placeholder="Escribe tu nombre de usuario..." 
                                                         class="form-control">
                                                     </div>
                                                     <div class="form-group">
-                                                        <label  for="password" >contraseña</label>
-                                                        <input required type="password" name="password" placeholder="Escribe tu contraseña..." 
+                                                        <label  for="contrasena" >contraseña</label>
+                                                        <input required type="password" name="contrasena" placeholder="Escribe tu contraseña..." 
                                                        class="form-control">
                                                     </div>
                                                     <p class="lost-password"><a href="forgot-password.html">¿Olvidaste tu contrase&ntilde;a?</a></p>
                                                     <input type="submit" value="Acceder" class="return-customer-btn">
-                                                    <button class="return-customer-btn">Iniciar</button>
+                                                
+                                                            
+                                                    <?php if (isset($validation)){ ?>
+                                                    <div class ="alert alert-danger">
+                                                        <?php echo $validation-> listErrors();?>
+                                                    </div>
+                                                <?php } ?>
+                                                       <?php if (isset($error)){ ?>
+                                                    <div class ="alert alert-danger">
+                                                        <?php echo $error;?>
+                                                    </div>
+                                                <?php } ?>
                                                 </form>
                                             </div>
                                         </div>

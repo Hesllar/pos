@@ -14,6 +14,7 @@ class UsuarioModel extends Model
 
     protected $returnType     = 'array';
     protected $useSoftDeletes = false;
+  
 
     protected $allowedFields = [
         'nom_usuario',
@@ -24,6 +25,7 @@ class UsuarioModel extends Model
         'nvl_acceso_fk',
         'rut_fk',
     ];
+
 
     protected $useTimestamps = false;
     protected $createdField  = 'fecha_creacion';
