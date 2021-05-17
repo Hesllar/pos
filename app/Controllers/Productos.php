@@ -33,4 +33,23 @@ class Productos extends BaseController
         echo view('Productos/Productos', $data);
         echo view('footer', $data);
     }
+
+    public function productoEmp()
+    {
+        $productos = $this->productos->findAll();
+        $categorias = $this->categorias->findAll();
+        $configuracion = $this->configuracion->First();
+        $data = ['titulo' => 'Productos', 'datos' => $productos, 'categorias' => $categorias, 'configuracion' => $configuracion];
+        $estados = [
+            'e_producto' => '',
+            'e_ordencompra' => '',
+            'e_proveedor' => '',
+            'e_config' => 'active'
+        ];
+        echo view('header', $data);
+        echo view('Empleado/panel_header_emp', $estados);
+        echo view('Empleado/productos_emp');
+        echo view('administrador/panel_footer');
+        echo view('footer');
+    }
 }

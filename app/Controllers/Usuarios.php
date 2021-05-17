@@ -5,21 +5,41 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use App\Models\UsuarioModel;
 use App\Models\ConfiguracionModel;
+use App\Models\DatosPersonalesModel;
+use App\Models\NivelAccesoModel;
+use App\Models\RegionModel;
+
 
 class Usuarios extends BaseController
 {
+	protected $nivel_acceso;
+	protected $region;
 	protected $usuarios;
+	protected $datosPersonales;
 
 	public function __construct()
 	{
+		$this->region = new RegionModel;
+		$this->nivel_acceso = new NivelAccesoModel;
+		$this->datosPersonales = new DatosPersonalesModel;
 		$this->usuarios = new UsuarioModel;
 		$this->configuracion = new ConfiguracionModel;
 	}
 
 	public function index()
 	{
+		$nvl_acceso = $this->nivel_acceso->findAll();
+		$region = $this->region->findAll();
+		$usuario = $this->usuarios->DatosPersonales();
 		$configuracion = $this->configuracion->First();
-		$data = ['titulo' => 'Usuarios', 'configuracion' => $configuracion];
+
+		$data = [
+			'titulo' => 'Usuarios',
+			'configuracion' => $configuracion,
+			'usuarios' => $usuario,
+			'nvl_acceso' => $nvl_acceso,
+			'region' => $region
+		];
 
 		$estados = [
 			'e_venta' => '',
@@ -34,7 +54,7 @@ class Usuarios extends BaseController
 		echo view('administrador/panel_header', $estados);
 		echo view('administrador/usuarios');
 		echo view('administrador/panel_footer');
-		echo view('footer', $data);
+		echo view('footer');
 	}
 
 	public function insertar()
@@ -59,13 +79,13 @@ class Usuarios extends BaseController
 
 	public function buscarPorId($id_usuario)
 	{
-		$usuarios = $this->usuarios->where('id_usuario',$id_usuario)->First();
+		$usuarios = $this->usuarios->where('id_usuario', $id_usuario)->First();
 		return $usuarios;
 	}
 
 	public function buscarPorRut($rut_fk)
 	{
-		$usuarios = $this->usuarios->where('rut_fk',$rut_fk)->First();
+		$usuarios = $this->usuarios->where('rut_fk', $rut_fk)->First();
 		return $usuarios;
 	}
 }

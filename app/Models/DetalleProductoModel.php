@@ -27,14 +27,4 @@ class DetalleProductoModel extends Model
     protected $validationRules    = [];
     protected $validationMessages = [];
     protected $skipValidation     = false;
-
-
-    public function obtFechaVenci($id)
-    {
-        $this->select('fecha_vencimiento');
-        $this->join('producto AS p', 'detalle_producto.id_detalle_prod = p.detalle_fk');
-        $this->where('id_detalle_prod', $id);
-        $datos = $this->First();
-        return $datos;
-    }
 }

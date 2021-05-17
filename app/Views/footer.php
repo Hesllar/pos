@@ -2,24 +2,7 @@
      <!-- Footer Top Start -->
      <div class="footer-top pt-50 pb-60">
          <div class="container">
-             <div class="row">
-                 <div class="col-lg-6 mr-auto ml-auto">
-                     <div class="newsletter text-center">
-                         <div class="main-news-desc">
-                             <div class="news-desc">
-                                 <h3>Sign Up For Newsletters</h3>
-                                 <p>Get e-mail updates about our latest shop and special offers.</p>
-                             </div>
-                         </div>
-                         <div class="newsletter-box">
-                             <form action="#">
-                                 <input class="subscribe" placeholder="Enter your email address" name="email" id="subscribe" type="text">
-                                 <button type="submit" class="submit">subscribe</button>
-                             </form>
-                         </div>
-                     </div>
-                 </div>
-             </div>
+
              <div class="row">
                  <!-- Single Footer Start -->
                  <div class="col-lg-4  col-md-7 col-sm-6">
@@ -42,10 +25,10 @@
                          <h3 class="footer-title">Información</h3>
                          <div class="footer-content">
                              <ul class="footer-list">
-                                 <li><a href="index.html">Inicio</a></li>
-                                 <li><a href="shop.html">Productos</a></li>
-                                 <li><a href="about.html">Acerca de nosotros</a></li>
-                                 <li><a href="contact.html">Contacto</a></li>
+                                 <li><a href="<?php echo base_url() ?>/home">Inicio</a></li>
+                                 <li><a href="<?php echo base_url() ?>/productos">Productos</a></li>
+                                 <li><a href="<?php echo base_url() ?>/acerca">Acerca de nosotros</a></li>
+                                 <li><a href="<?php echo base_url() ?>/contacto">Contacto</a></li>
                                  <li><a href="#">Seguimiento</a></li>
                              </ul>
                          </div>
@@ -109,6 +92,40 @@
  <script src="<?php echo base_url(); ?>/js/plugins.js"></script>
  <!-- main js -->
  <script src="<?php echo base_url(); ?>/js/main.js"></script>
+ <!-- mensajes flash-->
+ <script src="<?php echo base_url(); ?>/js/toastr.min.js"></script>
+ <!-- Modal de alerta-->
+ <!-- ajax-->
+ <script src="<?php echo base_url() ?>/js/ajax-mail.js"></script>
+ <script>
+     $('#Eliminar').on('show.bs.modal', function(e) {
+         $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'))
+     });
+ </script>
+ <!-- codigo mensajes flash-->
+ <script>
+     toastr.options = {
+         "closeButton": false,
+         "debug": false,
+         "newestOnTop": false,
+         "progressBar": false,
+         "positionClass": "toast-top-center",
+         "preventDuplicates": false,
+         "onclick": null,
+         "showDuration": "300",
+         "hideDuration": "1000",
+         "timeOut": "2000",
+         "extendedTimeOut": "1000",
+         "showEasing": "swing",
+         "hideEasing": "linear",
+         "showMethod": "fadeIn",
+         "hideMethod": "fadeOut"
+     }
+
+     function success_toast() {
+         toastr.success("Producto agregado correctamente")
+     }
+ </script>
  </body>
 
  </html>

@@ -3,10 +3,10 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
+use App\Controllers\DetalleProducto;
 use App\Models\ProductosAdminModel;
 use App\Models\ConfiguracionModel;
 use App\Models\CategoriaModel;
-use App\Models\DetalleProductoModel;
 use App\Controllers\Categorias;
 
 class ProductosAdmin extends BaseController
@@ -16,14 +16,41 @@ class ProductosAdmin extends BaseController
     protected $request;
     protected $detalle_producto;
     protected $categoria;
+    protected $reglas;
     public function __construct()
     {
 
         $this->productos = new ProductosAdminModel;
         $this->configuracion = new ConfiguracionModel;
         $this->categorias = new CategoriaModel;
-        $this->detalle_producto = new DetalleProductoModel;
+        $this->detalle_producto = new DetalleProducto;
         $this->categoria = new Categorias;
+        helper(['form', 'upload']);
+        /*$this->reglas = [
+            'imagen' => 'required',
+            'Codigo_barra' => 'required',
+            'nombre_producto' => 'required',
+            'marca' => 'required',
+            'descripcion' => 'required',
+            'precio_venta' => 'required',
+            'precio_costo' => 'required',
+            'stock' => 'required',
+            'stock_critico' => 'required',
+            'categoria' => 'required',
+            'fecha_vencimiento' => 'required',
+        ];*/
+        $this->reglas1 = [
+            //'imagen' => 'required',
+            'nombre_producto' => 'required',
+            'marca' => 'required',
+            'descripcion' => 'required',
+            'precio_venta' => 'required',
+            'precio_costo' => 'required',
+            'stock' => 'required',
+            'stock_critico' => 'required',
+            'categoria' => 'required',
+            'fecha_vencimiento' => 'required',
+        ];
     }
 
     public function index()
@@ -33,7 +60,8 @@ class ProductosAdmin extends BaseController
         $productos = $this->productos->findAll();
         $data = ['titulo' => 'Productos', 'datos' => $productos]; */
         $categorias = $this->categorias->findAll();
-        $productos = $this->productos->findAll();
+        $productos = $this->productos->orderProducto();
+
         $configuracion = $this->configuracion->First();
         $data = ['titulo' => 'Productos', 'datos' => $productos, 'configuracion' => $configuracion, 'categorias' => $categorias];
 
@@ -53,20 +81,35 @@ class ProductosAdmin extends BaseController
         echo view('administrador/panel_footer');
         echo view('footer', $data);
     }
-
+    // Funcion del administrador
     public function NuevoProducto()
     {
+
         $this->request = \Config\Services::request();
 
-        $this->detalle_producto->save(['fecha_vencimiento' => $this->request->getPost('fecha_vencimiento')]);
+        $this->detalle_producto->agregarFecha(
+            $this->request->getPost('fecha_vencimiento')
+        );
 
-        $ultimo_detalle = $this->detalle_producto->orderby('id_detalle_prod', 'DESC')->First();
+        $validacion = $this->validate([
+            'imagen' => [
+                'uploaded[imagen]',
+                'max_size[imagen, 4096]'
+            ]
+        ]);
 
-        $img = $this->request->getFile('imagen');
-        $newName = $img->getRandomName();
-        $img->move('img/productos', $newName);
+        if ($validacion) {
+
+            $img = $this->request->getFile('imagen');
+            $newName = $img->getName();
+            $img->move('img/productos', $newName);
+        }
+
+
+
         $this->productos->save([
             'imagen' => $newName,
+            'id_producto' => $this->request->getPost('Codigo_barra'),
             'nombre' => $this->request->getPost('nombre_producto'),
             'marca' => $this->request->getPost('marca'),
             'descripcion' => $this->request->getPost('descripcion'),
@@ -75,14 +118,61 @@ class ProductosAdmin extends BaseController
             'stock' => $this->request->getPost('stock'),
             'stock_critico' => $this->request->getPost('stock_critico'),
             'categoria' => $this->request->getPost('categoria'),
-            'detalle_fk' => $ultimo_detalle['id_detalle_prod'],
+            'detalle_fk' => $this->detalle_producto->buscarId(),
+            'estado' => 1,
         ]);
-
-        #$img->move('img/productos/', $img);
-
 
         return redirect()->to(base_url() . '/productosadmin');
     }
+    // Funcion del empleado
+    public function NuevoProductoEmp()
+    {
+
+        $this->request = \Config\Services::request();
+
+        $this->detalle_producto->agregarFecha(
+            $this->request->getPost('fecha_vencimiento')
+        );
+
+
+
+
+
+        $validacion = $this->validate([
+            'imagen' => [
+                'uploaded[imagen]',
+                'max_size[imagen, 4096]'
+            ]
+        ]);
+
+        if ($validacion) {
+
+            $img = $this->request->getFile('imagen');
+            $newName = $img->getName();
+            $img->move('img/productos', $newName);
+        }
+
+
+
+
+        $this->productos->save([
+            'imagen' => $newName,
+            'id_producto' => $this->request->getPost('Codigo_barra'),
+            'nombre' => $this->request->getPost('nombre_producto'),
+            'marca' => $this->request->getPost('marca'),
+            'descripcion' => $this->request->getPost('descripcion'),
+            'precio_venta' => $this->request->getPost('precio_venta'),
+            'precio_costo' => $this->request->getPost('precio_costo'),
+            'stock' => $this->request->getPost('stock'),
+            'stock_critico' => $this->request->getPost('stock_critico'),
+            'categoria' => $this->request->getPost('categoria'),
+            'detalle_fk' => $this->detalle_producto->buscarId(),
+            'estado' => 1,
+        ]);
+
+        return redirect()->to(base_url() . '/Productos/productoEmp');
+    }
+    //Funcion administrador
     public function NuevaCategoria()
     {
 
@@ -92,8 +182,18 @@ class ProductosAdmin extends BaseController
         ]);
         return redirect()->to(base_url() . '/productosadmin');
     }
+    //Funcion empleado
+    public function NuevaCategoriaEmp()
+    {
 
-    public function editar($id)
+        $this->request = \Config\Services::request();
+        $this->categorias->save([
+            'nombre_categoria' => $this->request->getPost('nombre_categoria')
+        ]);
+        return redirect()->to(base_url() . '/Productos/productoEmp');
+    }
+
+    public function editar($id, $valid = null)
     {
 
         $productos = $this->productos->where('id_producto', $id)->first();
@@ -101,14 +201,99 @@ class ProductosAdmin extends BaseController
         $fecha_venci = $this->detalle_producto->obtFechaVenci($productos['detalle_fk']);
         $configuracion = $this->configuracion->First();
         $categorias = $this->categorias->findAll();
-        $data = [
-            'datos' => $productos, 'configuracion' => $configuracion, 'categorias' => $categorias,
-            'cat' => $categoria, 'fecha_venci' => $fecha_venci
-        ];
+        if ($valid != null) {
+
+            $data = [
+                'datos' => $productos, 'configuracion' => $configuracion, 'categorias' => $categorias,
+                'cat' => $categoria, 'fecha_venci' => $fecha_venci, 'validation' => $valid
+            ];
+        } else {
+            $data = [
+                'datos' => $productos, 'configuracion' => $configuracion, 'categorias' => $categorias,
+                'cat' => $categoria, 'fecha_venci' => $fecha_venci
+            ];
+        }
 
         #$this->load->view('administrador/productos_admin', $data);
         echo view('header', $data);
         echo view('administrador/editar_producto');
         echo view('footer');
+    }
+
+    public function actualizar()
+    {
+
+        $this->request = \Config\Services::request();
+        if ($this->request->getMethod() == "post" && $this->validate($this->reglas1)) {
+
+            $this->detalle_producto->actualizarFecha(
+                $this->request->getPost('id_detalle'),
+                $this->request->getPost('fecha_vencimiento')
+            );
+
+            if (($this->request->getFile('imagen')) !== null) {
+                $img = $this->request->getFile('imagen');
+                $newName = $img->getName();
+                $img->move('img/productos', $newName);
+            } else {
+                $newName = '1.jpg';
+            }
+
+
+            $this->productos->update($this->request->getPost('id_producto'), [
+                'imagen' => $newName,
+                'nombre' => $this->request->getPost('nombre_producto'),
+                'marca' => $this->request->getPost('marca'),
+                'descripcion' => $this->request->getPost('descripcion'),
+                'precio_venta' => $this->request->getPost('precio_venta'),
+                'precio_costo' => $this->request->getPost('precio_costo'),
+                'stock' => $this->request->getPost('stock'),
+                'stock_critico' => $this->request->getPost('stock_critico'),
+                'categoria' => $this->request->getPost('categoria'),
+                'detalle_fk' => $this->detalle_producto->buscarId(),
+
+            ]);
+
+            #$img->move('img/productos/', $img);
+
+
+            return redirect()->to(base_url() . '/productosadmin');
+        } else {
+            return $this->editar($this->request->getPost('id_producto'), $this->validator);
+        }
+    }
+
+
+    public function eliminarProducto($id, $est = 0)
+    {
+        /*
+        $productos = $this->productos->findAll();
+        $data = ['titulo' => 'Productos', 'datos' => $productos]; */
+        $this->productos->update($id, ['estado' => $est]);
+        return redirect()->to(base_url() . '/productosadmin');
+    }
+
+    public function pagEliminarPro()
+    {
+        $this->request = \Config\Services::request();
+        $productos = $this->productos->where('estado', 0)->findAll();
+        $configuracion = $this->configuracion->First();
+        $data = ['datos' => $productos, 'configuracion' => $configuracion,];
+
+
+        echo view('header', $data);
+        echo view('administrador/eliminar_producto');
+        echo view('footer');
+    }
+
+    public function reingresarProd($id, $estado = 1)
+    {
+        $this->productos->update($id, ['estado' => $estado]);
+        return redirect()->to(base_url() . '/productosadmin/pagEliminarPro ');
+    }
+    public function eliminar($id)
+    {
+        $this->productos->delete($id);
+        return redirect()->to(base_url() . '/productosadmin/pagEliminarPro ');
     }
 }

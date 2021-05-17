@@ -37,6 +37,8 @@
     <link rel="stylesheet" href="<?php echo base_url(); ?>/style.css">
     <!-- responsive css -->
     <link rel="stylesheet" href="<?php echo base_url(); ?>/css/responsive.css">
+    <!-- mensajes flash css -->
+    <link rel="stylesheet" href="<?php echo base_url(); ?>/css/toastr.min.css">
 
     
  <!-- jquery 3.12.4 -->
@@ -54,11 +56,6 @@
                 <div class="container">
                     <div class="row">
                         <!-- Header Top left Start -->
-                        <div class="col-lg-4 col-md-12 d-center">
-                            <div class="header-top-left">
-                                <img src="<?php echo base_url(); ?>/img/icon/call.png" alt="">Llámanos : +56 (9) <?php echo $configuracion['telefono'] ?>
-                            </div>
-                        </div>
                         <!-- Header Top left End -->
                         <!-- Search Box Start -->
                         <div class="col-lg-4 col-md-6 ml-auto mr-auto">
@@ -108,7 +105,8 @@
                     <div class="row">
                         <div class="col-xl-3 col-lg-2 col-sm-5 col-5">
                             <div class="logo">
-                                <a href="index.html"><img src="<?php echo base_url(); ?>/img/logo/logo.png" alt="Ferme Ferreteria"></a>
+                                <a href="<?php echo base_url() ?>/home"><img src="<?php echo base_url(); ?>/img/logo/logo.png" alt="Ferme Ferreteria"></a>
+                         
                             </div>
                         </div>
                         <!-- Primary Vertical-Menu End -->
@@ -144,7 +142,7 @@
                                     $tipo_sesion = true;
                                     if ($tipo_sesion) {
                                     ?>
-                                        <li><a href="compare.html"><i class="fa fa-sign-in"></i></a>
+                                        <li><a href="#"><i class="fa fa-sign-in"></i></a>
                                             <ul class="ht-dropdown">
                                                 <li><a href="<?php echo base_url() ?>/acceder">Acceder</a></li>
                                                 <li><a href="<?php echo base_url() ?>/registro">Registrarme</a></li>
@@ -153,7 +151,7 @@
                                     <?php
                                     } else {
                                     ?>
-                                        <li><a href="compare.html"><i class="fa fa-cog"></i></a></li>
+                                        <li><a href="#"><i class="fa fa-cog"></i></a></li>
                                     <?php
                                     }
                                     ?>

@@ -25,7 +25,6 @@ class Ventas extends BaseController
 		$this->configuracion = new ConfiguracionModel;
 		$this->forma_pago = new FormaPagoModel;
 		$this->boletas = new VentaModel;
-
 	}
 
 	public function index()
@@ -38,24 +37,24 @@ class Ventas extends BaseController
 		$v_boletas = $this->ventas->where('tipo_comprobante', 'boleta')->findAll();
 		$facturas = $this->ventas->where('tipo_comprobante', 'factura')->findAll();
 
-		$test = ['msje'=>'ddd'];
+		$test = ['msje' => 'ddd'];
 
 		foreach ($v_boletas as $boleta) {
 			$empleado_fk = $this->empleados->buscarPorId($boleta['empleado_fk']);
-			$nom_empleado = $this->usuarios->buscarPorId($empleado_fk['usuario_fk']); 
+			$nom_empleado = $this->usuarios->buscarPorId($empleado_fk['usuario_fk']);
 
-			$nom_cliente = $this->usuarios->buscarPorId($boleta['cliente_fk']); 
+			$nom_cliente = $this->usuarios->buscarPorId($boleta['cliente_fk']);
 			$nom_pago = $this->formapago->buscarPorId($boleta['forma_pago_fk']);
 
 
-			$boleta ['nom_empleado'] = $nom_empleado['nom_usuario'];
-			$boleta ['nom_cliente'] = $nom_cliente['nom_usuario'];
-			$boleta ['nom_pago'] = $nom_pago['tipo_pago'];
-			$boleta ['despacho_str'] = $this->despachoString($boleta['despacho']);
-			$boleta ['estado_str'] = $this->estadoVentaString($boleta['estado_venta']);
-			$boletas[]=$boleta;
+			$boleta['nom_empleado'] = $nom_empleado['nom_usuario'];
+			$boleta['nom_cliente'] = $nom_cliente['nom_usuario'];
+			$boleta['nom_pago'] = $nom_pago['tipo_pago'];
+			$boleta['despacho_str'] = $this->despachoString($boleta['despacho']);
+			$boleta['estado_str'] = $this->estadoVentaString($boleta['estado_venta']);
+			$boletas[] = $boleta;
 		}
-		
+
 		#print_r($boletas['id_venta']);
 		$configuracion = $this->configuracion->First();
 		$data = [
@@ -75,12 +74,13 @@ class Ventas extends BaseController
 
 		echo view('header', $data);
 		echo view('administrador/panel_header', $estados);
-		echo view('administrador/ventas',$test);
+		echo view('administrador/ventas', $test);
 		echo view('administrador/panel_footer');
 		echo view('footer', $data);
 	}
 
-	public function despachoString($valor){
+	public function despachoString($valor)
+	{
 		switch ($valor) {
 			case 0:
 				return 'No';
@@ -89,7 +89,8 @@ class Ventas extends BaseController
 		}
 	}
 
-	public function estadoVentaString($valor){
+	public function estadoVentaString($valor)
+	{
 		switch ($valor) {
 			case 0:
 				return 'Anulada';
