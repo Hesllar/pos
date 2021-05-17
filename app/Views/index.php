@@ -52,11 +52,9 @@
     </div>
 </div>
 <!-- Slider Area End -->
-<!-- Product Area Start -->
-
-<!-- Product Area End -->
-<!-- Banner Start -->
-<!-- Banner End -->
+<div class="breadcrumb-area ptb-15 ptb-sm-5">
+    <!-- Container End -->
+</div>
 <!-- New Products Start -->
 <div class="new-products pb-60">
     <div class="container">

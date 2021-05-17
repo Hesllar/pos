@@ -68,6 +68,9 @@ body {
     padding-left: 15px;
     padding-right: 15px;
 }
+.universal-padding-border-edit {
+    padding:50px;
+}
 .universal-margin {
     margin-left: 15px;
     margin-right: 15px;
@@ -1664,7 +1667,7 @@ ul.ht-dropdown.dropdown-style-two li {
     visibility: visible;
     transform: translateY(0);
     margin-top: 23px;
-    align-content: ;
+    align-content: center;
 }
 .main-categorie #list-view .pro-content h4 a {
     margin-bottom: 7px;
@@ -1941,12 +1944,49 @@ ul.ht-dropdown.dropdown-style-two li {
     cursor: pointer;
     border-radius: 4px;
 }
+.btn-estilo {
+    padding: 8px 15px;
+    text-transform: uppercase;
+    font-weight: 500;
+    -webkit-transition: all 0.3s ease-in;
+    transition: all 0.3s ease-in-out;
+    cursor: pointer;
+    border-radius: 4px;
+}
+.btn-aceptar {
+    background: #f1ac06 none repeat scroll 0 0;
+    border: 1px solid #f1ac06;
+    color: #fff;
+}
+
+.btn-cancelar {
+    background: #f2f2f2;
+    border: 1px solid #cdcdcd;
+    color: #363f4d;
+}
+
+.btn-peligro:hover {
+    background: hsl(9, 100%, 27%);
+    border: 1px solid #cdcdcd;
+    color: #363f4d;
+}
+
+.btn-cancelar:hover {
+    color: #fff;
+    background: #363f4d;
+    border-color: #363f4d;
+}
+.btn-aceptar:hover {
+    background: #363f4d;
+    border-color: #363f4d;
+}
 
 .btn-submit:hover {
     background: #f1ac06;
     border-color: #f1ac06;
     color: #fff;
 }
+
 .related-product .group-title{
     margin-bottom: 30px;
 }
@@ -3893,6 +3933,15 @@ legend {
 .billing-address {
     font-size: 16px;
     margin-top: 25px;
+}
+
+.fuente-titulo{
+    font-size: 16px;
+}
+
+.fuente-parrafo {
+    font-size: 14px;
+    
 }
 
 #address .view {

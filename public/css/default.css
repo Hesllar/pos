@@ -1107,3 +1107,6 @@ input[type="text"]#email-two::-webkit-input-placeholder {
     -webkit-transform: translateY(-25px);
     transform: translateY(-25px);
 }
+#botton1{
+    color: #007da1;
+}

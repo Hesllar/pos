@@ -14,7 +14,7 @@ class EmpleadoModel extends Model
     protected $returnType     = 'array';
     protected $useSoftDeletes = false;
 
-   /* protected $allowedFields = ['no tiene atributos']; */
+    protected $allowedFields = ['cargo_fk','usuario_fk'];
 
     protected $useTimestamps = false;
     

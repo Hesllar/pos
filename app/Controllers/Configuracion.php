@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
@@ -15,13 +16,22 @@ class Configuracion extends BaseController
 
 	public function index()
 	{
-		/*$usuarios = $this->usuario->findAll();
-		$data = ['titulo' => 'Usuarios', 'datos' => $usuarios];*/
+		$configuracion = $this->configuracion->First();
+		$data = ['titulo' => 'Usuarios', 'configuracion' => $configuracion];
 
-		echo view('header');
-		echo view('administrador/panel_header');
+		$estados = [
+			'e_venta' => '',
+			'e_producto' => '',
+			'e_ordencompra' => '',
+			'e_usuario' => '',
+			'e_notacredito' => '',
+			'e_config' => 'active'
+		];
+
+		echo view('header', $data);
+		echo view('administrador/panel_header', $estados);
 		echo view('administrador/configuracion');
 		echo view('administrador/panel_footer');
-		echo view('footer');
+		echo view('footer', $data);
 	}
 }
