@@ -3,8 +3,9 @@
      <br>
      <div class="pull-mediun ">
          <a href="<?php echo base_url(); ?>/productosadmin/"> <button type="button" class="btn-submit">
-                 Volver</a>
-         </button>
+                 Volver
+             </button>
+         </a>
      </div>
      <div class="table-responsive">
          <table class="table">

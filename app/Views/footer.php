@@ -66,7 +66,7 @@
  </div>
  <!-- Wrapper End -->
  <!-- jquery 3.12.4 -->
- <script src="<?php echo base_url(); ?>/js/vendor/jquery-1.12.4.min.js"></script>
+ <script src="<?php echo base_url(); ?>/js/vendor/jquery-3.6.0.min.js"></script>
  <!-- mobile menu js  -->
  <script src="<?php echo base_url(); ?>/js/jquery.meanmenu.min.js"></script>
  <!-- scroll-up js -->
@@ -94,11 +94,14 @@
  <script src="<?php echo base_url(); ?>/js/main.js"></script>
  <!-- mensajes flash-->
  <script src="<?php echo base_url(); ?>/js/toastr.min.js"></script>
+
  
-    <!-- Carrito-->
-    <script src="<?php echo base_url() ?>/js/tienda.js"></script>
+ <!-- Carrito-->
+ <script src="<?php echo base_url() ?>/js/tienda.js"></script>
  <!-- ajax-->
  <script src="<?php echo base_url() ?>/js/ajax-mail.js"></script>
+
+ <!-- Modal de alerta-->
 
  <script>
      $('#Eliminar').on('show.bs.modal', function(e) {

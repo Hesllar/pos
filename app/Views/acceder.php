@@ -48,7 +48,7 @@
                                                         <input required type="password" name="contrasena" placeholder="Escribe tu contraseña..." 
                                                        class="form-control">
                                                     </div>
-                                                    <p class="lost-password"><a href="forgot-password.html">¿Olvidaste tu contrase&ntilde;a?</a></p>
+                                                    <p class="lost-password"><a href="<?php echo base_url();?>/Acceder/olvide_contrasena">¿Olvidaste tu Contraseña?</a></p>
                                                     <input type="submit" value="Acceder" class="return-customer-btn">
                                                 
                                                             

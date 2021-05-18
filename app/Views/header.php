@@ -1,3 +1,7 @@
+<?php
+$user_session = session();
+?>
+
 <!doctype html>
 <html class="no-js" lang="en-US">
 
@@ -142,10 +146,13 @@
                                     $tipo_sesion = true;
                                     if ($tipo_sesion) {
                                     ?>
-                                        <li><a href="#"><i class="fa fa-sign-in"></i></a>
+                                        <li><a href="#"><?php echo $user_session->nom_usuario; ?>
+                                                <i class="fa fa-user fa-fw"></i>
+                                            </a>
                                             <ul class="ht-dropdown">
-                                                <li><a href="<?php echo base_url() ?>/acceder">Acceder</a></li>
+                                                <li><a href="<?php echo base_url() ?>/acceder">Iniciar</a></li>
                                                 <li><a href="<?php echo base_url() ?>/registro">Registrarme</a></li>
+                                                <li><a href="<?php echo base_url() ?>/Usuarios/logout">Salir</a></li>
                                             </ul>
                                         </li>
                                     <?php

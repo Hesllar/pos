@@ -39,7 +39,7 @@
                                     <div class="form-group">
                                         <label class="control-label" for="nombre_categoria"><span class="require">*</span>Nombre categoria</label>
                                         <div class="col-sm-10">
-                                            <input type="text" class="form-control" id="nombre_categoria" name="nombre_categoria" placeholder="Ingrese nombre categoria">
+                                            <input type="text" class="form-control" id="nombre_categoria" name="nombre_categoria" placeholder="Ingrese nombre categoria" required>
                                         </div>
                                     </div>
                                 </fieldset>
@@ -77,7 +77,7 @@
                                     <div class="form-group">
                                         <label class="control-label" for="nombre_producto"><span class="require">*</span>Codigo de barra</label>
                                         <div class="col-sm-10">
-                                            <input type="text" class="form-control" id="Codigo_barra" name="Codigo_barra" placeholder="Ingese nombre producto">
+                                            <input type="text" class="form-control" id="Codigo_barra" name="Codigo_barra" placeholder="Ingese nombre producto" required>
                                             <label for="" id="lbCodBarra"></label>
                                         </div>
                                     </div>
@@ -85,14 +85,14 @@
                                     <div class="form-group">
                                         <label class="control-label" for="nombre_producto"><span class="require">*</span>Nombre producto</label>
                                         <div class="col-sm-10">
-                                            <input type="text" class="form-control" id="nombre_producto" name="nombre_producto" placeholder="Ingese nombre producto">
+                                            <input type="text" class="form-control" id="nombre_producto" name="nombre_producto" placeholder="Ingese nombre producto" required>
                                             <label for="" id="lbNomPro"></label>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label" for="marca"><span class="require">*</span>Marca</label>
                                         <div class="col-sm-10">
-                                            <input type="text" class="form-control" id="marca" name="marca" placeholder="Ingrese nombre marca">
+                                            <input type="text" class="form-control" id="marca" name="marca" placeholder="Ingrese nombre marca" required>
                                             <label for="" id="lbMarca"></label>
                                         </div>
                                     </div>
@@ -100,8 +100,8 @@
                                     <div class="form-group">
                                         <label class="control-label" for="categoria"><span class="require">*</span>Categoria</label>
                                         <div class=" checkbox-form col-sm-10">
-                                            <select id="categoria" name="categoria">
-                                                <option value="0" required>Seleccione</option>
+                                            <select id="categoria" name="categoria" required>
+                                                <option value="">Seleccione</option>
                                                 <?php foreach ($categorias as $categoria) { ?>
                                                     <option value="<?php echo $categoria['id_categoria']; ?>"><?php echo $categoria['nombre_categoria']; ?></option>
                                                 <?php } ?>
@@ -109,40 +109,38 @@
                                             </select>
                                         </div>
                                     </div>
-
                                     <div class="form-group">
                                         <div class="col-sm-10">
                                             <img src="" class="img-responsive" />
-                                            <input type="file" class="form-control" id="imagen" name="imagen">
+                                            <input type="file" class="form-control" id="imagen" name="imagen" required>
                                             <label for="" id="lbImagen"></label>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label" for="number"><span class="require">*</span>Precio venta</label>
                                         <div class="col-sm-10">
-                                            <input type="number" class="form-control" id="precio_venta" name="precio_venta" placeholder="Ingreso precio venta">
+                                            <input type="number" class="form-control" id="precio_venta" name="precio_venta" placeholder="Ingreso precio venta" required>
                                             <label for="" id="lbPreVenta"></label>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label" for="number"><span class="require">*</span>Prectio costo</label>
                                         <div class="col-sm-10">
-                                            <input type="number" class="form-control" id="precio_costo" name="precio_costo" placeholder="Ingrese precio costo">
+                                            <input type="number" class="form-control" id="precio_costo" name="precio_costo" placeholder="Ingrese precio costo" required>
                                             <label for="" id="lbPreCosto"></label>
                                         </div>
                                     </div>
-
                                     <div class="form-group">
                                         <label class="control-label" for="number"><span class="require">*</span>Fecha de vencimiento</label>
                                         <div class="col-sm-10">
-                                            <input type="date" class="form-control" id="fecha_vencimiento" name="fecha_vencimiento" placeholder="Fecha de vencimiento">
+                                            <input type="date" class="form-control" id="fecha_vencimiento" name="fecha_vencimiento" placeholder="Fecha de vencimiento" required>
                                             <label for="" id="lbFecNacimiento"></label>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label" for="number"><span class="require">*</span>Stock</label>
                                         <div class="col-sm-10">
-                                            <input type="number" class="form-control" id="stock" name="stock" placeholder="Ingrese existencia">
+                                            <input type="number" class="form-control" id="stock" name="stock" placeholder="Ingrese existencia" required>
                                             <label for="" id="lbStock"></label>
                                         </div>
                                     </div>
@@ -150,7 +148,7 @@
                                     <div class="form-group">
                                         <label class="control-label" for="number"><span class="require">*</span>Stock critico</label>
                                         <div class="col-sm-10">
-                                            <input type="number" class="form-control" id="stock_critico" name="stock_critico" placeholder="Ingrese existencia criticas">
+                                            <input type="number" class="form-control" id="stock_critico" name="stock_critico" placeholder="Ingrese existencia criticas" required>
                                             <label for="" id="lbStockCri"></label>
                                         </div>
                                     </div>
@@ -158,7 +156,7 @@
                                         <label class="control-label" for="number"><span class="require">*</span>Descripcion</label>
                                         <div class="col-sm-10">
                                             <label for="descripcion" class="form-label"></label>
-                                            <textarea class="form-control" id="descripcion" name="descripcion" rows="3"></textarea>
+                                            <textarea class="form-control" id="descripcion" name="descripcion" rows="3" required></textarea>
                                             <label for="" id="lbDescri"></label>
                                         </div>
                                     </div>
@@ -182,7 +180,7 @@
         </div>
 
     </div>
-    <div id="respuesta">hola</div>
+    <div id="respuesta"></div>
     <div class="table-responsive">
         <table class="table">
             <thead>
@@ -236,7 +234,7 @@
     </div>
 </div>
 <script>
-    /*$("#agregarProductoForm").submit(function(e) {
+    $("#agregarProductoForm").submit(function(e) {
         e.preventDefault();
         var fun = "funregistrar";
         var codBarra = $("#Codigo_barra").val();
@@ -329,5 +327,5 @@
             });
         }
 
-    });*/
+    });
 </script>
