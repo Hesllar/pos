@@ -11,6 +11,8 @@ class Acceder extends BaseController
 	protected $configuracion;
 	protected $request;
 	protected $usuarioModal;
+	protected $reglasLogin;
+
 	public function __construct()
 	{
 		$this->configuracion = new ConfiguracionModel;
@@ -30,6 +32,7 @@ class Acceder extends BaseController
 			]
 
 		];
+
 	}
 
 	public function index()
@@ -38,6 +41,15 @@ class Acceder extends BaseController
 		$data = ['configuracion' => $configuracion];
 		echo view('header', $data);
 		echo view('acceder');
+		echo view('footer');
+	}
+
+	public function olvide_contrasena()
+	{
+		$configuracion = $this->configuracion->First();
+		$data = ['configuracion' => $configuracion];
+		echo view('header', $data);
+		echo view('olvide_contrasena');
 		echo view('footer');
 	}
 
