@@ -14,6 +14,7 @@ use App\Models\DireccionModel;
 
 
 
+
 class Usuarios extends BaseController
 {
 	protected $nivel;
@@ -191,17 +192,23 @@ class Usuarios extends BaseController
 	public function editarUsuario($id, $valid = null)
 	{
 		$usuario = $this->usuarios->where('id_usuario', $id)->first();
-		$region  = $this->usuarios->obtnRegion($usuario['id_usuario']);
+		$comunaAll = $this->comuna->findAll();
+		$regionAll = $this->region->findAll();
+		$datos_perso = $this->obtnDatos($usuario['rut_fk']);
+		$nivel_fk = $this->buscarIdNvl($usuario['nvl_acceso_fk']);
+		$nive_all = $this->nivel->findAll();
 		$configuracion = $this->configuracion->First();
 		if ($valid != null) {
 
 			$data = [
 				'datos' => $usuario, 'configuracion' => $configuracion,
-				'validation' => $valid, 'region' => $region
+				'validation' => $valid, 'nivel_fk' => $nivel_fk, 'nivel_all' => $nive_all, 'dtsPerso' => $datos_perso,
+				'comunaAll' => $comunaAll, 'region' => $regionAll
 			];
 		} else {
 			$data = [
-				'datos' => $usuario, 'region' => $region
+				'datos' => $usuario, 'configuracion' => $configuracion, 'nivel_fk' => $nivel_fk, 'nivel_all' => $nive_all,
+				'dtsPerso' => $datos_perso, 'comunaAll' => $comunaAll, 'region' => $regionAll
 			];
 		}
 
@@ -271,21 +278,40 @@ class Usuarios extends BaseController
 	}
 
 
-	public function buscarIdComuna($id)
+	/*public function buscarIdComuna($id)
 	{
 		$comuna = $this->direccion->where('id_direccion', $id)->first();
 		return $comuna;
+	}*/
+
+	public function buscarIdNvl($id)
+	{
+		$buscarid =  $this->nivel->where('id_nivel', $id)->First();
+		return $buscarid;
+	}
+	public function buscarRut($rut)
+	{
+		$buscarid =  $this->datosPersonales->where('rut', $rut)->First();
+		return $buscarid;
+	}
+
+	public function obtnDatos($rut)
+	{
+		$this->datosPersonales->select('natural_juridico AS juridico,correo,celular,nombres,apellidos,rut,dv,d.calle AS calle, 
+		d.numero AS numero,d.ciudad AS ciudad,d.comuna_fk AS comuna,c.region_fk AS region ');
+		$this->datosPersonales->join('usuario u', 'datos_personales.rut=u.rut_fk');
+		$this->datosPersonales->join('direccion d', 'datos_personales.direccion_fk=d.id_direccion');
+		$this->datosPersonales->join('comuna c', 'd.comuna_fk=c.id_comuna');
+		$this->datosPersonales->where('rut', $rut);
+		$datos = $this->datosPersonales->First();
+		return $datos;
 	}
 
 	/*public function insertarNvl($id)
 	{
 		$this->nivel->save(['nivel_acceso' => $id]);
 	}
-	public function buscarIdNvl()
-	{
-		$buscarid =  $this->nivel_acceso->orderBy('id_nivel', 'DESC')->First();
-		return $buscarid['id_nivel'];
-	}
+	
 
 
 
@@ -306,14 +332,8 @@ class Usuarios extends BaseController
 		]);
 	}*/
 }
-/*<div class="form-row">
-            <div class="form-group col-md-12">
-                <label for="inputState">*Region</label>
-                <select name="region" id="region" require>
-                    <option value="0" required>Seleccione</option>
-                    <?php foreach ($region as $Region) { ?>
-                        <option value="<?php echo $Region['id_region'] ?>" required><?php echo $Region['nombre_region'] ?> </option>
-                    <?php } ?>
-                </select>
-            </div>
-        </div>*/
+/*
+		
+		
+		
+		*/
