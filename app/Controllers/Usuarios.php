@@ -55,6 +55,14 @@ class Usuarios extends BaseController
 		];*/
 	}
 
+	public function logout(){
+		$session = session();
+		$session->destroy();
+		return redirect()->to(base_url()."/acceder");
+	}
+
+
+
 	public function index()
 	{
 		$nvl_acceso = $this->nivel->findAll();
@@ -86,6 +94,8 @@ class Usuarios extends BaseController
 		echo view('footer');
 	}
 
+
+	
 	public function pagNuevoUsuario()
 	{
 

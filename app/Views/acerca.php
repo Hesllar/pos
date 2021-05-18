@@ -16,10 +16,10 @@
 							<h3>¿POR QU&Eacute; NOSOTROS?</h3>
 							<p>Ofrecemos una variada gama de productos ferreteros, que le permitirán realizar sus proyectos y obras de construcción que esté desarrollando, sea construyendo un proyecto inmobiliario o bien, realizando bricolaje en casa, ampliando y mejorando su propio hogar.</p>
 							<ul class="mt-20 about-content-list">
-								<li><a href="#">Atención de Calidad</a></li>
-								<li><a href="#">Precios Competitivos</a></li>
-								<li><a href="#">Variado Catalogo de Productos para sus Proyectos</a></li>
-								<li><a href="#">Despacho de Productos</a></li>
+								<li><a >Atención de Calidad</a></li>
+								<li><a >Precios Competitivos</a></li>
+								<li><a >Variado Catalogo de Productos para sus Proyectos</a></li>
+								<li><a >Despacho de Productos</a></li>
 							</ul>
 						</div>
 					</div>
@@ -45,21 +45,21 @@
                             <div class="ht-about-work">
                                 <span>1</span>
                                 <div class="ht-work-text">
-                                    <h5><a href="#">ATENCI&Oacute;N A CLIENTES</a></h5>
+                                    <h5><a >ATENCI&Oacute;N A CLIENTES</a></h5>
                                     <p>Ofrecemos la mejor atención para que nuestros clientes tengan una <br> grata experiencia junto a una compra adecuada a sus necesidades.</p>
                                 </div>
                             </div>
                             <div class="ht-about-work">
                                 <span>2</span>
                                 <div class="ht-work-text">
-                                    <h5><a href="#">MARCAS</a></h5>
+                                    <h5><a>MARCAS</a></h5>
                                     <p>Trabajamos con las mejores marcas del rubro, para ofrecer a nuestros <br>clientes, productos variados y de la mejor calidad.</p>
                                 </div>
                             </div>
                             <div class="ht-about-work">
                                 <span>3</span>
                                 <div class="ht-work-text">
-                                    <h5><a href="#">EQUIPO DE VENTAS</a></h5>
+                                    <h5><a >EQUIPO DE VENTAS</a></h5>
                                     <p>Nuestro experimentando equipo de vendedores lo asesoraran, <br> respondiendo a sus consultas e inquietudes, para que su compra sea la <br> más adecuada de acuerdo con sus necesidades.</p>
                                 </div>
                             </div>
