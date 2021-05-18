@@ -94,7 +94,15 @@
  <script src="<?php echo base_url(); ?>/js/main.js"></script>
  <!-- mensajes flash-->
  <script src="<?php echo base_url(); ?>/js/toastr.min.js"></script>
+
+ 
+ <!-- Carrito-->
+ <script src="<?php echo base_url() ?>/js/tienda.js"></script>
+ <!-- ajax-->
+ <script src="<?php echo base_url() ?>/js/ajax-mail.js"></script>
+
  <!-- Modal de alerta-->
+
  <script>
      $('#Eliminar').on('show.bs.modal', function(e) {
          $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'))
