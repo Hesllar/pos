@@ -44,6 +44,17 @@ class Acceder extends BaseController
 		echo view('footer');
 	}
 
+	public function olvide_contrasena()
+	{
+		$configuracion = $this->configuracion->First();
+		$data = ['configuracion' => $configuracion];
+		echo view('header', $data);
+		echo view('olvide_contrasena');
+		echo view('footer');
+	}
+
+
+
 	public function valida()
 	{
 		$configuracion = $this->configuracion->First();
