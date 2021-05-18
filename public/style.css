@@ -1791,6 +1791,16 @@ ul.ht-dropdown.dropdown-style-two li {
     text-align: center;
 }
 
+.cantidad {
+    background-color: #ffffff;
+    color: #555;
+    font-size: 12px;
+    width: 35px;
+    height: 20px;
+    border: none;
+    padding-left: 0%;
+}
+
 .boton-accion {
     background: #f1ac06 none repeat scroll 0 0;
     border: none;

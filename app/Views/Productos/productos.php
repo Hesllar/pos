@@ -83,15 +83,16 @@
                                                     <i class="fa fa-star"></i>
                                                     <i class="fa fa-star"></i>
                                                 </div>
-                                                <h4><a href="product.html"><?php echo $dato['nombre']; ?></a></h4>
-                                                <p><span id="precio" id="precio"><?php echo $configuracion['signo_moneda']; ?><?php echo $dato['precio_venta']; ?>
-                                                    </span>
+                                                <h4><a class="nombre-producto" href="product.html"><?php echo $dato['nombre']; ?></a></h4>
+                                                <p><?php echo $configuracion['signo_moneda']; ?><span><?php echo $dato['precio_venta']; ?></span>
                                                     <del class="prev-price"><?php echo $configuracion['signo_moneda']; ?><?php echo $dato['precio_venta'] + 2000; ?></del>
                                                 </p>
                                                 <div class="pro-actions">
                                                     <div class="actions-secondary">
                                                         <a href="wishlist.html" title="Añadir a favoritos"><i class="fa fa-heart"></i></a>
-                                                        <button id="<?php echo $dato['id_producto']; ?>" class="btn-add" title="Añadir al carro">Añadir carro</button>
+                                                        <button id="<?php echo $dato['id_producto']; ?>" class="add-cart" title="Añadir al carro">Añadir carro</button>
+                                                       <!-- <a class="add-cart" href="" data-toggle="tooltip" title="Añadir al carro">Añadir</a>-->
+                                    
                                                     </div>
                                                 </div>
                                             </div>
@@ -136,8 +137,7 @@
                                         <div class="pro-actions">
                                             <div class="actions-secondary">
                                                 <a href="wishlist.html" data-toggle="tooltip" title="Añadir a favoritos"><i class="fa fa-heart"></i></a>
-                                                <a class="add-cart" href="cart.html" data-toggle="tooltip" title="Añadir al carro">Añadir</a>
-                                            </div>
+                                                </div>
                                         </div>
                                     </div>
 
