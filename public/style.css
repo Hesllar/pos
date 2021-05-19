@@ -1795,6 +1795,31 @@ ul.ht-dropdown.dropdown-style-two li {
     text-align: center;
 }
 
+.cantidad {
+    background-color: #ffffff;
+    color: #555;
+    font-size: 12px;
+    width: 35px;
+    height: 20px;
+    border: none;
+    padding-left: 0%;
+}
+
+.boton-accion {
+    background: #f1ac06 none repeat scroll 0 0;
+    border: none;
+    color: #fff;
+    display: inline-block;
+    height: 25px;
+    width: 39px;
+}
+.alerta {
+    background: hsl(0, 87%, 38%) none repeat scroll 0 0;
+}
+.boton-accion:hover {
+    color: #fff;
+    background: #1a1a1a;
+}
 .add-cart {
     background: #f1ac06 none repeat scroll 0 0;
     border-color: #f1ac06;
@@ -3920,7 +3945,13 @@ legend {
     color: #f1ac06;
     text-transform: capitalize;
 }
-.view,.view-cart  {
+.view-alerta {
+    background: hsl(0, 87%, 38%) none repeat scroll 0 0;
+    color: #fff;
+    padding: 5px 12px;
+    text-transform: capitalize;
+}
+.view,.view-cart,.view-alerta {
   background: #f1ac06  none repeat scroll 0 0;
   color: #fff;
   padding: 5px 12px;

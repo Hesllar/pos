@@ -75,7 +75,9 @@
                         <!-- LogIn Page End -->
                         <!-- Brand Logo Start -->
                         <div class="brand-area pb-60">
+                        
                             <div class="container">
+                            <h3 class="footer-title">Marcas Asociadas</h3>
                                 <!-- Brand Banner Start -->
                                 <div class="brand-banner owl-carousel">
                                     <div class="single-brand">

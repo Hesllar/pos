@@ -44,6 +44,9 @@ $user_session = session();
     <!-- mensajes flash css -->
     <link rel="stylesheet" href="<?php echo base_url(); ?>/css/toastr.min.css">
 
+
+    <!-- jquery 3.12.4 -->
+    <script src="<?php echo base_url(); ?>/js/vendor/jquery-1.12.4.min.js"></script>
     <!-- modernizr js -->
     <script src="<?php echo base_url(); ?>/js/vendor/modernizr-2.8.3.min.js"></script>
 </head>
@@ -159,42 +162,18 @@ $user_session = session();
                                     <?php
                                     }
                                     ?>
-
                                     <li><a href="#"><i class="fa fa-shopping-basket"></i><span class="cart-counter">2</span></a>
                                         <ul class="ht-dropdown main-cart-box">
-                                            <li>
+                                            <li class="lista-carrito">
                                                 <!-- Cart Box Start -->
-                                                <div class="single-cart-box">
-                                                    <div class="cart-img">
-                                                        <a href="#"><img src="img/menu/1.jpg" alt="cart-image"></a>
-                                                    </div>
-                                                    <div class="cart-content">
-                                                        <h6><a href="product.html">Products Name</a></h6>
-                                                        <span>1 × $399.00</span>
-                                                    </div>
-                                                    <a class="del-icone" href="#"><i class="fa fa-window-close-o"></i></a>
-                                                </div>
-                                                <!-- Cart Box End -->
-                                                <!-- Cart Box Start -->
-                                                <div class="single-cart-box">
-                                                    <div class="cart-img">
-                                                        <a href="#"><img src="img/menu/2.jpg" alt="cart-image"></a>
-                                                    </div>
-                                                    <div class="cart-content">
-                                                        <h6><a href="product.html">Products Name</a></h6>
-                                                        <span>2 × $299.00</span>
-                                                    </div>
-                                                    <a class="del-icone" href="#"><i class="fa fa-window-close-o"></i></a>
-                                                </div>
-                                                <!-- Cart Box End -->
-                                                <!-- Cart Footer Inner Start -->
+                                            </li>
+                                            <li class="footer-carrito">
                                                 <div class="cart-footer fix">
-                                                    <h5>total :<span class="f-right">$698.00</span></h5>
+                                                    <h5>total: $<span class="f-right total">0</span></h5>
                                                     <div class="cart-actions">
-                                                        <a class="checkout" href="checkout.html">Comprar</a>
+                                                        <a class="checkout" href="<?php echo base_url();?>/FormaPago/pago">Comprar</a>
                                                     </div>
                                                 </div>
-                                                <!-- Cart Footer Inner End -->
                                             </li>
                                         </ul>
                                     </li>
