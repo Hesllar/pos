@@ -30,8 +30,6 @@ class DatosPersonalesModel extends Model
 
     protected $useTimestamps = false;
 
-    /*protected $createdField  = 'fecha_registro';
-     protected $updatedField  = 'updated_at';
     protected $deletedField  = 'deleted_at';
     */
 
