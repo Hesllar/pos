@@ -29,7 +29,7 @@ class UsuarioModel extends Model
 
     protected $useTimestamps = false;
 
-    protected $createdField  = 'fecha_registro';
+    protected $createdField  = 'fecha_creacion';
     /*
     protected $updatedField  = 'updated_at';
     protected $deletedField  = 'deleted_at';
