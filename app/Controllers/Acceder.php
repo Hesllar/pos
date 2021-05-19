@@ -11,6 +11,8 @@ class Acceder extends BaseController
 	protected $configuracion;
 	protected $request;
 	protected $usuarioModal;
+	protected $reglasLogin;
+
 	public function __construct()
 	{
 		$this->configuracion = new ConfiguracionModel;
@@ -30,6 +32,7 @@ class Acceder extends BaseController
 			]
 
 		];
+
 	}
 
 	public function index()
@@ -38,6 +41,15 @@ class Acceder extends BaseController
 		$data = ['configuracion' => $configuracion];
 		echo view('header', $data);
 		echo view('acceder');
+		echo view('footer');
+	}
+
+	public function olvide_contrasena()
+	{
+		$configuracion = $this->configuracion->First();
+		$data = ['configuracion' => $configuracion];
+		echo view('header', $data);
+		echo view('olvide_contrasena');
 		echo view('footer');
 	}
 
@@ -71,13 +83,13 @@ class Acceder extends BaseController
 					$session->set($datosSesion);
 					if ($datosUsuario['nvl_acceso_fk'] == 10) {
 						return redirect()->to(base_url() . '/productosadmin');
-					}elseif ($datosUsuario['nvl_acceso_fk'] == 20){
+					} elseif ($datosUsuario['nvl_acceso_fk'] == 20) {
 						return redirect()->to(base_url() . '/proveedor');
-					}elseif ($datosUsuario['nvl_acceso_fk'] == 30){
+					} elseif ($datosUsuario['nvl_acceso_fk'] == 30) {
 						return redirect()->to(base_url() . '/#');
-					}elseif($datosUsuario['nvl_acceso_fk'] == 40){
+					} elseif ($datosUsuario['nvl_acceso_fk'] == 40) {
 						return redirect()->to(base_url() . '/productos');
-					}elseif($datosUsuario['nvl_acceso_fk'] == 50){
+					} elseif ($datosUsuario['nvl_acceso_fk'] == 50) {
 						return redirect()->to(base_url() . '/#');
 					}
 				} else {

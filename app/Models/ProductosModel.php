@@ -37,4 +37,13 @@ class ProductosModel extends Model
     protected $validationRules    = [];
     protected $validationMessages = [];
     protected $skipValidation     = false;
+
+    public function orderProducto()
+    {
+        $this->select('*');
+        $this->orderBy('fecha_creacion', 'DESC');
+        $this->where('estado', 1);
+        $data = $this->findAll();
+        return $data;
+    }
 }

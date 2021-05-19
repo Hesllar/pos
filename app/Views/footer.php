@@ -11,10 +11,10 @@
                          <div class="footer-content">
                              <div class="loc-address">
                                  <span><i class="fa fa-map-marker"></i><?php echo $configuracion['direccion'] ?></span>
-                                 <span><i class="fa fa-envelope-o"></i><?php echo $configuracion['correo_principal'] ?></span>
-                                 <span><i class="fa fa-phone"></i>Tel&eacute;fono : +56 (9)<?php echo $configuracion['telefono'] ?></span>
+                                 <span><a ><i class="fa fa-envelope-o"></i><?php echo $configuracion['correo_principal'] ?></a></span>
+                                 <span><a href="https://api.whatsapp.com/send?phone=56972678521&text=Hola!%20tengo%20una%20duda%20o%20sugerencia!" Target="_blank"><i class="fa fa-phone"></i>Tel&eacute;fono : +56 (9)<?php echo $configuracion['telefono'] ?></a> </span>
                              </div>
-                             <div class="payment-mth"><a href="#"><img class="img" src="img/footer/1.png" alt="payment-image"></a></div>
+                             <div class="payment-mth"><a><img class="img" src="img/footer/1.png" alt="payment-image"></a></div>
                          </div>
                      </div>
                  </div>
@@ -49,11 +49,10 @@
                  <p class="copy-right-text">Copyright © <a href="<?php echo base_url() ?>/home">Ferme</a> Todos los derechos reservados.</p>
                  <div class="footer-social-content">
                      <ul class="social-content-list">
-                         <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                         <li><a href="#"><i class="fa fa-wifi"></i></a></li>
-                         <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
-                         <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                         <li><a href="#"><i class="fa fa-youtube"></i></a></li>
+                         <li><a href="https://twitter.com/Ferme37549373" Target="_blank" ><i class="fa fa-twitter"></i></a></li>
+                         <li><a href="https://www.instagram.com/ferreteria.ferme/" Target="_blank" ><i class="fa fa-instagram"></i></a></li>
+                         <li><a href="https://web.facebook.com/ferm.ferme/" Target="_blank" ><i class="fa fa-facebook"></i></a></li>
+                         <li><a href="https://www.youtube.com/channel/UC8rPVHToAiS48GBjV2zhrpg" Target="_blank" ><i class="fa fa-youtube"></i></a></li>
                      </ul>
                  </div>
              </div>
@@ -66,7 +65,7 @@
  </div>
  <!-- Wrapper End -->
  <!-- jquery 3.12.4 -->
- <script src="<?php echo base_url(); ?>/js/vendor/jquery-1.12.4.min.js"></script>
+ <script src="<?php echo base_url(); ?>/js/vendor/jquery-3.6.0.min.js"></script>
  <!-- mobile menu js  -->
  <script src="<?php echo base_url(); ?>/js/jquery.meanmenu.min.js"></script>
  <!-- scroll-up js -->
@@ -94,9 +93,15 @@
  <script src="<?php echo base_url(); ?>/js/main.js"></script>
  <!-- mensajes flash-->
  <script src="<?php echo base_url(); ?>/js/toastr.min.js"></script>
- <!-- Modal de alerta-->
+
+ 
+ <!-- Carrito-->
+ <script src="<?php echo base_url() ?>/js/tienda.js"></script>
  <!-- ajax-->
  <script src="<?php echo base_url() ?>/js/ajax-mail.js"></script>
+
+ <!-- Modal de alerta-->
+
  <script>
      $('#Eliminar').on('show.bs.modal', function(e) {
          $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'))

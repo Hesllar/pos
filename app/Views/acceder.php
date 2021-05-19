@@ -48,7 +48,7 @@
                                                         <input required type="password" name="contrasena" placeholder="Escribe tu contraseña..." 
                                                        class="form-control">
                                                     </div>
-                                                    <p class="lost-password"><a href="forgot-password.html">¿Olvidaste tu contrase&ntilde;a?</a></p>
+                                                    <p class="lost-password"><a href="<?php echo base_url();?>/Acceder/olvide_contrasena">¿Olvidaste tu Contraseña?</a></p>
                                                     <input type="submit" value="Acceder" class="return-customer-btn">
                                                 
                                                             
@@ -75,7 +75,9 @@
                         <!-- LogIn Page End -->
                         <!-- Brand Logo Start -->
                         <div class="brand-area pb-60">
+                        
                             <div class="container">
+                            <h3 class="footer-title">Marcas Asociadas</h3>
                                 <!-- Brand Banner Start -->
                                 <div class="brand-banner owl-carousel">
                                     <div class="single-brand">
