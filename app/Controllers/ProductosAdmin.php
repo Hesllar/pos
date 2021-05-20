@@ -195,7 +195,7 @@ class ProductosAdmin extends BaseController
         ]);
         return redirect()->to(base_url() . '/Productos/productoEmp');
     }
-    //Editar admin
+
     public function editar($id, $valid = null)
     {
 
@@ -220,6 +220,33 @@ class ProductosAdmin extends BaseController
         #$this->load->view('administrador/productos_admin', $data);
         echo view('header', $data);
         echo view('administrador/editar_producto');
+        echo view('footer');
+    }
+    //Funcion empleado
+    public function editarEmp($id, $valid = null)
+    {
+
+        $productos = $this->productos->where('id_producto', $id)->first();
+        $categoria = $this->categoria->buscarId($productos['categoria']);
+        $fecha_venci = $this->detalle_producto->obtFechaVenci($productos['detalle_fk']);
+        $configuracion = $this->configuracion->First();
+        $categorias = $this->categorias->findAll();
+        if ($valid != null) {
+
+            $data = [
+                'datos' => $productos, 'configuracion' => $configuracion, 'categorias' => $categorias,
+                'cat' => $categoria, 'fecha_venci' => $fecha_venci, 'validation' => $valid
+            ];
+        } else {
+            $data = [
+                'datos' => $productos, 'configuracion' => $configuracion, 'categorias' => $categorias,
+                'cat' => $categoria, 'fecha_venci' => $fecha_venci
+            ];
+        }
+
+        #$this->load->view('administrador/productos_admin', $data);
+        echo view('header', $data);
+        echo view('Empleado/editar_producto_emp');
         echo view('footer');
     }
 
@@ -261,6 +288,49 @@ class ProductosAdmin extends BaseController
 
 
             return redirect()->to(base_url() . '/productosadmin');
+        } else {
+            return $this->editar($this->request->getPost('id_producto'), $this->validator);
+        }
+    }
+    //Funcion empleado
+    public function actualizarEmp()
+    {
+
+        $this->request = \Config\Services::request();
+        if ($this->request->getMethod() == "post" && $this->validate($this->reglas1)) {
+
+            $this->detalle_producto->actualizarFecha(
+                $this->request->getPost('id_detalle'),
+                $this->request->getPost('fecha_vencimiento')
+            );
+
+            if (($this->request->getFile('imagen')) !== null) {
+                $img = $this->request->getFile('imagen');
+                $newName = $img->getName();
+                $img->move('img/productos', $newName);
+            } else {
+                $newName = '1.jpg';
+            }
+
+
+            $this->productos->update($this->request->getPost('id_producto'), [
+                'imagen' => $newName,
+                'nombre' => $this->request->getPost('nombre_producto'),
+                'marca' => $this->request->getPost('marca'),
+                'descripcion' => $this->request->getPost('descripcion'),
+                'precio_venta' => $this->request->getPost('precio_venta'),
+                'precio_costo' => $this->request->getPost('precio_costo'),
+                'stock' => $this->request->getPost('stock'),
+                'stock_critico' => $this->request->getPost('stock_critico'),
+                'categoria' => $this->request->getPost('categoria'),
+                'detalle_fk' => $this->detalle_producto->buscarId(),
+
+            ]);
+
+            #$img->move('img/productos/', $img);
+
+
+            return redirect()->to(base_url() . '/proveedor'); //revisar!
         } else {
             return $this->editar($this->request->getPost('id_producto'), $this->validator);
         }

@@ -171,7 +171,7 @@ $user_session = session();
                                                 <div class="cart-footer fix">
                                                     <h5>total: $<span class="f-right total">0</span></h5>
                                                     <div class="cart-actions">
-                                                        <a class="checkout" href="checkout.html">Comprar</a>
+                                                        <a class="checkout" href="<?php echo base_url();?>/FormaPago/pago">Comprar</a>
                                                     </div>
                                                 </div>
                                             </li>

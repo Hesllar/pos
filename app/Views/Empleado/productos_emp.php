@@ -186,13 +186,8 @@
                                                         <td>$<?php echo $producto['precio_venta']; ?></td>
                                                         <td><?php echo $producto['stock']; ?></td>
                                                         <td><?php echo $producto['categoria']; ?></td>
-                                                        <td><a class="view" href="<?php echo base_url() . '/productosadmin/editar/' . $producto['id_producto']; ?>"
+                                                        <td><a class="view" href="<?php echo base_url() . '/productosadmin/editarEmp/' . $producto['id_producto']; ?>"
                                                          > <i class="fa fa-pencil"></i></a>
-                                                        </td>
-                                                        <td><a class="view" data-href="<?php echo base_url() . '/productosadmin/eliminarProducto/' . $producto['id_producto']; ?>"
-                                                            data-toggle="modal" data-target="#Eliminar">
-                                                                <i class="fa fa-trash"></i></a>
-    
                                                         </td>
                                                     </tr>
                                                 <?php } ?>
