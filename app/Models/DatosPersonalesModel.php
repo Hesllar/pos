@@ -30,9 +30,9 @@ class DatosPersonalesModel extends Model
 
     protected $useTimestamps = false;
 
-
+    protected $createdField  = 'fecha_creacion';
     protected $deletedField  = 'deleted_at';
-    */
+
 
     protected $validationRules    = [];
     protected $validationMessages = [];
