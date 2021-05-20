@@ -70,11 +70,13 @@ body {
 }
 .universal-padding-border-edit {
     padding:50px;
+    margin-bottom: 15px
 }
 .universal-margin {
     margin-left: 15px;
     margin-right: 15px;
 }
+
 .border-default {
     border: 1px solid #ebebeb;
     border-radius: 3px;
@@ -4080,3 +4082,37 @@ legend {
 .mobile-menu nav ul{
     display: none;
 }
+.form-row .error_formulario {
+    color: red;
+    font-size: 12px;
+    margin-bottom: 0;
+    display: none;
+}
+.form-row .error_formulario-activo{
+    display: block;
+}
+.form-row .icono-x{
+    position: absolute;
+    right: 10px;
+    bottom: 15px;
+    z-index: 100;
+    font-size: 16px;
+    opacity: 0;
+
+}
+.form-group-correcto .icono-x {
+    color: green;
+    opacity: 1;
+}
+.form-group-incorrecto .formulario_lb{
+    color: red;
+
+}
+.form-group-incorrecto .icono-x {
+    color: red;
+    opacity: 1;
+}
+.form-group-incorrecto .form-control {
+    border: 3px solid red;
+}
+
