@@ -194,7 +194,7 @@ class ProductosAdmin extends BaseController
         ]);
         return redirect()->to(base_url() . '/Productos/productoEmp');
     }
-
+    //Funcion administrador
     public function editar($id, $valid = null)
     {
 
@@ -248,7 +248,7 @@ class ProductosAdmin extends BaseController
         echo view('Empleado/editar_producto_emp');
         echo view('footer');
     }
-
+    //Funcion administrador
     public function actualizar()
     {
 
@@ -329,7 +329,7 @@ class ProductosAdmin extends BaseController
             #$img->move('img/productos/', $img);
 
 
-            return redirect()->to(base_url() . '/proveedor'); //revisar!
+            return redirect()->to(base_url() . 'productos/productos_emp'); //revisar!
         } else {
             return $this->editar($this->request->getPost('id_producto'), $this->validator);
         }
