@@ -129,6 +129,7 @@ class ProductosAdmin extends BaseController
         ]);
         return redirect()->to(base_url() . '/productosadmin');
     }
+
     // Funcion del empleado
     public function NuevoProductoEmp()
     {
@@ -366,6 +367,8 @@ class ProductosAdmin extends BaseController
     public function eliminar($id)
     {
         $this->request = \Config\Services::request();
+        //$producto_eliminado = $this->productos->where('id_producto', $id)->first();
+        //$this->detalle_productoModel->where('id_detalle_prod', $producto_eliminado['detalle_fk'])->delete();
         $this->productos->where('id_producto', $id)->delete();
         return redirect()->to(base_url() . '/productosadmin/pagEliminarPro ');
     }

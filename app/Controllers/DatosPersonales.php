@@ -27,24 +27,25 @@ class DatosPersonales extends BaseController
 	}
 
 
-	public function insertarDatosPerso($id, $dv, $nombre_usario, $apellidos, $email, $celular, $juridico)
+	public function insertarDatosPerso($id, $dv, $nombre, $apellidos, $email, $celular, $juridico)
 	{
 		$this->request = \Config\Services::request();
 		$this->datospersonales->save([
 			'rut' => $id,
 			'dv' => $dv,
-			'nombres' => $nombre_usario,
+			'nombres' => $nombre,
 			'apellidos' => $apellidos,
+			'correo' => $email,
 			'celular' => $celular,
 			'natural_juridico' => $juridico,
-			'correo' => $email,
 			'direccion_fk' => $this->buscarIdDireccion()
 		]);
 	}
-	public function buscarIdPerso()
+	public function buscarIdPerso($idRut)
 	{
-		$buscarid =  $this->datospersonales->orderBy('rut', 'DESC')->First();
-		return $buscarid['rut'];
+		/*$this->datospersonales->select('rut');
+		$this->datospersonales->where('rut', $idRut);
+		$this->datospersonales->orderBy('fecha_creacion', 'DESC')->First();*/
 	}
 
 	public function listar()

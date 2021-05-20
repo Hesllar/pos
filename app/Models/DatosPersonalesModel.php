@@ -30,6 +30,7 @@ class DatosPersonalesModel extends Model
 
     protected $useTimestamps = false;
 
+
     protected $deletedField  = 'deleted_at';
     */
 
