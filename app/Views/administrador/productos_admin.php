@@ -47,7 +47,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary newsletter-btn">Cancelar</button>
+                        <button type="button" class="btn btn-secondary newsletter-btn" data-dismiss="modal">Cancelar</button>
                         <button type="submit" class="newsletter-btn">Guardar</button>
                     </div>
                 </form>
@@ -77,7 +77,7 @@
                                     <div class="form-group">
                                         <label class="control-label" for="nombre_producto"><span class="require">*</span>Codigo de barra</label>
                                         <div class="col-sm-10">
-                                            <input type="text" class="form-control" id="Codigo_barra" name="Codigo_barra" placeholder="Ingese nombre producto" required>
+                                            <input type="text" class="form-control" id="Codigo_barra" name="Codigo_barra" placeholder="Ingese nombre producto">
                                             <label for="" id="lbCodBarra"></label>
                                         </div>
                                     </div>
@@ -85,62 +85,63 @@
                                     <div class="form-group">
                                         <label class="control-label" for="nombre_producto"><span class="require">*</span>Nombre producto</label>
                                         <div class="col-sm-10">
-                                            <input type="text" class="form-control" id="nombre_producto" name="nombre_producto" placeholder="Ingese nombre producto" required>
+                                            <input type="text" class="form-control" id="nombre_producto" name="nombre_producto" placeholder="Ingese nombre producto">
                                             <label for="" id="lbNomPro"></label>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label" for="marca"><span class="require">*</span>Marca</label>
                                         <div class="col-sm-10">
-                                            <input type="text" class="form-control" id="marca" name="marca" placeholder="Ingrese nombre marca" required>
+                                            <input type="text" class="form-control" id="marca" name="marca" placeholder="Ingrese nombre marca">
                                             <label for="" id="lbMarca"></label>
                                         </div>
                                     </div>
 
                                     <div class="form-group">
-                                        <label class="control-label" for="categoria"><span class="require">*</span>Categoria</label>
+                                        <label class="control-label" for="categoria"><span>*</span>Categoria</label>
                                         <div class=" checkbox-form col-sm-10">
                                             <select id="categoria" name="categoria" required>
                                                 <option value="">Seleccione</option>
                                                 <?php foreach ($categorias as $categoria) { ?>
                                                     <option value="<?php echo $categoria['id_categoria']; ?>"><?php echo $categoria['nombre_categoria']; ?></option>
                                                 <?php } ?>
-                                                <label for="" id="lbCategoria"></label>
+
                                             </select>
+                                            <label for="" id="lbCategoria"></label>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <div class="col-sm-10">
                                             <img src="" class="img-responsive" />
-                                            <input type="file" class="form-control" id="imagen" name="imagen" required>
+                                            <input type="file" class="form-control" id="imagen" name="imagen">
                                             <label for="" id="lbImagen"></label>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label" for="number"><span class="require">*</span>Precio venta</label>
                                         <div class="col-sm-10">
-                                            <input type="number" class="form-control" id="precio_venta" name="precio_venta" placeholder="Ingreso precio venta" required>
+                                            <input type="number" class="form-control" id="precio_venta" name="precio_venta" placeholder="Ingreso precio venta">
                                             <label for="" id="lbPreVenta"></label>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label" for="number"><span class="require">*</span>Prectio costo</label>
                                         <div class="col-sm-10">
-                                            <input type="number" class="form-control" id="precio_costo" name="precio_costo" placeholder="Ingrese precio costo" required>
+                                            <input type="number" class="form-control" id="precio_costo" name="precio_costo" placeholder="Ingrese precio costo">
                                             <label for="" id="lbPreCosto"></label>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label" for="number"><span class="require">*</span>Fecha de vencimiento</label>
                                         <div class="col-sm-10">
-                                            <input type="date" class="form-control" id="fecha_vencimiento" name="fecha_vencimiento" placeholder="Fecha de vencimiento" required>
+                                            <input type="date" class="form-control" id="fecha_vencimiento" name="fecha_vencimiento" placeholder="Fecha de vencimiento">
                                             <label for="" id="lbFecNacimiento"></label>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label" for="number"><span class="require">*</span>Stock</label>
                                         <div class="col-sm-10">
-                                            <input type="number" class="form-control" id="stock" name="stock" placeholder="Ingrese existencia" required>
+                                            <input type="number" class="form-control" id="stock" name="stock" placeholder="Ingrese existencia">
                                             <label for="" id="lbStock"></label>
                                         </div>
                                     </div>
@@ -148,7 +149,7 @@
                                     <div class="form-group">
                                         <label class="control-label" for="number"><span class="require">*</span>Stock critico</label>
                                         <div class="col-sm-10">
-                                            <input type="number" class="form-control" id="stock_critico" name="stock_critico" placeholder="Ingrese existencia criticas" required>
+                                            <input type="number" class="form-control" id="stock_critico" name="stock_critico" placeholder="Ingrese existencia criticas">
                                             <label for="" id="lbStockCri"></label>
                                         </div>
                                     </div>
@@ -156,7 +157,7 @@
                                         <label class="control-label" for="number"><span class="require">*</span>Descripcion</label>
                                         <div class="col-sm-10">
                                             <label for="descripcion" class="form-label"></label>
-                                            <textarea class="form-control" id="descripcion" name="descripcion" rows="3" required></textarea>
+                                            <textarea class="form-control" id="descripcion" name="descripcion" rows="3"></textarea>
                                             <label for="" id="lbDescri"></label>
                                         </div>
                                     </div>
@@ -233,9 +234,10 @@
         </div>
     </div>
 </div>
+<script src="<?php echo base_url() ?>/js/ajax-mail.js"></script>
+<script src="<?php echo base_url(); ?>/js/vendor/jquery-3.6.0.min.js"></script>
 <script>
     $("#agregarProductoForm").submit(function(e) {
-        e.preventDefault();
         var fun = "funregistrar";
         var codBarra = $("#Codigo_barra").val();
         var nomProducto = $("#nombre_producto").val();
@@ -243,15 +245,16 @@
         var precVenta = $("#precio_venta").val();
         var precCosto = $("#precio_costo").val();
         var stock = $("#stock").val();
-        var categoria = '1';
-        var fecha_vencimiento = $('#fecha_vencimiento').val();
         var stockCritico = $("#stock_critico").val();
         var descri = $("#descripcion").val();
-        var imagen = 'adad';
+        var img = $("#imagen").val();
+
+
+
 
         if (codBarra == '') {
             setTimeout(function() {
-                $("#lbCodBarra").html("<span style='color:red;'> complete el campo codigo de barra </span>").fadeOut(10000);
+                $("#lbCodBarra").html("<span style='color:red;'> Complete el campo codigo de barra </span>").fadeOut(10000);
             }, 0);
 
             $("#Codigo_barra").focus();
@@ -259,50 +262,63 @@
 
         } else if (nomProducto == '') {
             setTimeout(function() {
-                $("#lbNomPro").html("<span style='color:red;'> complete el campo nombre producto </span>").fadeOut(10000);
+                $("#lbNomPro").html("<span style='color:red;'> Complete el campo nombre producto </span>").fadeOut(10000);
             }, 0);
 
             $("#nombre_producto").focus();
             return false;
         } else if (marca == '') {
             setTimeout(function() {
-                $("#lbMarca").html("<span style='color:red;'> complete el campo nombre producto </span>").fadeOut(10000);
+                $("#lbMarca").html("<span style='color:red;'> Complete el campo marca </span>").fadeOut(10000);
             }, 0);
 
             $("#marca").focus();
             return false;
         } else if (precVenta == '') {
             setTimeout(function() {
-                $("#lbPreVenta").html("<span style='color:red;'> complete el campo nombre producto </span>").fadeOut(10000);
+                $("#lbPreVenta").html("<span style='color:red;'> Complete el campo precio venta </span>").fadeOut(10000);
             }, 0);
 
             $("#precio_venta").focus();
             return false;
         } else if (precCosto == '') {
             setTimeout(function() {
-                $("#lbPreCosto").html("<span style='color:red;'> complete el campo nombre producto </span>").fadeOut(10000);
+                $("#lbPreCosto").html("<span style='color:red;'> complete el campo precio costo </span>").fadeOut(10000);
             }, 0);
 
             $("#precio_costo").focus();
             return false;
         } else if (stock == '') {
             setTimeout(function() {
-                $("#lbStock").html("<span style='color:red;'> complete el campo nombre producto </span>").fadeOut(10000);
+                $("#lbStock").html("<span style='color:red;'> complete el campo stock </span>").fadeOut(10000);
             }, 0);
 
             $("#stock").focus();
             return false;
         } else if (stockCritico == '') {
             setTimeout(function() {
-                $("#lbStockCri").html("<span style='color:red;'> complete el campo nombre producto </span>").fadeOut(10000);
+                $("#lbStockCri").html("<span style='color:red;'> complete el campo stock critico </span>").fadeOut(10000);
             }, 0);
 
             $("#stock_critico").focus();
             return false;
-        } else {
+        } else if (img == '') {
+            setTimeout(function() {
+                $("#lbImagen").html("<span style='color:red;'> complete el campo de imagen </span>").fadeOut(10000);
+            }, 0);
 
+            $("#imagen").focus();
+            return false;
+        } else if (descri == '') {
+            setTimeout(function() {
+                $("#lbDescri").html("<span style='color:red;'> complete el campo descripcion </span>").fadeOut(10000);
+            }, 0);
+
+            $("#descripcion").focus();
+            return false;
+        } else {
             $.ajax({
-                url: "<?php echo base_url(); ?>/ProductosAdmin/NuevoProducto",
+                url: "<?php echo base_url(); ?>/productosadmin/NuevoProducto",
                 method: "POST",
                 data: {
                     "funcion": fun,
@@ -313,19 +329,11 @@
                     "precCosto": precCosto,
                     "stock": stock,
                     "stockCritico": stockCritico,
-                    "categoria": categoria,
-                    "fecha_vencimiento": fecha_vencimiento,
                     "descri": descri,
-                    "imagen": imagen
-                },
-                success: function(respuesta) {
-                    alert(respuesta.jeison);
-                    $("#AgregarProducto").modal('hide');
-                    $("#respuesta").html(respuesta.jeison);
-                    $("#agregarProductoForm").trigger('reset');
+                    "imagen": img,
+
                 }
             });
         }
-
     });
 </script>

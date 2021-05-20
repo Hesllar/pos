@@ -4,29 +4,21 @@
     </div>
 <?php }
 ?>
-<input type="hidden" value="<?php echo $datos['id_usuario']; ?> " name="id_producto">
+
 <div class="d-flex justify-content-center ">
-    <form class="border border-dark universal-padding-border-edit" method="POST" enctype="multipart/form-data" action="<?php echo base_url() ?>/Usuarios/insertar">
-        <div class=" form-row ">
-            <div class=" form-group col-md-6">
-                <label for="inputEmail4">*Rut</label>
-                <input type="number" class="form-control" id="rut" name="rut" value="<?php echo $dtsPerso['rut']; ?>" placeholder="Ingese rut sin puntos">
-            </div>
-            <div class="form-group col-md-6">
-                <label for="inputPassword4">*Dv</label>
-                <input type="text" class="form-control" id="dv" name="dv" value="<?php echo $dtsPerso['dv']; ?>" placeholder="Ingese identificador unico">
-            </div>
-        </div>
-        <div class="form-row">
+    <form class="border border-dark universal-padding-border-edit" method="POST" enctype="multipart/form-data" action="<?php echo base_url() ?>/Usuarios/actualizarUsuario">
+        <input type="hidden" value="<?php echo $datos['id_usuario']; ?> " name="id_usuario">
+        <input type="hidden" value="<?php echo $datos['rut_fk']; ?> " name="rut_fk">
+        <!--<div class="form-row">
             <div class="form-group col-md-6">
                 <label for="inputAddress">*Nombres</label>
-                <input type="text" class="form-control" id="nombre_usuario" value="<?php echo $dtsPerso['nombres']; ?>" name="nombre_usuario" placeholder="Ingese nombre">
+                <input type="text" class="form-control" id="nombre" value="<?php echo $dtsPerso['nombres']; ?>" name="nombre" placeholder="Ingese nombre">
             </div>
             <div class="form-group col-md-6">
                 <label for="inputAddress2">*Apellidos</label>
                 <input type="text" class="form-control" id="apellidos" value="<?php echo $dtsPerso['apellidos']; ?>" name="apellidos" placeholder="Ingrese apellidos">
             </div>
-        </div>
+        </div>-->
         <div class="form-row">
             <div class="form-group col-md-6">
                 <label for="inputCity">*Email</label>
@@ -38,21 +30,20 @@
             </div>
         </div>
 
-        <div class="form-group">
+        <!--<div class="form-group">
             <p> ¿Es empresa?</p>
             <div class="form-check">
                 <?php if ($dtsPerso['juridico'] == 1) { ?>
-                    <input class="form-check-input" type="radio" name="juridico" id="juridico" checked>
+                    <input class="form-check-input" type="radio" name="juridico" id="juridico" value="1" checked>
                     Si
                     <br>
-                    <input class="form-check-input" type="radio" name="juridico" id="juridico">
+                    <input class="form-check-input" type="radio" name="juridico" id="juridico" value="0">
                     No
-
                 <?php } else { ?>
-                    <input class="form-check-input" type="radio" name="juridico" id="juridico">
+                    <input class="form-check-input" type="radio" name="juridico" id="juridico" value="1">
                     Si
                     <br>
-                    <input class="form-check-input" type="radio" name="juridico" id="juridico" checked>
+                    <input class="form-check-input" type="radio" name="juridico" id="juridico" value="0" checked>
                     No
 
 
@@ -61,24 +52,24 @@
             </div>
             <div class="form-check">
             </div>
-        </div>
+        </div>-->
         <div class="form-row">
             <div class="form-group col-md-12">
                 <label for="inputState">*Nombre usuario</label>
-                <input type="text" class="form-control" id="nom_usuario" value="<?php echo $datos['nom_usuario']; ?>" name="nom_usuario" placeholder="Ingrese nombre usuario">
+                <input type="text" class="form-control" id="nombre_usuario" value="<?php echo $datos['nom_usuario']; ?>" name="nombre_usuario" placeholder="Ingrese nombre usuario">
             </div>
         </div>
         <div class="form-row">
             <div class="form-group col-md-6">
                 <label for="inputState">*Contraseña</label>
-                <input type="text" class="form-control" id="contraseña" value="<?php echo $datos['contrasena']; ?>" name="contraseña" placeholder="Ingrese contraseña">
+                <input type="password" class="form-control" id="contraseña" value="<?php echo $datos['contrasena']; ?>" name="contraseña" placeholder="Ingrese contraseña">
             </div>
             <div class="form-group col-md-6">
                 <label for="inputState">*Confirmar contraseña</label>
-                <input type="text" class="form-control" id="contraseña2" value="<?php echo $datos['contrasena']; ?>" name="contraseña2" placeholder="Ingrese contraseña">
+                <input type="password" class="form-control" id="contraseña2" value="<?php echo $datos['contrasena']; ?>" name="contraseña2" placeholder="Ingrese contraseña">
             </div>
         </div>
-        <div class="form-row">
+        <!--<div class="form-row">
             <div class="form-group col-md-12">
                 <label for="inputState">*Imagen</label>
                 <input type="file" class="form-control" value="<?php echo $datos['avatar']; ?>" id="imagen" name="imagen">
@@ -130,7 +121,6 @@
                 <label for="inputState">*Calle</label>
                 <input type="text" class="form-control" id="calle" name="calle" value="<?php echo $dtsPerso['calle']; ?>" placeholder="Ingrese calle">
             </div>
-
             <div class="form-group col-md-6">
                 <label for="inputState">*Numero</label>
                 <input type="number" class="form-control" id="numero" value="<?php echo $dtsPerso['numero']; ?>" name="numero" placeholder="Ingrese numero">
@@ -153,7 +143,7 @@
                     <?php } ?>
                 </select>
             </div>
-        </div>
+        </div>-->
         <a href="<?php echo base_url() ?>/Usuarios"><button type="button" class="btn btn-secondary newsletter-btn" data-dismiss="modal">Cancelar</button></a>
         <button type="submit" class="newsletter-btn" onclick="success_toast()">Guardar</button>
     </form>
