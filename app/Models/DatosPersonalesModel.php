@@ -27,9 +27,10 @@ class DatosPersonalesModel extends Model
         'fecha_nacimiento',
         'direccion_fk'
     ];
-    protected $createdField  = 'fecha_registro';
+    
     protected $useTimestamps = false;
 
+    protected $createdField  = 'fecha_creacion';
     protected $deletedField  = 'deleted_at';
     
     protected $validationRules    = [];

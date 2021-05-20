@@ -36,6 +36,8 @@
                     </div>
                 </div>
             </div>
+
+
             <div class="col-md-4">
                 <!-- Single Banner Start -->
                 <div class="single-banner zoom mb-20">
