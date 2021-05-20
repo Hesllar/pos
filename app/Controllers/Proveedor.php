@@ -42,4 +42,6 @@ class Proveedor extends BaseController
         echo view('administrador/panel_footer');
         echo view('footer');
     }
+
+    
 }

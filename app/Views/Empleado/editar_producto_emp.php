@@ -5,7 +5,7 @@
 <?php }
 ?>
 
-<form class="form-horizontal " d-flex justify-content-center method="Post" enctype="multipart/form-data" action="<?php echo base_url() ?>/productosadmin/actualizar">
+<form class="form-horizontal " d-flex justify-content-center method="Post" enctype="multipart/form-data" action="<?php echo base_url() ?>/Productos/productoEmp">
     <div class="modal-body d-flex justify-content-center">
         <div class="row  ">
             <div class="col-sm-12  ">
@@ -56,7 +56,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="control-label" for="number"><span class="require">*</span>Prectio costo</label>
+                        <label class="control-label" for="number"><span class="require">*</span>Precio costo</label>
                         <div class="col-sm-10">
                             <input type="number" value="<?php echo $datos['precio_costo']; ?>" class="form-control" id="precio_costo" name="precio_costo" placeholder="Ingrese precio costo">
                         </div>
@@ -91,7 +91,7 @@
 
                 </fieldset>
                 <div class="modal-footer d-flex justify-content-center">
-                    <a href="<?php echo base_url() ?>/productosadmin"><button type="button" class="btn btn-secondary newsletter-btn" data-dismiss="modal">Cancelar</button></a>
+                    <a href="<?php echo base_url() ?>/Productos/productoEmp"><button type="button" class="btn btn-secondary newsletter-btn" data-dismiss="modal">Cancelar</button></a>
                     </a><button type="submit" class="newsletter-btn">Guardar</button>
                 </div>
 
