@@ -10,7 +10,7 @@ class ProveedorModel extends Model
     protected $table      = 'proveedor';
     protected $primaryKey = 'id_proveedor';
 
-    protected $useAutoIncrement = false;
+    protected $useAutoIncrement = true;
 
     protected $returnType     = 'array';
     protected $useSoftDeletes = false;
