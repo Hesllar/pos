@@ -20,7 +20,7 @@ class Usuarios extends BaseController
 	protected $nivel;
 	protected $direccion;
 	protected $region;
-	protected $usuarios;
+	protected $usuarioModal;
 	protected $datosPersonales;
 	protected $datosPersonalesControl;
 	protected $comuna;
@@ -37,28 +37,15 @@ class Usuarios extends BaseController
 		$this->region = new RegionModel;
 		$this->nivel = new NivelAccesoModel();
 		$this->datosPersonales = new DatosPersonalesModel;
-		$this->usuarios = new UsuarioModel;
+		$this->usuarioModal = new UsuarioModel;
 		$this->configuracion = new ConfiguracionModel;
-		helper(['form']);
-		/*$this->reglas1 = [
-			'imagen' => 'required',
-			'nom_usuario' => 'required',
-			'contrasena' => 'required',
-			'rut' => 'required',
-			'nombres' => 'required',
-			'apellidos' => 'required',
-			'celular' => 'required',
-			'natural_juridico' => 'required',
-			'correo' => 'required',
-			'nivel_acceso_fk' => 'required'
-
-		];*/
 	}
 
-	public function logout(){
+	public function logout()
+	{
 		$session = session();
 		$session->destroy();
-		return redirect()->to(base_url()."/acceder");
+		return redirect()->to(base_url() . "/acceder");
 	}
 
 
@@ -67,7 +54,7 @@ class Usuarios extends BaseController
 	{
 		$nvl_acceso = $this->nivel->findAll();
 		$region = $this->region->findAll();
-		$usuario = $this->usuarios->DatosPersonales();
+		$usuario = $this->usuarioModal->DatosPersonales();
 		$configuracion = $this->configuracion->First();
 
 		$data = [
@@ -95,14 +82,14 @@ class Usuarios extends BaseController
 	}
 
 
-	
-	public function pagNuevoUsuario()
+
+	/*public function pagNuevoUsuario()
 	{
 
 		$comuna = $this->comuna->findAll();
 		$nvl_acceso = $this->nivel->findAll();
 		$region = $this->region->findAll();
-		$usuario = $this->usuarios->DatosPersonales();
+		$usuario = $this->usuarioModal->DatosPersonales();
 		$configuracion = $this->configuracion->First();
 		$data = [
 			'titulo' => 'Usuarios',
@@ -115,7 +102,7 @@ class Usuarios extends BaseController
 		echo view('header', $data);
 		echo view('administrador/Registro_usuario');
 		echo view('footer');
-	}
+	}*/
 
 	public function insertar()
 	{
@@ -124,7 +111,9 @@ class Usuarios extends BaseController
 		/*$this->nivel->insertarNvl([
 			$this->request->getPost('nivel_acceso')
 		]);*/
-		//if ($this->request->getMethod() == "post" && $this->validate($this->reglas1)) {
+
+
+
 		//Acá se obtienen los datos de la tabla direccion
 		$this->datosPersonalesControl->insertarDireccion(
 			$this->request->getPost('ciudad'),
@@ -137,11 +126,12 @@ class Usuarios extends BaseController
 		$this->datosPersonalesControl->insertarDatosPerso(
 			$this->request->getPost('rut'),
 			$this->request->getPost('dv'),
-			$this->request->getPost('nombre_usuario'),
+			$this->request->getPost('nombre'),
 			$this->request->getPost('apellidos'),
 			$this->request->getPost('email'),
 			$this->request->getPost('celular'),
-			$this->request->getPost('juridico')
+			$this->request->getPost('juridico'),
+
 		);
 
 		//Acá insertamos los datos a la tabla usuario
@@ -159,8 +149,8 @@ class Usuarios extends BaseController
 			$newName = $img->getName();
 			$img->move('img/Usuarios', $newName);
 		}
-		$this->usuarios->save([
-			'nom_usuario' => $this->request->getPost('nom_usuario'),
+		$this->usuarioModal->save([
+			'nom_usuario' => $this->request->getPost('nombre_usuario'),
 			'contrasena' => $this->request->getPost('contraseña2'),
 			'estado_usuario' => 1,
 			'avatar' => $newName,
@@ -168,30 +158,11 @@ class Usuarios extends BaseController
 			'rut_fk' =>  $this->request->getPost('rut')
 		]);
 		return redirect()->to(base_url() . '/Usuarios');
-		/*} else {
-			$comuna = $this->comuna->findAll();
-			$nvl_acceso = $this->nivel->findAll();
-			$region = $this->region->findAll();
-			$usuario = $this->usuarios->DatosPersonales();
-			$configuracion = $this->configuracion->First();
-			$data = [
-				'titulo' => 'Usuarios',
-				'configuracion' => $configuracion,
-				'usuarios' => $usuario,
-				'nvl_acceso' => $nvl_acceso,
-				'region' => $region,
-				'comuna' => $comuna,
-				'validation' => $this->validator
-			];
-			echo view('header', $data);
-			echo view('administrador/Registro_usuario');
-			echo view('footer');
-		}*/
 	}
 
 	public function editarUsuario($id, $valid = null)
 	{
-		$usuario = $this->usuarios->where('id_usuario', $id)->first();
+		$usuario = $this->usuarioModal->where('id_usuario', $id)->first();
 		$comunaAll = $this->comuna->findAll();
 		$regionAll = $this->region->findAll();
 		$datos_perso = $this->obtnDatos($usuario['rut_fk']);
@@ -217,63 +188,69 @@ class Usuarios extends BaseController
 		echo view('administrador/editar_usuario');
 		echo view('footer');
 	}
+	public function updateDatosPerso($id, $celular, $correo)
+	{
+		$this->request = \Config\Services::request();
+		$this->datosPersonales->update($this->request->getPost('rut_fk'), [
 
-	public function actualizar()
+			'celular' => $celular,
+			'correo' => $correo,
+
+		]);
+	}
+
+	public function actualizarUsuario()
 	{
 
 		$this->request = \Config\Services::request();
-
-		$this->detalle_producto->actualizarFecha(
-			$this->request->getPost('id_detalle'),
-			$this->request->getPost('fecha_vencimiento')
+		//if ($this->request->getPost('juridco') == 'Si') {
+		$this->updateDatosPerso(
+			$this->request->getPost('id_usuario'),
+			$this->request->getPost('celular'),
+			$this->request->getPost('email')
 		);
 
-		if (($this->request->getFile('imagen')) !== null) {
-			$img = $this->request->getFile('imagen');
-			$newName = $img->getName();
-			$img->move('img/productos', $newName);
-		} else {
-			$newName = '1.jpg';
-		}
+		/*$this->updateDireccion(
+			$this->request->getPost('id_direccion'),
+			$this->request->getPost('calle'),
+			$this->request->getPost('numero'),
+			$this->request->getPost('ciudad'),
 
 
-		$this->productos->update($this->request->getPost('id_producto'), [
-			'imagen' => $newName,
-			'nombre' => $this->request->getPost('nombre_producto'),
-			'marca' => $this->request->getPost('marca'),
-			'descripcion' => $this->request->getPost('descripcion'),
-			'precio_venta' => $this->request->getPost('precio_venta'),
-			'precio_costo' => $this->request->getPost('precio_costo'),
-			'stock' => $this->request->getPost('stock'),
-			'stock_critico' => $this->request->getPost('stock_critico'),
-			'categoria' => $this->request->getPost('categoria'),
-			'detalle_fk' => $this->detalle_producto->buscarId(),
+		);*/
 
-		]);
+
+		$this->usuarioModal->update(
+			$this->request->getPost('id_usuario'),
+			[
+				'nom_usuario' => $this->request->getPost('nombre_usuario'),
+				'contrasena' => $this->request->getPost('contraseña2'),
+			]
+		);
 
 		#$img->move('img/productos/', $img);
 
 
-		return redirect()->to(base_url() . '/productosadmin');
+		return redirect()->to(base_url() . '/Usuarios');
 	}
 
 
 
 	public function listar()
 	{
-		$usuarios = $this->usuarios->FindAll();
+		$usuarios = $this->usuarioModal->FindAll();
 		return $usuarios;
 	}
 
 	public function buscarPorId($id_usuario)
 	{
-		$usuarios = $this->usuarios->where('id_usuario', $id_usuario)->First();
+		$usuarios = $this->usuarioModal->where('id_usuario', $id_usuario)->First();
 		return $usuarios;
 	}
 
 	public function buscarPorRut($rut_fk)
 	{
-		$usuarios = $this->usuarios->where('rut_fk', $rut_fk)->First();
+		$usuarios = $this->usuarioModal->where('rut_fk', $rut_fk)->First();
 		return $usuarios;
 	}
 
@@ -283,6 +260,26 @@ class Usuarios extends BaseController
 		$comuna = $this->direccion->where('id_direccion', $id)->first();
 		return $comuna;
 	}*/
+
+
+
+
+	/*public function updateDireccion($id, $calle, $numero, $ciudad)
+	{
+		$this->request = \Config\Services::request();
+		$this->direccion->update(
+			$this->request->getPost('id_direccion'),
+			[
+				'calle' => $calle,
+				'numero' => $numero,
+				'ciudad' => $ciudad
+
+			]
+		);
+	}*/
+
+
+
 
 	public function buscarIdNvl($id)
 	{
@@ -298,7 +295,8 @@ class Usuarios extends BaseController
 	public function obtnDatos($rut)
 	{
 		$this->datosPersonales->select('natural_juridico AS juridico,correo,celular,nombres,apellidos,rut,dv,d.calle AS calle, 
-		d.numero AS numero,d.ciudad AS ciudad,d.comuna_fk AS comuna,c.region_fk AS region ');
+		d.numero AS numero,d.ciudad AS ciudad,d.comuna_fk AS comuna,c.region_fk AS region, 
+		d.id_direccion AS direccion, c.id_comuna AS comuna_id');
 		$this->datosPersonales->join('usuario u', 'datos_personales.rut=u.rut_fk');
 		$this->datosPersonales->join('direccion d', 'datos_personales.direccion_fk=d.id_direccion');
 		$this->datosPersonales->join('comuna c', 'd.comuna_fk=c.id_comuna');
@@ -306,6 +304,48 @@ class Usuarios extends BaseController
 		$datos = $this->datosPersonales->First();
 		return $datos;
 	}
+
+	public function darBajaUsuario($id, $est = 0)
+	{
+		$this->request = \Config\Services::request();
+		$this->usuarioModal->update($id, ['estado_usuario' => $est]);
+		return redirect()->to(base_url() . '/Usuarios');
+	}
+
+	public function pagEliminarUsuario()
+	{
+		$this->request = \Config\Services::request();
+		$usuarioOff = $this->datosUsuariosOff();
+		$configuracion = $this->configuracion->First();
+		$data = ['datos' => $usuarioOff, 'configuracion' => $configuracion];
+
+
+		echo view('header', $data);
+		echo view('administrador/Usuarios_eliminados');
+		echo view('footer');
+	}
+
+	public function datosUsuariosOff()
+	{
+
+		$this->datosPersonales->select('u.id_usuario AS id_usuario,nombres,apellidos,rut,correo, n.nivel_acceso AS nivel_acceso');
+		$this->datosPersonales->join('usuario u ', 'datos_personales.rut=u.rut_fk');
+		$this->datosPersonales->join('nivel_acceso n ', 'u.nvl_acceso_fk=n.id_nivel');
+		$this->datosPersonales->where('estado_usuario', 0);
+		$datos = $this->datosPersonales->findAll();
+		return $datos;
+	}
+	public function reingresarUsuario($id, $estado = 1)
+	{
+		$this->usuarioModal->update($id, ['estado_usuario' => $estado]);
+		return redirect()->to(base_url() . '/Usuarios/pagEliminarUsuario ');
+	}
+
+
+
+
+
+
 
 	/*public function insertarNvl($id)
 	{
@@ -332,8 +372,18 @@ class Usuarios extends BaseController
 		]);
 	}*/
 }
+
 /*
-		
-		
-		
+<div class="form-row">
+            <div class="form-group col-md-12">
+                <label for="comuna">*Comuna</label>
+                <select name="comuna" id="comuna">
+                    <option value="">Seleccione</option>
+                    <?php foreach ($comuna as $comunas) { ?>
+                        <option value="<?php echo $comunas['id_comuna'] ?>"><?php echo $comunas['nombre_comuna'] ?> </option>
+                    <?php } ?>
+                </select>
+            </div>
+        </div>
+			
 		*/

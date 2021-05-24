@@ -46,4 +46,13 @@ class ProductosModel extends Model
         $data = $this->findAll();
         return $data;
     }
+
+    public function masvendido(){
+        $this->select('*');     
+        $this->where('estado',1 );
+        $this->orderBy ('fecha_creacion','ASC');
+        $data = $this->findAll();
+        return $data;
+    }
+    
 }
