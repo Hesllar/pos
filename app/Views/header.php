@@ -164,7 +164,7 @@ $user_session = session();
                                     ?>
                                     <li><a href="#"><i class="fa fa-shopping-basket"></i><span class="cart-counter">0</span></a>
                                         <ul class="ht-dropdown main-cart-box">
-                                            <form class="form-horizontal" id="nuevaCompraPost" method="post" enctype="multipart/form-data" action="<?php echo base_url() ?>/canasta/nuevaCompra">
+                                               <!-- <form class="form-horizontal" id="nuevaCompraPost" method="post" enctype="multipart/form-data" action="<?php // echo base_url() ?>/canasta/nuevaCompra">-->
                                                 <li class="lista-carrito">
                                                     <!-- Aqui van los productos del carrito por JS -->
                                                 </li>
@@ -173,11 +173,11 @@ $user_session = session();
                                                         <input id="tt" name="tt" value="50">
                                                         <h5>total: $<span class="f-right total">0</span></h5>
                                                         <div class="cart-actions">
-                                                            <button type="submit" id="realizar-compra" class="checkout">Comprar</button>
+                                                            <!--<a href="#" id="realizar-compra" class="checkout">Comprar</a> -->
+                                                            <button type="submit" id="realizar-compra" class="checkout">Comprar</a>
                                                         </div>
                                                     </div>
                                                 </li>
-                                            </form>
                                         </ul>
                                     </li>
                                 </ul>

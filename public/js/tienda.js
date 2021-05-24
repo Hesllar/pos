@@ -130,4 +130,12 @@ function realizarCompra(){
         arrayCompras.push([idProducto,cantidad]);
     });
     console.log("Array: " ,arrayCompras);
+                $.ajax({
+                    url: "http://localhost/pos/public/Canasta/nuevaCompra",
+                    method: "POST",
+                    data: {
+                        compras:arrayCompras,
+                    },
+                    dataType: "JSON",
+                });
 }

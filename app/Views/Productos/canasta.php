@@ -16,7 +16,15 @@
             <div class="container">
                 <!-- Section Title Start -->
                 <div class="section-title mb-20">
-                    <h2>Carrito de Compras</h2>
+                    <h2>Carrito de Compras
+                        <?php
+                            if(isset($idProd)){
+                                echo $idProd;
+                            }else{
+                                'nada';
+                            }
+                        ?>
+                    </h2>
                 </div>
             </div>
         </div>
