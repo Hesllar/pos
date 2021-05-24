@@ -12,11 +12,11 @@
                         <div class="col-lg-2">
                             <!-- Nav tabs -->
                             <ul class="nav flex-column dashboard-list" role="tablist">
-                                <li><a data-toggle="tab" href="#dashboard">Tablero</a></li>
+                                <li><a data-toggle="tab" ><h4>Categorias</h4></a></li>
                                 <li><a class="<?php echo $e_producto; ?>" href="<?php echo base_url() ?>/Productos/productoEmp">Productos</a></li>
                                 <li><a class="<?php echo $e_proveedor; ?>" href="<?php echo base_url() ?>/Proveedor">Proveedores</a></li>
                                 <li><a class="<?php echo $e_ordencompra; ?>" href="<?php echo base_url() ?>/ordenescompra/traerOrden">Ordenes de compra</a></li>
-                                <li><a href="<?php echo base_url() ?>/CerrarSesion">Cerrar Sesión</a></li>
+                                <li><a href="<?php echo base_url() ?>/Usuarios/logout">Cerrar Sesión</a></li>
                             </ul>
                         </div>
                         <div class="col-lg-10">
