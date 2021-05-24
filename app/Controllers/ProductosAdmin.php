@@ -115,7 +115,7 @@ class ProductosAdmin extends BaseController
 
         $this->productos->save([
             'imagen' => $newName,
-            'id_producto' => $this->request->getPost('Codigo_barra'),
+            //'id_producto' => $this->request->getPost('Codigo_barra'),
             'nombre' => $this->request->getPost('nombre_producto'),
             'marca' => $this->request->getPost('marca'),
             'descripcion' => $this->request->getPost('descripcion'),
@@ -160,7 +160,7 @@ class ProductosAdmin extends BaseController
 
         $this->productos->save([
             'imagen' => $newName,
-            'id_producto' => $this->request->getPost('Codigo_barra'),
+            //'id_producto' => $this->request->getPost('Codigo_barra'),
             'nombre' => $this->request->getPost('nombre_producto'),
             'marca' => $this->request->getPost('marca'),
             'descripcion' => $this->request->getPost('descripcion'),
@@ -330,7 +330,7 @@ class ProductosAdmin extends BaseController
             #$img->move('img/productos/', $img);
 
 
-            return redirect()->to(base_url() . 'productos/productos_emp'); //revisar!
+            return redirect()->to(base_url() . '/productos/productoEmp'); //revisar!
         } else {
             return $this->editar($this->request->getPost('id_producto'), $this->validator);
         }
@@ -357,6 +357,25 @@ class ProductosAdmin extends BaseController
         echo view('header', $data);
         echo view('administrador/eliminar_producto');
         echo view('footer');
+    }
+
+    public function pagEliminarProEmp()
+    {
+        $this->request = \Config\Services::request();
+        $productos = $this->productos->where('estado', 0)->findAll();
+        $configuracion = $this->configuracion->First();
+        $data = ['datos' => $productos, 'configuracion' => $configuracion,];
+
+
+        echo view('header', $data);
+        echo view('Empleado/productos_eliminados_emp');
+        echo view('footer');
+    }
+
+    public function reingresarProdEmp($id, $estado = 1)
+    {
+        $this->productos->update($id, ['estado' => $estado]);
+        return redirect()->to(base_url() . '/productosadmin/pagEliminarProEmp ');
     }
 
     public function reingresarProd($id, $estado = 1)

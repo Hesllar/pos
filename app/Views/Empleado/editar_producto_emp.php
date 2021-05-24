@@ -5,7 +5,7 @@
 <?php }
 ?>
 
-<form class="form-horizontal " d-flex justify-content-center method="Post" enctype="multipart/form-data" action="<?php echo base_url() ?>/Productos/productoEmp">
+<form class="form-horizontal " d-flex justify-content-center method="Post" enctype="multipart/form-data" action="<?php echo base_url() ?>/productosadmin/actualizarEmp">
     <div class="modal-body d-flex justify-content-center">
         <div class="row  ">
             <div class="col-sm-12  ">
