@@ -75,14 +75,6 @@
                             <div class="col-sm-12">
                                 <fieldset>
                                     <div class="form-group">
-                                        <label class="control-label" for="nombre_producto"><span class="require">*</span>Codigo de barra</label>
-                                        <div class="col-sm-10">
-                                            <input type="text" class="form-control" id="Codigo_barra" name="Codigo_barra" placeholder="Ingese nombre producto">
-                                            <label for="" id="lbCodBarra"></label>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
                                         <label class="control-label" for="nombre_producto"><span class="require">*</span>Nombre producto</label>
                                         <div class="col-sm-10">
                                             <input type="text" class="form-control" id="nombre_producto" name="nombre_producto" placeholder="Ingese nombre producto">

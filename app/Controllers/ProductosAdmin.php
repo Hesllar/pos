@@ -115,7 +115,7 @@ class ProductosAdmin extends BaseController
 
         $this->productos->save([
             'imagen' => $newName,
-            'id_producto' => $this->request->getPost('Codigo_barra'),
+            //'id_producto' => $this->request->getPost('Codigo_barra'),
             'nombre' => $this->request->getPost('nombre_producto'),
             'marca' => $this->request->getPost('marca'),
             'descripcion' => $this->request->getPost('descripcion'),
@@ -160,7 +160,7 @@ class ProductosAdmin extends BaseController
 
         $this->productos->save([
             'imagen' => $newName,
-            'id_producto' => $this->request->getPost('Codigo_barra'),
+            //'id_producto' => $this->request->getPost('Codigo_barra'),
             'nombre' => $this->request->getPost('nombre_producto'),
             'marca' => $this->request->getPost('marca'),
             'descripcion' => $this->request->getPost('descripcion'),
