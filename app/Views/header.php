@@ -162,19 +162,22 @@ $user_session = session();
                                     <?php
                                     }
                                     ?>
-                                    <li><a href="#"><i class="fa fa-shopping-basket"></i><span class="cart-counter">2</span></a>
+                                    <li><a href="#"><i class="fa fa-shopping-basket"></i><span class="cart-counter">0</span></a>
                                         <ul class="ht-dropdown main-cart-box">
-                                            <li class="lista-carrito">
-                                                <!-- Cart Box Start -->
-                                            </li>
-                                            <li class="footer-carrito">
-                                                <div class="cart-footer fix">
-                                                    <h5>total: $<span class="f-right total">0</span></h5>
-                                                    <div class="cart-actions">
-                                                        <a class="checkout" href="checkout.html">Comprar</a>
+                                            <form class="form-horizontal" id="nuevaCompraPost" method="post" enctype="multipart/form-data" action="<?php echo base_url() ?>/canasta/nuevaCompra">
+                                                <li class="lista-carrito">
+                                                    <!-- Aqui van los productos del carrito por JS -->
+                                                </li>
+                                                <li class="footer-carrito">
+                                                    <div class="cart-footer fix">
+                                                        <input id="tt" name="tt" value="50">
+                                                        <h5>total: $<span class="f-right total">0</span></h5>
+                                                        <div class="cart-actions">
+                                                            <button type="submit" id="realizar-compra" class="checkout">Comprar</button>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </li>
+                                                </li>
+                                            </form>
                                         </ul>
                                     </li>
                                 </ul>

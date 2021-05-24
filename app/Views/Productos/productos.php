@@ -67,6 +67,7 @@
                                 <?php foreach ($datos as $dato) { ?>
                                     <div class="col-lg-4 col-sm-6">
                                         <div class="single-product">
+                                        <input class="id_produc" value="<?php echo $dato['id_producto']; ?>" hidden>
                                             <!-- Product Image Start -->
                                             <div class="pro-img">
                                                 <a href="product.html">
@@ -110,6 +111,7 @@
                             <!-- Single Product Start -->
                             <?php foreach ($datos as $dato) { ?>
                                 <div class="single-product">
+                                <input class="id_produc" id="<?php echo $dato['id_producto']; ?>" value="<?php echo $dato['id_producto']; ?>" hidden>
                                     <!-- Product Image Start -->
                                     <div class="pro-img">
                                         <a href="#">
