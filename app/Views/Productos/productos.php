@@ -67,6 +67,7 @@
                                 <?php foreach ($datos as $dato) { ?>
                                     <div class="col-lg-4 col-sm-6">
                                         <div class="single-product">
+                                        <input class="id_produc" value="<?php echo $dato['id_producto']; ?>" hidden>
                                             <!-- Product Image Start -->
                                             <div class="pro-img">
                                                 <a href="product.html">
@@ -110,6 +111,7 @@
                             <!-- Single Product Start -->
                             <?php foreach ($datos as $dato) { ?>
                                 <div class="single-product">
+                                <input class="id_produc" id="<?php echo $dato['id_producto']; ?>" value="<?php echo $dato['id_producto']; ?>" hidden>
                                     <!-- Product Image Start -->
                                     <div class="pro-img">
                                         <a href="#">
@@ -175,43 +177,5 @@
     <!-- Container End -->
 </div>
 <!-- Shop Page End -->
-<!-- Brand Logo Start -->
-<div class="brand-area pb-60">
-    <div class="container">
-        <!-- Brand Banner Start -->
-        <div class="brand-banner owl-carousel">
-            <div class="single-brand">
-                <a href="#"><img class="img" src="img/brand/1.png" alt="brand-image"></a>
-            </div>
-            <div class="single-brand">
-                <a href="#"><img src="img/brand/2.png" alt="brand-image"></a>
-            </div>
-            <div class="single-brand">
-                <a href="#"><img src="img/brand/3.png" alt="brand-image"></a>
-            </div>
-            <div class="single-brand">
-                <a href="#"><img src="img/brand/4.png" alt="brand-image"></a>
-            </div>
-            <div class="single-brand">
-                <a href="#"><img src="img/brand/5.png" alt="brand-image"></a>
-            </div>
-            <div class="single-brand">
-                <a href="#"><img class="img" src="img/brand/1.png" alt="brand-image"></a>
-            </div>
-            <div class="single-brand">
-                <a href="#"><img src="img/brand/2.png" alt="brand-image"></a>
-            </div>
-            <div class="single-brand">
-                <a href="#"><img src="img/brand/3.png" alt="brand-image"></a>
-            </div>
-            <div class="single-brand">
-                <a href="#"><img src="img/brand/4.png" alt="brand-image"></a>
-            </div>
-            <div class="single-brand">
-                <a href="#"><img src="img/brand/5.png" alt="brand-image"></a>
-            </div>
-        </div>
-        <!-- Brand Banner End -->
-    </div>
-</div>
+
 <!-- Brand Logo End -->

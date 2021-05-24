@@ -26,7 +26,7 @@ class DatosPersonales extends BaseController
 	{
 	}
 
-
+	//Aqui se Insertan Datos para un nuevo Usuario
 	public function insertarDatosPerso($id, $dv, $nombre, $apellidos, $email, $celular, $juridico)
 	{
 		$this->request = \Config\Services::request();
@@ -41,6 +41,23 @@ class DatosPersonales extends BaseController
 			'direccion_fk' => $this->buscarIdDireccion()
 		]);
 	}
+
+	//Aqui se Insertan Datos para un nuevo Proveedor
+	public function insertarDatosProveedor($id, $dv, $nombre, $apellidos, $email, $celular)
+	{
+		$this->request = \Config\Services::request();
+		$this->datospersonales->save([
+			'rut' => $id,
+			'dv' => $dv,
+			'nombres' => $nombre,
+			'apellidos' => $apellidos,
+			'correo' => $email,
+			'celular' => $celular,
+			'natural_juridico' => 1,
+			'direccion_fk' => $this->buscarIdDireccion()
+		]);
+	}
+
 	public function buscarIdPerso($idRut)
 	{
 		/*$this->datospersonales->select('rut');
@@ -54,6 +71,16 @@ class DatosPersonales extends BaseController
 		return $datospersonales;
 	}
 	public function insertarDireccion($ciudad, $calle, $numero, $comuna)
+	{
+		$this->direccion->save([
+			'ciudad' => $ciudad,
+			'calle' => $calle,
+			'numero' => $numero,
+			'comuna_fk' => $comuna
+		]);
+	}
+
+	public function insertarDireccionProveedor($ciudad, $calle, $numero, $comuna)
 	{
 		$this->direccion->save([
 			'ciudad' => $ciudad,

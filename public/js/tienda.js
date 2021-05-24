@@ -1,33 +1,51 @@
 const agregarCarritoBotones = document.querySelectorAll('.add-cart');
 const contenedorProductos = document.querySelector('.lista-carrito');
+const btnComprar = document.getElementById('realizar-compra');
+var contador = 0;
 
 // Create our number formatter.
 var formatter = new Intl.NumberFormat('es-CL', {
     style: 'currency',
     currency: 'CLP',
-  
-    // These options are needed to round to whole numbers if that's what you want.
-    //minimumFractionDigits: 0, // (this suffices for whole numbers, but will print 2500.10 as $2,500.1)
-    //maximumFractionDigits: 0, // (causes 2500.99 to be printed as $2,501)
   });
 
 agregarCarritoBotones.forEach((productoAgregar) => {
     productoAgregar.addEventListener('click', agregarAlCarroClick);
 });
 
+
+    btnComprar.addEventListener('click', realizarCompra);
+
+
 function agregarAlCarroClick(event) {
     const boton = event.target;
     const item = boton.closest('.single-product');
 
+    const itemCodigo = item.querySelector('.id_produc').value;
     const itemNombre = item.querySelector('h4').textContent;
     const itemPrecio = item.querySelector('span').textContent;
     const itemImagen = item.querySelector('img').src;
-
-    agregarProducto(itemNombre, itemPrecio, itemImagen);
-
+    agregarProducto(itemCodigo, itemNombre, itemPrecio, itemImagen);
 }
 
-function agregarProducto(itemNombre, itemPrecio, itemImagen) {
+function actualizarContador(c, rev){
+    const numeroContador = document.querySelector('.cart-counter');
+    switch (c) {
+        case "+":
+            contador++;
+            break;
+        case "-":
+            contador = contador - rev;
+            break;
+        default:
+          contador = 0;
+          break;
+    }
+    numeroContador.innerHTML=`${contador}`;
+}
+
+function agregarProducto(itemCodigo, itemNombre, itemPrecio, itemImagen) {
+    actualizarContador("+",0);
     const tituloProd = contenedorProductos.getElementsByClassName('titulo');
     for(let i = 0; i < tituloProd.length; i++){
         if(tituloProd[i].textContent === itemNombre){
@@ -37,16 +55,18 @@ function agregarProducto(itemNombre, itemPrecio, itemImagen) {
             return;
         }
     }
+    
     const productoEnFila = document.createElement('li');
     const contenedor = `
     <div class="single-cart-box">
         <div class="cart-img">
+            <input class="id_prod_carrito" id="id_prod_carrito" name="id_prod_carrito" value="${itemCodigo}" hidden>
             <a href="#"><img src=${itemImagen} alt="cart-image"></a>
         </div>
         <div class="cart-content">
             <h6><a class="titulo">${itemNombre}</a></h6>
             <span class="precio">$${itemPrecio}</span> x 
-            <input class="cantidad" type="number" value="1"> 
+            <input id="cantidadComprar" name="cantidadComprar" class="cantidad" type="number" value="1"> 
         </div>
         <a class="del-icone"><i class="fa fa-window-close-o"></i></a>
     </div>`;
@@ -62,9 +82,11 @@ function agregarProducto(itemNombre, itemPrecio, itemImagen) {
         .querySelector('.cantidad')
         .addEventListener('change', cambiarCantidad);
     }
-
+    
     actualizarTotal();
     ///cart-box
+
+    
 }
 
 function actualizarTotal(){
@@ -82,14 +104,14 @@ function actualizarTotal(){
     });
     let ttt = formatter.format(total.toFixed(0));
     totalCarrito.innerHTML= `${ttt}`;
-
-
 }
 
 function eliminarProducto(event){
     const botonClick = event.target;
+    const cantidadCarrito = botonClick.closest('.single-cart-box').querySelector(".cantidad");
     botonClick.closest('.single-cart-box').remove();
     actualizarTotal();
+    actualizarContador("-",cantidadCarrito.value);
 }
 
 function cambiarCantidad(event){
@@ -98,10 +120,22 @@ function cambiarCantidad(event){
     actualizarTotal();
 }
 
-const cfoot = `
-<div class="cart-footer fix">
-<h5>total :<span class="f-right">$698.00</span></h5>
-<div class="cart-actions">
-    <a class="checkout" href="checkout.html">Comprar</a>
-</div>
-</div>`;
+function realizarCompra(){
+    const carritoProductos = document.querySelectorAll('.single-cart-box');
+    var arrayCompras = new Array();
+
+    carritoProductos.forEach(carritoProducto => {
+        var idProducto = carritoProducto.querySelector(".id_prod_carrito").value;
+        var cantidad =carritoProducto.querySelector(".cantidad").value;
+        arrayCompras.push([idProducto,cantidad]);
+    });
+    console.log("Array: " ,arrayCompras);
+                $.ajax({
+                    url: "http://localhost/pos/public/Canasta/nuevaCompra",
+                    method: "POST",
+                    data: {
+                        compras:arrayCompras,
+                    },
+                    dataType: "JSON",
+                });
+}

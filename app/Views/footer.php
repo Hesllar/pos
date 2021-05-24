@@ -4,6 +4,8 @@
          <div class="container">
 
              <div class="row">
+
+
                  <!-- Single Footer Start -->
                  <div class="col-lg-4  col-md-7 col-sm-6">
                      <div class="single-footer">
@@ -12,12 +14,13 @@
                              <div class="loc-address">
                                  <span><i class="fa fa-map-marker"></i><?php echo $configuracion['direccion'] ?></span>
                                  <span><a ><i class="fa fa-envelope-o"></i><?php echo $configuracion['correo_principal'] ?></a></span>
-                                 <span><a href="https://api.whatsapp.com/send?phone=56972678521&text=Hola!%20tengo%20una%20duda%20o%20sugerencia!" Target="_blank"><i class="fa fa-phone"></i>Tel&eacute;fono : +56 (9)<?php echo $configuracion['telefono'] ?></a> </span>
+                                 <span><a href="https://api.whatsapp.com/send?phone=56972678521&text=Hola!%20tengo%20una%20duda%20o%20sugerencia!" Target="_blank"><i class="fa fa-whatsapp"></i></i>Tel&eacute;fono : +56 (9)<?php echo $configuracion['telefono'] ?></a> </span>
                              </div>
                              <div class="payment-mth"><a><img class="img" src="img/footer/1.png" alt="payment-image"></a></div>
                          </div>
                      </div>
                  </div>
+                 
                  <!-- Single Footer Start -->
                  <!-- Single Footer Start -->
                  <div class="col-lg-2  col-md-5 col-sm-6 footer-full">
