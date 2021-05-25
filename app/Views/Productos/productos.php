@@ -17,7 +17,6 @@
                             <?php foreach ($categorias as $categoria) { ?>
                                 <li><a href="#"><?php echo $categoria['nombre_categoria']; ?></a></li>
                             <?php } ?>
-
                         </ul>
                     </div>
                     <!-- Single Banner Start -->
@@ -60,14 +59,12 @@
                     <!-- Grid & List Main Area End -->
                     <div class="tab-content fix">
                         <div id="grid-view" class="tab-pane active">
-
-
                             <div class="row">
                                 <!-- Single Product Start -->
                                 <?php foreach ($datos as $dato) { ?>
                                     <div class="col-lg-4 col-sm-6">
                                         <div class="single-product">
-                                        <input class="id_produc" value="<?php echo $dato['id_producto']; ?>" hidden>
+                                            <input class="id_produc" value="<?php echo $dato['id_producto']; ?>" hidden>
                                             <!-- Product Image Start -->
                                             <div class="pro-img">
                                                 <a href="product.html">
@@ -92,8 +89,8 @@
                                                     <div class="actions-secondary">
                                                         <a href="wishlist.html" title="Añadir a favoritos"><i class="fa fa-heart"></i></a>
                                                         <button id="<?php echo $dato['id_producto']; ?>" class="add-cart" title="Añadir al carro">Añadir carro</button>
-                                                       <!-- <a class="add-cart" href="" data-toggle="tooltip" title="Añadir al carro">Añadir</a>-->
-                                    
+                                                        <!-- <a class="add-cart" href="" data-toggle="tooltip" title="Añadir al carro">Añadir</a>-->
+
                                                     </div>
                                                 </div>
                                             </div>
@@ -111,7 +108,7 @@
                             <!-- Single Product Start -->
                             <?php foreach ($datos as $dato) { ?>
                                 <div class="single-product">
-                                <input class="id_produc" id="<?php echo $dato['id_producto']; ?>" value="<?php echo $dato['id_producto']; ?>" hidden>
+                                    <input class="id_produc" id="<?php echo $dato['id_producto']; ?>" value="<?php echo $dato['id_producto']; ?>" hidden>
                                     <!-- Product Image Start -->
                                     <div class="pro-img">
                                         <a href="#">
@@ -139,7 +136,7 @@
                                         <div class="pro-actions">
                                             <div class="actions-secondary">
                                                 <a href="wishlist.html" data-toggle="tooltip" title="Añadir a favoritos"><i class="fa fa-heart"></i></a>
-                                                </div>
+                                            </div>
                                         </div>
                                     </div>
 

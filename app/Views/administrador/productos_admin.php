@@ -231,7 +231,6 @@
 <script>
     $("#agregarProductoForm").submit(function(e) {
         var fun = "funregistrar";
-        var codBarra = $("#Codigo_barra").val();
         var nomProducto = $("#nombre_producto").val();
         var marca = $("#marca").val();
         var precVenta = $("#precio_venta").val();
@@ -241,18 +240,7 @@
         var descri = $("#descripcion").val();
         var img = $("#imagen").val();
 
-
-
-
-        if (codBarra == '') {
-            setTimeout(function() {
-                $("#lbCodBarra").html("<span style='color:red;'> Complete el campo codigo de barra </span>").fadeOut(10000);
-            }, 0);
-
-            $("#Codigo_barra").focus();
-            return false;
-
-        } else if (nomProducto == '') {
+        if (nomProducto == '') {
             setTimeout(function() {
                 $("#lbNomPro").html("<span style='color:red;'> Complete el campo nombre producto </span>").fadeOut(10000);
             }, 0);
@@ -314,7 +302,6 @@
                 method: "POST",
                 data: {
                     "funcion": fun,
-                    "codBarra": codBarra,
                     "nombres": nomProducto,
                     "marca": marca,
                     "precVenta": precVenta,

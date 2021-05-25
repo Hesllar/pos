@@ -11,59 +11,63 @@ use App\Models\RegionModel;
 use App\Models\DatosPersonalesModel;
 use App\Controllers\DatosPersonales;
 use App\Models\UsuarioModel;
+use App\Models\EmpresaModel;
 
 
 class Proveedor extends BaseController
 {
-    protected $configuracion;
-    protected $proveedor;
-    protected $ordenesCompra;
-    protected $region;
-    protected $request;
-    protected $datospersonalesmodel;
-    protected $datosPersonalesControl;
-    protected $usuarioModal;
+	protected $empresa;
+	protected $configuracion;
+	protected $proveedor;
+	protected $ordenesCompra;
+	protected $region;
+	protected $request;
+	protected $datospersonalesmodel;
+	protected $datosPersonalesControl;
+	protected $usuarioModal;
 
 
-    public function __construct()
-    {
-        $this->configuracion = new ConfiguracionModel;
-        $this->proveedor = new ProveedorModel;
-        $this->ordenesCompra = new OrdenesCompra;
-        $this->region = new RegionModel;
-        $this->datospersonalesmodel = new DatosPersonalesModel;
-        $this->datosPersonalesControl = new DatosPersonales;
-        $this->usuarioModal = new UsuarioModel;
-    }
+	public function __construct()
+	{
+		$this->empresa = new EmpresaModel;
+		$this->configuracion = new ConfiguracionModel;
+		$this->proveedor = new ProveedorModel;
+		$this->ordenesCompra = new OrdenesCompra;
+		$this->region = new RegionModel;
+		$this->datospersonalesmodel = new DatosPersonalesModel;
+		$this->datosPersonalesControl = new DatosPersonales;
+		$this->usuarioModal = new UsuarioModel;
+	}
 
-    public function index()
-    {
-        #Condicion para mostrar los productos mayor al stock critico
+	public function index()
+	{
+		#Condicion para mostrar los productos mayor al stock critico
 
-        $regionAll = $this->region->findall();
-        $proveedor = $this->proveedor->findall();
-        $configuracion = $this->configuracion->First();
-        $data = ['datos' => $proveedor, 'configuracion' => $configuracion, 'region' => $regionAll];
-        $estados = [
-            'e_producto' => '',
-            'e_ordencompra' => '',
-            'e_proveedor' => '',
-            'e_config' => 'active'
-        ];
-        echo view('header', $data);
-        echo view('Empleado/panel_header_emp', $estados);
-        echo view('Empleado/proveedor_emp');
-        echo view('administrador/panel_footer');
-        echo view('footer');
-    }
+		$regionAll = $this->region->findall();
+		$proveedor = $this->dtsProveedor();
+		$configuracion = $this->configuracion->First();
+		$data = ['datos' => $proveedor, 'configuracion' => $configuracion, 'region' => $regionAll];
+		$estados = [
+			'e_producto' => '',
+			'e_ordencompra' => '',
+			'e_proveedor' => '',
+			'e_config' => 'active'
+		];
+		echo view('header', $data);
+		echo view('Empleado/panel_header_emp', $estados);
+		echo view('Empleado/proveedor_emp');
+		echo view('administrador/panel_footer');
+		echo view('footer');
+	}
 
-    public function insertarProveedor()
+	public function insertarProveedor()
 	{
 		$this->request = \Config\Services::request();
 		//Acá la funciones insertarNvl obtiene el nivel de acceso y lo guarda en su respectiva tabla
 		/*$this->nivel->insertarNvl([
 			$this->request->getPost('nivel_acceso')
 		]);*/
+
 
 
 		//Acá se obtienen los datos de la tabla direccion
@@ -109,24 +113,74 @@ class Proveedor extends BaseController
 			'rut_fk' =>  $this->request->getPost('rut')
 		]);
 
-        
-        $this->proveedor->save([
+		//Acá se obtienen los datos de la tabla proveedor
+		$this->proveedor->save([
 
 			'rubro' => $this->request->getPost('rubro'),
 			'usuario_fk' => $this->BuscarIdUsuario()
-			
+
+		]);
+
+		//Acá se obtienen los datos de la tabla empresa
+		$this->empresa->save([
+			'rut_empresa' => $this->request->getPost('rut_emp'),
+			'dv-empresa' => $this->request->getPost('dv_emp'),
+			'razon_social' => $this->request->getPost('razon'),
+			'giro' => $this->request->getPost('giro'),
+			'telefono' => $this->request->getPost('telefono'),
+			'DATOS_PERSONALES_rut' =>  $this->request->getPost('rut'),
+			'direccion_empresa' => $this->datosPersonalesControl->buscarIdDireccion()
 		]);
 
 		return redirect()->to(base_url() . '/Proveedor');
 	}
 
-    public function BuscarIdUsuario()
+	public function BuscarIdUsuario()
 
-    {
-        $BuscarIdUsuario = $this->usuarioModal->orderBy('id_usuario', 'DESC')->First();
+	{
+		$BuscarIdUsuario = $this->usuarioModal->orderBy('id_usuario', 'DESC')->First();
 
-        return $BuscarIdUsuario['id_usuario'];
+		return $BuscarIdUsuario['id_usuario'];
+	}
 
-    }
-    
+	/*public function editarProveedor($id, $valid = null)
+	{
+
+		$productos = $this->productos->where('id_producto', $id)->first();
+		$categoria = $this->categoria->buscarId($productos['categoria']);
+		$fecha_venci = $this->detalle_producto->obtFechaVenci($productos['detalle_fk']);
+		$configuracion = $this->configuracion->First();
+		$categorias = $this->categorias->findAll();
+		if ($valid != null) {
+
+			$data = [
+				'datos' => $productos, 'configuracion' => $configuracion, 'categorias' => $categorias,
+				'cat' => $categoria, 'fecha_venci' => $fecha_venci, 'validation' => $valid
+			];
+		} else {
+			$data = [
+				'datos' => $productos, 'configuracion' => $configuracion, 'categorias' => $categorias,
+				'cat' => $categoria, 'fecha_venci' => $fecha_venci
+			];
+		}
+
+		#$this->load->view('administrador/productos_admin', $data);
+		echo view('header', $data);
+		echo view('administrador/editar_producto');
+		echo view('footer');
+	}*/
+
+
+	public function dtsProveedor()
+	{
+
+		$this->request = \Config\Services::request();
+		$this->datospersonalesmodel->select('CONCAT(e.rut_empresa, "-", e.dvempresa) AS rut_emp, e.razon_social AS razon, e.giro AS giro');
+		$this->datospersonalesmodel->join('empresa as e', 'datos_personales.rut=e.DATOS_PERSONALES_rut');
+		$this->datospersonalesmodel->join('usuario as u', 'datos_personales.rut=u.rut_fk');
+		$this->datospersonalesmodel->join('proveedor as p', 'u.id_usuario=p.usuario_fk');
+		$this->datospersonalesmodel->orderBy('id_proveedor', 'DESC');
+		$datos = $this->datospersonalesmodel->findAll();
+		return $datos;
+	}
 }

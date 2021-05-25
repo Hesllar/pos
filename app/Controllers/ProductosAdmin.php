@@ -55,7 +55,6 @@ class ProductosAdmin extends BaseController
             'stock' => 'required',
             'stock_critico' => 'required',
             'categoria' => 'required',
-            'fecha_vencimiento' => 'required',
         ];
     }
 
@@ -359,24 +358,9 @@ class ProductosAdmin extends BaseController
         echo view('footer');
     }
 
-    public function pagEliminarProEmp()
-    {
-        $this->request = \Config\Services::request();
-        $productos = $this->productos->where('estado', 0)->findAll();
-        $configuracion = $this->configuracion->First();
-        $data = ['datos' => $productos, 'configuracion' => $configuracion,];
 
 
-        echo view('header', $data);
-        echo view('Empleado/productos_eliminados_emp');
-        echo view('footer');
-    }
 
-    public function reingresarProdEmp($id, $estado = 1)
-    {
-        $this->productos->update($id, ['estado' => $estado]);
-        return redirect()->to(base_url() . '/productosadmin/pagEliminarProEmp ');
-    }
 
     public function reingresarProd($id, $estado = 1)
     {

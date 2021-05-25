@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use App\Models\VentaModel;
 use App\Models\ProductosModel;
+use App\Models\ConfiguracionModel;
 
 class Canasta extends BaseController
 {
@@ -12,31 +13,34 @@ class Canasta extends BaseController
     protected $productos;
     protected $request;
     protected $carritoArray;
+    protected $configuracion;
 
 	public function __construct()
 	{
 		$this->canasta = new VentaModel;
 		$this->productos = new ProductosModel;
+    $this->configuracion = new ConfiguracionModel;
 	}
 
-	public function index($carritoArray = null)
-	{
+    public function index($carritoArray = null)
+    {
+        $configuracion = $this->configuracion->First();
         $productos = $carritoArray;
-        if($productos){
-            $data= ['idProd' => $productos['id']];
+        if ($productos) {
+            $data = ['idProd' => $productos['id'], 'configuracion' => $configuracion];
             echo view('header');
             echo view('Productos/Canasta', $data);
             echo view('footer');
-        }else{
-            echo view('header');
+        } else {
+            $data = ['configuracion' => $configuracion];
+            echo view('header', $data);
             echo view('Productos/Canasta');
             echo view('footer');
         }
-		
-	}
-	
-	public function nuevaCompra()
-	{
+    }
+
+    public function nuevaCompra()
+    {
         $this->request = \Config\Services::request();
         //$ec = $this->request->getPost('tt');
         /*
