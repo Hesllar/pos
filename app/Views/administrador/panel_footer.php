@@ -29,6 +29,7 @@
                                 <div class="single-brand">
                                     <a href="#"><img src="<?php echo base_url(); ?>/img/brand/2.png" alt="brand-image"></a>
                                 </div>
+                                
                                 <div class="single-brand">
                                     <a href="#"><img src="<?php echo base_url(); ?>/img/brand/3.png" alt="brand-image"></a>
                                 </div>

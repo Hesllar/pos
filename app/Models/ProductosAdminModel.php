@@ -10,13 +10,13 @@ class ProductosAdminModel extends Model
     protected $table      = 'producto';
     protected $primaryKey = 'id_producto';
 
-    protected $useAutoIncrement = false;
+    protected $useAutoIncrement = true;
 
     protected $returnType     = 'array';
     protected $useSoftDeletes = false;
 
     protected $allowedFields = [
-        'id_producto',
+        //'id_producto',
         'n_registro',
         'imagen',
         'nombre',
