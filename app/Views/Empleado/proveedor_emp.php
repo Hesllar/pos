@@ -195,6 +195,7 @@
                 <tr>
                     <th>Rut empresa</th>
                     <th>Razón social</th>
+                    <th>Giro</th>
                     <th>Rubro</th>
                     <th>Acciones</th>
                 </tr>
@@ -205,6 +206,7 @@
                         <td><?php echo $proveedor['rut_emp']; ?></td>
                         <td><?php echo $proveedor['razon']; ?></td>
                         <td><?php echo $proveedor['giro']; ?></td>
+                        <td><?php echo $proveedor['rubro']; ?></td>
                         <td><a class="view" href=""> <i class="fa fa-pencil"></i></a>
                         </td>
                         <td><a class="view" data-href="" data-toggle="modal" data-target="#Eliminar">
