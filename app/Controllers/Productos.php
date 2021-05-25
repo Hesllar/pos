@@ -36,7 +36,7 @@ class Productos extends BaseController
 
     public function productoEmp()
     {
-        $productos = $this->productos->findAll();
+        $productos = $this->productos->orderProducto();
         $categorias = $this->categorias->findAll();
         $configuracion = $this->configuracion->First();
         $data = ['titulo' => 'Productos', 'datos' => $productos, 'categorias' => $categorias, 'configuracion' => $configuracion];

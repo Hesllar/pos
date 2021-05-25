@@ -15,6 +15,7 @@
                     Usuarios eliminados </button> </a>
         </div>
     </div>
+
     <!-- Modal ingreso usuarios -->
     <div class="modal fade" id="AgregarUsuario" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
@@ -73,13 +74,32 @@
                                     <div class="form-group">
                                         <p> ¿Es empresa?</p>
                                         <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="juridico" id="juridico" value="1" required>
+                                            <input class="form-check-input" type="radio" name="juridico" id="juridico" value="1" onclick="text(0)" checked>
                                             Si
                                             <br>
-                                            <input class="form-check-input" type="radio" name="juridico" id="juridico" value="0" required>
+                                            <input class="form-check-input" type="radio" name="juridico" id="juridico" value="0" onclick="text(1)">
                                             No
                                         </div>
                                         <label for="" id="lbJuridico"></label>
+                                    </div>
+                                    <h4 id="titulo">Datos empresa</h4>
+                                    <br>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <input type="number" class="form-control" id="rut_emp" name="rut_emp" placeholder="Ingrese rut empresa">
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <input type="text" class="form-control" id="dv_emp" name="dv_emp" placeholder="Ingrese dv">
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <input type="text" class="form-control" id="razon" name="razon" placeholder="Ingrese razón social">
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <input type="text" class="form-control" id="giro" name="giro" placeholder="Ingrese giro">
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <input type="text" class="form-control" id="telefono" name="telefono" placeholder="Ingrese teléfono">
+                                        </div>
                                     </div>
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
@@ -401,3 +421,25 @@
     });
 </script>
 <!-- Fin Funcion de validar formulario de registro usuario-->
+<script>
+    function text(x) {
+
+
+        if (x == 0) {
+            document.getElementById("rut_emp").style.display = "block",
+                document.getElementById("razon").style.display = "block",
+                document.getElementById("giro").style.display = "block",
+                document.getElementById("telefono").style.display = "block",
+                document.getElementById("titulo").style.display = "block",
+                document.getElementById("dv_emp").style.display = "block";
+
+        } else
+            document.getElementById("rut_emp").style.display = "none",
+            document.getElementById("razon").style.display = "none",
+            document.getElementById("giro").style.display = "none",
+            document.getElementById("telefono").style.display = "none",
+            document.getElementById("titulo").style.display = "none",
+            document.getElementById("dv_emp").style.display = "none";
+        return;
+    }
+</script>
