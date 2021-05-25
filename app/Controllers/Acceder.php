@@ -32,7 +32,6 @@ class Acceder extends BaseController
 			]
 
 		];
-
 	}
 
 	public function index()
@@ -76,7 +75,6 @@ class Acceder extends BaseController
 						'ultima_conexion' => $datosUsuario['ultima_conexion'],
 						'rut_fk' => $datosUsuario['rut_fk'],
 						'nvl_acceso_fk' => $datosUsuario['nvl_acceso_fk'],
-						'fecha_creacion' => $datosUsuario['fecha_creacion'],
 					];
 					$data = ['titulo' => 'Validar', 'datos' => $datosSesion, 'configuracion' => $configuracion];
 					$session = session();

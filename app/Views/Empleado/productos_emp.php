@@ -12,11 +12,6 @@
                                             </button>
                                         </div>
 
-                                        <div class="pull-right ">
-                                            <a href="<?php echo base_url(); ?>/productosadmin/pagEliminarProEmp"> <button type="button" class="btn-submit">
-                                                    Pro. eliminados </button> </a>
-
-                                        </div>
                                     </div>
 
 

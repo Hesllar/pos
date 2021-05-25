@@ -11,12 +11,16 @@ use App\Models\NivelAccesoModel;
 use App\Models\RegionModel;
 use App\Models\ComunaModel;
 use App\Models\DireccionModel;
+use App\Models\EmpresaModel;
+
+
 
 
 
 
 class Usuarios extends BaseController
 {
+	protected $empresa;
 	protected $nivel;
 	protected $direccion;
 	protected $region;
@@ -31,6 +35,7 @@ class Usuarios extends BaseController
 	public function __construct()
 	{
 
+		$this->empresa = new EmpresaModel;
 		$this->direccion = new DireccionModel;
 		$this->datosPersonalesControl = new DatosPersonales;
 		$this->comuna = new ComunaModel;
@@ -149,6 +154,7 @@ class Usuarios extends BaseController
 			$newName = $img->getName();
 			$img->move('img/Usuarios', $newName);
 		}
+		//Acá insertamos los datos a la tabla usuario
 		$this->usuarioModal->save([
 			'nom_usuario' => $this->request->getPost('nombre_usuario'),
 			'contrasena' => $this->request->getPost('contraseña2'),
@@ -157,6 +163,20 @@ class Usuarios extends BaseController
 			'nvl_acceso_fk' => $this->request->getPost('nivel_acceso'),
 			'rut_fk' =>  $this->request->getPost('rut')
 		]);
+
+		//Acá insertamos los datos a la tabla empresa
+		if ($this->request->getPost('juridico') == 1) {
+			$this->empresa->save([
+				'rut_empresa' => $this->request->getPost('rut_emp'),
+				'dv-empresa' => $this->request->getPost('dv_emp'),
+				'razon_social' => $this->request->getPost('razon'),
+				'giro' => $this->request->getPost('giro'),
+				'telefono' => $this->request->getPost('telefono'),
+				'DATOS_PERSONALES_rut' =>  $this->request->getPost('rut'),
+				'direccion_empresa' => $this->datosPersonalesControl->buscarIdDireccion()
+			]);
+		}
+
 		return redirect()->to(base_url() . '/Usuarios');
 	}
 
