@@ -164,6 +164,7 @@ $user_session = session();
                                     ?>
                                     <li><a href="#"><i class="fa fa-shopping-basket"></i><span class="cart-counter">0</span></a>
                                         <ul class="ht-dropdown main-cart-box">
+
                                             <!-- <form class="form-horizontal" id="nuevaCompraPost" method="post" enctype="multipart/form-data" action="<?php // echo base_url() 
                                                                                                                                                         ?>/canasta/nuevaCompra">-->
                                             <li class="lista-carrito">

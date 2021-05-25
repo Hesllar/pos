@@ -1,6 +1,6 @@
 <!-- Header Area End -->
 <!-- Shop Page Start -->
-<div class="main-shop-page pb-60">
+<div class="main-shop-page pb-60" id="main-producto">
     <div class="container">
         <!-- Row End -->
         <div class="row">
@@ -10,7 +10,7 @@
                 <div class="sidebar white-bg">
                     <div class="single-sidebar">
                         <div class="group-title">
-                            <h2>categorias</h2>
+                            <h2 id="catt">categorias</h2>
                         </div>
                         <ul>
                             <li><a href="#">Ver todo</a></li>

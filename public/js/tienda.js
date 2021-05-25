@@ -126,16 +126,23 @@ function realizarCompra(){
 
     carritoProductos.forEach(carritoProducto => {
         var idProducto = carritoProducto.querySelector(".id_prod_carrito").value;
+        var titulo =carritoProducto.querySelector(".titulo").textContent;
         var cantidad =carritoProducto.querySelector(".cantidad").value;
-        arrayCompras.push([idProducto,cantidad]);
+        var precio =carritoProducto.querySelector(".precio").textContent;
+        arrayCompras.push([idProducto,titulo,cantidad,precio]);
     });
-    console.log("Array: " ,arrayCompras);
+    
+    var totalCarro = document.querySelector('.total').textContent;
                 $.ajax({
                     url: "http://localhost/pos/public/Canasta/nuevaCompra",
                     method: "POST",
                     data: {
                         compras:arrayCompras,
+                        total:totalCarro,
                     },
-                    dataType: "JSON",
+                    success: function(data){
+                        return $("#main-producto").html(data);
+
+                    },
                 });
 }

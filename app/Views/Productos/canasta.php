@@ -1,10 +1,14 @@
+     <?php 
+        isset($arrayCompra) ? $arrayProductos = $arrayCompra :  $arrayProductos = null;
+        print_r($arrayProductos);
+     ?>
         <!-- Breadcrumb Start -->
         <div class="breadcrumb-area pt-60 pb-55 pt-sm-30 pb-sm-20">
             <div class="container">
                 <div class="breadcrumb">
                     <ul>
-                        <li><a href="index.html">Home</a></li>
-                        <li class="active"><a href="checkout.html">Checkout</a></li>
+                        <li><a href="index.html">Inicio</a></li>
+                        <li class="active"><a href="checkout.html">Confirmar Compra</a></li>
                     </ul>
                 </div>
             </div>
@@ -18,11 +22,7 @@
                 <div class="section-title mb-20">
                     <h2>Carrito de Compras
                         <?php
-                            if(isset($idProd)){
-                                echo $idProd;
-                            }else{
-                                'nada';
-                            }
+
                         ?>
                     </h2>
                 </div>
@@ -232,31 +232,29 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr class="cart_item">
+                                        <?php 
+                                            foreach ($arrayCompra as $producto) {
+                                        ?>
+                                                <tr class="cart_item">
                                                 <td class="product-name">
-                                                    Products Name Here <strong class="product-quantity"> × 1</strong>
+                                                    <?php echo $producto[1]; ?><strong class="product-quantity"> × <?php echo $producto[2]; ?></strong>
                                                 </td>
                                                 <td class="product-total">
-                                                    <span class="amount">£165.00</span>
+                                                    <span class="amount"><?php echo $producto[3]; ?></span>
                                                 </td>
                                             </tr>
-                                            <tr class="cart_item">
-                                                <td class="product-name">
-                                                    Products Name Here <strong class="product-quantity"> × 1</strong>
-                                                </td>
-                                                <td class="product-total">
-                                                    <span class="amount">£50.00</span>
-                                                </td>
-                                            </tr>
+                                        <?php
+                                            }
+                                        ?>
                                         </tbody>
                                         <tfoot>
                                             <tr class="cart-subtotal">
                                                 <th>Cart Subtotal</th>
-                                                <td><span class="amount">£215.00</span></td>
+                                                <td><span class="amount"><?php echo $totalCompra; ?></span></td>
                                             </tr>
                                             <tr class="order-total">
                                                 <th>Order Total</th>
-                                                <td><strong><span class="amount">£215.00</span></strong>
+                                                <td><strong><span class="amount"><?php echo $totalCompra; ?></span></strong>
                                                 </td>
                                             </tr>
                                         </tfoot>

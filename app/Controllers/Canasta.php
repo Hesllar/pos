@@ -4,22 +4,23 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use App\Models\VentaModel;
+use App\Models\ProductosModel;
 use App\Models\ConfiguracionModel;
-
-
 
 class Canasta extends BaseController
 {
-    protected $configuracion;
-    protected $canasta;
+	protected $canasta;
+    protected $productos;
     protected $request;
     protected $carritoArray;
+    protected $configuracion;
 
-    public function __construct()
-    {
-        $this->canasta = new VentaModel;
-        $this->configuracion = new ConfiguracionModel;
-    }
+	public function __construct()
+	{
+		$this->canasta = new VentaModel;
+		$this->productos = new ProductosModel;
+    $this->configuracion = new ConfiguracionModel;
+	}
 
     public function index($carritoArray = null)
     {
@@ -47,7 +48,13 @@ class Canasta extends BaseController
         $ec = $this->request->getPost('cantidad');
         */
         //$action = $this->request->getVar('compras')."  -  ".$this->request->getVar('id1');
-        $carritoArray = json_encode($this->request->getVar('compras'));
-        return redirect()->to(base_url() . '/Canasta');
-    }
+        //return  json_encode($this->request->getVar('compras'));
+        //return redirect()->to(base_url() . '/Canasta');
+        //echo view('Productos/Canasta');
+        $array1 = array();
+        //$this->listarCarrito($array1);
+        
+        $data = ['arrayCompra' => ($this->request->getVar('compras')),'totalCompra' => $this->request->getVar('total')];
+        return view('Productos/Canasta', $data);
+	}
 }
