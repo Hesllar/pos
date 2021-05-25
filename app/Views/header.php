@@ -173,8 +173,8 @@ $user_session = session();
                                                         <input id="tt" name="tt" value="50">
                                                         <h5>total: $<span class="f-right total">0</span></h5>
                                                         <div class="cart-actions">
-                                                            <!--<a href="#" id="realizar-compra" class="checkout">Comprar</a> -->
-                                                            <button type="submit" id="realizar-compra" class="checkout">Comprar</a>
+                                                            <a href="#" id="realizar-compra" class="checkout">a Comprar</a>
+                                                           <!--  <button type="submit" id="realizar-compra" class="checkout">b Comprar</a> -->
                                                         </div>
                                                     </div>
                                                 </li>
