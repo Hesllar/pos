@@ -60,13 +60,6 @@
                                         </div>
                                     </div>
                                     <div class="form-row">
-                                        <div class="form-group col-md-6">
-                                            <label for="rubro">*Rubro Empresa</label>
-                                            <input type="text" class="form-control" id="rubro" name="rubro" placeholder="Ingrese rubro">
-                                            <label for="" id="lbCiudad"></label>
-                                        </div>
-                                    </div>
-                                    <div class="form-row">
                                         <div class="form-group col-md-6" id="casilla_email">
                                             <label for="email">*Email</label>
                                             <input type="email" class="form-control" id="email" name="email" placeholder="ejemplo@gmail.com">
@@ -78,7 +71,44 @@
                                             <label for="" id="lbCelular"></label>
                                         </div>
                                     </div>
-        
+
+                                    <h5>Datos empresa</h5>
+                                    <br>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label for="rubro">*Rut empresa</label>
+                                            <input type="number" class="form-control" id="rut_emp" name="rut_emp" placeholder="Ingrese rut empresa" required>
+
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="rubro">*Dv</label>
+                                            <input type="text" class="form-control" id="dv_emp" name="dv_emp" placeholder="Ingrese dv" required>
+
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label for="rubro">*Rubro</label>
+                                            <input type="text" class="form-control" id="rubro" name="rubro" placeholder="Ingrese rubro" required>
+
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="rubro">*Razón social</label>
+                                            <input type="text" class="form-control" id="razon" name="razon" placeholder="Ingrese giro" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label for="rubro">°Teléfono</label>
+                                            <input type="number" class="form-control" id="telefono" name="telefono" placeholder="Ingrese teléfono">
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="rubro">*Giro</label>
+                                            <input type="text" class="form-control" id="giro" name="giro" placeholder="Ingrese giro">
+                                        </div>
+                                    </div>
+                                    <h5>Dirección</h5>
+                                    <br>
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
                                             <label for="region">*Region</label>
@@ -144,7 +174,7 @@
                                             <label for="" id="lbAvatar"></label>
                                         </div>
                                     </div>
-                                    
+
                                 </fieldset>
                             </div>
                         </div>
@@ -163,7 +193,9 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th>Id_proveedor</th>
+                    <th>Rut empresa</th>
+                    <th>Razón social</th>
+                    <th>Giro</th>
                     <th>Rubro</th>
                     <th>Acciones</th>
                 </tr>
@@ -171,7 +203,9 @@
             <tbody>
                 <?php foreach ($datos as $proveedor) { ?>
                     <tr>
-                        <td><?php echo $proveedor['id_proveedor']; ?></td>
+                        <td><?php echo $proveedor['rut_emp']; ?></td>
+                        <td><?php echo $proveedor['razon']; ?></td>
+                        <td><?php echo $proveedor['giro']; ?></td>
                         <td><?php echo $proveedor['rubro']; ?></td>
                         <td><a class="view" href=""> <i class="fa fa-pencil"></i></a>
                         </td>
