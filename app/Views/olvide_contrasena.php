@@ -10,7 +10,7 @@
                             <ul>
                                 <li><a href="<?php echo base_url() ?>/home">Inicio</a></li>
                                 <li><a href="<?php echo base_url() ?>/acceder">Login</a></li>
-                                <li class="active"><a href="<?php echo base_url() ?>/olvide_contrasena">Olvide contraseña</a></li>
+                                <li class="active"><a href="<?php echo base_url() ?>/Acceder/olvide_contrasena">Olvide contraseña</a></li>
                             </ul>
                         </div>
                     </div>
