@@ -175,7 +175,7 @@ class Proveedor extends BaseController
 	{
 
 		$this->request = \Config\Services::request();
-		$this->datospersonalesmodel->select('CONCAT(e.rut_empresa, "-", e.dvempresa) AS rut_emp, e.razon_social AS razon, e.giro AS giro');
+		$this->datospersonalesmodel->select('CONCAT(e.rut_empresa, "-", e.dvempresa) AS rut_emp, e.razon_social AS razon, e.giro AS giro, p.rubro AS rubro');
 		$this->datospersonalesmodel->join('empresa as e', 'datos_personales.rut=e.DATOS_PERSONALES_rut');
 		$this->datospersonalesmodel->join('usuario as u', 'datos_personales.rut=u.rut_fk');
 		$this->datospersonalesmodel->join('proveedor as p', 'u.id_usuario=p.usuario_fk');
