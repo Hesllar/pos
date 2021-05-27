@@ -57,4 +57,8 @@ class Canasta extends BaseController
         $data = ['arrayCompra' => ($this->request->getVar('compras')),'totalCompra' => $this->request->getVar('total')];
         return view('Productos/Canasta', $data);
 	}
+
+    public function agregarCompra(){
+        
+    }
 }
