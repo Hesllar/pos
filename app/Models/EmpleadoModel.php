@@ -14,7 +14,7 @@ class EmpleadoModel extends Model
     protected $returnType     = 'array';
     protected $useSoftDeletes = false;
 
-    protected $allowedFields = ['cargo_fk','usuario_fk'];
+    protected $allowedFields = ['usuario_fk'];
 
     protected $useTimestamps = false;
     
@@ -28,4 +28,3 @@ class EmpleadoModel extends Model
     protected $validationMessages = [];
     protected $skipValidation     = false;
 }
-?>
