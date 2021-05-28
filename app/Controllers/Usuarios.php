@@ -154,10 +154,11 @@ class Usuarios extends BaseController
 			$newName = $img->getName();
 			$img->move('img/Usuarios', $newName);
 		}
+		$hash = password_hash($this->request->getPost('contraseña'), PASSWORD_DEFAULT);
 		//Acá insertamos los datos a la tabla usuario
 		$this->usuarioModal->save([
 			'nom_usuario' => $this->request->getPost('nombre_usuario'),
-			'contrasena' => $this->request->getPost('contraseña2'),
+			'contrasena' => $hash,
 			'estado_usuario' => 1,
 			'avatar' => $newName,
 			'nvl_acceso_fk' => $this->request->getPost('nivel_acceso'),
@@ -244,7 +245,7 @@ class Usuarios extends BaseController
 			$this->request->getPost('id_usuario'),
 			[
 				'nom_usuario' => $this->request->getPost('nombre_usuario'),
-				'contrasena' => $this->request->getPost('contraseña2'),
+
 			]
 		);
 
