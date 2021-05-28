@@ -12,6 +12,8 @@ use App\Models\DatosPersonalesModel;
 use App\Controllers\DatosPersonales;
 use App\Models\UsuarioModel;
 use App\Models\EmpresaModel;
+use App\Models\ProductosAdminModel;
+
 
 
 class Proveedor extends BaseController
@@ -25,10 +27,12 @@ class Proveedor extends BaseController
 	protected $datospersonalesmodel;
 	protected $datosPersonalesControl;
 	protected $usuarioModal;
+	protected $productos;
 
 
 	public function __construct()
 	{
+		$this->productos = new ProductosAdminModel;
 		$this->empresa = new EmpresaModel;
 		$this->configuracion = new ConfiguracionModel;
 		$this->proveedor = new ProveedorModel;
@@ -188,8 +192,9 @@ class Proveedor extends BaseController
 	public function pagOrden()
 	{
 		$proveedor = $this->dtsProveedor();
+		$productos = $this->productos->findAll();
 		$configuracion = $this->configuracion->First();
-		$data = ['datos' => $proveedor, 'configuracion' => $configuracion];
+		$data = ['datos' => $proveedor, 'configuracion' => $configuracion, 'productos' => $productos];
 
 		echo view('header', $data);
 		echo view('administrador/crear_orden');
@@ -208,6 +213,28 @@ class Proveedor extends BaseController
 		$datos = $this->datospersonalesmodel->get()->getRow();
 
 
+
+		$res['existe'] = false;
+		$res['datos'] = '';
+		$res['error'] = '';
+
+		if ($datos) {
+			$res['datos'] = $datos;
+			$res['existe'] = true;
+		} else {
+			$res['error']  = 'No existe el id';
+			$res['existe'] = false;
+		}
+
+		echo json_encode($res);
+	}
+
+
+	public function buscarProducto($codigo)
+	{
+		$this->productos->select('CONCAT("$", precio_costo) AS precio_costo, id_producto, marca, nombre, stock');
+		$this->productos->where('id_producto', $codigo);
+		$datos = $this->productos->get()->getRow();
 
 		$res['existe'] = false;
 		$res['datos'] = '';
