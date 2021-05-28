@@ -12,14 +12,11 @@ use App\Models\RegionModel;
 use App\Models\ComunaModel;
 use App\Models\DireccionModel;
 use App\Models\EmpresaModel;
-
-
-
-
-
+use App\Models\EmpleadoModel;
 
 class Usuarios extends BaseController
 {
+	protected $empleado;
 	protected $empresa;
 	protected $nivel;
 	protected $direccion;
@@ -34,7 +31,7 @@ class Usuarios extends BaseController
 
 	public function __construct()
 	{
-
+		$this->empleado = new EmpleadoModel;
 		$this->empresa = new EmpresaModel;
 		$this->direccion = new DireccionModel;
 		$this->datosPersonalesControl = new DatosPersonales;
@@ -154,10 +151,11 @@ class Usuarios extends BaseController
 			$newName = $img->getName();
 			$img->move('img/Usuarios', $newName);
 		}
+		$hash = password_hash($this->request->getPost('contraseña'), PASSWORD_DEFAULT);
 		//Acá insertamos los datos a la tabla usuario
 		$this->usuarioModal->save([
 			'nom_usuario' => $this->request->getPost('nombre_usuario'),
-			'contrasena' => $this->request->getPost('contraseña2'),
+			'contrasena' => $hash,
 			'estado_usuario' => 1,
 			'avatar' => $newName,
 			'nvl_acceso_fk' => $this->request->getPost('nivel_acceso'),
@@ -174,6 +172,13 @@ class Usuarios extends BaseController
 				'telefono' => $this->request->getPost('telefono'),
 				'DATOS_PERSONALES_rut' =>  $this->request->getPost('rut'),
 				'direccion_empresa' => $this->datosPersonalesControl->buscarIdDireccion()
+			]);
+		}
+		//Acá insertamos los datos a la tabla empleado
+		if ($this->request->getPost('nivel_acceso') == 20) {
+			$this->empleado->save([
+
+				'usuario_fk' => $this->buscarUltiomoIdUser()
 			]);
 		}
 
@@ -244,7 +249,7 @@ class Usuarios extends BaseController
 			$this->request->getPost('id_usuario'),
 			[
 				'nom_usuario' => $this->request->getPost('nombre_usuario'),
-				'contrasena' => $this->request->getPost('contraseña2'),
+
 			]
 		);
 
@@ -361,6 +366,12 @@ class Usuarios extends BaseController
 		return redirect()->to(base_url() . '/Usuarios/pagEliminarUsuario ');
 	}
 
+
+	public function buscarUltiomoIdUser()
+	{
+		$buscarid = $this->usuarioModal->orderBy('id_usuario', 'DESC')->first();
+		return $buscarid['id_usuario'];
+	}
 
 
 

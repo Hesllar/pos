@@ -59,16 +59,6 @@
                 <input type="text" class="form-control" id="nombre_usuario" value="<?php echo $datos['nom_usuario']; ?>" name="nombre_usuario" placeholder="Ingrese nombre usuario">
             </div>
         </div>
-        <div class="form-row">
-            <div class="form-group col-md-6">
-                <label for="inputState">*Contraseña</label>
-                <input type="password" class="form-control" id="contraseña" value="<?php echo $datos['contrasena']; ?>" name="contraseña" placeholder="Ingrese contraseña">
-            </div>
-            <div class="form-group col-md-6">
-                <label for="inputState">*Confirmar contraseña</label>
-                <input type="password" class="form-control" id="contraseña2" value="<?php echo $datos['contrasena']; ?>" name="contraseña2" placeholder="Ingrese contraseña">
-            </div>
-        </div>
         <!--<div class="form-row">
             <div class="form-group col-md-12">
                 <label for="inputState">*Imagen</label>
