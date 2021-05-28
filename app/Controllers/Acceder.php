@@ -16,7 +16,7 @@ class Acceder extends BaseController
 	public function __construct()
 	{
 		$this->configuracion = new ConfiguracionModel;
-		$this->usuarioModal = new UsuarioModel();
+		$this->usuarioModal = new UsuarioModel;
 		$this->reglasLogin = [
 			'nom_usuario' => [
 				'rules' => 'required',
@@ -43,14 +43,7 @@ class Acceder extends BaseController
 		echo view('footer');
 	}
 
-	public function olvide_contrasena()
-	{
-		$configuracion = $this->configuracion->First();
-		$data = ['configuracion' => $configuracion];
-		echo view('header', $data);
-		echo view('olvide_contrasena');
-		echo view('footer');
-	}
+
 
 
 
@@ -61,11 +54,10 @@ class Acceder extends BaseController
 
 		if ($this->request->getMEthod() == "post" && $this->validate($this->reglasLogin)) {
 			$nom_usuario = $this->request->getPost('nom_usuario');
-			$contrasena = $this->request->getPost('contrasena');
+			$contraseña = $this->request->getPost('contrasena');
 			$datosUsuario = $this->usuarioModal->where('nom_usuario', $nom_usuario)->first();
-			print_r('entro al reglas login   ');
 			if ($datosUsuario != null) {
-				if ($datosUsuario['contrasena'] == $contrasena) {
+				if (password_verify($contraseña, $datosUsuario['contrasena'])) {
 					$datosSesion = [
 						'id_usuario' => $datosUsuario['id_usuario'],
 						'nom_usuario' => $datosUsuario['nom_usuario'],
@@ -112,5 +104,15 @@ class Acceder extends BaseController
 			echo view('acceder', $data);
 			echo view('footer');
 		}
+	}
+	public function olvide_contrasena()
+	{
+		$session = session();
+		$usuario = $this->usuarioModal->where('id_usuario', $session->id_usuario)->first();
+		$configuracion = $this->configuracion->First();
+		$data = ['configuracion' => $configuracion, 'usuario' => $usuario];
+		echo view('header', $data);
+		echo view('olvide_contrasena');
+		echo view('footer');
 	}
 }
