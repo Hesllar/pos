@@ -1,4 +1,3 @@
-//Metodo para listar las regiones vía ajax
 listarRegiones();
 
 //Guardando variables para que se ejecuten cuando se haga click
@@ -10,7 +9,7 @@ selectComuna.addEventListener('click', costoComuna);
 //Función que lista las regiones
 function listarRegiones(){
     $.ajax({
-        url: "http://fermeapp.com/pos/public/Region/listarRegiones",
+        url: "http://localhost/pos/public/Region/listarRegiones",
         method: "GET",
         dataType: "JSON",
         success: function(data) {
