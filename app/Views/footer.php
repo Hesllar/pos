@@ -102,6 +102,8 @@
  <script src="<?php echo base_url() ?>/js/tienda.js"></script>
  <!-- ajax-->
  <script src="<?php echo base_url() ?>/js/ajax-mail.js"></script>
+ <!-- Estadistica-->
+
 
  <!-- Modal de alerta-->
 

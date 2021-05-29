@@ -69,7 +69,8 @@ class Ventas extends BaseController
 			'e_ordencompra' => '',
 			'e_usuario' => '',
 			'e_notacredito' => '',
-			'e_config' => ''
+			'e_config' => '',
+			'e_estadistica' => ''
 		];
 
 		echo view('header', $data);
@@ -101,9 +102,10 @@ class Ventas extends BaseController
 		}
 	}
 
-	public function boton(){
-		$accion = function($row){
-			return '<button class="boton-accion" data-id="'.$row["id_venta"].'><i class="fa fa-bars"></i></button><br>';
+	public function boton()
+	{
+		$accion = function ($row) {
+			return '<button class="boton-accion" data-id="' . $row["id_venta"] . '><i class="fa fa-bars"></i></button><br>';
 		};
 		return 'f';
 	}
@@ -115,17 +117,18 @@ class Ventas extends BaseController
 		return $venta;
 	}
 
-	public function anularVenta($id_venta = 1002){
+	public function anularVenta($id_venta = 1002)
+	{
 		$this->ventas->select('*');
 		$this->ventas->where('id_venta', $id_venta);
 		$datos = $this->ventas->get()->getRow();
-		(isset($tester)) ? print_r($tester) : print_r('Sin datos'); 
+		(isset($tester)) ? print_r($tester) : print_r('Sin datos');
 		$res['datos'] = '';
 
-		if($datos){
+		if ($datos) {
 			$res['datos'] = $datos;
 			$res['error'] = 'No Error';
-		}else{
+		} else {
 			$res['error'] = 'Error';
 		}
 
@@ -181,5 +184,4 @@ class Ventas extends BaseController
 		echo view('administrador/panel_footer');
 		echo view('footer');*/
 	}
-	
 }

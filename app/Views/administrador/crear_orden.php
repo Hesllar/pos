@@ -4,6 +4,7 @@
         <div class="form-group">
             <div class="row">
                 <div class="col-md-10">
+                    <input type="hidden" id="id_empleado" name="id_empleado">
                     <input type="hidden" id="id_proveedor" name="id_proveedor">
                     <input type="number" class="form-control" id="id_prove" name="id_prove" placeholder="Luego de ingresar el id presione Enter" onkeyup="buscarProveedor(event, this, this.value)" autofocus>
                     <label for="id_prove" id="resultado_error" style="color: red"></label>
@@ -92,14 +93,14 @@
                 <label for="" id="lbGiroEmp"></label>
             </div>
             <div class="pull-center col-md-4">
-                <button type="button" id="agregarProTabla" class="btn-submit" onclick="agregarProducto(event)">
+                <button type="button" id="agregarProTabla" class="btn-submit" onclick="agregarProductos(id_producto.value, cantidad.value)">
                     Agregar
                 </button>
             </div>
         </div>
     </form>
 
-    <div class="row">
+    <div class=" row">
         <table id="tablaProducto" class="table">
             <thead>
                 <tr>
@@ -180,6 +181,18 @@
 </div>
 <script src="<?php echo base_url() ?>/js/ajax-mail.js"></script>
 <script src="<?php echo base_url(); ?>/js/vendor/jquery-3.6.0.min.js"></script>
+<!--<script>
+    function buscarEmp(id_emp) {
+        $.ajax({
+            url: '<?php echo base_url(); ?>/Proveedor/buscarIdProveedor/' + id_emp,
+            dataType: 'json',
+            success: function(resultado) {
+                $('#id_empleado').val(resultado.datos.id_empleado)
+            }
+        })
+    }
+</script>-->
+
 <script>
     function buscarProveedor(e, tagId, codigo) {
 
@@ -295,8 +308,45 @@
         } else {
             $("#subtotal").val('0');
         }
+    }
+</script>
+<script>
+    function agregarProductos(id_producto, cantidad, id_emp) {
+        if (id_producto != null && id_producto != 0 && cantidad > 0) {
 
+            $.ajax({
+                url: '<?php echo base_url(); ?>/TemporalCompra/insertarTemporal/' + id_producto + "/" + cantidad + "/" + id_emp,
+                success: function(resultado) {
+                    if (resultado == 0) {
+                        console.log(resultado)
+                    } else {
+                        /*
+                        $(tagId).removeClass('has-error');
+                        $("#resultado_error").html(resultado.error);
 
+                        if (resultado.existe) {
+                            $("#id_proveedor").val(resultado.datos.id_proveedor);
+                            $("#rut_emp").val(resultado.datos.rut_emp);
+                            $("#dv_emp").val(resultado.datos.dv_empresa);
+                            $("#rubro").val(resultado.datos.rubro);
+                            $("#razon").val(resultado.datos.razon);
+                            $("#telefono").val(resultado.datos.telefono);
+                            $("#giro").val(resultado.datos.giro);
+
+                        } else {
+                            $("#id_proveedor").val('');
+                            $("#rut_emp").val('');
+                            $("#dv_emp").val('');
+                            $("#rubro").val('');
+                            $("#razon").val('');
+                            $("#telefono").val('');
+                            $("#giro").val('');
+                        }
+                    */
+                    }
+                }
+            })
+        }
     }
 </script>
 <!--

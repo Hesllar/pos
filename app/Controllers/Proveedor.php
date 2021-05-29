@@ -12,12 +12,14 @@ use App\Models\DatosPersonalesModel;
 use App\Controllers\DatosPersonales;
 use App\Models\UsuarioModel;
 use App\Models\EmpresaModel;
+use App\Models\EmpleadoModel;
 use App\Models\ProductosAdminModel;
 
 
 
 class Proveedor extends BaseController
 {
+	protected $empleado;
 	protected $empresa;
 	protected $configuracion;
 	protected $proveedor;
@@ -32,6 +34,7 @@ class Proveedor extends BaseController
 
 	public function __construct()
 	{
+		$this->empleado = new EmpleadoModel;
 		$this->productos = new ProductosAdminModel;
 		$this->empresa = new EmpresaModel;
 		$this->configuracion = new ConfiguracionModel;
@@ -204,7 +207,8 @@ class Proveedor extends BaseController
 
 	public function buscarIdProveedor($codigo)
 	{
-		$this->datospersonalesmodel->select('e.rut_empresa AS rut_emp,e.dvempresa AS dv_empresa,e.razon_social AS razon,e.giro AS giro,p.rubro AS rubro,p.id_proveedor AS id_proveedor,e.telefono AS telefono');
+		$this->datospersonalesmodel->select('e.rut_empresa AS rut_emp,e.dvempresa AS dv_empresa,e.razon_social AS razon,e.giro AS giro,p.rubro AS rubro,
+		p.id_proveedor AS id_proveedor,e.telefono AS telefono');
 		$this->datospersonalesmodel->join('empresa as e', 'datos_personales.rut=e.DATOS_PERSONALES_rut');
 		$this->datospersonalesmodel->join('usuario as u', 'datos_personales.rut=u.rut_fk');
 		$this->datospersonalesmodel->join('proveedor as p', 'u.id_usuario=p.usuario_fk');
@@ -236,6 +240,27 @@ class Proveedor extends BaseController
 		$this->productos->where('id_producto', $codigo);
 		$datos = $this->productos->get()->getRow();
 
+		$res['existe'] = false;
+		$res['datos'] = '';
+		$res['error'] = '';
+
+		if ($datos) {
+			$res['datos'] = $datos;
+			$res['existe'] = true;
+		} else {
+			$res['error']  = 'No existe el id';
+			$res['existe'] = false;
+		}
+
+		echo json_encode($res);
+	}
+
+
+	public function buscarEmp($id_usuario)
+	{
+		$this->empleado->select('*');
+		$this->empleado->where('usuario_fk', $id_usuario);
+		$datos = $this->empleado->get()->getRow();
 		$res['existe'] = false;
 		$res['datos'] = '';
 		$res['error'] = '';
