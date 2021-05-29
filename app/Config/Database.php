@@ -33,8 +33,8 @@ class Database extends Config
 	public $default = [
 		'DSN'      => '',
 		'hostname' => 'localhost',
-		'username' => 'orlandomun',
-		'password' => 'Omun.2021',
+		'username' => 'root',
+		'password' => '',
 		'database' => 'ferme',
 		'DBDriver' => 'MySQLi',
 		'DBPrefix' => '',
