@@ -134,7 +134,7 @@ function realizarCompra(){
     
     var totalCarro = document.querySelector('.total').textContent;
                 $.ajax({
-                    url: "http://localhost/pos/public/Canasta/nuevaCompra",
+   
                     method: "POST",
                     data: {
                         compras:arrayCompras,

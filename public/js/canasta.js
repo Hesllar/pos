@@ -9,7 +9,7 @@ selectComuna.addEventListener('click', costoComuna);
 //Función que lista las regiones
 function listarRegiones(){
     $.ajax({
-        url: "http://localhost/pos/public/Region/listarRegiones",
+      
         method: "GET",
         dataType: "JSON",
         success: function(data) {
