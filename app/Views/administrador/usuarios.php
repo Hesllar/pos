@@ -46,7 +46,6 @@
                                             <label for="" id="lbDv"></label>
                                         </div>
                                     </div>
-
                                     <div class="form-row">
                                         <div class="form-group col-md-6" id="casilla_nombre">
                                             <label for="nombre">*Nombres</label>
@@ -101,6 +100,8 @@
                                             <input type="text" class="form-control" id="telefono" name="telefono" placeholder="Ingrese teléfono">
                                         </div>
                                     </div>
+                                    <h5>Datos Ubicación</h5>
+                                    <br>
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
                                             <label for="region">*Region</label>
@@ -139,6 +140,8 @@
                                             <label for="" id="lbNumero"></label>
                                         </div>
                                     </div>
+                                    <h5>Datos Usuarios</h5>
+                                    <br>
                                     <div class="form-row">
                                         <div class="form-group col-md-12" id="casilla_nombr_usuario">
                                             <label for="nombre_usuario">*Nombre usuario</label>
@@ -157,6 +160,7 @@
                                             <label for="contraseña2">*Confirmar contraseña</label>
                                             <input type="password" class="form-control" id="contraseña2" name="contraseña2" placeholder="Ingrese contraseña">
                                             <label for="" id="lbContraseña2"></label>
+                                            <label for="" id="lbValidContraseña"></label>
                                         </div>
                                     </div>
                                     <div class="form-row">
@@ -215,7 +219,6 @@
                         <td><a class="view" href="<?php echo base_url() . '/Usuarios/editarUsuario/' . $usuario['id_usuario']; ?>"> <i class="fa fa-pencil"></i></a>
                         <td><a class="view" data-href="<?php echo base_url() . '/Usuarios/darBajaUsuario/' . $usuario['id_usuario']; ?>" data-toggle="modal" data-target="#Eliminar">
                                 <i class="fa fa-trash"></i></a>
-
                         </td>
                     </tr>
                 <?php } ?>
@@ -388,6 +391,15 @@
 
             $("#contraseña2").focus();
             return false;
+
+        } else if (contraseña != contraseña2) {
+            setTimeout(function() {
+                $("#lbValidContraseña").html("<span style='color:red;'> Las contraseña no son iguales </span>").fadeOut(10000);
+            }, 0);
+
+            $("#contraseña2").focus();
+            return false;
+
         } else if (avatar == '') {
             setTimeout(function() {
                 $("#lbAvatar").html("<span style='color:red;'> complete el campo imagen </span>").fadeOut(10000);

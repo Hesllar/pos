@@ -50,4 +50,9 @@ class ProductosAdminModel extends Model
         $data = $this->findAll();
         return $data;
     }
+
+    public function totalProductos()
+    {
+        return $this->where('estado', 1)->countAllResults(); // Cuanta todos los resultados de la sentencia
+    }
 }

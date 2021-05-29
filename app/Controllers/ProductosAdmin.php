@@ -21,6 +21,7 @@ class ProductosAdmin extends BaseController
     protected $detalle_productoModel;
     protected $categoria;
     protected $reglas;
+    protected $session;
 
     public function __construct()
     {
@@ -31,6 +32,7 @@ class ProductosAdmin extends BaseController
         $this->categorias = new CategoriaModel;
         $this->detalle_producto = new DetalleProducto;
         $this->categoria = new Categorias;
+        $this->session = session();
         helper(['form', 'upload']);
         /*$this->reglas = [
             'imagen' => 'required',
@@ -60,7 +62,9 @@ class ProductosAdmin extends BaseController
 
     public function index()
     {
-
+        if (!isset($this->session->id_usuario)) {
+            return redirect()->to(base_url() . '/Acceder');
+        }
         /*
         $productos = $this->productos->findAll();
         $data = ['titulo' => 'Productos', 'datos' => $productos]; */
@@ -77,7 +81,8 @@ class ProductosAdmin extends BaseController
             'e_ordencompra' => '',
             'e_usuario' => '',
             'e_notacredito' => '',
-            'e_config' => ''
+            'e_config' => '',
+            'e_estadistica' => ''
         ];
 
         echo view('header', $data);

@@ -27,7 +27,8 @@ class OrdenesCompra extends BaseController
 			'e_ordencompra' => 'active',
 			'e_usuario' => '',
 			'e_notacredito' => '',
-			'e_config' => ''
+			'e_config' => '',
+			'e_estadistica' => ''
 		];
 
 		echo view('header', $data);
@@ -47,7 +48,8 @@ class OrdenesCompra extends BaseController
 			'e_producto' => '',
 			'e_ordencompra' => '',
 			'e_proveedor' => '',
-			'e_config' => 'active'
+			'e_config' => 'active',
+			'e_estadistica' => ''
 		];
 		echo view('header', $data);
 		echo view('Empleado/panel_header_emp', $estados);

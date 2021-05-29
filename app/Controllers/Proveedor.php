@@ -12,10 +12,14 @@ use App\Models\DatosPersonalesModel;
 use App\Controllers\DatosPersonales;
 use App\Models\UsuarioModel;
 use App\Models\EmpresaModel;
+use App\Models\EmpleadoModel;
+use App\Models\ProductosAdminModel;
+
 
 
 class Proveedor extends BaseController
 {
+	protected $empleado;
 	protected $empresa;
 	protected $configuracion;
 	protected $proveedor;
@@ -25,10 +29,13 @@ class Proveedor extends BaseController
 	protected $datospersonalesmodel;
 	protected $datosPersonalesControl;
 	protected $usuarioModal;
+	protected $productos;
 
 
 	public function __construct()
 	{
+		$this->empleado = new EmpleadoModel;
+		$this->productos = new ProductosAdminModel;
 		$this->empresa = new EmpresaModel;
 		$this->configuracion = new ConfiguracionModel;
 		$this->proveedor = new ProveedorModel;
@@ -104,9 +111,10 @@ class Proveedor extends BaseController
 			$newName = $img->getName();
 			$img->move('img/Usuarios', $newName);
 		}
+		$hash = password_hash($this->request->getPost('contraseña'), PASSWORD_DEFAULT);
 		$this->usuarioModal->save([
 			'nom_usuario' => $this->request->getPost('nombre_usuario'),
-			'contrasena' => $this->request->getPost('contraseña2'),
+			'contrasena' => $hash,
 			'estado_usuario' => 1,
 			'avatar' => $newName,
 			'nvl_acceso_fk' => 50,
@@ -124,7 +132,7 @@ class Proveedor extends BaseController
 		//Acá se obtienen los datos de la tabla empresa
 		$this->empresa->save([
 			'rut_empresa' => $this->request->getPost('rut_emp'),
-			'dv-empresa' => $this->request->getPost('dv_emp'),
+			'dvempresa' => $this->request->getPost('dv_emp'),
 			'razon_social' => $this->request->getPost('razon'),
 			'giro' => $this->request->getPost('giro'),
 			'telefono' => $this->request->getPost('telefono'),
@@ -175,12 +183,96 @@ class Proveedor extends BaseController
 	{
 
 		$this->request = \Config\Services::request();
-		$this->datospersonalesmodel->select('CONCAT(e.rut_empresa, "-", e.dvempresa) AS rut_emp, e.razon_social AS razon, e.giro AS giro, p.rubro AS rubro');
+		$this->datospersonalesmodel->select('CONCAT(e.rut_empresa, "-", e.dvempresa) AS rut_emp, e.razon_social AS razon, e.giro AS giro, p.rubro AS rubro, p.id_proveedor AS id_proveedor');
 		$this->datospersonalesmodel->join('empresa as e', 'datos_personales.rut=e.DATOS_PERSONALES_rut');
 		$this->datospersonalesmodel->join('usuario as u', 'datos_personales.rut=u.rut_fk');
 		$this->datospersonalesmodel->join('proveedor as p', 'u.id_usuario=p.usuario_fk');
 		$this->datospersonalesmodel->orderBy('id_proveedor', 'DESC');
 		$datos = $this->datospersonalesmodel->findAll();
 		return $datos;
+	}
+
+	public function pagOrden()
+	{
+		$proveedor = $this->dtsProveedor();
+		$productos = $this->productos->findAll();
+		$configuracion = $this->configuracion->First();
+		$data = ['datos' => $proveedor, 'configuracion' => $configuracion, 'productos' => $productos];
+
+		echo view('header', $data);
+		echo view('administrador/crear_orden');
+		echo view('footer');
+	}
+
+
+	public function buscarIdProveedor($codigo)
+	{
+		$this->datospersonalesmodel->select('e.rut_empresa AS rut_emp,e.dvempresa AS dv_empresa,e.razon_social AS razon,e.giro AS giro,p.rubro AS rubro,
+		p.id_proveedor AS id_proveedor,e.telefono AS telefono');
+		$this->datospersonalesmodel->join('empresa as e', 'datos_personales.rut=e.DATOS_PERSONALES_rut');
+		$this->datospersonalesmodel->join('usuario as u', 'datos_personales.rut=u.rut_fk');
+		$this->datospersonalesmodel->join('proveedor as p', 'u.id_usuario=p.usuario_fk');
+		$this->datospersonalesmodel->where('p.id_proveedor', $codigo);
+		$this->datospersonalesmodel->where('u.estado_usuario', 1);
+		$datos = $this->datospersonalesmodel->get()->getRow();
+
+
+
+		$res['existe'] = false;
+		$res['datos'] = '';
+		$res['error'] = '';
+
+		if ($datos) {
+			$res['datos'] = $datos;
+			$res['existe'] = true;
+		} else {
+			$res['error']  = 'No existe el id';
+			$res['existe'] = false;
+		}
+
+		echo json_encode($res);
+	}
+
+
+	public function buscarProducto($codigo)
+	{
+		$this->productos->select('CONCAT("$", precio_costo) AS precio_costo, id_producto, marca, nombre, stock');
+		$this->productos->where('id_producto', $codigo);
+		$datos = $this->productos->get()->getRow();
+
+		$res['existe'] = false;
+		$res['datos'] = '';
+		$res['error'] = '';
+
+		if ($datos) {
+			$res['datos'] = $datos;
+			$res['existe'] = true;
+		} else {
+			$res['error']  = 'No existe el id';
+			$res['existe'] = false;
+		}
+
+		echo json_encode($res);
+	}
+
+
+	public function buscarEmp($id_usuario)
+	{
+		$this->empleado->select('*');
+		$this->empleado->where('usuario_fk', $id_usuario);
+		$datos = $this->empleado->get()->getRow();
+		$res['existe'] = false;
+		$res['datos'] = '';
+		$res['error'] = '';
+
+		if ($datos) {
+			$res['datos'] = $datos;
+			$res['existe'] = true;
+		} else {
+			$res['error']  = 'No existe el id';
+			$res['existe'] = false;
+		}
+
+		echo json_encode($res);
 	}
 }
