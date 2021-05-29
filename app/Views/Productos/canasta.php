@@ -1,6 +1,7 @@
      <?php
         isset($arrayCompra) ? $arrayProductos = $arrayCompra :  $arrayProductos = null;
-
+        $user_session = session();
+        
         ?>
      <!-- Breadcrumb Start -->
      <div class="breadcrumb-area pt-60 pb-55 pt-sm-30 pb-sm-20">
@@ -48,7 +49,7 @@
                                                      Nombre:
                                                  </div>
                                                  <div class="col-sm-5">
-                                                     Bastian Barraza Díaz
+                                                     <span id="nombre">Bastian </span> <span id="apellidos">Barraza Díaz</span>
                                                  </div>
                                              </div>
                                          </li>
@@ -58,7 +59,7 @@
                                                      Celular: <span class="policy-desc">
                                                  </div>
                                                  <div class="col-sm-5">
-                                                     +56 (9) 82547833
+                                                     +56 (9) <span id="celular">81783155</span>
                                                  </div>
                                              </div>
                                          </li>
@@ -68,7 +69,7 @@
                                                      Correo:
                                                  </div>
                                                  <div class="col-sm-5">
-                                                     bastian@bastianbastian.com
+                                                    <span id="correo"> bastian_b_d@hotmail.com </span>
                                                  </div>
                                              </div>
                                          </li>
@@ -78,7 +79,7 @@
                                                      Direcci&oacute;n:
                                                  </div>
                                                  <div class="col-sm-5">
-                                                     Lago Villarrica #1256
+                                                    <span id="calle_direccion">Lago Villarrica </span> <span id="numero_direccion">#1256</span>
                                                  </div>
                                              </div>
                                          </li>
@@ -88,7 +89,7 @@
                                                      Ciudad:
                                                  </div>
                                                  <div class="col-sm-8">
-                                                     San Antonio
+                                                    <span id="ciudad"> San Antonio</span>
                                                  </div>
                                              </div>
                                          </li>
@@ -207,7 +208,7 @@
      </div>
 
      <div class="pull-right ">
-         <button type="button" class="btn-submit" data-toggle="modal" data-target="#iniciarSesion">
+         <button type="button" id="btnIniciarSesion" style="display: none;" data-toggle="modal" data-target="#iniciarSesion">
              ++
          </button>
      </div>
@@ -253,5 +254,18 @@
          </div>
      </div>
 
+    
+
+
      <!-- Canasta-->
      <script src="<?php echo base_url() ?>/js/canasta.js"></script>
+
+     <?php
+if($user_session->id_usuario){
+    echo '<script>user_session_js.push('.$user_session->id_usuario.');</script>';
+    echo '<script>user_session_js.push('.$user_session->rut_fk.');</script>';
+
+}
+?>
+<script>sesionUsuario();</script>
+
