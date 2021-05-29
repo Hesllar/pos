@@ -73,7 +73,8 @@ class Usuarios extends BaseController
 			'e_ordencompra' => '',
 			'e_usuario' => 'active',
 			'e_notacredito' => '',
-			'e_config' => ''
+			'e_config' => '',
+			'e_estadistica' => ''
 		];
 
 		echo view('header', $data);
@@ -175,7 +176,10 @@ class Usuarios extends BaseController
 			]);
 		}
 		//Acá insertamos los datos a la tabla empleado
-		if ($this->request->getPost('nivel_acceso') == 20) {
+		if (
+			$this->request->getPost('nivel_acceso') == 20
+			|| $this->request->getPost('nivel_acceso') == 10
+		) {
 			$this->empleado->save([
 
 				'usuario_fk' => $this->buscarUltiomoIdUser()

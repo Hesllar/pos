@@ -81,7 +81,8 @@ class ProductosAdmin extends BaseController
             'e_ordencompra' => '',
             'e_usuario' => '',
             'e_notacredito' => '',
-            'e_config' => ''
+            'e_config' => '',
+            'e_estadistica' => ''
         ];
 
         echo view('header', $data);

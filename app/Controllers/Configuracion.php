@@ -25,7 +25,8 @@ class Configuracion extends BaseController
 			'e_ordencompra' => '',
 			'e_usuario' => '',
 			'e_notacredito' => '',
-			'e_config' => 'active'
+			'e_config' => 'active',
+			'e_estadistica' => ''
 		];
 
 		echo view('header', $data);
