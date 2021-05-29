@@ -1,7 +1,20 @@
      <?php
-        isset($arrayCompra) ? $arrayProductos = $arrayCompra :  $arrayProductos = ["n" => "s", "n" => "s", "n" => "s", "n" => "s"];
-        isset($totalCompra) ? null : $totalCompra = 0;
+        isset($arrayCompra) ? $arrayProductos = $arrayCompra :  $arrayProductos = null;
+
         ?>
+     <!-- Breadcrumb Start -->
+     <div class="breadcrumb-area pt-60 pb-55 pt-sm-30 pb-sm-20">
+         <div class="container">
+             <div class="breadcrumb">
+                 <ul>
+                     <li><a href="index.html">Inicio</a></li>
+                     <li class="active"><a href="checkout.html">Confirmar Compra</a></li>
+                 </ul>
+             </div>
+         </div>
+         <!-- Container End -->
+     </div>
+     <!-- Breadcrumb End -->
      <!-- coupon-area start -->
      <div class="coupon-area">
          <div class="container">
@@ -176,6 +189,7 @@
                                                  <input id="compraEstatica" value="<?php echo $totalCompra; ?>" hidden />
                                              </th>
                                              <td><strong><span id="totalCompra" class="amount"><?php echo $totalCompra; ?></span></strong>
+
                                              </td>
                                          </tr>
                                      </tfoot>
@@ -184,6 +198,7 @@
                              <div class="order-button-payment">
                                  <input id="realizarCompra" type="submit" value="Realizar Compra" />
                              </div>
+
                          </div>
                      </div>
                  </div>
