@@ -37,184 +37,110 @@
              <form action="#">
                  <div class="row">
                      <div class="col-lg-6 col-md-6">
-                         <div class="checkbox-form">
-                             <h3>Datos del despacho</h3>
-                             <div class="row">
-                                 <div class="col-md-12">
-                                     <div class="country-select mb-30">
-                                         <label>Country <span class="required">*</span></label>
-                                         <select>
-                                             <option value="volvo">Bangladesh</option>
-                                             <option value="saab">Algeria</option>
-                                             <option value="mercedes">Afghanistan</option>
-                                             <option value="audi">Ghana</option>
-                                             <option value="audi2">Albania</option>
-                                             <option value="audi3">Bahrain</option>
-                                             <option value="audi4">Colombia</option>
-                                             <option value="audi5">Dominican Republic</option>
-                                         </select>
-                                     </div>
+                         <div class="row">
+                             <div class="col-sm-12">
+                                 <div class="categorie recent-post same-sidebar">
+                                     <h3 class="sidebar-title">Datos del comprador</h3>
+                                     <ul class="categorie-list">
+                                         <li>
+                                             <div class="row">
+                                                 <div class="col-sm-2">
+                                                     Nombre:
+                                                 </div>
+                                                 <div class="col-sm-5">
+                                                     Bastian Barraza Díaz
+                                                 </div>
+                                             </div>
+                                         </li>
+                                         <li>
+                                             <div class="row">
+                                                 <div class="col-sm-2">
+                                                     Celular: <span class="policy-desc">
+                                                 </div>
+                                                 <div class="col-sm-5">
+                                                     +56 (9) 82547833
+                                                 </div>
+                                             </div>
+                                         </li>
+                                         <li>
+                                             <div class="row">
+                                                 <div class="col-sm-2">
+                                                     Correo:
+                                                 </div>
+                                                 <div class="col-sm-5">
+                                                     bastian@bastianbastian.com
+                                                 </div>
+                                             </div>
+                                         </li>
+                                         <li>
+                                             <div class="row">
+                                                 <div class="col-sm-2">
+                                                     Direcci&oacute;n:
+                                                 </div>
+                                                 <div class="col-sm-5">
+                                                     Lago Villarrica #1256
+                                                 </div>
+                                             </div>
+                                         </li>
+                                         <li>
+                                             <div class="row">
+                                                 <div class="col-sm-2">
+                                                     Ciudad:
+                                                 </div>
+                                                 <div class="col-sm-8">
+                                                     San Antonio
+                                                 </div>
+                                             </div>
+                                         </li>
+                                     </ul>
                                  </div>
-                                 <div class="col-md-6">
-                                     <div class="checkout-form-list">
-                                         <label>Nombre <span class="required">*</span></label>
-                                         <input type="text" placeholder="" />
-                                     </div>
-                                 </div>
-                                 <div class="col-md-6">
-                                     <div class="checkout-form-list mb-30">
-                                         <label>Teléfono <span class="required">*</span></label>
-                                         <input type="text" placeholder="" />
-                                     </div>
-                                 </div>
-                                 <div class="col-md-12">
-                                     <div class="checkout-form-list mb-30">
-                                         <label>Company Name</label>
-                                         <input type="text" placeholder="" />
-                                     </div>
-                                 </div>
-                                 <div class="col-md-12">
-                                     <div class="checkout-form-list">
-                                         <label>Address <span class="required">*</span></label>
-                                         <input type="text" placeholder="Street address" />
-                                     </div>
-                                 </div>
-                                 <div class="col-md-12">
-                                     <div class="checkout-form-list mtb-30">
-                                         <input type="text" placeholder="Apartment, suite, unit etc. (optional)" />
-                                     </div>
-                                 </div>
-                                 <div class="col-md-12">
-                                     <div class="checkout-form-list mb-30">
-                                         <label>Town / City <span class="required">*</span></label>
-                                         <input type="text" placeholder="Town / City" />
-                                     </div>
-                                 </div>
-                                 <div class="col-md-6">
-                                     <div class="checkout-form-list mb-30">
-                                         <label>State / County <span class="required">*</span></label>
-                                         <input type="text" placeholder="" />
-                                     </div>
-                                 </div>
-                                 <div class="col-md-6">
-                                     <div class="checkout-form-list mb-30">
-                                         <label>Postcode / Zip <span class="required">*</span></label>
-                                         <input type="text" placeholder="Postcode / Zip" />
-                                     </div>
-                                 </div>
-                                 <div class="col-md-6">
-                                     <div class="checkout-form-list mb-30">
-                                         <label>Email Address <span class="required">*</span></label>
-                                         <input type="email" placeholder="" />
-                                     </div>
-                                 </div>
-                                 <div class="col-md-6">
-                                     <div class="checkout-form-list mb-30">
-                                         <label>Phone <span class="required">*</span></label>
-                                         <input type="text" placeholder="Postcode / Zip" />
-                                     </div>
-                                 </div>
-                                 <div class="col-md-12">
-                                     <div class="checkout-form-list create-acc mb-30">
-                                         <input id="cbox" type="checkbox" />
-                                         <label>Create an account?</label>
-                                     </div>
-                                     <div id="cbox_info" class="checkout-form-list create-accounts mb-25">
-                                         <p class="mb-10">Create an account by entering the information below. If you are a returning customer please login at the top of the page.</p>
-                                         <label>Account password <span class="required">*</span></label>
-                                         <input type="password" placeholder="password" />
-                                     </div>
+
+                                 <div class="btn-group btn-group-toggle pt-30" data-toggle="buttons" onclick="retiro(event)">
+                                     <label class="btn btn-secondary active">
+                                         <input type="radio" name="opciones" id="despacho"> Despacho a domicilio
+                                     </label>
+                                     <label class="btn btn-secondary">
+                                         <input type="radio" name="opciones" id="tienda"> Retiro en tienda
+                                     </label>
                                  </div>
                              </div>
-                             <div class="different-address">
-                                 <div class="ship-different-title">
-                                     <h3>
-                                         <label>Ship to a different address?</label>
-                                         <input id="ship-box" type="checkbox" />
-                                     </h3>
+                         </div>
+                         <div id="despachoDom" class="row">
+                             <div class="checkbox-form pt-30">
+                                 <div class="categorie recent-post same-sidebar pt-30">
+                                     <h3 class="sidebar-title">Despacho a domicilio</h3>
                                  </div>
-                                 <div id="ship-box-info">
-                                     <div class="row">
-                                         <div class="col-md-12">
-                                             <div class="country-select mb-30">
-                                                 <label>Country <span class="required">*</span></label>
-                                                 <select>
-                                                     <option value="volvo">Bangladesh</option>
-                                                     <option value="saab">Algeria</option>
-                                                     <option value="mercedes">Afghanistan</option>
-                                                     <option value="audi">Ghana</option>
-                                                     <option value="audi2">Albania</option>
-                                                     <option value="audi3">Bahrain</option>
-                                                     <option value="audi4">Colombia</option>
-                                                     <option value="audi5">Dominican Republic</option>
-                                                 </select>
-                                             </div>
-                                         </div>
-                                         <div class="col-md-6">
-                                             <div class="checkout-form-list mb-30">
-                                                 <label>First Name <span class="required">*</span></label>
-                                                 <input type="text" placeholder="" />
-                                             </div>
-                                         </div>
-                                         <div class="col-md-6">
-                                             <div class="checkout-form-list mb-30">
-                                                 <label>Last Name <span class="required">*</span></label>
-                                                 <input type="text" placeholder="" />
-                                             </div>
-                                         </div>
-                                         <div class="col-md-12">
-                                             <div class="checkout-form-list mb-30">
-                                                 <label>Company Name</label>
-                                                 <input type="text" placeholder="" />
-                                             </div>
-                                         </div>
-                                         <div class="col-md-12">
-                                             <div class="checkout-form-list mb-30">
-                                                 <label>Address <span class="required">*</span></label>
-                                                 <input type="text" placeholder="Street address" />
-                                             </div>
-                                         </div>
-                                         <div class="col-md-12">
-                                             <div class="checkout-form-list mb-30">
-                                                 <input type="text" placeholder="Apartment, suite, unit etc. (optional)" />
-                                             </div>
-                                         </div>
-                                         <div class="col-md-12">
-                                             <div class="checkout-form-list mb-30">
-                                                 <label>Town / City <span class="required">*</span></label>
-                                                 <input type="text" placeholder="Town / City" />
-                                             </div>
-                                         </div>
-                                         <div class="col-md-6">
-                                             <div class="checkout-form-list mb-30">
-                                                 <label>State / County <span class="required">*</span></label>
-                                                 <input type="text" placeholder="" />
-                                             </div>
-                                         </div>
-                                         <div class="col-md-6">
-                                             <div class="checkout-form-list mb-30">
-                                                 <label>Postcode / Zip <span class="required">*</span></label>
-                                                 <input type="text" placeholder="Postcode / Zip" />
-                                             </div>
-                                         </div>
-                                         <div class="col-md-6">
-                                             <div class="checkout-form-list mb-30">
-                                                 <label>Email Address <span class="required">*</span></label>
-                                                 <input type="email" placeholder="" />
-                                             </div>
-                                         </div>
-                                         <div class="col-md-6">
-                                             <div class="checkout-form-list mb-30">
-                                                 <label>Phone <span class="required">*</span></label>
-                                                 <input type="text" placeholder="Postcode / Zip" />
-                                             </div>
+                                 <div class="row">
+                                     <div class="col-md-6">
+                                         <div class="checkout-form-list">
+                                             <label>Nombre quien recibe <span class="required">*</span></label>
+                                             <input type="text" placeholder="" />
                                          </div>
                                      </div>
-                                 </div>
-                                 <div class="order-notes">
-                                     <div class="checkout-form-list">
-                                         <label>Order Notes</label>
-                                         <textarea id="checkout-mess" cols="30" rows="10" placeholder="Notes about your order, e.g. special notes for delivery."></textarea>
+                                     <div class="col-md-5">
+                                         <div class="checkout-form-list mb-30">
+                                             <label>Teléfono <span class="required">*</span></label>
+                                             <input type="text" placeholder="" />
+                                         </div>
+                                     </div>
+                                     <div class="col-md-11">
+                                         <div class="country-select mb-30">
+                                             <label>Región<span class="required">*</span></label>
+                                             <select id="region" onclick="validadorRegion(event)" required>
+                                                 <option value="">Seleccione región</option>
+                                             </select>
+                                         </div>
+                                     </div>
+                                     <div class="col-md-11">
+                                         <div class="country-select mb-30">
+                                             <label>Comuna<span class="required">*</span></label>
+                                             <select id="comuna" onclick="costoComuna(event)" required>
+                                                 <option value="">Seleccione comuna</option>
+                                             </select>
+                                         </div>
+                                     </div>
+                                     <div class="col-md-12">
+                                         <span id="rNoDisponible" class="require">*Actualmente solo existen despachos dentro de la regi&oacute;n de Valpara&iacute;so</span>
                                      </div>
                                  </div>
                              </div>
@@ -232,37 +158,100 @@
                                          </tr>
                                      </thead>
                                      <tbody>
-                                         <?php
-                                            foreach ($arrayCompra as $producto) {
+                                         <?php if (isset($arrayCompra)) {
+                                                foreach ($arrayCompra as $producto) {
                                             ?>
-                                             <tr class="cart_item">
-                                                 <td class="product-name">
-                                                     <?php echo $producto[1]; ?><strong class="product-quantity"> × <?php echo $producto[2]; ?></strong>
-                                                 </td>
-                                                 <td class="product-total">
-                                                     <span class="amount"><?php echo $producto[3]; ?></span>
-                                                 </td>
-                                             </tr>
+                                                 <tr class="cart_item">
+                                                     <td class="product-name">
+                                                         <?php echo $producto[1]; ?><strong class="product-quantity"> × <?php echo $producto[2]; ?></strong>
+                                                     </td>
+                                                     <td class="product-total">
+                                                         <span class="amount"><?php echo $producto[3]; ?></span>
+                                                     </td>
+                                                 </tr>
                                          <?php
+                                                }
                                             }
                                             ?>
                                      </tbody>
                                      <tfoot>
                                          <tr class="cart-subtotal">
-                                             <th>Cart Subtotal</th>
+                                             <th>Subtotal</th>
                                              <td><span class="amount"><?php echo $totalCompra; ?></span></td>
                                          </tr>
+                                         <tr id="cart-despacho" class="cart-subtotal">
+                                             <th>Costo despacho</th>
+                                             <td><span id="costoDespacho" class="amount">0</span></td>
+                                         </tr>
                                          <tr class="order-total">
-                                             <th>Order Total</th>
-                                             <td><strong><span class="amount"><?php echo $totalCompra; ?></span></strong>
+                                             <th>
+                                                 Total a pagar
+                                                 <input id="compraEstatica" value="<?php echo $totalCompra; ?>" hidden />
+                                             </th>
+                                             <td><strong><span id="totalCompra" class="amount"><?php echo $totalCompra; ?></span></strong>
+
                                              </td>
                                          </tr>
                                      </tfoot>
                                  </table>
                              </div>
+                             <div class="order-button-payment">
+                                 <input id="realizarCompra" type="submit" value="Realizar Compra" />
+                             </div>
+
                          </div>
                      </div>
                  </div>
              </form>
          </div>
      </div>
+
+     <div class="pull-right ">
+         <button type="button" class="btn-submit" data-toggle="modal" data-target="#iniciarSesion">
+             ++
+         </button>
+     </div>
+     <!-- Modal iniciar sesión -->
+     <div class="modal fade" id="iniciarSesion" tabindex="-1" role="dialog" aria-labelledby="iniciarSesion" aria-hidden="true">
+         <div class="modal-dialog modal-sm" role="document">
+             <div class="modal-content">
+                 <div class="modal-header">
+                     <h5 class="modal-title" id="exampleModalLabel">Iniciar Sesión</h5>
+                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                         <span aria-hidden="true">&times;</span>
+                     </button>
+                 </div>
+                 <div class="modal-body">
+                     <div class="row">
+                         <div class="col-sm-12">
+                             <p class="pro-img">Inicie sesión para continuar la compra, si no está registrado
+                                 <a href="#">¡Registrese Aqu&iacute;!</a>
+                             </p>
+                         </div>
+                     </div>
+                     <div class="row">
+                         <div class="col-sm-12">
+                             <fieldset>
+                                 <div class="form-group">
+                                     <label class="control-label" for="nombre_usuario">Nombre de usuario</label>
+                                     <div class="col-sm-10 pro-img">
+                                         <input type="text" class="form-control" id="nombre_usuario" name="nombre_usuario" placeholder="Nombre de usuario" required>
+                                     </div>
+                                     <label class="control-label" for="nombre_usuario">Contrase&ntilde;a</label>
+                                     <div class="col-sm-10">
+                                         <input type="text" class="form-control" id="clave" name="clave" placeholder="Contraseña" required>
+                                     </div>
+                                 </div>
+                             </fieldset>
+                         </div>
+                     </div>
+                 </div>
+                 <div class="modal-footer">
+                     <button type="submit" class="newsletter-btn">Acceder</button>
+                 </div>
+             </div>
+         </div>
+     </div>
+
+     <!-- Canasta-->
+     <script src="<?php echo base_url() ?>/js/canasta.js"></script>
