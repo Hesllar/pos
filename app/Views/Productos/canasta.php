@@ -81,7 +81,7 @@
                                          </li>
                                      </ul>
                                  </div>
-                                 
+
                                  <div class="btn-group btn-group-toggle pt-30" data-toggle="buttons" onclick="retiro(event)">
                                      <label class="btn btn-secondary active">
                                          <input type="radio" name="opciones" id="despacho"> Despacho a domicilio
@@ -113,7 +113,7 @@
                                      <div class="col-md-11">
                                          <div class="country-select mb-30">
                                              <label>Región<span class="required">*</span></label>
-                                             <select id="region" required>
+                                             <select id="region" onclick="validadorRegion(event)" required>
                                                  <option value="">Seleccione región</option>
                                              </select>
                                          </div>
@@ -121,10 +121,13 @@
                                      <div class="col-md-11">
                                          <div class="country-select mb-30">
                                              <label>Comuna<span class="required">*</span></label>
-                                             <select id="comuna" required>
+                                             <select id="comuna" onclick="costoComuna(event)" required>
                                                  <option value="">Seleccione comuna</option>
                                              </select>
                                          </div>
+                                     </div>
+                                     <div class="col-md-12">
+                                         <span id="rNoDisponible" class="require">*Actualmente solo existen despachos dentro de la regi&oacute;n de Valpara&iacute;so</span>
                                      </div>
                                  </div>
                              </div>
@@ -163,7 +166,7 @@
                                              <th>Subtotal</th>
                                              <td><span class="amount"><?php echo $totalCompra; ?></span></td>
                                          </tr>
-                                         <tr class="cart-subtotal">
+                                         <tr id="cart-despacho" class="cart-subtotal">
                                              <th>Costo despacho</th>
                                              <td><span id="costoDespacho" class="amount">0</span></td>
                                          </tr>
@@ -179,7 +182,7 @@
                                  </table>
                              </div>
                              <div class="order-button-payment">
-                                 <input type="submit" value="Realizar Compra" />
+                                 <input id="realizarCompra" type="submit" value="Realizar Compra" />
                              </div>
                          </div>
                      </div>

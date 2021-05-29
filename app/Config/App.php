@@ -23,7 +23,7 @@ class App extends BaseConfig
 	 *
 	 * @var string
 	 */
-	public $baseURL = 'http://fermeapp.com/pos/public/';
+	public $baseURL = 'http://localhost/pos/public/';
 
 	/**
 	 * --------------------------------------------------------------------------
