@@ -55,10 +55,11 @@ class VentaModel extends Model
 
     public function ventasXEmpleado()
     {
-        $this->select('d.nombres AS nombre,d.rut AS rut,empleado_fk AS empleado, sum(total) AS total, count(id_venta) AS venta');
-        $this->join('usuario as u', 'venta.cliente_fk=u.id_usuario');
+        $this->select('CONCAT(d.nombres," ",d.apellidos) AS nombre,CONCAT(d.rut, "-",d.dv) AS rut,empleado_fk AS empleado, CONCAT("$",FORMAT(sum(total),"")) AS total, count(id_venta) AS venta');
+        $this->join('empleado as e', 'venta.empleado_fk=e.id_empleado');
+        $this->join('usuario as u', 'e.usuario_fk=u.id_usuario');
         $this->join('datos_personales as d', 'u.rut_fk=d.rut');
-        $this->groupBy('nombre');
+        $this->groupBy('empleado');
         return $this->findAll();
     }
 }
