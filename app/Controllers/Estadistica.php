@@ -174,4 +174,20 @@ class Estadistica extends BaseController
 
         $pdf->Output('ventasXEmpleado.pdf', 'I');
     }
+
+    public function excel()
+    {
+    }
+
+    public function datos()
+    {
+        $this->ventas->select('CONCAT(d.nombres," ",d.apellidos) AS nombre,CONCAT(d.rut, "-",d.dv) AS rut,empleado_fk AS empleado,sum(total) AS total, count(id_venta) AS venta');
+        $this->ventas->join('empleado as e', 'venta.empleado_fk=e.id_empleado');
+        $this->ventas->join('usuario as u', 'e.usuario_fk=u.id_usuario');
+        $this->ventas->join('datos_personales as d', 'u.rut_fk=d.rut');
+        $this->ventas->groupBy('empleado');
+        $datos =  $this->ventas->findAll();
+
+        echo json_encode($datos);
+    }
 }
