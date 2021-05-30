@@ -46,4 +46,19 @@ class VentaModel extends Model
     {
         return $this->where('estado_venta', 1)->countAllResults();
     }
+    public function totalVentas()
+    {
+
+        $this->select('sum(total) AS total');
+        return $this->where('estado_venta', 1)->first();
+    }
+
+    public function ventasXEmpleado()
+    {
+        $this->select('d.nombres AS nombre,d.rut AS rut,empleado_fk AS empleado, sum(total) AS total, count(id_venta) AS venta');
+        $this->join('usuario as u', 'venta.cliente_fk=u.id_usuario');
+        $this->join('datos_personales as d', 'u.rut_fk=d.rut');
+        $this->groupBy('nombre');
+        return $this->findAll();
+    }
 }

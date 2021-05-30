@@ -55,4 +55,16 @@ class ProductosAdminModel extends Model
     {
         return $this->where('estado', 1)->countAllResults(); // Cuanta todos los resultados de la sentencia
     }
+
+
+    public function StockMinimos()
+    {
+        $where = "stock_critico >= stock AND estado=1";
+        return $this->where($where)->countAllResults();
+    }
+    public function productosStockCriti()
+    {
+        $where = "stock_critico >= stock AND estado=1";
+        return $this->where($where)->findAll();
+    }
 }
