@@ -27,7 +27,8 @@ class NotasCredito extends BaseController
 			'e_ordencompra' => '',
 			'e_usuario' => '',
 			'e_notacredito' => 'active',
-			'e_config' => ''
+			'e_config' => '',
+			'e_estadistica' => ''
 		];
 
 		echo view('header', $data);

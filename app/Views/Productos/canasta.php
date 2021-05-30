@@ -1,6 +1,7 @@
      <?php
         isset($arrayCompra) ? $arrayProductos = $arrayCompra :  $arrayProductos = null;
-
+        $user_session = session();
+        
         ?>
      <!-- Breadcrumb Start -->
      <div class="breadcrumb-area pt-60 pb-55 pt-sm-30 pb-sm-20">
@@ -48,7 +49,7 @@
                                                      Nombre:
                                                  </div>
                                                  <div class="col-sm-5">
-                                                     Bastian Barraza Díaz
+                                                     <span id="nombre">Bastian </span> <span id="apellidos">Barraza Díaz</span>
                                                  </div>
                                              </div>
                                          </li>
@@ -58,7 +59,7 @@
                                                      Celular: <span class="policy-desc">
                                                  </div>
                                                  <div class="col-sm-5">
-                                                     +56 (9) 82547833
+                                                     +56 (9) <span id="celular">81783155</span>
                                                  </div>
                                              </div>
                                          </li>
@@ -68,7 +69,7 @@
                                                      Correo:
                                                  </div>
                                                  <div class="col-sm-5">
-                                                     bastian@bastianbastian.com
+                                                    <span id="correo"> bastian_b_d@hotmail.com </span>
                                                  </div>
                                              </div>
                                          </li>
@@ -78,7 +79,7 @@
                                                      Direcci&oacute;n:
                                                  </div>
                                                  <div class="col-sm-5">
-                                                     Lago Villarrica #1256
+                                                    <span id="calle_direccion">Lago Villarrica </span> <span id="numero_direccion">#1256</span>
                                                  </div>
                                              </div>
                                          </li>
@@ -88,13 +89,13 @@
                                                      Ciudad:
                                                  </div>
                                                  <div class="col-sm-8">
-                                                     San Antonio
+                                                    <span id="ciudad"> San Antonio</span>
                                                  </div>
                                              </div>
                                          </li>
                                      </ul>
                                  </div>
-                                 
+
                                  <div class="btn-group btn-group-toggle pt-30" data-toggle="buttons" onclick="retiro(event)">
                                      <label class="btn btn-secondary active">
                                          <input type="radio" name="opciones" id="despacho"> Despacho a domicilio
@@ -126,7 +127,7 @@
                                      <div class="col-md-11">
                                          <div class="country-select mb-30">
                                              <label>Región<span class="required">*</span></label>
-                                             <select id="region" required>
+                                             <select id="region" onclick="validadorRegion(event)" required>
                                                  <option value="">Seleccione región</option>
                                              </select>
                                          </div>
@@ -134,10 +135,13 @@
                                      <div class="col-md-11">
                                          <div class="country-select mb-30">
                                              <label>Comuna<span class="required">*</span></label>
-                                             <select id="comuna" required>
+                                             <select id="comuna" onclick="costoComuna(event)" required>
                                                  <option value="">Seleccione comuna</option>
                                              </select>
                                          </div>
+                                     </div>
+                                     <div class="col-md-12">
+                                         <span id="rNoDisponible" class="require">*Actualmente solo existen despachos dentro de la regi&oacute;n de Valpara&iacute;so</span>
                                      </div>
                                  </div>
                              </div>
@@ -176,7 +180,7 @@
                                              <th>Subtotal</th>
                                              <td><span class="amount"><?php echo $totalCompra; ?></span></td>
                                          </tr>
-                                         <tr class="cart-subtotal">
+                                         <tr id="cart-despacho" class="cart-subtotal">
                                              <th>Costo despacho</th>
                                              <td><span id="costoDespacho" class="amount">0</span></td>
                                          </tr>
@@ -193,7 +197,7 @@
                                  </table>
                              </div>
                              <div class="order-button-payment">
-                                 <input type="submit" value="Realizar Compra" />
+                                 <input id="realizarCompra" type="submit" value="Realizar Compra" />
                              </div>
 
                          </div>
@@ -204,7 +208,7 @@
      </div>
 
      <div class="pull-right ">
-         <button type="button" class="btn-submit" data-toggle="modal" data-target="#iniciarSesion">
+         <button type="button" id="btnIniciarSesion" style="display: none;" data-toggle="modal" data-target="#iniciarSesion">
              ++
          </button>
      </div>
@@ -250,5 +254,18 @@
          </div>
      </div>
 
+    
+
+
      <!-- Canasta-->
      <script src="<?php echo base_url() ?>/js/canasta.js"></script>
+
+     <?php
+if($user_session->id_usuario){
+    echo '<script>user_session_js.push('.$user_session->id_usuario.');</script>';
+    echo '<script>user_session_js.push('.$user_session->rut_fk.');</script>';
+
+}
+?>
+<script>sesionUsuario();</script>
+

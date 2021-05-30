@@ -1,6 +1,9 @@
 //Metodo para listar las regiones vía ajax
 listarRegiones();
 
+var user_session_js = new Array(); //Variable ArraySession
+let user_data_js = new Array(); //Variable datos del usuario
+
 //Guardando variables para que se ejecuten cuando se haga click
 const selectRegion = document.getElementById('region');
 selectRegion.addEventListener('click', listarComunas);
@@ -133,3 +136,4 @@ function limpiarDespacho(){
     $('#region').val(0);
     $('#comuna').val(0);
 }
+
