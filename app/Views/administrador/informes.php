@@ -18,8 +18,11 @@
                         <div class="card-body">
                             Ventas del día
                             <?php echo $ventas ?>
+                            <br>
+                            Total ventas:
+                            $<?php echo $sumaTotal['total'] ?>
                         </div>
-                        <a class="card-footer text-white" href="<?php echo base_url() ?>/ProductosAdmin">Ver detalle</a>
+                        <a class="card-footer text-white" href="<?php echo base_url() ?>/Estadistica/pagVentaXEmp">Ver detalle</a>
                     </div>
                 </div>
 
@@ -27,9 +30,9 @@
                     <div class="card text-white bg-danger">
                         <div class="card-body">
                             Productos con sotck minimo
-                            <?php echo $productos ?>
+                            <?php echo $stock_minimo ?>
                         </div>
-                        <a class="card-footer text-white" href="<?php echo base_url() ?>/ProductosAdmin">Ver detalle</a>
+                        <a class="card-footer text-white" href="<?php echo base_url() ?>/Estadistica/pagStockMin">Ver detalle</a>
                     </div>
                 </div>
             </div>
