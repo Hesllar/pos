@@ -137,30 +137,3 @@ function limpiarDespacho(){
     $('#comuna').val(0);
 }
 
-function sesionUsuario(){
-    if(user_session_js[1] != null){
-        $.ajax({
-            url: "http://localhost/pos/public/DatosPersonales/buscarPorRut/" + user_session_js[1],
-            method: "POST",
-            dataType: "JSON",
-            success: function (data) {
-                user_data_js = data;
-                agregarDatosCliente(data);
-            }
-        });
-    }else{
-        $('#btnIniciarSesion').click();
-    }
-}
-
-function agregarDatosCliente(datos_usuario){
-
-    console.log(datos_usuario);
-    $('#nombre').html(datos_usuario.nombres);
-    $('#apellidos').html(datos_usuario.apellidos);
-    $('#celular').html(datos_usuario.celular);
-    $('#correo').html(datos_usuario.correo);
-    $('#calle_direccion').html(datos_usuario.calle);
-    $('#numero_direccion').html(datos_usuario.numero);
-    $('#ciudad').html(datos_usuario.ciudad);
-}
