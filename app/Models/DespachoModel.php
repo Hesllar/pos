@@ -14,9 +14,14 @@ class DespachoModel extends Model
     protected $returnType     = 'array';
     protected $useSoftDeletes = false;
 
-    protected $allowedFields = ['nombre_recibe',
+    protected $allowedFields = ['fecha_entrega',
+                                'nombre_recibe',
                                 'telefono',
-                                'costo_despacho'                              
+                                'costo_despacho',
+                                'estado_despacho', 
+                                'venta_fk', 
+                                'costo_comuna_fk', 
+                                'costo_peso_fk'                         
                                 ];
 
     protected $useTimestamps = false;

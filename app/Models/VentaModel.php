@@ -17,6 +17,7 @@ class VentaModel extends Model
 
     protected $allowedFields = [
         'tipo_comprobante',
+        'fecha_venta',
         'valor_neto',
         'valor_iva',
         'total',
@@ -24,16 +25,16 @@ class VentaModel extends Model
         'estado_venta',
         'conversion_moneda',
         'empleado_fk',
-        'cliente,fk',
+        'cliente_fk',
         'forma_pago_fk',
     ];
 
     protected $useTimestamps = false;
     protected $createdField  = 'fecha_venta';
-    /*
+    
     protected $updatedField  = 'updated_at';
     protected $deletedField  = 'deleted_at';
-    */
+    
 
     protected $validationRules    = [];
     protected $validationMessages = [];

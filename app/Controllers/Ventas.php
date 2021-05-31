@@ -6,6 +6,8 @@ use App\Controllers\BaseController;
 use App\Controllers\Usuarios;
 use App\Controllers\Empleados;
 use App\Controllers\FormaPago;
+use App\Controllers\Comuna;
+use App\Controllers\Despachos;
 
 use App\Models\ConfiguracionModel;
 use App\Models\VentaModel;
@@ -14,12 +16,15 @@ use App\Models\FormaPagoModel;
 class Ventas extends BaseController
 {
 	protected $ventas;
+	protected $request;
 
 	public function __construct()
 	{
 		$this->usuarios = new Usuarios;
 		$this->empleados = new Empleados;
 		$this->formapago = new FormaPago;
+		$this->costoComuna = new Comuna;
+		$this->desp = new Despachos;
 
 		$this->ventas = new VentaModel;
 		$this->configuracion = new ConfiguracionModel;
@@ -183,5 +188,63 @@ class Ventas extends BaseController
 		echo view('administrador/ventas');
 		echo view('administrador/panel_footer');
 		echo view('footer');*/
+	}
+
+	function obtenerUltimoId()
+	{
+		$resultado = $this->ventas->select('id_venta')->orderBy('id_venta','DESC')->first();
+		return $resultado;
+	}
+
+	function realizarVentaWeb(){
+		
+		$this->request = \Config\Services::request();
+		date_default_timezone_set("America/Santiago");
+
+		$valores_venta = $this->calcularValores($this->request->getVar('total_venta_web'));
+
+		$this->ventas->save([
+            'tipo_comprobante' => $this->request->getVar('tipo_comprobante'),
+            'fecha_venta' => date('Y-m-d H:i:s'),
+            'valor_neto' => $valores_venta['valor_neto'],
+            'valor_iva' => $valores_venta['iva'],
+            'total' => $valores_venta['total'],
+            'despacho' => $this->request->getVar('despacho'),
+            'estado_venta' => 1,
+            'empleado_fk' => 301,
+            'cliente_fk' => $this->request->getVar('cliente_fk'),
+            'forma_pago_fk' => 2,
+        ]);
+		if($this->request->getVar('despacho') == 1){
+			$ultimoId = $this->obtenerUltimoId();
+			$ui = $ultimoId['id_venta'];
+			$costo_com = $this->costoComuna->obtenerCostoId($this->request->getVar('comuna_fk'));
+			$cc = $costo_com['id_costo'];
+			$costo_desp = str_replace('$', '',$this->request->getVar('costo')) ;
+			$this->desp->insertarDespacho(
+			 $this->request->getVar('nom_recibe'),
+             $this->request->getVar('telefono'),
+             $costo_desp,
+             $ui,
+             $cc
+			);
+		}
+		
+
+	}
+
+	function calcularValores($total)
+	{
+
+		$tv = str_replace('$', '',$total) ;
+		$total_venta = str_replace('.', '',$tv);
+		$total_iva = $total_venta * 0.19;
+		$total_neto = $total_venta - $total_iva;
+		$valores = [
+			'valor_neto' => round($total_neto),
+			'iva' => round($total_iva),
+			'total' => $total_venta
+		];
+		return $valores;
 	}
 }
