@@ -45,4 +45,8 @@ class Comuna extends BaseController
         echo json_encode($this->costoComuna->where('comuna_fk', $this->request->getVar('id_comuna'))->First());
     }
 
+    public function obtenerCostoId($id){
+        return $this->costoComuna->select('id_costo')->where('comuna_fk', $id)->First();
+    }
+
 }
