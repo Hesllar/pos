@@ -1,7 +1,7 @@
      <?php
         isset($arrayCompra) ? $arrayProductos = $arrayCompra :  $arrayProductos = null;
         $user_session = session();
-        
+
         ?>
      <!-- Breadcrumb Start -->
      <div class="breadcrumb-area pt-60 pb-55 pt-sm-30 pb-sm-20">
@@ -38,76 +38,19 @@
              <form action="#">
                  <div class="row">
                      <div class="col-lg-6 col-md-6">
-                         <div class="row">
-                             <div class="col-sm-12">
-                                 <div class="categorie recent-post same-sidebar">
-                                     <h3 class="sidebar-title">Datos del comprador</h3>
-                                     <ul class="categorie-list">
-                                         <li>
-                                             <div class="row">
-                                                 <div class="col-sm-2">
-                                                     Nombre:
-                                                 </div>
-                                                 <div class="col-sm-5">
-                                                     <span id="nombre">Bastian </span> <span id="apellidos">Barraza Díaz</span>
-                                                 </div>
-                                             </div>
-                                         </li>
-                                         <li>
-                                             <div class="row">
-                                                 <div class="col-sm-2">
-                                                     Celular: <span class="policy-desc">
-                                                 </div>
-                                                 <div class="col-sm-5">
-                                                     +56 (9) <span id="celular">81783155</span>
-                                                 </div>
-                                             </div>
-                                         </li>
-                                         <li>
-                                             <div class="row">
-                                                 <div class="col-sm-2">
-                                                     Correo:
-                                                 </div>
-                                                 <div class="col-sm-5">
-                                                    <span id="correo"> bastian_b_d@hotmail.com </span>
-                                                 </div>
-                                             </div>
-                                         </li>
-                                         <li>
-                                             <div class="row">
-                                                 <div class="col-sm-2">
-                                                     Direcci&oacute;n:
-                                                 </div>
-                                                 <div class="col-sm-5">
-                                                    <span id="calle_direccion">Lago Villarrica </span> <span id="numero_direccion">#1256</span>
-                                                 </div>
-                                             </div>
-                                         </li>
-                                         <li>
-                                             <div class="row">
-                                                 <div class="col-sm-2">
-                                                     Ciudad:
-                                                 </div>
-                                                 <div class="col-sm-8">
-                                                    <span id="ciudad"> San Antonio</span>
-                                                 </div>
-                                             </div>
-                                         </li>
-                                     </ul>
-                                 </div>
-
-                                 <div class="btn-group btn-group-toggle pt-30" data-toggle="buttons" onclick="retiro(event)">
-                                     <label class="btn btn-secondary active">
-                                         <input type="radio" name="opciones" id="despacho"> Despacho a domicilio
-                                     </label>
-                                     <label class="btn btn-secondary">
-                                         <input type="radio" name="opciones" id="tienda"> Retiro en tienda
-                                     </label>
-                                 </div>
+                         <div class="checkbox-form">
+                             <div class="btn-group btn-group-toggle" data-toggle="buttons" onclick="retiro(event)">
+                                 <label class="btn btn-secondary active">
+                                     <input type="radio" name="opciones" id="despacho"> Despacho a domicilio
+                                 </label>
+                                 <label class="btn btn-secondary">
+                                     <input type="radio" name="opciones" id="tienda"> Retiro en tienda
+                                 </label>
                              </div>
                          </div>
                          <div id="despachoDom" class="row">
-                             <div class="checkbox-form pt-30">
+
+                             <div class="checkbox-form pt-10">
                                  <div class="categorie recent-post same-sidebar pt-30">
                                      <h3 class="sidebar-title">Despacho a domicilio</h3>
                                  </div>
@@ -115,13 +58,19 @@
                                      <div class="col-md-6">
                                          <div class="checkout-form-list">
                                              <label>Nombre quien recibe <span class="required">*</span></label>
-                                             <input type="text" placeholder="" />
+                                             <input id="nombre_recibe" type="text" placeholder="" />
                                          </div>
                                      </div>
                                      <div class="col-md-5">
                                          <div class="checkout-form-list mb-30">
                                              <label>Teléfono <span class="required">*</span></label>
-                                             <input type="text" placeholder="" />
+                                             <input id="tel_contacto" type="tel" placeholder="" />
+                                         </div>
+                                     </div>
+                                     <div class="col-md-11">
+                                         <div class="checkout-form-list">
+                                             <span id="rNoDisponible" class="require">*Actualmente solo existen
+                                                 despachos dentro de la regi&oacute;n de Valpara&iacute;so</span>
                                          </div>
                                      </div>
                                      <div class="col-md-11">
@@ -140,12 +89,81 @@
                                              </select>
                                          </div>
                                      </div>
-                                     <div class="col-md-12">
-                                         <span id="rNoDisponible" class="require">*Actualmente solo existen despachos dentro de la regi&oacute;n de Valpara&iacute;so</span>
-                                     </div>
                                  </div>
                              </div>
                          </div>
+                         <div class="row pt-30">
+                             <div class="categorie recent-post same-sidebar col-sm-12">
+                                 <h3 class="sidebar-title">
+                                     Datos del comprador
+                                 </h3>
+                                 <div class="row pb-30">
+                                     <div class="col-sm-12">
+                                         <div class="form-check header-top-left">
+                                             <input class="form-check-input position-static" type="checkbox"
+                                                 id="esEmpresa" value="0" aria-label="empresa">
+                                             Comprar con factura
+                                         </div>
+                                     </div>
+                                 </div>
+                                 <ul class="categorie-list">
+                                     <li>
+                                         <div class="row">
+                                             <div class="col-sm-4">
+                                                 Nombre:
+                                             </div>
+                                             <div class="col-sm-8">
+                                                 <input id="id_cliente" type="hidden">
+                                                 <span id="nombre"></span> <span id="apellidos"></span>
+                                             </div>
+                                         </div>
+                                     </li>
+                                     <li>
+                                         <div class="row">
+                                             <div class="col-sm-4">
+                                                 Celular: <span class="policy-desc">
+                                             </div>
+                                             <div class="col-sm-8">
+                                                 +56 (9) <span id="celular"></span>
+                                             </div>
+                                         </div>
+                                     </li>
+                                     <li>
+                                         <div class="row">
+                                             <div class="col-sm-4">
+                                                 Correo:
+                                             </div>
+                                             <div class="col-sm-8">
+                                                 <span id="correo"></span>
+                                             </div>
+                                         </div>
+                                     </li>
+                                     <li>
+                                         <div class="row">
+                                             <div class="col-sm-4">
+                                                 Direcci&oacute;n:
+                                             </div>
+                                             <div class="col-sm-8">
+                                                 <span id="calle_direccion"></span> #<span id="numero_direccion"></span>
+                                             </div>
+                                         </div>
+                                     </li>
+                                     <li>
+                                         <div class="row">
+                                             <div class="col-sm-4">
+                                                 Ciudad:
+                                             </div>
+                                             <div class="col-sm-8">
+                                                 <span id="ciudad"></span>
+                                             </div>
+                                         </div>
+                                     </li>
+                                 </ul>
+                             </div>
+
+
+                         </div>
+
                      </div>
                      <div class="col-lg-6 col-md-6">
                          <div class="your-order">
@@ -162,14 +180,20 @@
                                          <?php if (isset($arrayCompra)) {
                                                 foreach ($arrayCompra as $producto) {
                                             ?>
-                                                 <tr class="cart_item">
-                                                     <td class="product-name">
-                                                         <?php echo $producto[1]; ?><strong class="product-quantity"> × <?php echo $producto[2]; ?></strong>
-                                                     </td>
-                                                     <td class="product-total">
-                                                         <span class="amount"><?php echo $producto[3]; ?></span>
-                                                     </td>
-                                                 </tr>
+                                         <tr class="cart_item">
+                                             <td>
+                                                 <input id="<?php echo $producto[0]; ?>" class="id_producto" type="hidden">
+                                                 <strong class="product-name">
+                                                 <?php echo $producto[1]; ?>
+                                                 </strong>
+                                                 <strong class="product-quantity"> ×
+                                                     <?php echo $producto[2]; ?>
+                                                 </strong>
+                                             </td>
+                                             <td class="product-total">
+                                                 <span class="amount"><?php echo $producto[3]; ?></span>
+                                             </td>
+                                         </tr>
                                          <?php
                                                 }
                                             }
@@ -187,9 +211,11 @@
                                          <tr class="order-total">
                                              <th>
                                                  Total a pagar
-                                                 <input id="compraEstatica" value="<?php echo $totalCompra; ?>" hidden />
+                                                 <input id="compraEstatica" value="<?php echo $totalCompra; ?>"
+                                                     />
                                              </th>
-                                             <td><strong><span id="totalCompra" class="amount"><?php echo $totalCompra; ?></span></strong>
+                                             <td><strong><span id="totalCompra"
+                                                         class="amount"><?php echo $totalCompra; ?></span></strong>
 
                                              </td>
                                          </tr>
@@ -197,7 +223,8 @@
                                  </table>
                              </div>
                              <div class="order-button-payment">
-                                 <input id="realizarCompra" type="submit" value="Realizar Compra" />
+                                 <input id="realizarCompra" type="submit" value="Realizar Compra"
+                                     onclick="realizarCompraWeb()" />
                              </div>
 
                          </div>
@@ -208,12 +235,14 @@
      </div>
 
      <div class="pull-right ">
-         <button type="button" id="btnIniciarSesion" style="display: none;" data-toggle="modal" data-target="#iniciarSesion">
+         <button type="button" id="btnIniciarSesion" style="display: none;" data-toggle="modal"
+             data-target="#iniciarSesion">
              ++
          </button>
      </div>
      <!-- Modal iniciar sesión -->
-     <div class="modal fade" id="iniciarSesion" tabindex="-1" role="dialog" aria-labelledby="iniciarSesion" aria-hidden="true">
+     <div class="modal fade" id="iniciarSesion" tabindex="-1" role="dialog" aria-labelledby="iniciarSesion"
+         aria-hidden="true">
          <div class="modal-dialog modal-sm" role="document">
              <div class="modal-content">
                  <div class="modal-header">
@@ -236,11 +265,13 @@
                                  <div class="form-group">
                                      <label class="control-label" for="nombre_usuario">Nombre de usuario</label>
                                      <div class="col-sm-10 pro-img">
-                                         <input type="text" class="form-control" id="nombre_usuario" name="nombre_usuario" placeholder="Nombre de usuario" required>
+                                         <input type="text" class="form-control" id="nombre_usuario"
+                                             name="nombre_usuario" placeholder="Nombre de usuario" required>
                                      </div>
                                      <label class="control-label" for="nombre_usuario">Contrase&ntilde;a</label>
                                      <div class="col-sm-10">
-                                         <input type="text" class="form-control" id="clave" name="clave" placeholder="Contraseña" required>
+                                         <input type="text" class="form-control" id="clave" name="clave"
+                                             placeholder="Contraseña" required>
                                      </div>
                                  </div>
                              </fieldset>
@@ -254,18 +285,18 @@
          </div>
      </div>
 
-    
+
 
 
      <!-- Canasta-->
      <script src="<?php echo base_url() ?>/js/canasta.js"></script>
 
      <?php
-if($user_session->id_usuario){
-    echo '<script>user_session_js.push('.$user_session->id_usuario.');</script>';
-    echo '<script>user_session_js.push('.$user_session->rut_fk.');</script>';
-
-}
-?>
-<script>sesionUsuario();</script>
-
+        if ($user_session->id_usuario) {
+            echo '<script>user_session_js.push(' . $user_session->id_usuario . ');</script>';
+            echo '<script>user_session_js.push(' . $user_session->rut_fk . ');</script>';
+        }
+        ?>
+     <script>
+sesionUsuario();
+     </script>
