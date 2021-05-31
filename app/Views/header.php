@@ -46,9 +46,14 @@ $user_session = session();
 
 
     <!-- jquery 3.12.4 -->
+
     <script src="<?php echo base_url(); ?>/js/vendor/jquery-1.12.4.min.js"></script>
     <!-- modernizr js -->
     <script src="<?php echo base_url(); ?>/js/vendor/modernizr-2.8.3.min.js"></script>
+    <!-- Estadistica-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.3.1/chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.3.1/chart.esm.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.3.1/helpers.esm.min.js"></script>
 </head>
 
 <body>
@@ -118,7 +123,7 @@ $user_session = session();
                         <div class="col-xl-6 col-lg-7 d-none d-lg-block">
                             <div class="middle-menu pull-right">
                                 <nav>
-                                    <ul class="middle-menu-list">
+                                    <ul class="middle-menu-list d-flex">
                                         <li><a href="<?php echo base_url(); ?>/home">inicio</a>
                                         </li>
                                         <li><a href="<?php echo base_url(); ?>/Productos">Productos<i class="fa fa-angle-down"></i></a>
@@ -131,8 +136,15 @@ $user_session = session();
                                             </ul>
                                             <!-- Home Version Dropdown End -->
                                         </li>
-                                        <li><a href="<?php echo base_url(); ?>/acerca">acerca de nosotros</a></li>
+                                        <li><a href="<?php echo base_url(); ?>/acerca">nosotros</a></li>
                                         <li><a href="<?php echo base_url(); ?>/contacto">contacto</a></li>
+                                        <?php
+
+                                        if ($user_session->nvl_acceso_fk == 10) {
+
+                                        ?>
+                                            <li><a href="<?php echo base_url(); ?>/productosAdmin">Administracion</a></li>
+                                        <?php } ?>
                                     </ul>
                                 </nav>
                             </div>

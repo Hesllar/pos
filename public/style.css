@@ -4115,4 +4115,7 @@ legend {
 .form-group-incorrecto .form-control {
     border: 3px solid red;
 }
+.container-pdf {
+    max-height: 200px !important;
+}
 

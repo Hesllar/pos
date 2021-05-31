@@ -58,11 +58,12 @@ class DatosPersonales extends BaseController
 		]);
 	}
 
-	public function buscarIdPerso($idRut)
+	public function buscarPorRut($idRut)
 	{
-		/*$this->datospersonales->select('rut');
-		$this->datospersonales->where('rut', $idRut);
-		$this->datospersonales->orderBy('fecha_creacion', 'DESC')->First();*/
+		$this->datospersonales->select('*');
+		$datoPersonal = $this->datospersonales->where('rut', $idRut)->First();
+		$direccion = $this->direccion->select()->where('id_direccion', $datoPersonal['direccion_fk'])->First();
+		return json_encode(array_merge($datoPersonal,$direccion));
 	}
 
 	public function listar()
