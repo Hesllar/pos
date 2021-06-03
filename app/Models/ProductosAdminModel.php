@@ -44,7 +44,7 @@ class ProductosAdminModel extends Model
 
     public function orderProducto()
     {
-        $this->select('*');
+        $this->select('id_producto, nombre,CONCAT("$",FORMAT(precio_venta,"")) AS precio_venta, stock, categoria');
         $this->orderBy('fecha_creacion', 'DESC');
         $this->where('estado', 1);
         $data = $this->findAll();
