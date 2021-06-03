@@ -19,7 +19,7 @@
                             <?php echo $ventas ?>
                             <br>
                             Total ventas:
-                            $<?php echo $sumaTotal['total'] ?>
+                            <?php echo $sumaTotal['total'] ?>
                         </div>
                         <a class="card-footer text-white" href="<?php echo base_url() ?>/Estadistica/pagVentaXEmp">Ver detalle</a>
                         <a class="card-footer text-white" id="btnbuscar" href="#">Ver grafico</a>
@@ -54,7 +54,6 @@
                     paramNombre.push(item.nombre)
                     paraCountVenta.push(item.venta)
                 })
-
                 var ctx = document.getElementById('myChart').getContext('2d');
                 var myChart = new Chart(ctx, {
                     type: 'bar',
