@@ -70,6 +70,7 @@
                             <div class="slider-right-content side-product-list-active owl-carousel">
                                 <div class="double-pro">
                                     <div class="single-product">
+                                    <input class="id_produc" value="<?php echo $destacado['id_producto']; ?>" hidden>
                                         <!-- Product Image Start -->
                                         <div class="pro-img">
                                             <a href="product.html">
