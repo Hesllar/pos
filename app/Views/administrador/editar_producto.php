@@ -68,12 +68,7 @@
                         </div>
 
                     </div>
-                    <div class="form-group">
-                        <label class="control-label" for="number"><span class="require">*</span>Stock</label>
-                        <div class="col-sm-10">
-                            <input type="number" value="<?php echo $datos['stock']; ?>" class="form-control" id="stock" name="stock" placeholder="Ingrese existencia">
-                        </div>
-                    </div>
+
                     <div class="form-group">
                         <label class="control-label" for="number"><span class="require">*</span>Stock critico</label>
                         <div class="col-sm-10">

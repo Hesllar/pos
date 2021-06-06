@@ -114,4 +114,33 @@ class Acceder extends BaseController
 		echo view('olvide_contrasena');
 		echo view('footer');
 	}
+
+
+	public function perfil($id_user)
+	{
+		$this->usuarioModal->select('rut,dv,nombres,apellidos,celular,correo,natural_juridico,d.ciudad AS ciudad,
+		r.nombre_region AS region, c.nombre_comuna AS comuna, d.calle AS calle, d.numero AS numero, nom_usuario');
+		$this->usuarioModal->join('datos_personales AS dt', 'usuario.rut_fk=dt.rut');
+		$this->usuarioModal->join('direccion AS d', 'dt.direccion_fk=d.id_direccion');
+		$this->usuarioModal->join('comuna AS c', 'd.comuna_fk=c.id_comuna');
+		$this->usuarioModal->join('region AS r', 'c.region_fk=r.id_region');
+		$this->usuarioModal->where('id_usuario', $id_user);
+		$datos = $this->usuarioModal->first();
+
+		$res['datos'] = $datos;
+
+		return json_encode($res);
+	}
+
+	public function datosEmp($id_user)
+	{
+		$this->usuarioModal->select('e.rut_empresa AS rut_emp, e.razon_social AS razon, e.giro AS giro, e.telefono AS fono, e.dvempresa AS dv_emp');
+		$this->usuarioModal->join('datos_personales AS dt', 'usuario.rut_fk=dt.rut');
+		$this->usuarioModal->join('empresa AS e', 'dt.rut=e.DATOS_PERSONALES_rut');
+		$this->usuarioModal->where('id_usuario', $id_user);
+		$datos = $this->usuarioModal->first();
+
+		$res['datos'] = $datos;
+		return json_encode($res);
+	}
 }

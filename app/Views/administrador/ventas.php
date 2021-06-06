@@ -102,9 +102,10 @@
                             <div class="modal-header">
                                 <h5 class="modal-title" id="exampleModalLabel">Datos de la venta N°
                                 </h5>
+                                <!--onclick=" location.href=' <?php echo base_url() ?>/Ventas'-->
                                 <input type="text" id="idBoleta" disabled>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
+                                    <span aria-hidden=" true">&times;</span>
                                 </button>
                             </div>
                             <div class="modal-body">
@@ -133,7 +134,7 @@
                                                                 <div class="form-group col-sm-4">
                                                                     <span class="fuente-titulo">Rut del Cliente</span>
                                                                     <div class="col-sm-12">
-                                                                        <span class="fuente-parrafo"><input type="text" id="rut" disabled></span>
+                                                                        <span class="fuente-parrafo"><input type="text" id="rut_user" disabled></span>
                                                                     </div>
                                                                 </div>
                                                                 <div class="form-group col-sm-5">
@@ -187,17 +188,8 @@
                                                                                     <th>Total</th>
                                                                                 </tr>
                                                                             </thead>
-                                                                            <tbody>
-                                                                                <tr>
-                                                                                    <td>523</td>
-                                                                                    <td>29/04/2021 18:03</td>
-                                                                                    <td>$15.990</td>
-                                                                                </tr>
-                                                                                <tr>
-                                                                                    <td>522</td>
-                                                                                    <td>29/04/2021 17:53</td>
-                                                                                    <td>$22.390</td>
-                                                                                </tr>
+                                                                            <tbody class="listProduct">
+
                                                                             </tbody>
                                                                         </table>
                                                                     </div>
@@ -209,7 +201,7 @@
                                                 <div class="cart_totals h2 col-sm-12">
                                                     <div class="form-group">
                                                         <span class="fuente-parrafo">Sub Total</span>
-                                                        <span class="fuente-titulo">$999.999</span>
+                                                        <span class="fuente-titulo"><input type="text" id="subtotal" disabled></span>
                                                     </div>
                                                 </div>
                                                 <div class="card">
@@ -328,7 +320,7 @@
                                         <td><?php echo $boleta['estado_str']; ?></td>
                                         <td><a href="#"><?php echo $boleta['nom_empleado']; ?></a></td>
                                         <td>
-                                            <a class="view" data-toggle="modal" data-target="#detalle" id="btnbuscar" onclick="obtnDatos(<?php echo $boleta['id_venta']; ?>)">
+                                            <a class="view" data-toggle="modal" data-target="#detalle" id="btnbuscar" onclick="todo(<?php echo $boleta['id_venta'] ?>)">
                                             </a>
 
                                         </td>
@@ -436,17 +428,45 @@
     }
 </script>
 
+
 <script>
+    function todo(id_venta) {
+        obtnDatos(id_venta);
+        obtnDatosPro(id_venta);
+    }
+
     function obtnDatos(id_venta) {
+        console.log(id_venta)
         $.ajax({
             url: "<?php echo base_url() ?>/Ventas/datosBoleta/" + id_venta,
             dataType: 'json',
             success: function(respuesta) {
                 $("#idBoleta").val(respuesta.datos.id_venta);
                 $("#fecha_emision").val(respuesta.datos.fecha_venta);
-                $("#rut").val(respuesta.datos.rut);
+                $("#rut_user").val(respuesta.datos.rut);
                 $("#nombre_cliente").val(respuesta.datos.nombres);
-                $("#rut_emp").val(respuesta.datos.rut_emp);
+                $("#subtotal").val(respuesta.datos.total);
+            }
+        });
+    }
+
+    function obtnDatosPro(id_venta) {
+        $.ajax({
+            url: "<?php echo base_url() ?>/Ventas/datosProductoBoleta/" + id_venta,
+
+            dataType: 'json',
+            success: function(respuesta) {
+                $('.listProduct').html('')
+                $.each(respuesta.datos, function(i, value) {
+                    $('.listProduct').append('<tr>\
+                    <td>' + value['nombre'] + '</td>\
+                    <td>' + value['conteo'] + '</td>\
+                    <td>' + value['valor_neto'] + '</td>\
+                    <td>' + value['valor_iva'] + '</td>\
+                    <td>' + value['costo'] + '</td>\
+                    <td>' + value['total'] + '</td>\
+                    ')
+                })
             }
         });
     }

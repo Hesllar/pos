@@ -249,12 +249,23 @@ class Ventas extends BaseController
 
 	public function datosBoleta($id_venta)
 	{
-		$this->ventas->select('id_venta, fecha_venta, CONCAT(u.rut_fk, "-",d.dv) AS rut, CONCAT(d.nombres, " ",d.apellidos) AS nombres');
+		$this->ventas->select('id_venta, fecha_venta, CONCAT(d.rut, "-",d.dv) AS rut, CONCAT(d.nombres, " ",d.apellidos) AS nombres,total');
 		$this->ventas->join('usuario AS u', 'venta.cliente_fk=u.id_usuario');
 		$this->ventas->join('datos_personales AS d', 'u.rut_fk=d.rut');
-		//$this->ventas->join('empleado AS e', 'ventas.empleado_fk=e.id_empleado');
 		$this->ventas->where('id_venta', $id_venta);
-		$datos = $this->ventas->get()->getRow();
+		$datos = $this->ventas->first();
+		$res['datos'] = $datos;
+		return json_encode($res);
+	}
+
+	public function datosProductoBoleta($id_venta)
+	{
+		$this->ventas->select('p.nombre AS nombre, count(dt.id_producto_pk) AS conteo, id_venta, fecha_venta, valor_neto, valor_iva, total, (valor_neto+valor_iva) AS costo');
+		$this->ventas->join('detalle_venta AS dt', 'venta.id_venta=dt.id_venta_pk');
+		$this->ventas->join('producto AS p', 'dt.id_producto_pk=p.id_producto');
+		$this->ventas->where('id_venta', $id_venta);
+		$this->ventas->groupBy('nombre');
+		$datos = $this->ventas->findAll();
 		$res['datos'] = $datos;
 		return json_encode($res);
 	}
