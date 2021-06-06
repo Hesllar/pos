@@ -95,6 +95,10 @@ class ProductosAdmin extends BaseController
     public function NuevoProducto()
     {
 
+        if (!isset($this->session->id_usuario)) {
+            return redirect()->to(base_url() . '/Acceder');
+        }
+
         $this->request = \Config\Services::request();
 
         $this->detalle_producto->agregarFecha(
@@ -137,7 +141,9 @@ class ProductosAdmin extends BaseController
     // Funcion del empleado
     public function NuevoProductoEmp()
     {
-
+        if (!isset($this->session->id_usuario)) {
+            return redirect()->to(base_url() . '/Acceder');
+        }
         $this->request = \Config\Services::request();
 
         $this->detalle_producto->agregarFecha(
@@ -182,7 +188,9 @@ class ProductosAdmin extends BaseController
     //Funcion administrador
     public function NuevaCategoria()
     {
-
+        if (!isset($this->session->id_usuario)) {
+            return redirect()->to(base_url() . '/Acceder');
+        }
         $this->request = \Config\Services::request();
         $this->categorias->save([
             'nombre_categoria' => $this->request->getPost('nombre_categoria')
@@ -192,6 +200,9 @@ class ProductosAdmin extends BaseController
     //Funcion empleado
     public function NuevaCategoriaEmp()
     {
+        if (!isset($this->session->id_usuario)) {
+            return redirect()->to(base_url() . '/Acceder');
+        }
 
         $this->request = \Config\Services::request();
         $this->categorias->save([
@@ -202,6 +213,9 @@ class ProductosAdmin extends BaseController
     //Funcion administrador
     public function editar($id, $valid = null)
     {
+        if (!isset($this->session->id_usuario)) {
+            return redirect()->to(base_url() . '/Acceder');
+        }
 
         $productos = $this->productos->where('id_producto', $id)->first();
         $categoria = $this->categoria->buscarId($productos['categoria']);
@@ -229,6 +243,9 @@ class ProductosAdmin extends BaseController
     //Funcion empleado
     public function editarEmp($id, $valid = null)
     {
+        if (!isset($this->session->id_usuario)) {
+            return redirect()->to(base_url() . '/Acceder');
+        }
 
         $productos = $this->productos->where('id_producto', $id)->first();
         $categoria = $this->categoria->buscarId($productos['categoria']);
@@ -256,6 +273,9 @@ class ProductosAdmin extends BaseController
     //Funcion administrador
     public function actualizar()
     {
+        if (!isset($this->session->id_usuario)) {
+            return redirect()->to(base_url() . '/Acceder');
+        }
 
         $this->request = \Config\Services::request();
         if ($this->request->getMethod() == "post" && $this->validate($this->reglas1)) {
@@ -281,7 +301,6 @@ class ProductosAdmin extends BaseController
                 'descripcion' => $this->request->getPost('descripcion'),
                 'precio_venta' => $this->request->getPost('precio_venta'),
                 'precio_costo' => $this->request->getPost('precio_costo'),
-                'stock' => $this->request->getPost('stock'),
                 'stock_critico' => $this->request->getPost('stock_critico'),
                 'categoria' => $this->request->getPost('categoria'),
                 'detalle_fk' => $this->detalle_producto->buscarId(),
@@ -300,6 +319,9 @@ class ProductosAdmin extends BaseController
     public function actualizarEmp()
     {
 
+        if (!isset($this->session->id_usuario)) {
+            return redirect()->to(base_url() . '/Acceder');
+        }
         $this->request = \Config\Services::request();
         if ($this->request->getMethod() == "post" && $this->validate($this->reglas1)) {
 
@@ -324,7 +346,6 @@ class ProductosAdmin extends BaseController
                 'descripcion' => $this->request->getPost('descripcion'),
                 'precio_venta' => $this->request->getPost('precio_venta'),
                 'precio_costo' => $this->request->getPost('precio_costo'),
-                'stock' => $this->request->getPost('stock'),
                 'stock_critico' => $this->request->getPost('stock_critico'),
                 'categoria' => $this->request->getPost('categoria'),
                 'detalle_fk' => $this->detalle_producto->buscarId(),
@@ -343,6 +364,9 @@ class ProductosAdmin extends BaseController
 
     public function eliminarProducto($id, $est = 0)
     {
+        if (!isset($this->session->id_usuario)) {
+            return redirect()->to(base_url() . '/Acceder');
+        }
         /*
         $productos = $this->productos->findAll();
         $data = ['titulo' => 'Productos', 'datos' => $productos]; */
@@ -352,6 +376,9 @@ class ProductosAdmin extends BaseController
 
     public function pagEliminarPro()
     {
+        if (!isset($this->session->id_usuario)) {
+            return redirect()->to(base_url() . '/Acceder');
+        }
         $this->request = \Config\Services::request();
         $productos = $this->productos->where('estado', 0)->findAll();
         $configuracion = $this->configuracion->First();
@@ -369,11 +396,17 @@ class ProductosAdmin extends BaseController
 
     public function reingresarProd($id, $estado = 1)
     {
+        if (!isset($this->session->id_usuario)) {
+            return redirect()->to(base_url() . '/Acceder');
+        }
         $this->productos->update($id, ['estado' => $estado]);
         return redirect()->to(base_url() . '/productosadmin/pagEliminarPro ');
     }
     public function eliminar($id)
     {
+        if (!isset($this->session->id_usuario)) {
+            return redirect()->to(base_url() . '/Acceder');
+        }
         $this->request = \Config\Services::request();
         //$producto_eliminado = $this->productos->where('id_producto', $id)->first();
         //$this->detalle_productoModel->where('id_detalle_prod', $producto_eliminado['detalle_fk'])->delete();

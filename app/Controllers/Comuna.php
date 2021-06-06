@@ -35,18 +35,20 @@ class Comuna extends BaseController
         }
     }
 
-    public function listarComuna(){
+    public function listarComuna()
+    {
         $this->request = \Config\Services::request();
         echo json_encode($this->comuna->where('region_fk', $this->request->getVar('id_region'))->findAll());
     }
 
-    public function costoComuna(){
+    public function costoComuna()
+    {
         $this->request = \Config\Services::request();
         echo json_encode($this->costoComuna->where('comuna_fk', $this->request->getVar('id_comuna'))->First());
     }
 
-    public function obtenerCostoId($id){
+    public function obtenerCostoId($id)
+    {
         return $this->costoComuna->select('id_costo')->where('comuna_fk', $id)->First();
     }
-
 }

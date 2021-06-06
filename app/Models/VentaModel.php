@@ -31,10 +31,10 @@ class VentaModel extends Model
 
     protected $useTimestamps = false;
     protected $createdField  = 'fecha_venta';
-    
+
     protected $updatedField  = 'updated_at';
     protected $deletedField  = 'deleted_at';
-    
+
 
     protected $validationRules    = [];
     protected $validationMessages = [];
@@ -50,7 +50,7 @@ class VentaModel extends Model
     public function totalVentas()
     {
 
-        $this->select('sum(total) AS total');
+        $this->select('CONCAT("$",FORMAT(sum(total),"")) AS total');
         return $this->where('estado_venta', 1)->first();
     }
 

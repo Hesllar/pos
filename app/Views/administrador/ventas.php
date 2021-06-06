@@ -1,8 +1,8 @@
 <div id="ventas" class="tab-pane <?php
 
-use App\Controllers\Ventas;
+                                    use App\Controllers\Ventas;
 
-echo $e_venta; ?>">
+                                    echo $e_venta; ?>">
     <h3>Ventas diarias</h3>
     <div class="container">
         <div class="row">
@@ -100,9 +100,12 @@ echo $e_venta; ?>">
                     <div class="modal-dialog modal-lg" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Datos de la venta N° [id_venta]</h5>
+                                <h5 class="modal-title" id="exampleModalLabel">Datos de la venta N°
+                                </h5>
+                                <!--onclick=" location.href=' <?php echo base_url() ?>/Ventas'-->
+                                <input type="text" id="idBoleta" disabled>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
+                                    <span aria-hidden=" true">&times;</span>
                                 </button>
                             </div>
                             <div class="modal-body">
@@ -113,7 +116,7 @@ echo $e_venta; ?>">
                                                 <div class="card">
                                                     <div class="card-header" id="headingOne">
                                                         <h5 class="mb-0">
-                                                            <a href="#" class="middle-menu-list" >Detalle de la venta</a>
+                                                            <a href="#" class="middle-menu-list">Detalle de la venta</a>
                                                         </h5>
                                                     </div>
 
@@ -123,7 +126,7 @@ echo $e_venta; ?>">
                                                                 <div class="form-group col-sm-6">
                                                                     <span class="fuente-titulo">Fecha de Emision</span>
                                                                     <div class="col-sm-12">
-                                                                        <span class="fuente-parrafo">05/05/2021 05:55:55</span>
+                                                                        <span class="fuente-parrafo"><input type="text" id="fecha_emision" disabled></span>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -131,13 +134,13 @@ echo $e_venta; ?>">
                                                                 <div class="form-group col-sm-4">
                                                                     <span class="fuente-titulo">Rut del Cliente</span>
                                                                     <div class="col-sm-12">
-                                                                        <span class="fuente-parrafo">19.168.632-0</span>
+                                                                        <span class="fuente-parrafo"><input type="text" id="rut_user" disabled></span>
                                                                     </div>
                                                                 </div>
                                                                 <div class="form-group col-sm-5">
                                                                     <span class="fuente-titulo">Nombre del Cliente</span>
                                                                     <div class="col-sm-12">
-                                                                        <span class="fuente-parrafo">Kimberly Aleen Pellizzari Villavicencio</span>
+                                                                        <span class="fuente-parrafo"><input type="text" id="nombre_cliente" disabled></span>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -145,7 +148,7 @@ echo $e_venta; ?>">
                                                                 <div class="form-group col-sm-4">
                                                                     <span class="fuente-titulo">Rut Empresa</span>
                                                                     <div class="col-sm-12">
-                                                                        <span class="fuente-parrafo">79.168.632-0</span>
+                                                                        <span class="fuente-parrafo"><input type="text" id="rut_emp"></span>
                                                                     </div>
                                                                 </div>
                                                                 <div class="form-group col-sm-4">
@@ -185,17 +188,8 @@ echo $e_venta; ?>">
                                                                                     <th>Total</th>
                                                                                 </tr>
                                                                             </thead>
-                                                                            <tbody>
-                                                                                <tr>
-                                                                                    <td>523</td>
-                                                                                    <td>29/04/2021 18:03</td>
-                                                                                    <td>$15.990</td>
-                                                                                </tr>
-                                                                                <tr>
-                                                                                    <td>522</td>
-                                                                                    <td>29/04/2021 17:53</td>
-                                                                                    <td>$22.390</td>
-                                                                                </tr>
+                                                                            <tbody class="listProduct">
+
                                                                             </tbody>
                                                                         </table>
                                                                     </div>
@@ -207,7 +201,7 @@ echo $e_venta; ?>">
                                                 <div class="cart_totals h2 col-sm-12">
                                                     <div class="form-group">
                                                         <span class="fuente-parrafo">Sub Total</span>
-                                                        <span class="fuente-titulo">$999.999</span>
+                                                        <span class="fuente-titulo"><input type="text" id="subtotal" disabled></span>
                                                     </div>
                                                 </div>
                                                 <div class="card">
@@ -266,31 +260,31 @@ echo $e_venta; ?>">
                                                     </div>
                                                 </div>
                                             </div>
-                                <div class="row pull-right billing-address">
-                                    <div class="form-group col-sm-9">
-                                        <span class="fuente-parrafo">Total</span>
-                                        <span class="fuente-titulo">$999.999</span>
-                                    </div>
+                                            <div class="row pull-right billing-address">
+                                                <div class="form-group col-sm-9">
+                                                    <span class="fuente-parrafo">Total</span>
+                                                    <span class="fuente-titulo">$999.999</span>
+                                                </div>
+                                            </div>
+
+                                        </fieldset>
+                                    </form>
+
+
                                 </div>
-
-                                </fieldset>
-                                </form>
-
-
                             </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn-estilo btn-cancelar" data-dismiss="modal">Cancelar</button>
-                            <button type="button" class="btn-estilo btn-cancelar" data-dismiss="modal">Anular
-                                venta</button>
-                            <button type="button" class="btn-estilo btn-aceptar" data-dismiss="modal">Aceptar</button>
+                            <div class="modal-footer">
+                                <button type="button" class="btn-estilo btn-cancelar" data-dismiss="modal">Cancelar</button>
+                                <button type="button" class="btn-estilo btn-cancelar" data-dismiss="modal">Anular
+                                    venta</button>
+                                <button type="button" class="btn-estilo btn-aceptar" data-dismiss="modal">Aceptar</button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 </div>
 <div class="container">
     <div class="row">
@@ -326,13 +320,14 @@ echo $e_venta; ?>">
                                         <td><?php echo $boleta['estado_str']; ?></td>
                                         <td><a href="#"><?php echo $boleta['nom_empleado']; ?></a></td>
                                         <td>
-                                            <a class="view" data-toggle="modal" href="#detalle">
-                                                <i class="fa fa-bars"></i>
+                                            <a class="view" data-toggle="modal" data-target="#detalle" id="btnbuscar" onclick="todo(<?php echo $boleta['id_venta'] ?>)">
                                             </a>
+
                                         </td>
                                     </tr>
                                 <?php } ?>
                             </tbody>
+
                         </table>
                     </div>
                 </div>
@@ -361,15 +356,13 @@ echo $e_venta; ?>">
                                         <td><?php echo $factura['estado_venta']; ?></td>
                                         <td><a href="#"><?php echo $factura['empleado_fk']; ?></a></td>
                                         <td>
-                                        <a class="view" data-toggle="modal" href="#detalle">
+                                            <a class="view" data-toggle="modal" href="#detalle">
                                                 <i class="fa fa-bars"></i>
                                             </a>
-                                            <a class="view-alerta" href="" 
-                                                onclick="anular(<?php echo $factura['id_venta'] ?>)">
+                                            <a class="view-alerta" href="" onclick="anular(<?php echo $factura['id_venta'] ?>)">
                                                 <i class="fa fa-bars"></i>
                                             </a>
-                                            <a class="view-alerta" href="" 
-                                                onclick="bpp(<?php echo $factura['id_venta'] ?>)">
+                                            <a class="view-alerta" href="" onclick="bpp(<?php echo $factura['id_venta'] ?>)">
                                                 <i class="fa fa-bars"></i>
                                             </a>
                                             <button id="anular" name="anular" type="button" class="btn btn-danger btn-sm delete" data-id="<?php $factura['id_venta'] ?>">Anular</button>
@@ -391,23 +384,24 @@ echo $e_venta; ?>">
 </div>
 <div id="resultado">Nada</div>
 
- <!-- jquery 3.12.4 -->
- <script src="<?php echo base_url(); ?>/js/vendor/jquery-1.12.4.min.js"></script>
+<!-- jquery 3.12.4 -->
+<script src="<?php echo base_url(); ?>/js/vendor/jquery-1.12.4.min.js"></script>
 <script>
-    $(document).ready(function(){
+    $(document).ready(function() {
 
     });
 
-    function bpp(codigo){
-        
+    function bpp(codigo) {
+
         alert('Run function bpp');
         $.ajax({
-            url: "<?php echo base_url() ?>/ventas/anularventa/"+codigo,
+            url: "<?php echo base_url() ?>/ventas/anularventa/" + codigo,
             datatype: 'json',
-            success: function(resultado){
-             alert('FInishes');
-             alert(resultado.datos.id_venta);
-                $("#resultado").html(resultado.datos.id_venta);
+            success: function(resultado) {
+                alert('FInishes');
+                alert(resultado.datos.id_venta);
+                //$("#resultado").html(resultado.datos.id_venta);
+                //$("#IdBoleta").html(resultado.datos.id_venta);
             }
         })
     };
@@ -415,21 +409,65 @@ echo $e_venta; ?>">
 
 
 <script>
-    
     //jQuery("#resultado").html('response');
-    function anular(id_venta)
-    {
+    function anular(id_venta) {
         alert('Si');
-        if(id_venta != null) {
-         $.ajax({
-            url:"<?php echo base_url('/ventas/anularventa/') ?>"+id_venta,
-            type:"POST",
+        if (id_venta != null) {
+            $.ajax({
+                url: "<?php echo base_url('/ventas/anularventa/') ?>" + id_venta,
+                type: "POST",
+                dataType: 'json',
+                data: {
+                    'id_venta': id_venta
+                },
+                success: function(respuesta) {
+                    alert('FInishes');
+                }
+            });
+        }
+    }
+</script>
+
+
+<script>
+    function todo(id_venta) {
+        obtnDatos(id_venta);
+        obtnDatosPro(id_venta);
+    }
+
+    function obtnDatos(id_venta) {
+        console.log(id_venta)
+        $.ajax({
+            url: "<?php echo base_url() ?>/Ventas/datosBoleta/" + id_venta,
             dataType: 'json',
-            data: {'id_venta': id_venta},
-            success:function(respuesta){
-             alert('FInishes');
-           }
-         });
-   }
+            success: function(respuesta) {
+                $("#idBoleta").val(respuesta.datos.id_venta);
+                $("#fecha_emision").val(respuesta.datos.fecha_venta);
+                $("#rut_user").val(respuesta.datos.rut);
+                $("#nombre_cliente").val(respuesta.datos.nombres);
+                $("#subtotal").val(respuesta.datos.total);
+            }
+        });
+    }
+
+    function obtnDatosPro(id_venta) {
+        $.ajax({
+            url: "<?php echo base_url() ?>/Ventas/datosProductoBoleta/" + id_venta,
+
+            dataType: 'json',
+            success: function(respuesta) {
+                $('.listProduct').html('')
+                $.each(respuesta.datos, function(i, value) {
+                    $('.listProduct').append('<tr>\
+                    <td>' + value['nombre'] + '</td>\
+                    <td>' + value['conteo'] + '</td>\
+                    <td>' + value['valor_neto'] + '</td>\
+                    <td>' + value['valor_iva'] + '</td>\
+                    <td>' + value['costo'] + '</td>\
+                    <td>' + value['total'] + '</td>\
+                    ')
+                })
+            }
+        });
     }
 </script>

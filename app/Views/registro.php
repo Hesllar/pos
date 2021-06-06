@@ -24,7 +24,7 @@
         <!-- Row End -->
         <div class="row">
             <div class="col-sm-12">
-                <form class="form-horizontal" method="Post" enctype="multipart/form-data" action="<?php echo base_url() ?>/Registro/registroUsuario">
+                <form class="form-horizontal" id="registroCliente" method="Post" enctype="multipart/form-data" action="<?php echo base_url() ?>/Registro/registroUsuario">
                     <fieldset>
                         <legend>Tus datos personales</legend>
                         <div class=" form-row">
@@ -231,4 +231,155 @@
             document.getElementById("dv_emp").style.display = "none";
         return;
     }
+</script>
+<script>
+    $("#registroCliente").submit(function(e) {
+        var fun = "funregistrar";
+        var rut = $("#rut").val();
+        var dv = $("#dv").val();
+        var nombres = $("#nombre").val();
+        var apellidos = $("#apellidos").val();
+        var correo = $("#email").val();
+        var celular = $("#celular").val();
+        var juridico = $("#juridico").val();
+        var ciudad = $("#ciudad").val();
+        var calle = $("#calle").val();
+        var numero = $("#numero").val();
+        var nom_usuario = $("#nombre_usuario").val();
+        var contraseña = $("#contraseña").val();
+        var contraseña2 = $("#contraseña2").val();
+        var avatar = $("#imagen").val();
+
+        if (rut == '') {
+            setTimeout(function() {
+                $("#lbRut").html("<span style='color:red;'> Complete el campo rut </span>").fadeOut(10000);
+            }, 0);
+
+            $("#rut").focus();
+            return false;
+
+        } else if (dv == '') {
+            setTimeout(function() {
+                $("#lbDv").html("<span style='color:red;'> Complete el campo dv </span>").fadeOut(10000);
+            }, 0);
+
+            $("#dv").focus();
+            return false;
+        } else if (nombres == '') {
+            setTimeout(function() {
+                $("#lbNombre").html("<span style='color:red;'> Complete el campo nombre</span>").fadeOut(10000);
+            }, 0);
+
+            $("#nombre").focus();
+            return false;
+        } else if (apellidos == '') {
+            setTimeout(function() {
+                $("#lbApellido").html("<span style='color:red;'> Complete el campo apellido </span>").fadeOut(10000);
+            }, 0);
+
+            $("#apellidos").focus();
+            return false;
+        } else if (correo == '') {
+            setTimeout(function() {
+                $("#lbCorreo").html("<span style='color:red;'> complete el campo correo </span>").fadeOut(10000);
+            }, 0);
+
+            $("#email").focus();
+            return false;
+        } else if (celular == '') {
+            setTimeout(function() {
+                $("#lbCelular").html("<span style='color:red;'> complete el celular </span>").fadeOut(10000);
+            }, 0);
+
+            $("#celular").focus();
+            return false;
+        } else if (juridico == '') {
+            setTimeout(function() {
+                $("#lbJuridico").html("<span style='color:red;'> complete el campo juridico </span>").fadeOut(10000);
+            }, 0);
+
+            $("#juridico").focus();
+            return false;
+        } else if (ciudad == '') {
+            setTimeout(function() {
+                $("#lbCiudad").html("<span style='color:red;'> complete el campo ciudad </span>").fadeOut(10000);
+            }, 0);
+
+            $("#ciudad").focus();
+            return false;
+        } else if (calle == '') {
+            setTimeout(function() {
+                $("#lbCalle").html("<span style='color:red;'> complete el campo calle </span>").fadeOut(10000);
+            }, 0);
+
+            $("#calle").focus();
+            return false;
+        } else if (numero == '') {
+            setTimeout(function() {
+                $("#lbNumero").html("<span style='color:red;'> complete el campo numero</span>").fadeOut(10000);
+            }, 0);
+
+            $("#numero").focus();
+            return false;
+        } else if (nom_usuario == '') {
+            setTimeout(function() {
+                $("#lbNomUsuario").html("<span style='color:red;'> complete el campo nombre usuario </span>").fadeOut(10000);
+            }, 0);
+
+            $("#nombre_usuario").focus();
+            return false;
+        } else if (contraseña == '') {
+            setTimeout(function() {
+                $("#lbContraseña").html("<span style='color:red;'> complete el campo contraseña </span>").fadeOut(10000);
+            }, 0);
+
+            $("#contraseña").focus();
+            return false;
+        } else if (contraseña2 == '') {
+            setTimeout(function() {
+                $("#lbContraseña2").html("<span style='color:red;'> complete el campo reingresar contraseña </span>").fadeOut(10000);
+            }, 0);
+
+            $("#contraseña2").focus();
+            return false;
+
+        } else if (contraseña != contraseña2) {
+            setTimeout(function() {
+                $("#lbValidContraseña").html("<span style='color:red;'> Las contraseña no son iguales </span>").fadeOut(10000);
+            }, 0);
+
+            $("#contraseña2").focus();
+            return false;
+
+        } else if (avatar == '') {
+            setTimeout(function() {
+                $("#lbAvatar").html("<span style='color:red;'> complete el campo imagen </span>").fadeOut(10000);
+            }, 0);
+
+            $("#imagen").focus();
+            return false;
+        } else {
+            $.ajax({
+                url: "<?php echo base_url(); ?>/Usuarios/insertar",
+                method: "POST",
+                data: {
+                    "funcion": fun,
+                    "rut": rut,
+                    "dv": dv,
+                    "nombres": nombres,
+                    "apellidos": apellidos,
+                    "correo": correo,
+                    "celular": celular,
+                    "juridico": juridico,
+                    "ciudad": ciudad,
+                    "calle": calle,
+                    "numero": numero,
+                    "nom_usuario": nom_usuario,
+                    "contraseña": contraseña,
+                    "contraseña2": contraseña2,
+                    "avatar": avatar
+                }
+            });
+        }
+    });
 </script>

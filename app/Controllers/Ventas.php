@@ -192,52 +192,51 @@ class Ventas extends BaseController
 
 	function obtenerUltimoId()
 	{
-		$resultado = $this->ventas->select('id_venta')->orderBy('id_venta','DESC')->first();
+		$resultado = $this->ventas->select('id_venta')->orderBy('id_venta', 'DESC')->first();
 		return $resultado;
 	}
 
-	function realizarVentaWeb(){
-		
+	function realizarVentaWeb()
+	{
+
 		$this->request = \Config\Services::request();
 		date_default_timezone_set("America/Santiago");
 
 		$valores_venta = $this->calcularValores($this->request->getVar('total_venta_web'));
 
 		$this->ventas->save([
-            'tipo_comprobante' => $this->request->getVar('tipo_comprobante'),
-            'fecha_venta' => date('Y-m-d H:i:s'),
-            'valor_neto' => $valores_venta['valor_neto'],
-            'valor_iva' => $valores_venta['iva'],
-            'total' => $valores_venta['total'],
-            'despacho' => $this->request->getVar('despacho'),
-            'estado_venta' => 1,
-            'empleado_fk' => 301,
-            'cliente_fk' => $this->request->getVar('cliente_fk'),
-            'forma_pago_fk' => 2,
-        ]);
-		if($this->request->getVar('despacho') == 1){
+			'tipo_comprobante' => $this->request->getVar('tipo_comprobante'),
+			'fecha_venta' => date('Y-m-d H:i:s'),
+			'valor_neto' => $valores_venta['valor_neto'],
+			'valor_iva' => $valores_venta['iva'],
+			'total' => $valores_venta['total'],
+			'despacho' => $this->request->getVar('despacho'),
+			'estado_venta' => 1,
+			'empleado_fk' => 301,
+			'cliente_fk' => $this->request->getVar('cliente_fk'),
+			'forma_pago_fk' => 2,
+		]);
+		if ($this->request->getVar('despacho') == 1) {
 			$ultimoId = $this->obtenerUltimoId();
 			$ui = $ultimoId['id_venta'];
 			$costo_com = $this->costoComuna->obtenerCostoId($this->request->getVar('comuna_fk'));
 			$cc = $costo_com['id_costo'];
-			$costo_desp = str_replace('$', '',$this->request->getVar('costo')) ;
+			$costo_desp = str_replace('$', '', $this->request->getVar('costo'));
 			$this->desp->insertarDespacho(
-			 $this->request->getVar('nom_recibe'),
-             $this->request->getVar('telefono'),
-             $costo_desp,
-             $ui,
-             $cc
+				$this->request->getVar('nom_recibe'),
+				$this->request->getVar('telefono'),
+				$costo_desp,
+				$ui,
+				$cc
 			);
 		}
-		
-
 	}
 
 	function calcularValores($total)
 	{
 
-		$tv = str_replace('$', '',$total) ;
-		$total_venta = str_replace('.', '',$tv);
+		$tv = str_replace('$', '', $total);
+		$total_venta = str_replace('.', '', $tv);
 		$total_iva = $total_venta * 0.19;
 		$total_neto = $total_venta - $total_iva;
 		$valores = [
@@ -247,4 +246,54 @@ class Ventas extends BaseController
 		];
 		return $valores;
 	}
+
+	public function datosBoleta($id_venta)
+	{
+		$this->ventas->select('id_venta, fecha_venta, CONCAT(d.rut, "-",d.dv) AS rut, CONCAT(d.nombres, " ",d.apellidos) AS nombres,total');
+		$this->ventas->join('usuario AS u', 'venta.cliente_fk=u.id_usuario');
+		$this->ventas->join('datos_personales AS d', 'u.rut_fk=d.rut');
+		$this->ventas->where('id_venta', $id_venta);
+		$datos = $this->ventas->first();
+		$res['datos'] = $datos;
+		return json_encode($res);
+	}
+
+	public function datosProductoBoleta($id_venta)
+	{
+		$this->ventas->select('p.nombre AS nombre, count(dt.id_producto_pk) AS conteo, id_venta, fecha_venta, valor_neto, valor_iva, total, (valor_neto+valor_iva) AS costo');
+		$this->ventas->join('detalle_venta AS dt', 'venta.id_venta=dt.id_venta_pk');
+		$this->ventas->join('producto AS p', 'dt.id_producto_pk=p.id_producto');
+		$this->ventas->where('id_venta', $id_venta);
+		$this->ventas->groupBy('nombre');
+		$datos = $this->ventas->findAll();
+		$res['datos'] = $datos;
+		return json_encode($res);
+	}
+
+
+
+
+
+
+
+
+
+	/* <?php foreach ($boletas as $boleta) { ?>
+                                    <tr>
+                                        <td><?php echo $boleta['id_venta']; ?></td>
+                                        <td><?php echo $boleta['fecha_venta']; ?></td>
+                                        <td><?php echo $configuracion['signo_moneda']; ?><?php echo $boleta['total']; ?>
+                                        </td>
+                                        <td><?php echo $boleta['despacho_str']; ?></td>
+                                        <td><?php echo $boleta['estado_str']; ?></td>
+                                        <td><a href="#"><?php echo $boleta['nom_empleado']; ?></a></td>
+                                        <td>
+                                            <input type="hidden" id="<?php echo $boleta['id_venta']; ?>" class="id_bo">
+
+                                            <a class="view" data-toggle="modal" data-target="#detalle" id="btnbuscar">
+                                            </a>
+
+                                        </td>
+                                    </tr>
+                                <?php } ?>*/
 }
