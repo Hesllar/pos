@@ -46,7 +46,6 @@ class Acceder extends BaseController
 
 
 
-
 	public function valida()
 	{
 		$configuracion = $this->configuracion->First();
