@@ -16,6 +16,8 @@ use App\Models\EmpleadoModel;
 
 class Usuarios extends BaseController
 {
+	protected $session;
+
 	protected $empleado;
 	protected $empresa;
 	protected $nivel;
@@ -31,6 +33,7 @@ class Usuarios extends BaseController
 
 	public function __construct()
 	{
+		$this->session = session();
 		$this->empleado = new EmpleadoModel;
 		$this->empresa = new EmpresaModel;
 		$this->direccion = new DireccionModel;
@@ -54,6 +57,9 @@ class Usuarios extends BaseController
 
 	public function index()
 	{
+		if (!isset($this->session->id_usuario)) {
+			return redirect()->to(base_url() . '/Acceder');
+		}
 		$nvl_acceso = $this->nivel->findAll();
 		$region = $this->region->findAll();
 		$usuario = $this->usuarioModal->DatosPersonales();
@@ -109,6 +115,9 @@ class Usuarios extends BaseController
 
 	public function insertar()
 	{
+		if (!isset($this->session->id_usuario)) {
+			return redirect()->to(base_url() . '/Acceder');
+		}
 		$this->request = \Config\Services::request();
 		//Acá la funciones insertarNvl obtiene el nivel de acceso y lo guarda en su respectiva tabala
 		/*$this->nivel->insertarNvl([
@@ -191,6 +200,9 @@ class Usuarios extends BaseController
 
 	public function editarUsuario($id, $valid = null)
 	{
+		if (!isset($this->session->id_usuario)) {
+			return redirect()->to(base_url() . '/Acceder');
+		}
 		$usuario = $this->usuarioModal->where('id_usuario', $id)->first();
 		$comunaAll = $this->comuna->findAll();
 		$regionAll = $this->region->findAll();
@@ -230,7 +242,9 @@ class Usuarios extends BaseController
 
 	public function actualizarUsuario()
 	{
-
+		if (!isset($this->session->id_usuario)) {
+			return redirect()->to(base_url() . '/Acceder');
+		}
 		$this->request = \Config\Services::request();
 		//if ($this->request->getPost('juridco') == 'Si') {
 		$this->updateDatosPerso(
@@ -267,18 +281,27 @@ class Usuarios extends BaseController
 
 	public function listar()
 	{
+		if (!isset($this->session->id_usuario)) {
+			return redirect()->to(base_url() . '/Acceder');
+		}
 		$usuarios = $this->usuarioModal->FindAll();
 		return $usuarios;
 	}
 
 	public function buscarPorId($id_usuario)
 	{
+		if (!isset($this->session->id_usuario)) {
+			return redirect()->to(base_url() . '/Acceder');
+		}
 		$usuarios = $this->usuarioModal->where('id_usuario', $id_usuario)->First();
 		return $usuarios;
 	}
 
 	public function buscarPorRut($rut_fk)
 	{
+		if (!isset($this->session->id_usuario)) {
+			return redirect()->to(base_url() . '/Acceder');
+		}
 		$usuarios = $this->usuarioModal->where('rut_fk', $rut_fk)->First();
 		return $usuarios;
 	}
@@ -312,17 +335,26 @@ class Usuarios extends BaseController
 
 	public function buscarIdNvl($id)
 	{
+		if (!isset($this->session->id_usuario)) {
+			return redirect()->to(base_url() . '/Acceder');
+		}
 		$buscarid =  $this->nivel->where('id_nivel', $id)->First();
 		return $buscarid;
 	}
 	public function buscarRut($rut)
 	{
+		if (!isset($this->session->id_usuario)) {
+			return redirect()->to(base_url() . '/Acceder');
+		}
 		$buscarid =  $this->datosPersonales->where('rut', $rut)->First();
 		return $buscarid;
 	}
 
 	public function obtnDatos($rut)
 	{
+		if (!isset($this->session->id_usuario)) {
+			return redirect()->to(base_url() . '/Acceder');
+		}
 		$this->datosPersonales->select('natural_juridico AS juridico,correo,celular,nombres,apellidos,rut,dv,d.calle AS calle, 
 		d.numero AS numero,d.ciudad AS ciudad,d.comuna_fk AS comuna,c.region_fk AS region, 
 		d.id_direccion AS direccion, c.id_comuna AS comuna_id');
@@ -336,6 +368,9 @@ class Usuarios extends BaseController
 
 	public function darBajaUsuario($id, $est = 0)
 	{
+		if (!isset($this->session->id_usuario)) {
+			return redirect()->to(base_url() . '/Acceder');
+		}
 		$this->request = \Config\Services::request();
 		$this->usuarioModal->update($id, ['estado_usuario' => $est]);
 		return redirect()->to(base_url() . '/Usuarios');
@@ -343,6 +378,9 @@ class Usuarios extends BaseController
 
 	public function pagEliminarUsuario()
 	{
+		if (!isset($this->session->id_usuario)) {
+			return redirect()->to(base_url() . '/Acceder');
+		}
 		$this->request = \Config\Services::request();
 		$usuarioOff = $this->datosUsuariosOff();
 		$configuracion = $this->configuracion->First();
@@ -356,6 +394,9 @@ class Usuarios extends BaseController
 
 	public function datosUsuariosOff()
 	{
+		if (!isset($this->session->id_usuario)) {
+			return redirect()->to(base_url() . '/Acceder');
+		}
 
 		$this->datosPersonales->select('u.id_usuario AS id_usuario,nombres,apellidos,rut,correo, n.nivel_acceso AS nivel_acceso');
 		$this->datosPersonales->join('usuario u ', 'datos_personales.rut=u.rut_fk');
@@ -366,6 +407,9 @@ class Usuarios extends BaseController
 	}
 	public function reingresarUsuario($id, $estado = 1)
 	{
+		if (!isset($this->session->id_usuario)) {
+			return redirect()->to(base_url() . '/Acceder');
+		}
 		$this->usuarioModal->update($id, ['estado_usuario' => $estado]);
 		return redirect()->to(base_url() . '/Usuarios/pagEliminarUsuario ');
 	}
@@ -373,6 +417,9 @@ class Usuarios extends BaseController
 
 	public function buscarUltiomoIdUser()
 	{
+		if (!isset($this->session->id_usuario)) {
+			return redirect()->to(base_url() . '/Acceder');
+		}
 		$buscarid = $this->usuarioModal->orderBy('id_usuario', 'DESC')->first();
 		return $buscarid['id_usuario'];
 	}

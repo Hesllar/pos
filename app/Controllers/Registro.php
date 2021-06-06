@@ -26,6 +26,7 @@ class Registro extends BaseController
 
 	public function __construct()
 	{
+
 		$this->empresa = new EmpresaModel;
 		$this->region = new RegionModel;
 		$this->configuracion = new ConfiguracionModel;
