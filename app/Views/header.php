@@ -183,7 +183,7 @@ $user_session = session();
                                                     <h5>total: $<span class="f-right total">0</span></h5>
                                                     <div class="cart-actions">
                                                         <!--<a href="#" id="realizar-compra" class="checkout">Comprar</a> -->
-                                                        <button type="submit" id="realizar-compra" class="checkout" data-toggle="modal" data-target="#comprarProducto">Comprar</a>
+                                                        <button type="submit" id="realizar-compra" class="checkout" data-toggle="modal" data-target="#comprarProducto">Ver carrito</a>
                                                     </div>
                                                 </div>
                                             </li>
@@ -261,79 +261,3 @@ $user_session = session();
             </div>
             <!-- Header Bottom End -->
         </header>
-        <!-- Modal ingreso producto -->
-        <!--<div class="modal fade" id="comprarProducto" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Despacho</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-
-                    <form class="form-horizontal" method="Post" enctype="multipart/form-data" action="<?php echo base_url() ?>/">
-                        <?php csrf_field(); ?>
-
-                        <div class="modal-body">
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <fieldset>
-                                        <div class="form-group">
-                                            <label class="control-label" for="nombre_producto"><span class="require">*</span>Nombre de quien recibe</label>
-                                            <div class="col-sm-10">
-                                                <input type="text" class="form-control" id="nombre_recibe" name="nombre_recibe" placeholder="Ingese nombre">
-                                                
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="control-label" for="marca"><span class="require">*</span>Celular</label>
-                                            <div class="col-sm-10">
-                                                <input type="tel" class="form-control" id="telefono" name="telefono" placeholder="Ingrese celular">
-                                                
-                                            </div>
-                                        </div>                       
-                                       
-                                        <div class="form-group">
-                                            <label class="control-label" for="number"><span class="require">*</span>Stock</label>
-                                            <div class="col-sm-10">
-                                                <input type="number" class="form-control" id="stock" name="stock" placeholder="Ingrese existencia">
-                                                
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label class="control-label" for="number"><span class="require">*</span>Stock critico</label>
-                                            <div class="col-sm-10">
-                                                <input type="number" class="form-control" id="stock_critico" name="stock_critico" placeholder="Ingrese existencia criticas">
-                                                
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="control-label" for="number"><span class="require">*</span>Descripcion</label>
-                                            <div class="col-sm-10">
-                                                <label for="descripcion" class="form-label"></label>
-                                                <textarea class="form-control" id="descripcion" name="descripcion" rows="3"></textarea>
-                                                
-                                            </div>
-                                        </div>
-
-                                    </fieldset>
-
-
-                                </div>
-
-                            </div>
-
-
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary newsletter-btn" id="botton1" data-dismiss="modal">Cancelar</button>
-                            <button type="submit" class="newsletter-btn" value="enviar datos" onclick="success_toast()">Guardar</button>
-                        </div>
-                    </form>
-
-                </div>
-            </div>
-
-        </div>-->

@@ -12,6 +12,7 @@ use App\Controllers\Despachos;
 use App\Models\ConfiguracionModel;
 use App\Models\VentaModel;
 use App\Models\FormaPagoModel;
+use App\Models\DetalleVentaModel;
 
 class Ventas extends BaseController
 {
@@ -26,6 +27,8 @@ class Ventas extends BaseController
 		$this->costoComuna = new Comuna;
 		$this->desp = new Despachos;
 
+		
+		$this->detalle_venta = new DetalleVentaModel;
 		$this->ventas = new VentaModel;
 		$this->configuracion = new ConfiguracionModel;
 		$this->forma_pago = new FormaPagoModel;
@@ -229,7 +232,26 @@ class Ventas extends BaseController
              $cc
 			);
 		}
+
 		
+
+	}
+
+	function agregarDetalleVenta(){
+		$this->request = \Config\Services::request();
+
+		$ultima_venta = $this->ventas->orderBy('id_venta','DESC')->first();
+		$id_venta_pk = $ultima_venta['id_venta'] + 1;
+
+		$productos = $this->request->getVar('arrayProductosDetalle');
+		
+		foreach ($productos as $key => $producto) {
+			$this->detalle_venta->save([
+				'id_producto_pk' => $producto[0],
+				'id_venta_pk' => $id_venta_pk,
+				'cantidad' => $producto[1]
+			]);
+		}
 
 	}
 
@@ -247,4 +269,11 @@ class Ventas extends BaseController
 		];
 		return $valores;
 	}
+
+	function testId(){
+		$tt = $this->ventas->orderBy('id_venta','DESC')->first();
+		return json_encode($tt['id_venta']);
+	}
+
+
 }
