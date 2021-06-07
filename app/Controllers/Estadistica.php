@@ -7,7 +7,7 @@ use App\Models\ConfiguracionModel;
 use App\Models\ProductosAdminModel;
 use App\Models\VentaModel;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
-use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+
 
 class Estadistica extends BaseController
 {
@@ -180,6 +180,7 @@ class Estadistica extends BaseController
     public function excel()
     {
 
+
         $this->request = \Config\Services::request();
         $phpExcel = new Spreadsheet();
         $hoja = $phpExcel->getActiveSheet();
@@ -204,6 +205,7 @@ class Estadistica extends BaseController
         $writer = new Xlsx($phpExcel);
         $writer->save("hola.xlsx");
         return redirect()->to(base_url() . '/Estadistica');
+
     }
 
     public function datos()
