@@ -1,15 +1,20 @@
 //Metodo para listar las regiones vía ajax
 listarRegiones();
+//Metodo Factura vía ajax
+checkboxEmpresa();
 
 var user_session_js = new Array(); //Variable ArraySession
 let user_data_js = new Array(); //Variable datos del usuario
 let venta_despacho = 1;
+var ultimaVenta;
 
 //Guardando variables para que se ejecuten cuando se haga click
 const selectRegion = document.getElementById('region');
 selectRegion.addEventListener('click', listarComunas);
 const seccionCostoDespacho = document.getElementById("cart-despacho");
 const errorDespacho = document.getElementById("rNoDisponible");
+const seccionEmpresa = document.getElementById("datosEmpresa");
+      seccionEmpresa.style.display = 'none';
 
 
 // Formatear moneda.
@@ -166,6 +171,8 @@ function sesionUsuario(){
 }
 
 function agregarDatosCliente(datos_usuario){
+    $('#rut-cli').html(datos_usuario.rut);
+    $('#dv').html(datos_usuario.dv);
     $('#nombre').html(datos_usuario.nombres);
     $('#apellidos').html(datos_usuario.apellidos);
     $('#celular').html(datos_usuario.celular);
@@ -173,6 +180,53 @@ function agregarDatosCliente(datos_usuario){
     $('#calle_direccion').html(datos_usuario.calle);
     $('#numero_direccion').html(datos_usuario.numero);
     $('#ciudad').html(datos_usuario.ciudad);
+}
+
+function checkboxEmpresa(){
+    const rut_fk = document.getElementById('rut-cli').textContent;
+    $.ajax({
+        url: "http://localhost/pos/public/Empresas/boolClienteEmpresa/" + rut_fk,
+        method: "POST",
+            dataType: "JSON",
+        success: function (data) {
+            console.log(data);
+        }
+        
+    });
+
+}
+
+function datosEmpresa(){
+    seccionEmpresa.style.display = 'none';
+    while ($('#esEmpresa').prop('checked')) {
+        const rut_fk = document.getElementById('rut-cli').textContent;
+        $.ajax({
+            url: "http://localhost/pos/public/Empresas/buscarPorRutCliente/" + rut_fk,
+            method: "POST",
+            dataType: "JSON",
+            success: function (data) {
+                agregarDatosEmpresa(data);
+            }
+            
+        });
+        seccionEmpresa.style.display = '';
+        break;
+    }
+}
+
+function agregarDatosEmpresa(datos_empresa){
+    $('#rut-emp').html(datos_empresa.rut_empresa);
+    $('#dv-emp').html(datos_empresa.dvempresa);
+    $('#razon').html(datos_empresa.razon_social);
+    $('#giro').html(datos_empresa.giro);
+    
+    $('#direccion-emp').html(datos_empresa.calle);
+    $('#numero-direccion-emp').html(datos_empresa.numero);
+    $('#ciudad-emp').html(datos_empresa.ciudad);
+    
+    
+    obid();
+    
 }
 
 function realizarCompraWeb(){
@@ -194,6 +248,8 @@ function realizarCompraWeb(){
     //formatter.format(total.toFixed(0));
     //Venta ID
     var fk_comuna = $('#comuna').val();
+
+    
     
 
     //Recibir cliente
@@ -201,7 +257,7 @@ function realizarCompraWeb(){
 
     //Productos
     
-    alert(venta_despacho);
+    alert('Venta realizada');
     $.ajax({
         url: "http://localhost/pos/public/Ventas/RealizarVentaWeb",
         method: "POST",
@@ -216,6 +272,56 @@ function realizarCompraWeb(){
             costo : costo_despacho,
             comuna_fk : fk_comuna,
         },
+        success: function(data){
+            //console.log(ultimaVenta);
+            const arrayProductos = document.querySelectorAll('.data-product');
+    var lista = new Array();
+    arrayProductos.forEach((producto, i) => {
+        const prod = producto.querySelector('.id_producto').id;
+        const cant = producto.querySelector('.qty').textContent;
+        lista.push([prod,cant]);
+    });
+        idv = data;
+        console.log(idv);
+            $.ajax({
+                url: "http://localhost/pos/public/Ventas/agregarDetalleVenta",
+                method: "POST",
+                data: {
+                    arrayProductosDetalle : lista,
+                    ultima_venta : idv,
+                },
+                dataType: 'JSON',
+                success: function(){
+                },
+            });
+        },
+    });
+    
+    
+    //setTimeout(detalleVenta(),2000);
+    
+
+}
+
+function detalleVenta(){
+    const arrayProductos = document.querySelectorAll('.data-product');
+    var lista = new Array();
+    arrayProductos.forEach((producto, i) => {
+        const prod = producto.querySelector('.id_producto').id;
+        const cant = producto.querySelector('.qty').textContent;
+        lista.push([prod,cant]);
+    });
+    //id_mod1 = id_ultima_venta.replace('"', '');
+    //v = id_mod1.replace('"', '');
+
+    $.ajax({
+        url: "http://localhost/pos/public/Ventas/agregarDetalleVenta",
+        method: "POST",
+        data: {
+            arrayProductosDetalle : lista,
+            ultima_venta : ultimaVenta,
+        },
+        dataType: 'JSON',
         success: function(){
         },
     });

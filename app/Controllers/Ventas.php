@@ -12,6 +12,7 @@ use App\Controllers\Despachos;
 use App\Models\ConfiguracionModel;
 use App\Models\VentaModel;
 use App\Models\FormaPagoModel;
+use App\Models\DetalleVentaModel;
 
 class Ventas extends BaseController
 {
@@ -26,6 +27,8 @@ class Ventas extends BaseController
 		$this->costoComuna = new Comuna;
 		$this->desp = new Despachos;
 
+		
+		$this->detalle_venta = new DetalleVentaModel;
 		$this->ventas = new VentaModel;
 		$this->configuracion = new ConfiguracionModel;
 		$this->forma_pago = new FormaPagoModel;
@@ -230,6 +233,29 @@ class Ventas extends BaseController
 				$cc
 			);
 		}
+		$ultima_venta = $this->ventas->orderBy('id_venta','DESC')->first();
+		return ($ultima_venta['id_venta']);
+
+		
+
+	}
+
+	function agregarDetalleVenta(){
+		$this->request = \Config\Services::request();
+
+		$ultima_venta = $this->ventas->orderBy('id_venta','DESC')->first();
+		$id_venta_pk = $this->request->getVar('ultima_venta');
+
+		$productos = $this->request->getVar('arrayProductosDetalle');
+		
+		foreach ($productos as $key => $producto) {
+			$this->detalle_venta->save([
+				'id_producto_pk' => $producto[0],
+				'id_venta_pk' => $id_venta_pk,
+				'cantidad' => $producto[1]
+			]);
+		}
+
 	}
 
 	function calcularValores($total)
@@ -246,6 +272,7 @@ class Ventas extends BaseController
 		];
 		return $valores;
 	}
+
 
 	public function datosBoleta($id_venta)
 	{
@@ -296,4 +323,5 @@ class Ventas extends BaseController
                                         </td>
                                     </tr>
                                 <?php } ?>*/
+
 }

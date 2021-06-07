@@ -715,12 +715,20 @@ ul.ht-dropdown.dropdown-style-two li {
 .checkout {
     background: #f1ac06;
     color: #fff;
+    border: none;
+    text-align: center;
+    text-transform: uppercase;
+    height: 32px;
+    width: 227px;
+    -webkit-transition: all 0.3s ease 0s;
+    transition: all 0.3s ease 0s;
 }
 
 .checkout:hover {
-    background-color: #f1ac06;
+    background-color: #9d9d9d;
     border-color: transparent;
     color: #fff;
+    outline: none;
 }
 
 .del-icone {
@@ -1200,6 +1208,49 @@ ul.ht-dropdown.dropdown-style-two li {
 
 .actions-secondary a {
     width: 33px;
+}
+
+.add-cart {
+    
+    background: #eef0f1 none repeat scroll 0 0;
+    border: none;
+    border-radius: 5px;
+    color: #555;
+    display: inline-block;
+    height: 32px;
+    line-height: 32px;
+    font-size: 12px;
+    text-align: center;
+    text-transform: uppercase;
+    width: 137px;
+}
+/*
+.add-cart {
+    
+    background: #f1ac06 none repeat scroll 0 0;
+    border-color: #f1ac06;
+    border-radius: 3px;
+    color: #fff;
+    display: inline-block;
+    height: 35px;
+    line-height: 36px;
+    padding: 0 10px;
+    text-align: center;
+    text-transform: capitalize;
+    width: 117px;
+}
+*/
+.add-cart:focus,.add-cart:hover {
+    background: #f1ac06;
+    color: #fff;
+    outline: none;
+    
+}
+
+.add-cart:active {
+    background: #eef0f1;
+    color: #555;
+    
 }
 
 .double-product .single-product {
@@ -1826,24 +1877,7 @@ ul.ht-dropdown.dropdown-style-two li {
     color: #fff;
     background: #1a1a1a;
 }
-.add-cart {
-    background: #f1ac06 none repeat scroll 0 0;
-    border-color: #f1ac06;
-    border-radius: 3px;
-    color: #fff;
-    display: inline-block;
-    height: 35px;
-    line-height: 36px;
-    padding: 0 10px;
-    text-align: center;
-    text-transform: capitalize;
-    width: 117px;
-}
 
-.add-cart:hover,.add-cart:focus {
-    opacity: 0.8;
-    color: #fff;
-}
 
 .product-link {
     border-top: 1px solid #ebebeb;
