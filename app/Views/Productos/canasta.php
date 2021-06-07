@@ -3,19 +3,6 @@
         $user_session = session();
 
         ?>
-     <!-- Breadcrumb Start -->
-     <div class="breadcrumb-area pt-60 pb-55 pt-sm-30 pb-sm-20">
-         <div class="container">
-             <div class="breadcrumb">
-                 <ul>
-                     <li><a href="index.html">Inicio</a></li>
-                     <li class="active"><a href="checkout.html">Confirmar Compra</a></li>
-                 </ul>
-             </div>
-         </div>
-         <!-- Container End -->
-     </div>
-     <!-- Breadcrumb End -->
      <!-- coupon-area start -->
      <div class="coupon-area">
          <div class="container">
@@ -35,7 +22,7 @@
      <!-- checkout-area start -->
      <div class="checkout-area pt-30  pb-60">
          <div class="container">
-             <form action="#">
+         
                  <div class="row">
                      <div class="col-lg-6 col-md-6">
                          <div class="checkbox-form">
@@ -64,174 +51,236 @@
                                      <div class="col-md-5">
                                          <div class="checkout-form-list mb-30">
                                              <label>Teléfono <span class="required">*</span></label>
-                                             <input id="tel_contacto" type="tel" placeholder="" />
-                                         </div>
+                                         <input id="tel_contacto col-md-5" type="text" placeholder="87654321" />
                                      </div>
-                                     <div class="col-md-11">
-                                         <div class="checkout-form-list">
-                                             <span id="rNoDisponible" class="require">*Actualmente solo existen
-                                                 despachos dentro de la regi&oacute;n de Valpara&iacute;so</span>
-                                         </div>
+                                 </div>
+                                 <div class="col-md-11">
+                                     <div class="checkout-form-list">
+                                         <span id="rNoDisponible" class="require">*Actualmente solo existen
+                                             despachos dentro de la regi&oacute;n de Valpara&iacute;so</span>
                                      </div>
-                                     <div class="col-md-11">
-                                         <div class="country-select mb-30">
-                                             <label>Región<span class="required">*</span></label>
-                                             <select id="region" onclick="validadorRegion(event)" required>
-                                                 <option value="">Seleccione región</option>
-                                             </select>
-                                         </div>
+                                 </div>
+                                 <div class="col-md-11">
+                                     <div class="country-select mb-30">
+                                         <label>Región<span class="required">*</span></label>
+                                         <select id="region" onclick="validadorRegion(event)" required>
+                                             <option value="">Seleccione región</option>
+                                         </select>
                                      </div>
-                                     <div class="col-md-11">
-                                         <div class="country-select mb-30">
-                                             <label>Comuna<span class="required">*</span></label>
-                                             <select id="comuna" onclick="costoComuna(event)" required>
-                                                 <option value="">Seleccione comuna</option>
-                                             </select>
-                                         </div>
+                                 </div>
+                                 <div class="col-md-11">
+                                     <div class="country-select mb-30">
+                                         <label>Comuna<span class="required">*</span></label>
+                                         <select id="comuna" onclick="costoComuna(event)" required>
+                                             <option value="">Seleccione comuna</option>
+                                         </select>
                                      </div>
                                  </div>
                              </div>
                          </div>
-                         <div class="row pt-30">
-                             <div class="categorie recent-post same-sidebar col-sm-12">
-                                 <h3 class="sidebar-title">
-                                     Datos del comprador
-                                 </h3>
-                                 <div class="row pb-30">
-                                     <div class="col-sm-12">
-                                         <div class="form-check header-top-left">
-                                             <input class="form-check-input position-static" type="checkbox"
-                                                 id="esEmpresa" value="0" aria-label="empresa">
-                                             Comprar con factura
-                                         </div>
+                     </div>
+                     <div class="row pt-30">
+                         <div class="categorie recent-post same-sidebar col-sm-12">
+                             <h3 class="sidebar-title">
+                                 Datos del comprador
+                             </h3>
+                             <div class="row pb-30">
+                                 <div class="col-sm-12">
+                                     <div class="form-check header-top-left">
+                                         <input class="form-check-input position-static" type="checkbox" id="esEmpresa"
+                                             value="0" aria-label="empresa" onclick="datosEmpresa()">
+                                         Comprar con factura
                                      </div>
                                  </div>
-                                 <ul class="categorie-list">
-                                     <li>
-                                         <div class="row">
-                                             <div class="col-sm-4">
-                                                 Nombre:
-                                             </div>
-                                             <div class="col-sm-8">
-                                                 <input id="id_cliente" type="hidden">
-                                                 <span id="nombre"></span> <span id="apellidos"></span>
-                                             </div>
-                                         </div>
-                                     </li>
-                                     <li>
-                                         <div class="row">
-                                             <div class="col-sm-4">
-                                                 Celular: <span class="policy-desc">
-                                             </div>
-                                             <div class="col-sm-8">
-                                                 +56 (9) <span id="celular"></span>
-                                             </div>
-                                         </div>
-                                     </li>
-                                     <li>
-                                         <div class="row">
-                                             <div class="col-sm-4">
-                                                 Correo:
-                                             </div>
-                                             <div class="col-sm-8">
-                                                 <span id="correo"></span>
-                                             </div>
-                                         </div>
-                                     </li>
-                                     <li>
-                                         <div class="row">
-                                             <div class="col-sm-4">
-                                                 Direcci&oacute;n:
-                                             </div>
-                                             <div class="col-sm-8">
-                                                 <span id="calle_direccion"></span> #<span id="numero_direccion"></span>
-                                             </div>
-                                         </div>
-                                     </li>
-                                     <li>
-                                         <div class="row">
-                                             <div class="col-sm-4">
-                                                 Ciudad:
-                                             </div>
-                                             <div class="col-sm-8">
-                                                 <span id="ciudad"></span>
-                                             </div>
-                                         </div>
-                                     </li>
-                                 </ul>
                              </div>
-
-
+                             <ul id="datosEmpresa" class="categorie-list emp">
+                                 <li>
+                                     <div class="row">
+                                         <div class="col-sm-4">
+                                             RUT:
+                                         </div>
+                                         <div class="col-sm-8">
+                                            <span id="rut-emp"></span> - <span id="dv-emp"></span>
+                                         </div>
+                                     </div>
+                                 </li>
+                                 <li>
+                                     <div class="row">
+                                         <div class="col-sm-4">
+                                             Razón Social:
+                                         </div>
+                                         <div class="col-sm-8">
+                                             <span id="razon"></span>
+                                         </div>
+                                     </div>
+                                 </li>
+                                 <li>
+                                     <div class="row">
+                                         <div class="col-sm-4">
+                                             Giro: <span class="policy-desc">
+                                         </div>
+                                         <div class="col-sm-8">
+                                             <span id="giro"></span>
+                                         </div>
+                                     </div>
+                                 </li>
+                                 <li>
+                                     <div class="row">
+                                         <div class="col-sm-4">
+                                             Direcci&oacute;n Empresa:
+                                         </div>
+                                         <div class="col-sm-8">
+                                             <span id="direccion-emp"></span> #<span id="numero-direccion-emp"></span>
+                                         </div>
+                                     </div>
+                                 </li>
+                                 <li>
+                                     <div class="row">
+                                         <div class="col-sm-4">
+                                             Ciudad:
+                                         </div>
+                                         <div class="col-sm-8">
+                                             <span id="ciudad-emp"></span>
+                                         </div>
+                                     </div>
+                                 </li>
+                                 <li></li>
+                                 <li></li>
+                             </ul>
+                             <ul class="categorie-list">
+                                 <li>
+                                     <div class="row">
+                                         <div class="col-sm-4">
+                                             RUT:
+                                         </div>
+                                         <div class="col-sm-8">
+                                             <span id="rut-cli"></span>-<span id="dv"></span>
+                                         </div>
+                                     </div>
+                                 </li>
+                                 <li>
+                                     <div class="row">
+                                         <div class="col-sm-4">
+                                             Nombre:
+                                         </div>
+                                         <div class="col-sm-8">
+                                             <input id="id_cliente" type="hidden">
+                                             <span id="nombre"></span> <span id="apellidos"></span>
+                                         </div>
+                                     </div>
+                                 </li>
+                                 <li>
+                                     <div class="row">
+                                         <div class="col-sm-4">
+                                             Celular: <span class="policy-desc">
+                                         </div>
+                                         <div class="col-sm-8">
+                                             +56 (9) <span id="celular"></span>
+                                         </div>
+                                     </div>
+                                 </li>
+                                 <li>
+                                     <div class="row">
+                                         <div class="col-sm-4">
+                                             Correo:
+                                         </div>
+                                         <div class="col-sm-8">
+                                             <span id="correo"></span>
+                                         </div>
+                                     </div>
+                                 </li>
+                                 <li>
+                                     <div class="row">
+                                         <div class="col-sm-4">
+                                             Direcci&oacute;n:
+                                         </div>
+                                         <div class="col-sm-8">
+                                             <span id="calle_direccion"></span> #<span id="numero_direccion"></span>
+                                         </div>
+                                     </div>
+                                 </li>
+                                 <li>
+                                     <div class="row">
+                                         <div class="col-sm-4">
+                                             Ciudad:
+                                         </div>
+                                         <div class="col-sm-8">
+                                             <span id="ciudad"></span>
+                                         </div>
+                                     </div>
+                                 </li>
+                             </ul>
                          </div>
+
 
                      </div>
-                     <div class="col-lg-6 col-md-6">
-                         <div class="your-order">
-                             <h3>Tu pedido</h3>
-                             <div class="your-order-table table-responsive">
-                                 <table>
-                                     <thead>
-                                         <tr>
-                                             <th class="product-name">Producto</th>
-                                             <th class="product-total">Total</th>
-                                         </tr>
-                                     </thead>
-                                     <tbody>
-                                         <?php if (isset($arrayCompra)) {
+
+                 </div>
+                 <div class="col-lg-6 col-md-6">
+                     <div class="your-order">
+                         <h3>Tu pedido</h3>
+                         <div class="your-order-table table-responsive">
+                             <table>
+                                 <thead>
+                                     <tr>
+                                         <th class="product-name">Producto</th>
+                                         <th class="product-total">Total</th>
+                                     </tr>
+                                 </thead>
+                                 <tbody>
+                                     <?php if (isset($arrayCompra)) {
                                                 foreach ($arrayCompra as $producto) {
                                             ?>
-                                         <tr class="cart_item">
-                                             <td>
-                                                 <input id="<?php echo $producto[0]; ?>" class="id_producto" type="hidden">
-                                                 <strong class="product-name">
+                                     <tr class="cart_item">
+                                         <td class="data-product">
+                                             <input id="<?php echo $producto[0]; ?>" class="id_producto" type="hidden">
+                                             <strong class="product-name">
                                                  <?php echo $producto[1]; ?>
-                                                 </strong>
-                                                 <strong class="product-quantity"> ×
-                                                     <?php echo $producto[2]; ?>
-                                                 </strong>
-                                             </td>
-                                             <td class="product-total">
-                                                 <span class="amount"><?php echo $producto[3]; ?></span>
-                                             </td>
-                                         </tr>
-                                         <?php
+                                             </strong>
+                                             <strong class="product-quantity"> ×
+                                                 <span class="qty"><?php echo $producto[2]; ?></span>
+                                             </strong>
+                                         </td>
+                                         <td class="product-total">
+                                             <span class="amount"><?php echo $producto[3]; ?></span>
+                                         </td>
+                                     </tr>
+                                     <?php
                                                 }
                                             }
                                             ?>
-                                     </tbody>
-                                     <tfoot>
-                                         <tr class="cart-subtotal">
-                                             <th>Subtotal</th>
-                                             <td><span class="amount"><?php echo $totalCompra; ?></span></td>
-                                         </tr>
-                                         <tr id="cart-despacho" class="cart-subtotal">
-                                             <th>Costo despacho</th>
-                                             <td><span id="costoDespacho" class="amount">0</span></td>
-                                         </tr>
-                                         <tr class="order-total">
-                                             <th>
-                                                 Total a pagar
-                                                 <input id="compraEstatica" value="<?php echo $totalCompra; ?>"
-                                                     />
-                                             </th>
-                                             <td><strong><span id="totalCompra"
-                                                         class="amount"><?php echo $totalCompra; ?></span></strong>
+                                 </tbody>
+                                 <tfoot>
+                                     <tr class="cart-subtotal">
+                                         <th>Subtotal</th>
+                                         <td><span class="amount"><?php echo $totalCompra; ?></span></td>
+                                     </tr>
+                                     <tr id="cart-despacho" class="cart-subtotal">
+                                         <th>Costo despacho</th>
+                                         <td><span id="costoDespacho" class="amount">0</span></td>
+                                     </tr>
+                                     <tr class="order-total">
+                                         <th>
+                                             Total a pagar
+                                             <input id="compraEstatica" type="hidden" value="<?php echo $totalCompra; ?>" />
+                                         </th>
+                                         <td><strong><span id="totalCompra"
+                                                     class="amount"><?php echo $totalCompra; ?></span></strong>
 
-                                             </td>
-                                         </tr>
-                                     </tfoot>
-                                 </table>
-                             </div>
-                             <div class="order-button-payment">
-                                 <input id="realizarCompra" type="submit" value="Realizar Compra"
-                                     onclick="realizarCompraWeb()" />
-                             </div>
-
+                                         </td>
+                                     </tr>
+                                 </tfoot>
+                             </table>
                          </div>
+                         <div class="order-button-payment">
+                             <input id="realizarCompra" type="submit" value="Realizar Compra"
+                                 onclick="realizarCompraWeb()" />
+                         </div>
+
                      </div>
                  </div>
-             </form>
          </div>
+     </div>
      </div>
 
      <div class="pull-right ">
@@ -266,12 +315,12 @@
                                      <label class="control-label" for="nombre_usuario">Nombre de usuario</label>
                                      <div class="col-sm-10 pro-img">
                                          <input type="text" class="form-control" id="nombre_usuario"
-                                             name="nombre_usuario" placeholder="Nombre de usuario" required>
+                                             name="nombre_usuario" placeholder="Nombre de usuario">
                                      </div>
                                      <label class="control-label" for="nombre_usuario">Contrase&ntilde;a</label>
                                      <div class="col-sm-10">
                                          <input type="text" class="form-control" id="clave" name="clave"
-                                             placeholder="Contraseña" required>
+                                             placeholder="Contraseña">
                                      </div>
                                  </div>
                              </fieldset>

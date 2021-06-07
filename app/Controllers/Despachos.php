@@ -25,10 +25,10 @@ class Despachos extends BaseController
             'nombre_recibe' => $nombre_recibe,
             'telefono' => $telefono,
             'costo_despacho' => $costo_despacho,
-            'estado_despacho' => 'Procesando compra',
+            'estado_despacho' => 'En preparación',
             'venta_fk' => $venta_fk,
             'costo_comuna_fk' => $costo_comuna_fk,
-            'costo_peso_fk' => 3
+            'costo_peso_fk' => 1
         ]);
 	}
 }

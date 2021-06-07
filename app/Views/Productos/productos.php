@@ -88,9 +88,7 @@
                                                 <div class="pro-actions">
                                                     <div class="actions-secondary">
                                                         <a href="wishlist.html" title="Añadir a favoritos"><i class="fa fa-heart"></i></a>
-                                                        <button id="<?php echo $dato['id_producto']; ?>" class="add-cart" title="Añadir al carro">Añadir carro</button>
-                                                        <!-- <a class="add-cart" href="" data-toggle="tooltip" title="Añadir al carro">Añadir</a>-->
-
+                                                        <button id="<?php echo $dato['id_producto']; ?>" class="add-cart">Añadir al carrito</button>
                                                     </div>
                                                 </div>
                                             </div>
