@@ -193,7 +193,7 @@ $user_session = session();
                                                     <h5>total: $<span class="f-right total">0</span></h5>
                                                     <div class="cart-actions">
                                                         <!--<a href="#" id="realizar-compra" class="checkout">Comprar</a> -->
-                                                        <button type="submit" id="realizar-compra" class="checkout" data-toggle="modal" data-target="#comprarProducto">Comprar</a>
+                                                        <button type="submit" id="realizar-compra" class="checkout" data-toggle="modal" data-target="#comprarProducto">Ver carrito</a>
                                                     </div>
                                                 </div>
                                             </li>
