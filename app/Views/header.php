@@ -444,12 +444,10 @@ $user_session = session();
             }
 
             function datosUsuarioEmp(id_user) {
-                console.log(id_user);
                 $.ajax({
                     url: "<?php echo base_url() ?>/Acceder/datosEmp/" + id_user,
                     dataType: 'json',
                     success: function(resp) {
-                        console.log(resp);
                         if (resp.datos == null) {
                             document.getElementById("per_rut_emp").style.display = "none",
                                 document.getElementById("per_razon").style.display = "none",

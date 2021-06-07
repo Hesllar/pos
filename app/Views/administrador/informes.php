@@ -23,6 +23,7 @@
                         </div>
                         <a class="card-footer text-white" href="<?php echo base_url() ?>/Estadistica/pagVentaXEmp">Ver detalle</a>
                         <a class="card-footer text-white" id="btnbuscar" href="#" data-toggle="modal" data-target="#grafico">Ver grafico</a>
+                        <a class="card-footer text-white" id="btnbuscar" href="<?php echo base_url() ?>/Estadistica/excel">Ver excel</a>
                     </div>
                 </div>
                 <div class="col-4">
@@ -35,8 +36,31 @@
                     </div>
                 </div>
             </div>
+            <br>
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12">
+                    <div class="panel">
+                        <h4>Generar reportes ventas por periodo (Excel)</h4>
+                        <br>
+                        <div class="form-row">
+                            <form action="<?php echo base_url() ?>/Estadistica/excel" method="POST">
+                                <div class="form-group col-md-12">
+                                    <label for="">Fecha inicio</label>
+                                    <input type="date" class="form-control" id="fecha_inicio" name="fecha_inicio" required>
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <label for="">Fecha termino</label>
+                                    <input type="date" class="form-control" id="fecha_termino" name="fecha_termino" required>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <button type="submit" name="buscar" value="Buscar" class="btn btn-outline-success">Buscar</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-
     </main>
     <div class="modal fade" id="grafico" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
