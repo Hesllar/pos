@@ -55,7 +55,7 @@ class Acceder extends BaseController
 			$nom_usuario = $this->request->getPost('nom_usuario');
 			$contraseña = $this->request->getPost('contrasena');
 			$datosUsuario = $this->usuarioModal->where('nom_usuario', $nom_usuario)->first();
-			if ($datosUsuario != null) {
+			if ($datosUsuario != null && $datosUsuario['estado_usuario'] == 1) {
 				if (password_verify($contraseña, $datosUsuario['contrasena'])) {
 					$datosSesion = [
 						'id_usuario' => $datosUsuario['id_usuario'],
