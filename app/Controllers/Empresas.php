@@ -49,7 +49,7 @@ class Empresas extends BaseController
 
 	public function datosEmp($id_venta)
 	{
-		$this->ventas->select('CONCAT(em.rut_empresa,"-" ,em.dvempresa) AS rut_emp ,em.razon_social AS social,em.giro AS giro');
+		$this->ventas->select('CONCAT(em.rut_empresa, "-",em.dvempresa) AS rut_emp ,em.razon_social AS social,em.giro AS giro');
 		$this->ventas->join('usuario AS u', 'venta.cliente_fk=u.id_usuario');
 		$this->ventas->join('datos_personales AS d ', 'u.rut_fk=d.rut');
 		$this->ventas->join('empresa AS em', 'd.rut=em.DATOS_PERSONALES_rut');
