@@ -30,10 +30,11 @@ class Proveedor extends BaseController
 	protected $datosPersonalesControl;
 	protected $usuarioModal;
 	protected $productos;
-
+	protected $session;
 
 	public function __construct()
 	{
+		$this->session = session();
 		$this->empleado = new EmpleadoModel;
 		$this->productos = new ProductosAdminModel;
 		$this->empresa = new EmpresaModel;
@@ -48,6 +49,9 @@ class Proveedor extends BaseController
 
 	public function index()
 	{
+		if (!isset($this->session->id_usuario)) {
+			return redirect()->to(base_url() . '/Acceder');
+		}
 		#Condicion para mostrar los productos mayor al stock critico
 
 		$regionAll = $this->region->findall();
@@ -69,6 +73,9 @@ class Proveedor extends BaseController
 
 	public function insertarProveedor()
 	{
+		if (!isset($this->session->id_usuario)) {
+			return redirect()->to(base_url() . '/Acceder');
+		}
 		$this->request = \Config\Services::request();
 		//Acá la funciones insertarNvl obtiene el nivel de acceso y lo guarda en su respectiva tabla
 		/*$this->nivel->insertarNvl([
@@ -146,6 +153,9 @@ class Proveedor extends BaseController
 	public function BuscarIdUsuario()
 
 	{
+		if (!isset($this->session->id_usuario)) {
+			return redirect()->to(base_url() . '/Acceder');
+		}
 		$BuscarIdUsuario = $this->usuarioModal->orderBy('id_usuario', 'DESC')->First();
 
 		return $BuscarIdUsuario['id_usuario'];
@@ -181,6 +191,9 @@ class Proveedor extends BaseController
 
 	public function dtsProveedor()
 	{
+		if (!isset($this->session->id_usuario)) {
+			return redirect()->to(base_url() . '/Acceder');
+		}
 
 		$this->request = \Config\Services::request();
 		$this->datospersonalesmodel->select('CONCAT(e.rut_empresa, "-", e.dvempresa) AS rut_emp, e.razon_social AS razon, e.giro AS giro, p.rubro AS rubro, p.id_proveedor AS id_proveedor');
@@ -194,6 +207,9 @@ class Proveedor extends BaseController
 
 	public function pagOrden()
 	{
+		if (!isset($this->session->id_usuario)) {
+			return redirect()->to(base_url() . '/Acceder');
+		}
 		$proveedor = $this->dtsProveedor();
 		$productos = $this->productos->findAll();
 		$configuracion = $this->configuracion->First();
@@ -207,6 +223,9 @@ class Proveedor extends BaseController
 
 	public function buscarIdProveedor($codigo)
 	{
+		if (!isset($this->session->id_usuario)) {
+			return redirect()->to(base_url() . '/Acceder');
+		}
 		$this->datospersonalesmodel->select('e.rut_empresa AS rut_emp,e.dvempresa AS dv_empresa,e.razon_social AS razon,e.giro AS giro,p.rubro AS rubro,
 		p.id_proveedor AS id_proveedor,e.telefono AS telefono');
 		$this->datospersonalesmodel->join('empresa as e', 'datos_personales.rut=e.DATOS_PERSONALES_rut');
@@ -236,6 +255,9 @@ class Proveedor extends BaseController
 
 	public function buscarProducto($codigo)
 	{
+		if (!isset($this->session->id_usuario)) {
+			return redirect()->to(base_url() . '/Acceder');
+		}
 		$this->productos->select('CONCAT("$", precio_costo) AS precio_costo, id_producto, marca, nombre, stock');
 		$this->productos->where('id_producto', $codigo);
 		$datos = $this->productos->get()->getRow();
@@ -258,6 +280,9 @@ class Proveedor extends BaseController
 
 	public function buscarEmp($id_usuario)
 	{
+		if (!isset($this->session->id_usuario)) {
+			return redirect()->to(base_url() . '/Acceder');
+		}
 		$this->empleado->select('*');
 		$this->empleado->where('usuario_fk', $id_usuario);
 		$datos = $this->empleado->get()->getRow();

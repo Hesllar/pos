@@ -286,7 +286,7 @@
         var fun = "funregistrar";
         var rut = $("#rut").val();
         var dv = $("#dv").val();
-        var nombres = $("#mnombre").val();
+        var nombres = $("#nombre").val();
         var apellidos = $("#apellidos").val();
         var correo = $("#email").val();
         var celular = $("#celular").val();

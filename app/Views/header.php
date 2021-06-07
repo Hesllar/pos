@@ -50,6 +50,7 @@ $user_session = session();
     <script src="<?php echo base_url(); ?>/js/vendor/jquery-1.12.4.min.js"></script>
     <!-- modernizr js -->
     <script src="<?php echo base_url(); ?>/js/vendor/modernizr-2.8.3.min.js"></script>
+
     <!-- Estadistica-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.3.1/chart.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.3.1/chart.esm.min.js"></script>
@@ -155,22 +156,26 @@ $user_session = session();
                             <div class="cart-box text-right">
                                 <ul>
                                     <?php
-                                    $tipo_sesion = true;
-                                    if ($tipo_sesion) {
+                                    if ($user_session->id_usuario != null) {
                                     ?>
                                         <li><a href="#"><?php echo $user_session->nom_usuario; ?>
                                                 <i class="fa fa-user fa-fw"></i>
                                             </a>
                                             <ul class="ht-dropdown">
-                                                <li><a href="<?php echo base_url() ?>/acceder">Iniciar</a></li>
-                                                <li><a href="<?php echo base_url() ?>/registro">Registrarme</a></li>
-                                                <li><a href="<?php echo base_url() ?>/Usuarios/logout">Salir</a></li>
+                                                <li><a href="<?php echo base_url() ?>" data-toggle="modal" data-target="#perfil" onclick="allFunctionc(<?php echo $user_session->id_usuario ?>)">perfil</a></li>
+                                                <li><a href="<?php echo base_url() ?>">cambiar clave</a></li>
+                                                <li><a href="<?php echo base_url() ?>/Usuarios/logout">Cerrar sesion</a></li>
                                             </ul>
                                         </li>
                                     <?php
                                     } else {
                                     ?>
-                                        <li><a href="#"><i class="fa fa-cog"></i></a></li>
+                                        <li><a href="#"><i class="fa fa-user fa-fw"></i></a>
+                                            <ul class="ht-dropdown">
+                                                <li><a href="<?php echo base_url() ?>/acceder">Iniciar sesion</a></li>
+                                                <li><a href="<?php echo base_url() ?>/registro">Registrarme</a></li>
+                                            </ul>
+                                        </li>
                                     <?php
                                     }
                                     ?>
@@ -266,3 +271,201 @@ $user_session = session();
             </div>
             <!-- Header Bottom End -->
         </header>
+        <!-- Modal ingreso usuarios -->
+        <div class="modal fade" id="perfil" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Datos del producto</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <fieldset>
+                                    <div class=" form-row">
+                                        <div class=" form-group col-md-6">
+                                            <label for="rut">*Rut</label>
+                                            <input type="number" class="form-control" id="per_rut" name="rut" disabled>
+                                            <label for="" id="lbRut"></label>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="dv">*Dv</label>
+                                            <input type="text" class="form-control" id="per_dv" name="dv" disabled>
+                                            <label for="" id="lbDv"></label>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6" id="casilla_nombre">
+                                            <label for="nombre">*Nombres</label>
+                                            <input type="text" class="form-control" id="per_nombre" name="nombre" disabled>
+                                            <label for="" id="lbNombre"></label>
+                                        </div>
+                                        <div class="form-group col-md-6" id="cailla_apellido">
+                                            <label for="apellidos">*Apellidos</label>
+                                            <input type="text" class="form-control" id="per_apellidos" name="apellidos" disabled>
+                                            <label for="" id="lbApellido"></label>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6" id="casilla_email">
+                                            <label for="email">*Email</label>
+                                            <input type="email" class="form-control" id="per_email" name="email" disabled>
+                                            <label for="" id="lbCorreo"></label>
+                                        </div>
+                                        <div class="form-group col-md-6" id="casilla_celular">
+                                            <label for="celular">*Celular</label>
+                                            <input type="number" class="form-control" id="per_celular" name="celular" disabled>
+                                            <label for="" id="lbCelular"></label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <p> ¿Es empresa?</p>
+                                        <div class="form-check">
+                                        </div>
+                                        <label for="" id="lbJuridico"></label>
+                                    </div>
+                                    <h4 id="per_titulo">Datos empresa</h4>
+                                    <br>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <input type="number" class="form-control" id="per_rut_emp" name="rut_emp" disabled>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <input type="text" class="form-control" id="per_emp_dv" disabled>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <input type="text" class="form-control" id="per_razon" name="razon" disabled>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <input type="text" class="form-control" id="per_giro" name="giro" disabled>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <input type="text" class="form-control" id="per_telefono" name="telefono" disabled>
+                                        </div>
+                                    </div>
+                                    <h5>Datos Ubicación</h5>
+                                    <br>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label for="region">Region</label>
+                                            <select name="per_region" id="per_region" disabled>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label for="region">Comuna</label>
+                                            <select name="per_comuna" id="per_comuna" disabled>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-12" id="casilla_ciudad">
+                                            <label for="ciudad">*Ciudad</label>
+                                            <input type="text" class="form-control" id="per_ciudad" name="ciudad" disabled>
+                                            <label for="" id="lbCiudad"></label>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6" id="casilla_calle">
+                                            <label for="calle">*Calle</label>
+                                            <input type="text" class="form-control" id="per_calle" name="calle" disabled>
+                                            <label for="" id="lbCalle"></label>
+                                        </div>
+                                        <div class="form-group col-md-6" id="cailla_numero">
+                                            <label for="numero">*Numero</label>
+                                            <input type="number" class="form-control" id="per_numero" name="numero" disabled>
+                                            <label for="" id="lbNumero"></label>
+                                        </div>
+                                    </div>
+                                    <h5>Datos Usuarios</h5>
+                                    <br>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-12" id="casilla_nombr_usuario">
+                                            <label for="nombre_usuario">*Nombre usuario</label>
+                                            <input type="text" class="form-control" id="per_nombre_usuario" name="nombre_usuario" disabled>
+                                            <label for="" id="lbNomUsuario"></label>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+
+                        <button type="submit" class="newsletter-btn" data-dismiss="modal">Aceptar</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <script>
+            function allFunctionc(id_user) {
+                datosUsuario(id_user);
+                datosUsuarioEmp(id_user);
+            }
+
+            function datosUsuario(id_user) {
+                console.log(id_user);
+                $.ajax({
+                    url: "<?php echo base_url() ?>/Acceder/perfil/" + id_user,
+                    dataType: 'json',
+                    success: function(resp) {
+                        console.log(resp);
+                        $("#per_rut").val(resp.datos.rut);
+                        $("#per_dv").val(resp.datos.dv);
+                        $("#per_nombre").val(resp.datos.nombres);
+                        $("#per_apellidos").val(resp.datos.apellidos);
+                        $("#per_celular").val(resp.datos.celular);
+                        $("#per_email").val(resp.datos.correo);
+                        $('.form-check').html('')
+                        if (resp.datos.natural_juridico == 1) {
+                            $('.form-check').append('<input class="form-check-input" type="radio" checked > SI\
+                        <br>\
+                        <input class="form-check-input" type="radio"disabled > No')
+                        } else {
+                            $('.form-check').append('<input class="form-check-input" type="radio"disabled> SI\
+                        <br>\
+                        <input class="form-check-input" type="radio" checked > No')
+                        }
+                        $('#per_region').append('<option>' + resp.datos.region + '</option>');
+                        $('#per_comuna').append('<option>' + resp.datos.comuna + '</option>');
+                        $("#per_ciudad").val(resp.datos.ciudad);
+                        $("#per_calle").val(resp.datos.calle);
+                        $("#per_numero").val(resp.datos.numero);
+                        $("#per_nombre_usuario").val(resp.datos.nom_usuario);
+
+                    }
+                });
+            }
+
+            function datosUsuarioEmp(id_user) {
+                console.log(id_user);
+                $.ajax({
+                    url: "<?php echo base_url() ?>/Acceder/datosEmp/" + id_user,
+                    dataType: 'json',
+                    success: function(resp) {
+                        console.log(resp);
+                        if (resp.datos == null) {
+                            document.getElementById("per_rut_emp").style.display = "none",
+                                document.getElementById("per_razon").style.display = "none",
+                                document.getElementById("per_giro").style.display = "none",
+                                document.getElementById("per_emp_dv").style.display = "none",
+                                document.getElementById("per_titulo").style.display = "none",
+                                document.getElementById("per_telefono").style.display = "none"
+
+                        } else {
+                            $("#per_rut_emp").val(resp.datos.rut_emp)
+                            $("#per_razon").val(resp.datos.razon)
+                            $("#per_giro").val(resp.datos.giro)
+                            $("#per_emp_dv").val(resp.datos.dv_emp)
+                            $("#per_telefono").val(resp.datos.fono)
+                        }
+                    }
+                });
+            }
+        </script>
