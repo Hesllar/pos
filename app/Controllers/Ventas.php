@@ -232,6 +232,8 @@ class Ventas extends BaseController
              $cc
 			);
 		}
+		$ultima_venta = $this->ventas->orderBy('id_venta','DESC')->first();
+		return ($ultima_venta['id_venta']);
 
 		
 
@@ -241,7 +243,7 @@ class Ventas extends BaseController
 		$this->request = \Config\Services::request();
 
 		$ultima_venta = $this->ventas->orderBy('id_venta','DESC')->first();
-		$id_venta_pk = $ultima_venta['id_venta'] + 1;
+		$id_venta_pk = $this->request->getVar('ultima_venta');
 
 		$productos = $this->request->getVar('arrayProductosDetalle');
 		

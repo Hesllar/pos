@@ -6,6 +6,7 @@ checkboxEmpresa();
 var user_session_js = new Array(); //Variable ArraySession
 let user_data_js = new Array(); //Variable datos del usuario
 let venta_despacho = 1;
+var ultimaVenta;
 
 //Guardando variables para que se ejecuten cuando se haga click
 const selectRegion = document.getElementById('region');
@@ -247,6 +248,8 @@ function realizarCompraWeb(){
     //formatter.format(total.toFixed(0));
     //Venta ID
     var fk_comuna = $('#comuna').val();
+
+    
     
 
     //Recibir cliente
@@ -269,10 +272,38 @@ function realizarCompraWeb(){
             costo : costo_despacho,
             comuna_fk : fk_comuna,
         },
-        success: function(){
+        success: function(data){
+            //console.log(ultimaVenta);
+            const arrayProductos = document.querySelectorAll('.data-product');
+    var lista = new Array();
+    arrayProductos.forEach((producto, i) => {
+        const prod = producto.querySelector('.id_producto').id;
+        const cant = producto.querySelector('.qty').textContent;
+        lista.push([prod,cant]);
+    });
+        idv = data;
+        console.log(idv);
+            $.ajax({
+                url: "http://localhost/pos/public/Ventas/agregarDetalleVenta",
+                method: "POST",
+                data: {
+                    arrayProductosDetalle : lista,
+                    ultima_venta : idv,
+                },
+                dataType: 'JSON',
+                success: function(){
+                },
+            });
         },
     });
     
+    
+    //setTimeout(detalleVenta(),2000);
+    
+
+}
+
+function detalleVenta(){
     const arrayProductos = document.querySelectorAll('.data-product');
     var lista = new Array();
     arrayProductos.forEach((producto, i) => {
@@ -280,28 +311,18 @@ function realizarCompraWeb(){
         const cant = producto.querySelector('.qty').textContent;
         lista.push([prod,cant]);
     });
+    //id_mod1 = id_ultima_venta.replace('"', '');
+    //v = id_mod1.replace('"', '');
 
     $.ajax({
         url: "http://localhost/pos/public/Ventas/agregarDetalleVenta",
         method: "POST",
         data: {
             arrayProductosDetalle : lista,
+            ultima_venta : ultimaVenta,
         },
         dataType: 'JSON',
         success: function(){
         },
-    });
-
-}
-
-function obid(){
-    $.ajax({
-        url: "http://localhost/pos/public/Ventas/testId",
-        method: "POST",
-        dataType: 'JSON',
-        success: function(data){
-            console.log(data);
-        },
-
     });
 }
