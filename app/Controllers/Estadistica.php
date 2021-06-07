@@ -15,6 +15,7 @@ class Estadistica extends BaseController
     protected $productos;
     protected $ventas;
     protected $response;
+    protected $request;
 
 
     public function __construct()
@@ -179,63 +180,31 @@ class Estadistica extends BaseController
     public function excel()
     {
 
-        $spreadsheet = new Spreadsheet();
 
-        // Set document properties
+        $this->request = \Config\Services::request();
+        $phpExcel = new Spreadsheet();
+        $hoja = $phpExcel->getActiveSheet();
+        $hoja->mergeCells("A3:D3");
+        $hoja->setCellValue("A3", "Reportes de ventas");
+        $hoja->setCellValue('A5', "Fecha de compra");
+        $hoja->setCellValue('B5', "Nombres");
+        $hoja->setCellValue('C5', "Tipo de comprobante");
+        $hoja->setCellValue('D5', "Forma de pago");
+        $hoja->setCellValue('E5', "Total");
+        $ventaEmp = $this->ventas->datosXPeriodo($this->request->getPost('fecha_inicio'), $this->request->getPost('fecha_termino'));
+        $fila = 9;
+        foreach ($ventaEmp as $venta) {
+            $hoja->setCellValue('A' . $fila, $venta['fecha_venta']);
+            $hoja->setCellValue('B' . $fila, $venta['nombres']);
+            $hoja->setCellValue('C' . $fila, $venta['tipo_comprobante']);
+            $hoja->setCellValue('D' . $fila, $venta['tipo_pago']);
+            $hoja->setCellValue('E' . $fila, $venta['total']);
+            $fila++;
+        }
 
-        $spreadsheet->getProperties()
-            ->setCreator('Maarten Balliauw')
-            ->setLastModifiedBy('Maarten Balliauw')
-            ->setTitle('PhpSpreadsheet Test Document')
-            ->setSubject('PhpSpreadsheet Test Document')
-            ->setDescription('Test document for PhpSpreadsheet, generated using PHP classes.')
-            ->setKeywords('office PhpSpreadsheet php')
-            ->setCategory('Test result file');
-
-        // Add some data
-
-        $spreadsheet->setActiveSheetIndex(0)
-            ->setCellValue('A1', 'Hello')
-            ->setCellValue('B2', 'world!')
-            ->setCellValue('C1', 'Hello')
-            ->setCellValue('D2', 'world!');
-
-        // Miscellaneous glyphs, UTF-8
-        $spreadsheet->setActiveSheetIndex(0)
-            ->setCellValue('A4', 'Miscellaneous glyphs')
-            ->setCellValue('A5', 'éàèùâêîôûëïüÿäöüç');
-
-        $spreadsheet->getActiveSheet()
-            ->setCellValue('A8', "Hello\nWorld");
-        $spreadsheet->getActiveSheet()
-            ->getRowDimension(8)
-            ->setRowHeight(-1);
-        $spreadsheet->getActiveSheet()
-            ->getStyle('A8')
-            ->getAlignment()
-            ->setWrapText(true);
-
-        $value = "-ValueA\n-Value B\n-Value C";
-        $spreadsheet->getActiveSheet()
-            ->setCellValue('A10', $value);
-        $spreadsheet->getActiveSheet()
-            ->getRowDimension(10)
-            ->setRowHeight(-1);
-        $spreadsheet->getActiveSheet()
-            ->getStyle('A10')
-            ->getAlignment()
-            ->setWrapText(true);
-        $spreadsheet->getActiveSheet()
-            ->getStyle('A10')
-            ->setQuotePrefix(true);
-
-        // Rename worksheet
-
-        $spreadsheet->getActiveSheet()
-            ->setTitle('Simple');
-
-        // Save
-
+        $writer = new Xlsx($phpExcel);
+        $writer->save("hola.xlsx");
+        return redirect()->to(base_url() . '/Estadistica');
 
     }
 
