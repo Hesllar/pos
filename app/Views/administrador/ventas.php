@@ -144,7 +144,7 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <div class="row">
+                                                            <div class="row" id="datos_emp">
                                                                 <div class="form-group col-sm-4">
                                                                     <span class="fuente-titulo">Rut Empresa</span>
                                                                     <div class="col-sm-12">
@@ -155,13 +155,13 @@
                                                                     <span class="fuente-titulo">Raz&oacute;n
                                                                         Social</span>
                                                                     <div class="col-sm-12">
-                                                                        <span class="fuente-parrafo">Empresa de Fierros</span>
+                                                                        <span class="fuente-parrafo"><input type="text" id="social"></span>
                                                                     </div>
                                                                 </div>
                                                                 <div class="form-group col-sm-4">
                                                                     <span class="fuente-titulo">Giro</span>
                                                                     <div class="col-sm-12">
-                                                                        <span class="fuente-parrafo">Venta de fierros</span>
+                                                                        <span class="fuente-parrafo"><input type="text" id="giro"></span>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -184,7 +184,7 @@
                                                                                     <th>Cantidad</th>
                                                                                     <th>Neto</th>
                                                                                     <th>IVA</th>
-                                                                                    <th>Costo unitario</th>
+
                                                                                     <th>Total</th>
                                                                                 </tr>
                                                                             </thead>
@@ -433,6 +433,8 @@
     function todo(id_venta) {
         obtnDatos(id_venta);
         obtnDatosPro(id_venta);
+        obtDatosEmp(id_venta);
+
     }
 
     function obtnDatos(id_venta) {
@@ -460,14 +462,32 @@
                 $.each(respuesta.datos, function(i, value) {
                     $('.listProduct').append('<tr>\
                     <td>' + value['nombre'] + '</td>\
-                    <td>' + value['conteo'] + '</td>\
-                    <td>' + value['valor_neto'] + '</td>\
-                    <td>' + value['valor_iva'] + '</td>\
-                    <td>' + value['costo'] + '</td>\
-                    <td>' + value['total'] + '</td>\
+                    <td>' + value['cantidad'] + '</td>\
+                    <td>' + value['precio_neto'] + '</td>\
+                    <td>' + value['precio_iva'] + '</td>\
+                    <td>' + value['precio_venta'] + '</td>\
                     ')
                 })
             }
         });
+    }
+
+    function obtDatosEmp(id_venta) {
+        console.log(id_venta);
+        $.ajax({
+            url: "<?php echo base_url() ?>/Empresas/datosEmp/" + id_venta,
+            dataType: 'json',
+            success: function(resp) {
+                if (resp.datos != null) {
+                    $("#rut_emp").val(resp.datos.rut_emp);
+                    $("#social").val(resp.datos.social);
+                    $("#giro").val(resp.datos.giro);
+                    document.getElementById("datos_emp").style.display = ""
+
+                } else {
+                    document.getElementById("datos_emp").style.display = "none"
+                }
+            }
+        })
     }
 </script>
