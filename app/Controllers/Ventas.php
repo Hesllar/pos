@@ -27,7 +27,7 @@ class Ventas extends BaseController
 		$this->costoComuna = new Comuna;
 		$this->desp = new Despachos;
 
-		
+
 		$this->detalle_venta = new DetalleVentaModel;
 		$this->ventas = new VentaModel;
 		$this->configuracion = new ConfiguracionModel;
@@ -233,21 +233,19 @@ class Ventas extends BaseController
 				$cc
 			);
 		}
-		$ultima_venta = $this->ventas->orderBy('id_venta','DESC')->first();
+		$ultima_venta = $this->ventas->orderBy('id_venta', 'DESC')->first();
 		return ($ultima_venta['id_venta']);
-
-		
-
 	}
 
-	function agregarDetalleVenta(){
+	function agregarDetalleVenta()
+	{
 		$this->request = \Config\Services::request();
 
-		$ultima_venta = $this->ventas->orderBy('id_venta','DESC')->first();
+		$ultima_venta = $this->ventas->orderBy('id_venta', 'DESC')->first();
 		$id_venta_pk = $this->request->getVar('ultima_venta');
 
 		$productos = $this->request->getVar('arrayProductosDetalle');
-		
+
 		foreach ($productos as $key => $producto) {
 			$this->detalle_venta->save([
 				'id_producto_pk' => $producto[0],
@@ -255,7 +253,6 @@ class Ventas extends BaseController
 				'cantidad' => $producto[1]
 			]);
 		}
-
 	}
 
 	function calcularValores($total)
@@ -287,7 +284,8 @@ class Ventas extends BaseController
 
 	public function datosProductoBoleta($id_venta)
 	{
-		$this->ventas->select('p.nombre AS nombre, count(dt.id_producto_pk) AS conteo, id_venta, fecha_venta, valor_neto, valor_iva, total, (valor_neto+valor_iva) AS costo');
+		$this->ventas->select('p.nombre AS nombre, dt.cantidad AS cantidad, id_venta, fecha_venta, (cantidad * (p.precio_venta - (p.precio_venta * 0.19))) AS precio_neto, total, (valor_neto+valor_iva) AS costo,
+		(p.precio_venta * cantidad) AS precio_venta,(cantidad * (p.precio_venta * 0.19)) AS precio_iva');
 		$this->ventas->join('detalle_venta AS dt', 'venta.id_venta=dt.id_venta_pk');
 		$this->ventas->join('producto AS p', 'dt.id_producto_pk=p.id_producto');
 		$this->ventas->where('id_venta', $id_venta);
@@ -323,5 +321,4 @@ class Ventas extends BaseController
                                         </td>
                                     </tr>
                                 <?php } ?>*/
-
 }
