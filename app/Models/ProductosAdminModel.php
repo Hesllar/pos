@@ -53,7 +53,7 @@ class ProductosAdminModel extends Model
 
     public function totalProductos()
     {
-        return $this->where('estado', 1)->countAllResults(); // Cuanta todos los resultados de la sentencia
+        return $this->where('estado', 1)->countAllResults(); // Cuenta todos los resultados de la sentencia
     }
 
 
@@ -66,5 +66,10 @@ class ProductosAdminModel extends Model
     {
         $where = "stock_critico >= stock AND estado=1";
         return $this->where($where)->findAll();
+    }
+
+    public function productosTotales()
+    {
+        return $this->where('estado', 1)->findAll(); // Muestra todos los resultados de la sentencia
     }
 }

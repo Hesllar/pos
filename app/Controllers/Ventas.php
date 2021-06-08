@@ -13,11 +13,14 @@ use App\Models\ConfiguracionModel;
 use App\Models\VentaModel;
 use App\Models\FormaPagoModel;
 use App\Models\DetalleVentaModel;
+use CodeIgniter\Session\Session;
 
 class Ventas extends BaseController
 {
 	protected $ventas;
 	protected $request;
+	protected $response;
+	protected $session;
 
 	public function __construct()
 	{
@@ -26,6 +29,7 @@ class Ventas extends BaseController
 		$this->formapago = new FormaPago;
 		$this->costoComuna = new Comuna;
 		$this->desp = new Despachos;
+		$this->session = session();
 
 
 		$this->detalle_venta = new DetalleVentaModel;
@@ -296,29 +300,83 @@ class Ventas extends BaseController
 	}
 
 
+	public function pagComprobante()
+	{
+		$configuracion = $this->configuracion->First();
+		$data = [
+			'configuracion' => $configuracion
+		];
+		$estados = [
+			'e_venta' => '',
+			'e_producto' => 'active',
+			'e_ordencompra' => '',
+			'e_usuario' => '',
+			'e_notacredito' => '',
+			'e_config' => '',
+			'e_estadistica' => ''
+		];
+
+		echo view('header', $data);
+		echo view('administrador/Comprobante');
+		echo view('footer');
+	}
 
 
+	public function datosProductoBoletaUser()
+	{	
+		$this->detalle_venta->select('p.nombre AS nombre');
+		$this->detalle_venta->join('venta AS v', 'detalle_venta.id_venta_pk=v.id_venta');
+		$this->detalle_venta->join('usuario AS u', 'v.cliente_fk=u.id_usuario');
+		$this->detalle_venta->join('producto AS p', 'detalle_venta.id_producto_pk=p.id_producto');
+		$this->detalle_venta->where('v.cliente_fk', $this->session->id_usuario);
+		$this->detalle_venta->where('v.id_venta', 1008);
+		$this->detalle_venta->groupBy('nombre');
+        return $this->detalle_venta->findAll();
+		
+	}
 
 
+	public function datosPersoUser()
+    {
+        $this->ventas->select('id_venta,cliente_fk,fecha_venta,CONCAT(u.rut_fk,"-", d.dv) AS rut, CONCAT(d.nombres,"-",d.apellidos) AS nombres');
+        $this->ventas->join('usuario AS u', 'venta.cliente_fk=u.id_usuario');
+        $this->ventas->join('datos_personales AS d', 'u.rut_fk=d.rut');
+        return $this->ventas->where('id_usuario', $this->session->id_usuario)->first();
+    }
 
+	public function cargartoComprobante()
+	{
+		$this->response = \Config\Services::response();
+		$datosUser = $this->datosPersoUser();
 
+		$pdf = new \FPDF('P', 'mm', 'letter');
+		$pdf->AddPage();
+		$pdf->SetMargins(30, 10, 10);
+		$pdf->SetTitle("Stock criticos");
+		$pdf->SetFont("Arial", 'B', 10);
+		$pdf->Image("img/logo/logo1.png", 150, 7);
+		$pdf->Cell(50, 5, utf8_decode("Datos de la venta N°"), 0, 1, 'C');
+		$pdf->Cell(10, 5, $datosUser['id_venta'], 0, 1, "C");
+		$pdf->Ln(10);
+		$pdf->Cell(7, 5, utf8_decode("Detalle de la venta:"), 0, 1, 'C');
+		$pdf->Ln(10);
+		$pdf->Cell(5, 5, utf8_decode("Fecha de emision:"), 0, 1, 'C');
+		$pdf->Cell(5, 5, $datosUser['fecha_venta'], 0, 1, "C");
+		$pdf->Ln(10);
+		$pdf->Cell(-6, 5, utf8_decode("Rut cliente:"), 0, 1, "C");
+		$pdf->Cell(-6, 5, $datosUser['rut'], 0, 1, 'C');
+		$pdf->Ln(10);
+		$pdf->Cell(-6, 5, utf8_decode("Nombre cliente:"), 0, 1, 'C');
+		$pdf->Cell(-6, 5, $datosUser['nombres'], 0, 1, 'C');
+		$pdf->Ln(10);
+		$datosProductos = $this->datosProductoBoletaUser();
+		foreach ($datosProductos as $product) {
+			$pdf->Ln();
+			$pdf->Cell(5, 5, $product['nombre'], 0, 1, "C");
+		}
 
-	/* <?php foreach ($boletas as $boleta) { ?>
-                                    <tr>
-                                        <td><?php echo $boleta['id_venta']; ?></td>
-                                        <td><?php echo $boleta['fecha_venta']; ?></td>
-                                        <td><?php echo $configuracion['signo_moneda']; ?><?php echo $boleta['total']; ?>
-                                        </td>
-                                        <td><?php echo $boleta['despacho_str']; ?></td>
-                                        <td><?php echo $boleta['estado_str']; ?></td>
-                                        <td><a href="#"><?php echo $boleta['nom_empleado']; ?></a></td>
-                                        <td>
-                                            <input type="hidden" id="<?php echo $boleta['id_venta']; ?>" class="id_bo">
+		$this->response->setHeader('Content-Type', 'application/pdf');
 
-                                            <a class="view" data-toggle="modal" data-target="#detalle" id="btnbuscar">
-                                            </a>
-
-                                        </td>
-                                    </tr>
-                                <?php } ?>*/
+		$pdf->Output('comprobante.pdf', 'I');
+	}
 }
