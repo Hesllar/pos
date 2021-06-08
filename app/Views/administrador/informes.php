@@ -23,7 +23,6 @@
                         </div>
                         <a class="card-footer text-white" href="<?php echo base_url() ?>/Estadistica/pagVentaXEmp">Ver detalle</a>
                         <a class="card-footer text-white" id="btnbuscar" href="#" data-toggle="modal" data-target="#grafico">Ver grafico</a>
-                        <a class="card-footer text-white" id="btnbuscar" href="<?php echo base_url() ?>/Estadistica/excel">Ver excel</a>
                     </div>
                 </div>
                 <div class="col-4">

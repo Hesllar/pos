@@ -7,6 +7,7 @@ use App\Models\ConfiguracionModel;
 use App\Models\ProductosAdminModel;
 use App\Models\VentaModel;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 
 class Estadistica extends BaseController
@@ -186,26 +187,43 @@ class Estadistica extends BaseController
         $hoja = $phpExcel->getActiveSheet();
         $hoja->mergeCells("A3:D3");
         $hoja->setCellValue("A3", "Reportes de ventas");
-        $hoja->setCellValue('A5', "Fecha de compra");
-        $hoja->setCellValue('B5', "Nombres");
-        $hoja->setCellValue('C5', "Tipo de comprobante");
-        $hoja->setCellValue('D5', "Forma de pago");
-        $hoja->setCellValue('E5', "Total");
+        $hoja->setCellValue('A5', "id_venta");
+        $hoja->setCellValue('B5', "Fecha de compra");
+        $hoja->setCellValue('C5', "Nombres");
+        $hoja->setCellValue('D5', "Tipo de comprobante");
+        $hoja->setCellValue('E5', "Forma de pago");
+        $hoja->setCellValue('F5', "Total");
         $ventaEmp = $this->ventas->datosXPeriodo($this->request->getPost('fecha_inicio'), $this->request->getPost('fecha_termino'));
-        $fila = 9;
+        $ventaProduct = $this->ventas->datosProducXPeriodo($this->request->getPost('fecha_inicio'), $this->request->getPost('fecha_termino'));
+        $fila = 6;
         foreach ($ventaEmp as $venta) {
-            $hoja->setCellValue('A' . $fila, $venta['fecha_venta']);
-            $hoja->setCellValue('B' . $fila, $venta['nombres']);
-            $hoja->setCellValue('C' . $fila, $venta['tipo_comprobante']);
-            $hoja->setCellValue('D' . $fila, $venta['tipo_pago']);
-            $hoja->setCellValue('E' . $fila, $venta['total']);
+            $hoja->setCellValue('A' . $fila, $venta['id_venta']);
+            $hoja->setCellValue('B' . $fila, $venta['fecha_venta']);
+            $hoja->setCellValue('C' . $fila, $venta['nombres']);
+            $hoja->setCellValue('D' . $fila, $venta['tipo_comprobante']);
+            $hoja->setCellValue('E' . $fila, $venta['tipo_pago']);
+            $hoja->setCellValue('F' . $fila, $venta['total']);
             $fila++;
         }
+        $hoja->mergeCells("A16:D16");
+        $hoja->setCellValue("A16", "Reportes de ventas");
+        $hoja->setCellValue('A19', "Id Venta");
+        $hoja->setCellValue('B19', "Nombre producto");
+        $hoja->setCellValue('C19', "Precio producto");
+
+        $fila1 = 20;
+        foreach ($ventaProduct as $venta) {
+            $hoja->setCellValue('A' . $fila1, $venta['id_venta']);
+            $hoja->setCellValue('B' . $fila1, $venta['nombre']);
+            $hoja->setCellValue('C' . $fila1, $venta['precio']);
+            $fila1++;
+        }
+
 
         $writer = new Xlsx($phpExcel);
         $writer->save("hola.xlsx");
-        return redirect()->to(base_url() . '/Estadistica');
 
+        return redirect()->to(base_url() . '/Estadistica');
     }
 
     public function datos()

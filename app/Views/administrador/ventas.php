@@ -1,3 +1,6 @@
+<?php
+$session = session();
+?>
 <div id="ventas" class="tab-pane <?php
 
                                     use App\Controllers\Ventas;
