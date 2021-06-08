@@ -21,7 +21,7 @@
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Datos del producto</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Datos Personales</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -71,7 +71,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <p> ¿Es empresa?</p>
+                                        <p> ¿Es Empresa?</p>
                                         <div class="form-check">
                                             <input class="form-check-input" type="radio" name="juridico" id="juridico" value="1" onclick="text(0)" checked>
                                             Si
@@ -81,7 +81,7 @@
                                         </div>
                                         <label for="" id="lbJuridico"></label>
                                     </div>
-                                    <h4 id="titulo">Datos empresa</h4>
+                                    <h4 id="titulo">Datos Empresa</h4>
                                     <br>
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
@@ -174,7 +174,7 @@
                                         <div class="form-group col-md-6">
                                             <label for="nivel_acceso">*Nivel de acceso</label>
                                             <select name="nivel_acceso" id="nivel_acceso" required>
-                                                <option value="">Selecciones</option>
+                                                <option value="">Seleccione</option>
                                                 <?php foreach ($nvl_acceso as $nvl) { ?>
                                                     <option value="<?php echo $nvl['id_nivel']; ?>"><?php echo $nvl['nivel_acceso']; ?></option>
                                                 <?php } ?>
@@ -230,13 +230,13 @@
     <div class="modal-dialog modal-md" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Eliminar producto</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Eliminar usuario</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <p>¿Desea dar de baja este producto?</p>
+                <p>¿Desea dar de baja este usuario?</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>

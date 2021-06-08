@@ -6,32 +6,34 @@
                 <div class="col-4">
                     <div class="card text-white bg-primary">
                         <div class="card-body">
-                            Total de productos
+                            Total de Productos:
                             <?php echo $productos ?>
                         </div>
-                        <a class="card-footer text-white" href="<?php echo base_url() ?>/ProductosAdmin">Ver detalle</a>
+                        <a class="card-footer text-white" href="<?php echo base_url() ?>/Estadistica/cargarstockTotal">Ver Detalle (PDF)</a>
                     </div>
                 </div>
                 <div class="col-4">
                     <div class="card text-white bg-success">
                         <div class="card-body">
-                            Ventas del día
+                            Ventas del día:
                             <?php echo $ventas ?>
                             <br>
-                            Total ventas:
+                            Total Ventas:
                             <?php echo $sumaTotal['total'] ?>
                         </div>
-                        <a class="card-footer text-white" href="<?php echo base_url() ?>/Estadistica/pagVentaXEmp">Ver detalle</a>
-                        <a class="card-footer text-white" id="btnbuscar" href="#" data-toggle="modal" data-target="#grafico">Ver grafico</a>
+
+                        <a class="card-footer text-white" href="<?php echo base_url() ?>/Estadistica/pagVentaXEmp">Ver Detalle (PDF)</a>
+                        <a class="card-footer text-white" id="btnbuscar" href="#" data-toggle="modal" data-target="#grafico">Ver Grafico</a>
+
                     </div>
                 </div>
                 <div class="col-4">
                     <div class="card text-white bg-danger">
                         <div class="card-body">
-                            Productos con sotck minimo
+                            Productos con Stock Minimo:
                             <?php echo $stock_minimo ?>
                         </div>
-                        <a class="card-footer text-white" href="<?php echo base_url() ?>/Estadistica/pagStockMin">Ver detalle</a>
+                        <a class="card-footer text-white" href="<?php echo base_url() ?>/Estadistica/pagStockMin">Ver Detalle (PDF)</a>
                     </div>
                 </div>
             </div>
@@ -39,20 +41,20 @@
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-12">
                     <div class="panel">
-                        <h4>Generar reportes ventas por periodo (Excel)</h4>
+                        <h4>Generar Reportes Ventas por Periodo (Excel)</h4>
                         <br>
                         <div class="form-row">
-                            <form action="<?php echo base_url() ?>/Estadistica/excel" method="POST">
+                            <form action="<?php echo base_url() ?>/Estadistica/excelVentas" method="POST">
                                 <div class="form-group col-md-12">
-                                    <label for="">Fecha inicio</label>
+                                    <label for="">Fecha Inicio</label>
                                     <input type="date" class="form-control" id="fecha_inicio" name="fecha_inicio" required>
                                 </div>
                                 <div class="form-group col-md-12">
-                                    <label for="">Fecha termino</label>
+                                    <label for="">Fecha Termino</label>
                                     <input type="date" class="form-control" id="fecha_termino" name="fecha_termino" required>
                                 </div>
                                 <div class="form-group col-md-4">
-                                    <button type="submit" name="buscar" value="Buscar" class="btn btn-outline-success">Buscar</button>
+                                    <button type="submit" name="buscar" value="Buscar" class="btn btn-outline-success">Generar Reporte</button>
                                 </div>
                             </form>
                         </div>
@@ -65,7 +67,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Datos grafico</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Datos Grafico</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -106,7 +108,7 @@
                     data: {
                         labels: paramNombre,
                         datasets: [{
-                            label: 'Total de ventas por cajero',
+                            label: 'Total de Ventas por Cajero',
                             data: paramTotal,
                             backgroundColor: [
                                 'rgba(255, 99, 132, 0.2)',

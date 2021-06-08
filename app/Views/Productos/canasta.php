@@ -271,7 +271,9 @@
                              </table>
                          </div>
                          <div class="order-button-payment">
+
                              <a href="<?php echo base_url() ?>/Ventas/pagComprobante"> <input id="realizarCompra" type="submit" value="Realizar Compra" onclick="realizarCompraWeb()" /></a>
+
                          </div>
 
                      </div>
