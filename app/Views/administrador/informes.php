@@ -65,7 +65,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Datos grafico</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Datos Grafico</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -106,7 +106,7 @@
                     data: {
                         labels: paramNombre,
                         datasets: [{
-                            label: 'Total de ventas por cajero',
+                            label: 'Total de Ventas por Cajero',
                             data: paramTotal,
                             backgroundColor: [
                                 'rgba(255, 99, 132, 0.2)',

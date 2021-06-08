@@ -221,33 +221,41 @@ class Estadistica extends BaseController
         $phpExcel = new Spreadsheet();
         $hoja = $phpExcel->getActiveSheet();
         $hoja->mergeCells('A3:D3');
-        $hoja->getStyle('A5:E5')->getAlignment()->setHorizontal
+        $hoja->getStyle('A5:G5')->getAlignment()->setHorizontal
         (\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
         $hoja->getStyle('A3')->getAlignment()->setHorizontal
         (\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
         $hoja->getStyle('A3')->getFont()->SetSize(14);
         $hoja->getStyle('A3')->getFont()->setName('Arial');
         $hoja->setCellValue('A3', "Reportes de Ventas");
-        $hoja->setCellValue('A5', "Fecha de Compra");
-        $hoja->getColumnDimension('A')->setWidth(20);
-        $hoja->setCellValue('B5', "Nombres");
-        $hoja->getColumnDimension('B')->setWidth(30);
-        $hoja->setCellValue('C5', "Tipo de Comprobante");
-        $hoja->getColumnDimension('C')->setWidth(25);
-        $hoja->setCellValue('D5', "Forma de Pago");
-        $hoja->getColumnDimension('D')->setWidth(20);
-        $hoja->setCellValue('E5', "Total");
-        $hoja->getColumnDimension('E')->setWidth(10);
-        $hoja->getStyle('A5:E5')->getFont()->setBold(true);
+        $hoja->setCellValue('A5', "ID Venta");
+        $hoja->getColumnDimension('A')->setWidth(12);
+        $hoja->setCellValue('B5', "Fecha de Compra");
+        $hoja->getColumnDimension('B')->setWidth(20);
+        $hoja->setCellValue('C5', "Nombres");
+        $hoja->getColumnDimension('C')->setWidth(30);
+        $hoja->setCellValue('D5', "Tipo de Comprobante");
+        $hoja->getColumnDimension('D')->setWidth(25);
+        $hoja->setCellValue('E5', "Cantidad de Producto");
+        $hoja->getColumnDimension('E')->setWidth(25);
+        $hoja->setCellValue('F5', "Forma de Pago");
+        $hoja->getColumnDimension('F')->setWidth(20);
+        $hoja->setCellValue('G5', "Total");
+        $hoja->getColumnDimension('G')->setWidth(10);
+        
+        $hoja->getStyle('A5:G5')->getFont()->setBold(true);
 
         $ventaEmp = $this->ventas->datosXPeriodo($this->request->getPost('fecha_inicio'), $this->request->getPost('fecha_termino'));
         $fila = 6;
         foreach ($ventaEmp as $venta) {
-            $hoja->setCellValue('A' . $fila, $venta['fecha_venta']);
-            $hoja->setCellValue('B' . $fila, $venta['nombres']);
-            $hoja->setCellValue('C' . $fila, $venta['tipo_comprobante']);
-            $hoja->setCellValue('D' . $fila, $venta['tipo_pago']);
-            $hoja->setCellValue('E' . $fila, $venta['total']);
+            $hoja->setCellValue('A' . $fila, $venta['id_venta']);
+            $hoja->setCellValue('B' . $fila, $venta['fecha_venta']);
+            $hoja->setCellValue('C' . $fila, $venta['nombres']);
+            $hoja->setCellValue('D' . $fila, $venta['tipo_comprobante']);
+            $hoja->setCellValue('E' . $fila, $venta['cantidad']);
+            $hoja->setCellValue('F' . $fila, $venta['tipo_pago']);
+            $hoja->setCellValue('G' . $fila, $venta['total']);
+            
             $fila++;
         }
 
@@ -265,9 +273,9 @@ class Estadistica extends BaseController
 
         ];
 
-        $hoja->getStyle('A5:E'.$ultimafila)->applyFromArray($styleArray);
+        $hoja->getStyle('A5:G'.$ultimafila)->applyFromArray($styleArray);
 
-        $hoja->setCellValueExplicit('E'.$fila, '=SUM(E5:E'.$ultimafila.')', 
+        $hoja->setCellValueExplicit('G'.$fila, '=SUM(G5:G'.$ultimafila.')', 
         \PhpOffice\PhpSpreadsheet\Cell\DataType::TYPE_FORMULA);
 
 
@@ -275,6 +283,81 @@ class Estadistica extends BaseController
         $writer->save("reporte_ventas.xlsx");
         return redirect()->to(base_url() . '/Estadistica');
 
+    }
+
+
+    public function excelTotalProductos()
+    {
+
+        $this->request = \Config\Services::request();
+        $phpExcel = new Spreadsheet();
+        $hoja = $phpExcel->getActiveSheet();
+        $hoja->mergeCells('A3:D3');
+        $hoja->getStyle('A5:G5')->getAlignment()->setHorizontal
+        (\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+        $hoja->getStyle('A3')->getAlignment()->setHorizontal
+        (\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+        $hoja->getStyle('A3')->getFont()->SetSize(14);
+        $hoja->getStyle('A3')->getFont()->setName('Arial');
+        $hoja->setCellValue('A3', "Reporte de Stock Total de Producto");
+        $hoja->setCellValue('A5', "ID Venta");
+        $hoja->getColumnDimension('A')->setWidth(12);
+        $hoja->setCellValue('B5', "Fecha de Compra");
+        $hoja->getColumnDimension('B')->setWidth(20);
+        $hoja->setCellValue('C5', "Nombres");
+        $hoja->getColumnDimension('C')->setWidth(30);
+        $hoja->setCellValue('D5', "Tipo de Comprobante");
+        $hoja->getColumnDimension('D')->setWidth(25);
+        $hoja->setCellValue('E5', "Cantidad de Producto");
+        $hoja->getColumnDimension('E')->setWidth(25);
+        $hoja->setCellValue('F5', "Forma de Pago");
+        $hoja->getColumnDimension('F')->setWidth(20);
+        $hoja->setCellValue('G5', "Total");
+        $hoja->getColumnDimension('G')->setWidth(10);
+        
+        $hoja->getStyle('A5:G5')->getFont()->setBold(true);
+
+
+
+        /*$datosProductos = $this->productos->productosTotales();
+        
+        foreach ($datosProductos as $p) {
+            $fila = 
+            $hoja->setCellValue('A' . $fila, $datosProductos['id_venta']);
+            $hoja->setCellValue('B' . $fila, $venta['fecha_venta']);
+            $hoja->setCellValue('C' . $fila, $venta['nombres']);
+            $hoja->setCellValue('D' . $fila, $venta['tipo_comprobante']);
+            $hoja->setCellValue('E' . $fila, $venta['cantidad']);
+            $hoja->setCellValue('F' . $fila, $venta['tipo_pago']);
+            $hoja->setCellValue('G' . $fila, $venta['total']);
+
+            $fila++;
+        }
+
+        $ultimafila = $fila - 1;
+
+        $styleArray = [
+
+            'borders' => [
+
+                'allBorders' => [
+                    'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                    'color' => ['rgb' => '000000'],
+                ]
+            ]
+
+        ];
+
+        $hoja->getStyle('A5:G'.$ultimafila)->applyFromArray($styleArray);
+
+        $hoja->setCellValueExplicit('G'.$fila, '=SUM(G5:G'.$ultimafila.')', 
+        \PhpOffice\PhpSpreadsheet\Cell\DataType::TYPE_FORMULA);
+
+
+        $writer = new Xlsx($phpExcel);
+        $writer->save("reporte_ventas.xlsx");
+        return redirect()->to(base_url() . '/Estadistica');
+*/
     }
 
     public function datos()

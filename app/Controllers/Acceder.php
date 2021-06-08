@@ -119,11 +119,12 @@ class Acceder extends BaseController
 	public function perfil($id_user)
 	{
 		$this->usuarioModal->select('rut,dv,nombres,apellidos,celular,correo,natural_juridico,d.ciudad AS ciudad,
-		r.nombre_region AS region, c.nombre_comuna AS comuna, d.calle AS calle, d.numero AS numero, nom_usuario');
+		r.nombre_region AS region, c.nombre_comuna AS comuna, d.calle AS calle, d.numero AS numero, nom_usuario, na.nivel_acceso AS nivel_acceso');
 		$this->usuarioModal->join('datos_personales AS dt', 'usuario.rut_fk=dt.rut');
 		$this->usuarioModal->join('direccion AS d', 'dt.direccion_fk=d.id_direccion');
 		$this->usuarioModal->join('comuna AS c', 'd.comuna_fk=c.id_comuna');
 		$this->usuarioModal->join('region AS r', 'c.region_fk=r.id_region');
+		$this->usuarioModal->join('nivel_acceso AS na', 'usuario.nvl_acceso_fk=na.id_nivel');
 		$this->usuarioModal->where('id_usuario', $id_user);
 		$datos = $this->usuarioModal->first();
 

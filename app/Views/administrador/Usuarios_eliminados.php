@@ -1,5 +1,5 @@
 <div id="usuarios" class="tab-pane">
-    <h3> Usuarios de baja </h3>
+    <h3> Usuarios de Baja </h3>
     <!-- Botón para agergar usuario-->
     <div class="pull-right">
         <a href="<?php echo base_url(); ?>/Usuarios/">

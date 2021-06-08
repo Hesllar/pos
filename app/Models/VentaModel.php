@@ -66,10 +66,12 @@ class VentaModel extends Model
     public function datosXPeriodo($fecha_inicio, $fecha_termino)
     {
         $where = "DATE(fecha_venta) >= '$fecha_inicio' AND DATE(fecha_venta) <='$fecha_termino'";
-        $this->select('fecha_venta,CONCAT(dt.nombres," ",dt.apellidos) AS nombres,tipo_comprobante,total,f.tipo_pago AS tipo_pago');
+        $this->select('fecha_venta,CONCAT(dt.nombres," ",dt.apellidos) AS nombres,tipo_comprobante,total,f.tipo_pago AS tipo_pago, id_venta, SUM(dv.cantidad) AS cantidad');
         $this->join('usuario AS u', 'venta.cliente_fk=u.id_usuario');
         $this->join('datos_personales AS dt', 'u.rut_fk=dt.rut');
         $this->join('forma_pago AS f', 'venta.forma_pago_fk=f.id_forma_pago');
+        $this->join('detalle_venta AS dv', 'venta.id_venta=dv.id_venta_pk');
+        $this->groupBy('id_venta');
         return $this->where($where)->findAll();
     }
 }
