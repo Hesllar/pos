@@ -220,6 +220,7 @@ class Estadistica extends BaseController
         $this->request = \Config\Services::request();
         $phpExcel = new Spreadsheet();
         $hoja = $phpExcel->getActiveSheet();
+
         $hoja->mergeCells('A3:D3');
         $hoja->getStyle('A5:G5')->getAlignment()->setHorizontal
         (\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
@@ -246,18 +247,36 @@ class Estadistica extends BaseController
         $hoja->getStyle('A5:G5')->getFont()->setBold(true);
 
         $ventaEmp = $this->ventas->datosXPeriodo($this->request->getPost('fecha_inicio'), $this->request->getPost('fecha_termino'));
+        $ventaProduct = $this->ventas->datosProducXPeriodo($this->request->getPost('fecha_inicio'), $this->request->getPost('fecha_termino'));
+
         $fila = 6;
         foreach ($ventaEmp as $venta) {
             $hoja->setCellValue('A' . $fila, $venta['id_venta']);
             $hoja->setCellValue('B' . $fila, $venta['fecha_venta']);
             $hoja->setCellValue('C' . $fila, $venta['nombres']);
             $hoja->setCellValue('D' . $fila, $venta['tipo_comprobante']);
+
             $hoja->setCellValue('E' . $fila, $venta['cantidad']);
             $hoja->setCellValue('F' . $fila, $venta['tipo_pago']);
             $hoja->setCellValue('G' . $fila, $venta['total']);
             
+
             $fila++;
         }
+        $hoja->mergeCells("A16:D16");
+        $hoja->setCellValue("A16", "Reportes de ventas");
+        $hoja->setCellValue('A19', "Id Venta");
+        $hoja->setCellValue('B19', "Nombre producto");
+        $hoja->setCellValue('C19', "Precio producto");
+
+        $fila1 = 20;
+        foreach ($ventaProduct as $venta) {
+            $hoja->setCellValue('A' . $fila1, $venta['id_venta']);
+            $hoja->setCellValue('B' . $fila1, $venta['nombre']);
+            $hoja->setCellValue('C' . $fila1, $venta['precio']);
+            $fila1++;
+        }
+
 
         $ultimafila = $fila - 1;
 
@@ -280,9 +299,10 @@ class Estadistica extends BaseController
 
 
         $writer = new Xlsx($phpExcel);
+
         $writer->save("reporte_ventas.xlsx");
         return redirect()->to(base_url() . '/Estadistica');
-
+      
     }
 
 

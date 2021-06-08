@@ -24,6 +24,7 @@ class Ventas extends BaseController
 
 	public function __construct()
 	{
+		$this->session = session();
 		$this->usuarios = new Usuarios;
 		$this->empleados = new Empleados;
 		$this->formapago = new FormaPago;
@@ -199,9 +200,10 @@ class Ventas extends BaseController
 
 	function obtenerUltimoId()
 	{
-		$resultado = $this->ventas->select('id_venta')->orderBy('id_venta', 'DESC')->first();
+		$resultado = $this->ventas->select('id_venta,fecha_venta')->orderBy('id_venta', 'DESC')->first();
 		return $resultado;
 	}
+
 
 	function realizarVentaWeb()
 	{
@@ -321,19 +323,74 @@ class Ventas extends BaseController
 		echo view('footer');
 	}
 
+	function obtenerUltimoIdCom()
+	{
+		$ultima_venta = $this->ventas->select('id_venta')->orderBy('id_venta', 'DESC')->first();
+		return $ultima_venta;
+	}
+
 
 	public function datosProductoBoletaUser()
-	{	
-		$this->detalle_venta->select('p.nombre AS nombre');
-		$this->detalle_venta->join('venta AS v', 'detalle_venta.id_venta_pk=v.id_venta');
-		$this->detalle_venta->join('usuario AS u', 'v.cliente_fk=u.id_usuario');
-		$this->detalle_venta->join('producto AS p', 'detalle_venta.id_producto_pk=p.id_producto');
-		$this->detalle_venta->where('v.cliente_fk', $this->session->id_usuario);
-		$this->detalle_venta->where('v.id_venta', 1008);
-		$this->detalle_venta->groupBy('nombre');
-        return $this->detalle_venta->findAll();
-		
+	{
+		$a = $this->obtenerUltimoIdCom();
+		$e = $a['id_venta'];
+		$this->request = \Config\Services::request();
+		$this->ventas->select('p.nombre AS nombre,dv.cantidad AS cantidad,(cantidad * (p.precio_venta - (p.precio_venta * 0.19))) AS precio_neto,
+		(cantidad * (p.precio_venta * 0.19)) AS precio_iva, (p.precio_venta * cantidad) AS precio_venta');
+		$this->ventas->join('detalle_venta AS dv', 'venta.id_venta=dv.id_venta_pk');
+		$this->ventas->join('usuario AS u', 'venta.cliente_fk=u.id_usuario');
+		$this->ventas->join('producto AS p', 'dv.id_producto_pk=p.id_producto');
+		$this->ventas->where('id_venta', $e);
+		$this->ventas->groupBy('nombre');
+		return $this->ventas->findAll();
 	}
+  
+  
+	public function datosPersoUser()
+	{
+		$this->ventas->select('id_venta,cliente_fk,fecha_venta,CONCAT(u.rut_fk,"-", d.dv) AS rut, CONCAT(d.nombres,"-",d.apellidos) AS nombres');
+		$this->ventas->join('usuario AS u', 'venta.cliente_fk=u.id_usuario');
+		$this->ventas->join('datos_personales AS d', 'u.rut_fk=d.rut');
+		$this->ventas->orderBy('id_venta, fecha_venta', 'DESC');
+		return $this->ventas->where('id_usuario', $this->session->id_usuario)->first();
+	}
+	public function cargartoComprobante()
+	{
+		$this->request = \Config\Services::request();
+		$this->response = \Config\Services::response();
+		$datosUser = $this->datosPersoUser();
+		$pdf = new \FPDF('P', 'mm', 'letter');
+		$pdf->AddPage();
+		$pdf->SetMargins(30, 10, 10);
+		$pdf->SetTitle("Stock criticos");
+		$pdf->SetFont("Arial", 'B', 10);
+		$pdf->Image("img/logo/logo1.png", 150, 7);
+		$pdf->Cell(50, 5, utf8_decode("Datos de la venta N°"), 0, 1, 'C');
+		$pdf->Cell(10, 5, utf8_decode($datosUser['id_venta']), 0, 1, "C");
+		$pdf->Ln(10);
+		$pdf->Cell(7, 5, utf8_decode("Detalle de la venta:"), 0, 1, 'C');
+		$pdf->Ln(10);
+		$pdf->Cell(5, 5, utf8_decode("Fecha de emision:"), 0, 1, 'C');
+		$pdf->Cell(5, 5, $datosUser['fecha_venta'], 0, 1, "C");
+		$pdf->Ln(10);
+		$pdf->Cell(-6, 5, utf8_decode("Rut cliente:"), 0, 1, "C");
+		$pdf->Cell(-6, 5, $datosUser['rut'], 0, 1, 'C');
+		$pdf->Ln(10);
+		$pdf->Cell(-6, 5, utf8_decode("Nombre cliente:"), 0, 1, 'C');
+		$pdf->Cell(-6, 5, $datosUser['nombres'], 0, 1, 'C');
+		$pdf->Ln(10);
+		$datosProductos = $this->datosProductoBoletaUser();
+		foreach ($datosProductos as $product) {
+			$pdf->Ln();
+			$pdf->Cell(5, 5, $product['nombre'], 0, 1, "C");
+			$pdf->Cell(5, 5, $product['cantidad'], 0, 1, "C");
+			$pdf->Cell(5, 5, $product['precio_neto'], 0, 1, "C");
+			$pdf->Cell(5, 5, $product['precio_iva'], 0, 1, "C");
+			$pdf->Cell(5, 5, $product['precio_venta'], 0, 1, "C");
+		}
+
+
+		$this->response->setHeader('Content-Type', 'application/pdf');
 
 
 	public function datosPersoUser()
@@ -379,4 +436,5 @@ class Ventas extends BaseController
 
 		$pdf->Output('comprobante.pdf', 'I');
 	}
+
 }

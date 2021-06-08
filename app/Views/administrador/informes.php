@@ -21,8 +21,10 @@
                             Total Ventas:
                             <?php echo $sumaTotal['total'] ?>
                         </div>
+
                         <a class="card-footer text-white" href="<?php echo base_url() ?>/Estadistica/pagVentaXEmp">Ver Detalle (PDF)</a>
                         <a class="card-footer text-white" id="btnbuscar" href="#" data-toggle="modal" data-target="#grafico">Ver Grafico</a>
+
                     </div>
                 </div>
                 <div class="col-4">
