@@ -276,7 +276,7 @@ $user_session = session();
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Datos del producto</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Datos del Usuario</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -391,6 +391,14 @@ $user_session = session();
                                             <label for="" id="lbNomUsuario"></label>
                                         </div>
                                     </div>
+                                    <h5>Nivel de Acceso</h5>
+                                    <br>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <select name="per_nvl" id="per_nvl" disabled>
+                                            </select>
+                                        </div>
+                                    </div>
                                 </fieldset>
                             </div>
                         </div>
@@ -438,18 +446,17 @@ $user_session = session();
                         $("#per_calle").val(resp.datos.calle);
                         $("#per_numero").val(resp.datos.numero);
                         $("#per_nombre_usuario").val(resp.datos.nom_usuario);
+                        $("#per_nvl").append('<option>' + resp.datos.nivel_acceso + '</option>');
 
                     }
                 });
             }
 
             function datosUsuarioEmp(id_user) {
-                console.log(id_user);
                 $.ajax({
                     url: "<?php echo base_url() ?>/Acceder/datosEmp/" + id_user,
                     dataType: 'json',
                     success: function(resp) {
-                        console.log(resp);
                         if (resp.datos == null) {
                             document.getElementById("per_rut_emp").style.display = "none",
                                 document.getElementById("per_razon").style.display = "none",
