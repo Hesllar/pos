@@ -172,7 +172,7 @@ $session = session();
                                                                 <div class="form-group col-sm-6">
                                                                     <span class="fuente-titulo">Nombre del Empleado</span>
                                                                     <div class="col-sm-12">
-                                                                        <span class="fuente-parrafo">Gino Baez Silva</span>
+                                                                        <span class="fuente-parrafo"><input type="text" id="nom_empleado"></span>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -219,43 +219,31 @@ $session = session();
                                                                 <div class="form-group col-sm-4">
                                                                     <span class="fuente-titulo">Estado del env&iacute;o</span>
                                                                     <div class="col-sm-12">
-                                                                        <span class="fuente-parrafo">Recibido</span>
+                                                                        <span class="fuente-parrafo"><input type="text" id="est_despacho"></span>
                                                                     </div>
                                                                 </div>
                                                                 <div class="form-group col-sm-4">
                                                                     <span class="fuente-titulo">Fecha de entrega</span>
                                                                     <div class="col-sm-12">
-                                                                        <span class="fuente-parrafo">00/00/00 00:00:00</span>
+                                                                        <span class="fuente-parrafo"><input type="text" id="fecha_entrega"></span>
                                                                     </div>
                                                                 </div>
                                                                 <div class="form-group col-sm-4">
                                                                     <span class="fuente-titulo">Recibido por</span>
                                                                     <div class="col-sm-12">
-                                                                        <span class="fuente-parrafo">Ricardo Muñoz Jorquera</span>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="form-group col-sm-4">
-                                                                    <span class="fuente-titulo">Rut quien recibe</span>
-                                                                    <div class="col-sm-12">
-                                                                        <span class="fuente-parrafo">+56981854566</span>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="form-group col-sm-4">
-                                                                    <span class="fuente-titulo">Peso del paquete</span>
-                                                                    <div class="col-sm-12">
-                                                                        <span class="fuente-parrafo">20kg</span>
+                                                                        <span class="fuente-parrafo"><input type="text" id="nom_recibe"></span>
                                                                     </div>
                                                                 </div>
                                                                 <div class="form-group col-sm-4">
                                                                     <span class="fuente-titulo">Comuna de env&iacute;o</span>
                                                                     <div class="col-sm-12">
-                                                                        <span class="fuente-parrafo">San Antonio</span>
+                                                                        <span class="fuente-parrafo"><input type="text" id="nom_comuna"></span>
                                                                     </div>
                                                                 </div>
                                                                 <div class="form-group col-sm-4">
                                                                     <span class="fuente-titulo">Costo de env&iacute;o</span>
                                                                     <div class="col-sm-12">
-                                                                        <span class="fuente-parrafo">$5460</span>
+                                                                        <span class="fuente-parrafo"><input type="text" id="costo_envio"></span>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -263,10 +251,10 @@ $session = session();
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="row pull-right billing-address">
+                                            <div class="row pull-right billing-address" id="total-des">
                                                 <div class="form-group col-sm-9">
                                                     <span class="fuente-parrafo">Total</span>
-                                                    <span class="fuente-titulo">$999.999</span>
+                                                    <span class="fuente-titulo"><input type="text" id="totales"></span>
                                                 </div>
                                             </div>
 
@@ -359,7 +347,7 @@ $session = session();
                                         <td><?php echo $factura['estado_venta']; ?></td>
                                         <td><a href="#"><?php echo $factura['empleado_fk']; ?></a></td>
                                         <td>
-                                            <a class="view" data-toggle="modal" href="#detalle">
+                                            <a class="view" data-toggle="modal" href="#detalle" onclick="todo(<?php echo $factura['id_venta'] ?>)">
                                                 <i class="fa fa-bars"></i>
                                             </a>
                                             <a class="view-alerta" href="" onclick="anular(<?php echo $factura['id_venta'] ?>)">
@@ -386,6 +374,7 @@ $session = session();
 <!-- Product Thumbnail Description End -->
 </div>
 <div id="resultado">Nada</div>
+
 
 <!-- jquery 3.12.4 -->
 <script src="<?php echo base_url(); ?>/js/vendor/jquery-1.12.4.min.js"></script>
@@ -437,11 +426,12 @@ $session = session();
         obtnDatos(id_venta);
         obtnDatosPro(id_venta);
         obtDatosEmp(id_venta);
+        obtDatosEmpleado(id_venta);
+        obtDatosDespacho(id_venta);
 
     }
 
     function obtnDatos(id_venta) {
-        console.log(id_venta)
         $.ajax({
             url: "<?php echo base_url() ?>/Ventas/datosBoleta/" + id_venta,
             dataType: 'json',
@@ -476,7 +466,6 @@ $session = session();
     }
 
     function obtDatosEmp(id_venta) {
-        console.log(id_venta);
         $.ajax({
             url: "<?php echo base_url() ?>/Empresas/datosEmp/" + id_venta,
             dataType: 'json',
@@ -491,6 +480,48 @@ $session = session();
                     document.getElementById("datos_emp").style.display = "none"
                 }
             }
-        })
+        });
+    }
+
+    function obtDatosEmpleado(id_venta) {
+        console.log(id_venta);
+        $.ajax({
+            url: "<?php echo base_url() ?>/Ventas/datosEmpleado/" + id_venta,
+            dataType: 'json',
+            success: function(resp) {
+                console.log(resp);
+                if (resp.datos != null) {
+                    $("#nom_empleado").val(resp.datos.nom_empleado);
+                }
+            }
+        });
+    }
+
+    function obtDatosDespacho(id_venta) {
+        $.ajax({
+            url: "<?php echo base_url() ?>/Ventas/datosDespacho/" + id_venta,
+            dataType: 'json',
+            success: function(resp) {
+
+                if (resp.datos != null) {
+                    if (resp.datos.est_desp == 1) {
+                        $("#est_despacho").val('Entregado')
+                    } else {
+                        $("#est_despacho").val('No entregado')
+                    }
+                    $("#nom_recibe").val(resp.datos.nom_recibe);
+                    $("#nom_comuna").val(resp.datos.nombre_comuna);
+                    $("#costo_envio").val(resp.datos.costo_comuna);
+                    $("#fecha_entrega").val(resp.datos.fecha_entrega);
+                    $("#fecha_entrega").val(resp.datos.fecha_entrega);
+                    $("#totales").val(resp.datos.totales);
+                    document.getElementById("despacho").style.display = ""
+                    document.getElementById("total-des").style.display = ""
+                } else {
+                    document.getElementById("despacho").style.display = "none"
+                    document.getElementById("total-des").style.display = "none"
+                }
+            }
+        });
     }
 </script>

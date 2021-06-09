@@ -276,10 +276,33 @@ class Ventas extends BaseController
 		return $valores;
 	}
 
+	public function datosDespacho($id_venta)
+	{
+		$this->ventas->select('dp.fecha_entrega AS fecha_entrega,dp.nombre_recibe AS nom_recibe,dp.telefono AS telefono, dp.estado_despacho AS est_desp,
+		c.nombre_comuna AS nombre_comuna, cc.costo_comuna AS costo_comuna, (total + costo_comuna) AS totales');
+		$this->ventas->join('despacho AS dp', 'venta.id_venta=dp.venta_fk');
+		$this->ventas->join('costo_comuna AS cc', 'dp.costo_comuna_fk=cc.id_costo');
+		$this->ventas->join('comuna AS c', 'cc.comuna_fk=c.id_comuna');
+		$this->ventas->where('id_venta', $id_venta);
+		$datos = $this->ventas->first();
+		$res['datos'] = $datos;
+		return json_encode($res);
+	}
+
+	public function datosEmpleado($id_venta)
+	{
+		$this->ventas->select('u.nom_usuario AS nom_empleado');
+		$this->ventas->join('empleado AS e', 'venta.empleado_fk=e.id_empleado');
+		$this->ventas->join('usuario AS u', 'e.usuario_fk=u.id_usuario');
+		$this->ventas->where('id_venta', $id_venta);
+		$datos = $this->ventas->first();
+		$res['datos'] = $datos;
+		return json_encode($res);
+	}
 
 	public function datosBoleta($id_venta)
 	{
-		$this->ventas->select('id_venta, fecha_venta, CONCAT(d.rut, "-",d.dv) AS rut, CONCAT(d.nombres, " ",d.apellidos) AS nombres,total');
+		$this->ventas->select('id_venta, fecha_venta, CONCAT(d.rut, "-",d.dv) AS rut, CONCAT(d.nombres, " ",d.apellidos) AS nombres, total');
 		$this->ventas->join('usuario AS u', 'venta.cliente_fk=u.id_usuario');
 		$this->ventas->join('datos_personales AS d', 'u.rut_fk=d.rut');
 		$this->ventas->where('id_venta', $id_venta);
@@ -308,16 +331,6 @@ class Ventas extends BaseController
 		$data = [
 			'configuracion' => $configuracion
 		];
-		$estados = [
-			'e_venta' => '',
-			'e_producto' => 'active',
-			'e_ordencompra' => '',
-			'e_usuario' => '',
-			'e_notacredito' => '',
-			'e_config' => '',
-			'e_estadistica' => ''
-		];
-
 		echo view('header', $data);
 		echo view('administrador/Comprobante');
 		echo view('footer');
@@ -328,15 +341,48 @@ class Ventas extends BaseController
 		$ultima_venta = $this->ventas->select('id_venta')->orderBy('id_venta', 'DESC')->first();
 		return $ultima_venta;
 	}
+	public function datosComprobanteDespacho()
+	{
+		$a = $this->obtenerUltimoIdCom();
+		$e = $a['id_venta'];
+		$this->ventas->select('dp.fecha_entrega AS fecha_entrega,dp.nombre_recibe AS nom_recibe,dp.telefono AS telefono, dp.estado_despacho AS est_desp,
+		c.nombre_comuna AS nombre_comuna, cc.costo_comuna AS costo_comuna, (total + costo_comuna) AS totales, despacho');
+		$this->ventas->join('despacho AS dp', 'venta.id_venta=dp.venta_fk');
+		$this->ventas->join('costo_comuna AS cc', 'dp.costo_comuna_fk=cc.id_costo');
+		$this->ventas->join('comuna AS c', 'cc.comuna_fk=c.id_comuna');
+		$this->ventas->where('id_venta', $e);
+		return $this->ventas->first();
+	}
+	public function datosComprobanteEmpresa()
+	{
+		$a = $this->obtenerUltimoIdCom();
+		$e = $a['id_venta'];
+		$this->ventas->select('CONCAT(em.rut_empresa, "-",em.dvempresa) AS rut_emp ,em.razon_social AS social,em.giro AS giro');
+		$this->ventas->join('usuario AS u', 'venta.cliente_fk=u.id_usuario');
+		$this->ventas->join('datos_personales AS d ', 'u.rut_fk=d.rut');
+		$this->ventas->join('empresa AS em', 'd.rut=em.DATOS_PERSONALES_rut');
+		$this->ventas->where('id_venta', $e);
+		return $this->ventas->first();
+	}
+	public function datosComprobanteEmpleado()
+	{
+		$a = $this->obtenerUltimoIdCom();
+		$e = $a['id_venta'];
+		$this->ventas->select('u.nom_usuario AS nom_empleado');
+		$this->ventas->join('empleado AS e', 'venta.empleado_fk=e.id_empleado');
+		$this->ventas->join('usuario AS u', 'e.usuario_fk=u.id_usuario');
+		$this->ventas->where('id_venta', $e);
+		return $this->ventas->first();
+	}
 
 
-	public function datosProductoBoletaUser()
+	public function datosProductoComprobanteUser()
 	{
 		$a = $this->obtenerUltimoIdCom();
 		$e = $a['id_venta'];
 		$this->request = \Config\Services::request();
-		$this->ventas->select('p.nombre AS nombre,dv.cantidad AS cantidad,(cantidad * (p.precio_venta - (p.precio_venta * 0.19))) AS precio_neto,
-		(cantidad * (p.precio_venta * 0.19)) AS precio_iva, (p.precio_venta * cantidad) AS precio_venta');
+		$this->ventas->select('p.nombre AS nombre,dv.cantidad AS cantidad,ROUND(cantidad * (p.precio_venta - (p.precio_venta * 0.19)),0) AS precio_neto,
+		ROUND(cantidad * (p.precio_venta * 0.19),0) AS precio_iva, (p.precio_venta * cantidad) AS precio_venta, total');
 		$this->ventas->join('detalle_venta AS dv', 'venta.id_venta=dv.id_venta_pk');
 		$this->ventas->join('usuario AS u', 'venta.cliente_fk=u.id_usuario');
 		$this->ventas->join('producto AS p', 'dv.id_producto_pk=p.id_producto');
@@ -344,11 +390,10 @@ class Ventas extends BaseController
 		$this->ventas->groupBy('nombre');
 		return $this->ventas->findAll();
 	}
-  
-  
-	public function datosPersoUser()
+
+	public function datosComprobantePersoUser()
 	{
-		$this->ventas->select('id_venta,cliente_fk,fecha_venta,CONCAT(u.rut_fk,"-", d.dv) AS rut, CONCAT(d.nombres,"-",d.apellidos) AS nombres');
+		$this->ventas->select('id_venta,cliente_fk,fecha_venta,CONCAT(u.rut_fk,"-", d.dv) AS rut, CONCAT(d.nombres,"-",d.apellidos) AS nombres, tipo_comprobante, total');
 		$this->ventas->join('usuario AS u', 'venta.cliente_fk=u.id_usuario');
 		$this->ventas->join('datos_personales AS d', 'u.rut_fk=d.rut');
 		$this->ventas->orderBy('id_venta, fecha_venta', 'DESC');
@@ -358,42 +403,121 @@ class Ventas extends BaseController
 	{
 		$this->request = \Config\Services::request();
 		$this->response = \Config\Services::response();
-		$datosUser = $this->datosPersoUser();
+		$datosDespacho = $this->datosComprobanteDespacho();
+		$datosEmpresa = $this->datosComprobanteEmpresa();
+		$datosEmp = $this->datosComprobanteEmpleado();
+		$datosUser = $this->datosComprobantePersoUser();
+		$tipo = $datosUser['tipo_comprobante'];
 		$pdf = new \FPDF('P', 'mm', 'letter');
 		$pdf->AddPage();
 		$pdf->SetMargins(30, 10, 10);
-		$pdf->SetTitle("Stock criticos");
+		$pdf->SetTitle("Comprobante");
 		$pdf->SetFont("Arial", 'B', 10);
-		$pdf->Image("img/logo/logo1.png", 150, 7);
-		$pdf->Cell(50, 5, utf8_decode("Datos de la venta N°"), 0, 1, 'C');
+		$pdf->Image("img/logo/logo1.png", 20, 7);
+		$pdf->SetDrawColor(247, 10, 10);
+		$pdf->Cell(140);
+		$pdf->MultiCell(50, 5, "               FermApp
+		       Rut: 57.103.331-3
+		    Tipo de comprobante:
+			              $tipo", 'LRTB', 'L');
+		$pdf->Cell(4);
+		$pdf->SetDrawColor(9, 120, 212);
+		$pdf->Cell(10, 5, utf8_decode("Detalle de la venta"), 0, 1, 'C');
+		$pdf->Ln(5);
+		$pdf->Cell(6);
+		$pdf->Cell(10, 5, utf8_decode("Datos de la venta N°:"), 0, 1, 'C');
+		$pdf->Cell(5);
 		$pdf->Cell(10, 5, utf8_decode($datosUser['id_venta']), 0, 1, "C");
-		$pdf->Ln(10);
-		$pdf->Cell(7, 5, utf8_decode("Detalle de la venta:"), 0, 1, 'C');
-		$pdf->Ln(10);
+		$pdf->Ln(5);
+		$pdf->Cell(6);
 		$pdf->Cell(5, 5, utf8_decode("Fecha de emision:"), 0, 1, 'C');
+		$pdf->Cell(6);
 		$pdf->Cell(5, 5, $datosUser['fecha_venta'], 0, 1, "C");
+		$pdf->Ln(-10);
+		$pdf->Cell(130);
+		$pdf->Cell(5, 5, utf8_decode("Rut cliente:"), 0, 1, "C");
+		$pdf->Cell(130);
+		$pdf->Cell(5, 5, $datosUser['rut'], 0, 1, 'C');
 		$pdf->Ln(10);
-		$pdf->Cell(-6, 5, utf8_decode("Rut cliente:"), 0, 1, "C");
-		$pdf->Cell(-6, 5, $datosUser['rut'], 0, 1, 'C');
-		$pdf->Ln(10);
+		$pdf->Cell(9);
 		$pdf->Cell(-6, 5, utf8_decode("Nombre cliente:"), 0, 1, 'C');
+		$pdf->Cell(9);
 		$pdf->Cell(-6, 5, $datosUser['nombres'], 0, 1, 'C');
 		$pdf->Ln(10);
-		$datosProductos = $this->datosProductoBoletaUser();
+		$pdf->Cell(11);
+		$pdf->Cell(-6, 5, utf8_decode("Nombre empleado:"), 0, 1, 'C');
+		$pdf->Cell(11);
+		$pdf->Cell(-6, 5, $datosEmp['nom_empleado'], 0, 1, 'C');
+		$pdf->Ln(7);
+		if ($datosEmpresa != null) {
+			$pdf->Cell(6);
+			$pdf->Cell(-6, 5, utf8_decode("Rut empresa:"), 0, 1, 'C');
+			$pdf->Cell(5);
+			$pdf->Cell(-6, 5, $datosEmpresa['rut_emp'], 0, 1, 'C');
+			$pdf->Ln(-10);
+			$pdf->Cell(80);
+			$pdf->Cell(-6, 5, utf8_decode("Razón social:"), 0, 1, 'C');
+			$pdf->Cell(80);
+			$pdf->Cell(-6, 5, $datosEmpresa['social'], 0, 1, 'C');
+			$pdf->Ln(-10);
+			$pdf->Cell(160);
+			$pdf->Cell(-6, 5, utf8_decode("Giro:"), 0, 1, 'C');
+			$pdf->Cell(160);
+			$pdf->Cell(-6, 5, $datosEmpresa['giro'], 0, 1, 'C');
+		}
+
+		$pdf->Ln(5);
+
+		$pdf->Cell(6);
+		$pdf->Cell(-6, 5, utf8_decode("Fecha entrega"), 0, 1, 'C');
+		$pdf->Cell(6);
+		$pdf->Cell(-6, 5, $datosDespacho['fecha_entrega'], 0, 1, 'C');
+		$pdf->Ln(-10);
+		$pdf->Cell(160);
+		$pdf->Cell(-6, 5, utf8_decode("Recibe"), 0, 1, 'C');
+		$pdf->Cell(160);
+		$pdf->Cell(-6, 5, utf8_decode($datosDespacho['nom_recibe']), 0, 1, 'C');
+		$pdf->Ln(10);
+		$pdf->Cell(6);
+		$pdf->Cell(-6, 5, utf8_decode("Comuna de envio"), 0, 1, 'C');
+		$pdf->Cell(6);
+		$pdf->Cell(-6, 5, utf8_decode($datosDespacho['nombre_comuna']), 0, 1, 'C');
+		$pdf->Ln(-10);
+		$pdf->Cell(80);
+		$pdf->Cell(-6, 5, utf8_decode("costo envio"), 0, 1, 'C');
+		$pdf->Cell(80);
+		$pdf->Cell(-6, 5, utf8_decode($datosDespacho['costo_comuna']), 0, 1, 'C');
+
+		$pdf->Ln(5);
+		$pdf->Cell(2);
+		$pdf->Cell(60, 5, utf8_decode("Nombre poducto"), 1, 0, "C");
+		$pdf->Cell(20, 5, utf8_decode("Cantidad"), 1, 0, "C");
+		$pdf->Cell(25, 5, utf8_decode("precio_neto"), 1, 0, "C");
+		$pdf->Cell(25, 5, utf8_decode("precio_iva"), 1, 0, "C");
+		$pdf->Cell(25, 5, utf8_decode("precio_venta"), 1, 0, "C");
+		$datosProductos = $this->datosProductoComprobanteUser();
 		foreach ($datosProductos as $product) {
 			$pdf->Ln();
-			$pdf->Cell(5, 5, $product['nombre'], 0, 1, "C");
-			$pdf->Cell(5, 5, $product['cantidad'], 0, 1, "C");
-			$pdf->Cell(5, 5, $product['precio_neto'], 0, 1, "C");
-			$pdf->Cell(5, 5, $product['precio_iva'], 0, 1, "C");
-			$pdf->Cell(5, 5, $product['precio_venta'], 0, 1, "C");
+			$pdf->Cell(2);
+			$pdf->Cell(60, 5, $product['nombre'], 1, 0, "C");
+			$pdf->Cell(20, 5, $product['cantidad'], 1, 0, "C");
+			$pdf->Cell(25, 5, $product['precio_neto'], 1, 0, "C");
+			$pdf->Cell(25, 5, $product['precio_iva'], 1, 0, "C");
+			$pdf->Cell(25, 5, $product['precio_venta'], 1, 0, "C");
 		}
+		if ($datosDespacho == null) {
+			$subtotal = $datosUser['total'] + 0;
+		} else {
+			$subtotal = $datosUser['total'] + $datosDespacho['costo_comuna'];
+		}
+
+		$pdf->Ln(5);
+		$pdf->Cell(107);
+		$pdf->MultiCell(50, 5, "Subtotal:        |       $subtotal", 'LRTB', 'L');
 
 
 		$this->response->setHeader('Content-Type', 'application/pdf');
-
 		$pdf->Output('comprobante.pdf', 'I');
-
 	}
-	
+
 }
