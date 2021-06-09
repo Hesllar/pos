@@ -392,49 +392,8 @@ class Ventas extends BaseController
 
 		$this->response->setHeader('Content-Type', 'application/pdf');
 
-
-	public function datosPersoUser()
-    {
-        $this->ventas->select('id_venta,cliente_fk,fecha_venta,CONCAT(u.rut_fk,"-", d.dv) AS rut, CONCAT(d.nombres,"-",d.apellidos) AS nombres');
-        $this->ventas->join('usuario AS u', 'venta.cliente_fk=u.id_usuario');
-        $this->ventas->join('datos_personales AS d', 'u.rut_fk=d.rut');
-        return $this->ventas->where('id_usuario', $this->session->id_usuario)->first();
-    }
-
-	public function cargartoComprobante()
-	{
-		$this->response = \Config\Services::response();
-		$datosUser = $this->datosPersoUser();
-
-		$pdf = new \FPDF('P', 'mm', 'letter');
-		$pdf->AddPage();
-		$pdf->SetMargins(30, 10, 10);
-		$pdf->SetTitle("Stock criticos");
-		$pdf->SetFont("Arial", 'B', 10);
-		$pdf->Image("img/logo/logo1.png", 150, 7);
-		$pdf->Cell(50, 5, utf8_decode("Datos de la venta N°"), 0, 1, 'C');
-		$pdf->Cell(10, 5, $datosUser['id_venta'], 0, 1, "C");
-		$pdf->Ln(10);
-		$pdf->Cell(7, 5, utf8_decode("Detalle de la venta:"), 0, 1, 'C');
-		$pdf->Ln(10);
-		$pdf->Cell(5, 5, utf8_decode("Fecha de emision:"), 0, 1, 'C');
-		$pdf->Cell(5, 5, $datosUser['fecha_venta'], 0, 1, "C");
-		$pdf->Ln(10);
-		$pdf->Cell(-6, 5, utf8_decode("Rut cliente:"), 0, 1, "C");
-		$pdf->Cell(-6, 5, $datosUser['rut'], 0, 1, 'C');
-		$pdf->Ln(10);
-		$pdf->Cell(-6, 5, utf8_decode("Nombre cliente:"), 0, 1, 'C');
-		$pdf->Cell(-6, 5, $datosUser['nombres'], 0, 1, 'C');
-		$pdf->Ln(10);
-		$datosProductos = $this->datosProductoBoletaUser();
-		foreach ($datosProductos as $product) {
-			$pdf->Ln();
-			$pdf->Cell(5, 5, $product['nombre'], 0, 1, "C");
-		}
-
-		$this->response->setHeader('Content-Type', 'application/pdf');
-
 		$pdf->Output('comprobante.pdf', 'I');
-	}
 
+	}
+	
 }
