@@ -465,6 +465,7 @@ class Ventas extends BaseController
 			$pdf->Cell(160);
 			$pdf->Cell(-6, 5, $datosEmpresa['giro'], 0, 1, 'C');
 		}
+
 		$pdf->Ln(5);
 
 		$pdf->Cell(6);
@@ -518,4 +519,5 @@ class Ventas extends BaseController
 		$this->response->setHeader('Content-Type', 'application/pdf');
 		$pdf->Output('comprobante.pdf', 'I');
 	}
+
 }

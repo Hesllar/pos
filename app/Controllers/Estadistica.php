@@ -222,58 +222,68 @@ class Estadistica extends BaseController
         $hoja = $phpExcel->getActiveSheet();
 
         $hoja->mergeCells('A3:D3');
-        $hoja->getStyle('A5:G5')->getAlignment()->setHorizontal
+        $hoja->getStyle('B5:H5')->getAlignment()->setHorizontal
         (\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
         $hoja->getStyle('A3')->getAlignment()->setHorizontal
         (\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
         $hoja->getStyle('A3')->getFont()->SetSize(14);
         $hoja->getStyle('A3')->getFont()->setName('Arial');
         $hoja->setCellValue('A3', "Reportes de Ventas");
-        $hoja->setCellValue('A5', "ID Venta");
-        $hoja->getColumnDimension('A')->setWidth(12);
-        $hoja->setCellValue('B5', "Fecha de Compra");
-        $hoja->getColumnDimension('B')->setWidth(20);
-        $hoja->setCellValue('C5', "Nombres");
-        $hoja->getColumnDimension('C')->setWidth(30);
-        $hoja->setCellValue('D5', "Tipo de Comprobante");
-        $hoja->getColumnDimension('D')->setWidth(25);
-        $hoja->setCellValue('E5', "Cantidad de Producto");
+        $hoja->setCellValue('B5', "ID Venta");
+        $hoja->getColumnDimension('B')->setWidth(12);
+        $hoja->setCellValue('C5', "Fecha de Compra");
+        $hoja->getColumnDimension('C')->setWidth(20);
+        $hoja->setCellValue('D5', "Nombres");
+        $hoja->getColumnDimension('D')->setWidth(30);
+        $hoja->setCellValue('E5', "Tipo de Comprobante");
         $hoja->getColumnDimension('E')->setWidth(25);
-        $hoja->setCellValue('F5', "Forma de Pago");
-        $hoja->getColumnDimension('F')->setWidth(20);
-        $hoja->setCellValue('G5', "Total");
-        $hoja->getColumnDimension('G')->setWidth(10);
+        $hoja->setCellValue('F5', "Cantidad de Producto");
+        $hoja->getColumnDimension('F')->setWidth(25);
+        $hoja->setCellValue('G5', "Forma de Pago");
+        $hoja->getColumnDimension('G')->setWidth(20);
+        $hoja->setCellValue('H5', "Total");
+        $hoja->getColumnDimension('H')->setWidth(10);
         
-        $hoja->getStyle('A5:G5')->getFont()->setBold(true);
+        $hoja->getStyle('B5:H5')->getFont()->setBold(true);
 
         $ventaEmp = $this->ventas->datosXPeriodo($this->request->getPost('fecha_inicio'), $this->request->getPost('fecha_termino'));
         $ventaProduct = $this->ventas->datosProducXPeriodo($this->request->getPost('fecha_inicio'), $this->request->getPost('fecha_termino'));
 
         $fila = 6;
         foreach ($ventaEmp as $venta) {
-            $hoja->setCellValue('A' . $fila, $venta['id_venta']);
-            $hoja->setCellValue('B' . $fila, $venta['fecha_venta']);
-            $hoja->setCellValue('C' . $fila, $venta['nombres']);
-            $hoja->setCellValue('D' . $fila, $venta['tipo_comprobante']);
-
-            $hoja->setCellValue('E' . $fila, $venta['cantidad']);
-            $hoja->setCellValue('F' . $fila, $venta['tipo_pago']);
-            $hoja->setCellValue('G' . $fila, $venta['total']);
+            $hoja->setCellValue('B' . $fila, $venta['id_venta']);
+            $hoja->setCellValue('C' . $fila, $venta['fecha_venta']);
+            $hoja->setCellValue('D' . $fila, $venta['nombres']);
+            $hoja->setCellValue('E' . $fila, $venta['tipo_comprobante']);
+            $hoja->setCellValue('F' . $fila, $venta['cantidad']);
+            $hoja->setCellValue('G' . $fila, $venta['tipo_pago']);
+            $hoja->setCellValue('H' . $fila, $venta['total']);
             
-
             $fila++;
         }
         $hoja->mergeCells("A16:D16");
-        $hoja->setCellValue("A16", "Reportes de ventas");
-        $hoja->setCellValue('A19', "Id Venta");
-        $hoja->setCellValue('B19', "Nombre producto");
-        $hoja->setCellValue('C19', "Precio producto");
+
+        $hoja->getStyle('B19:D19')->getAlignment()->setHorizontal
+        (\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+        $hoja->getStyle('A16')->getAlignment()->setHorizontal
+        (\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+        $hoja->getStyle('A16')->getFont()->SetSize(14);
+        $hoja->getStyle('A16')->getFont()->setName('Arial');
+        $hoja->setCellValue("A16", "Reportes de Ventas");
+        $hoja->setCellValue('B19', "Id Venta");
+        $hoja->getColumnDimension('B')->setWidth(12);
+        $hoja->setCellValue('C19', "Nombre Producto");
+        $hoja->getColumnDimension('C')->setWidth(40);
+        $hoja->setCellValue('D19', "Precio Producto");
+        $hoja->getColumnDimension('D')->setWidth(30);
+
+        $hoja->getStyle('B19:D19')->getFont()->setBold(true);
 
         $fila1 = 20;
         foreach ($ventaProduct as $venta) {
-            $hoja->setCellValue('A' . $fila1, $venta['id_venta']);
-            $hoja->setCellValue('B' . $fila1, $venta['nombre']);
-            $hoja->setCellValue('C' . $fila1, $venta['precio']);
+            $hoja->setCellValue('B' . $fila1, $venta['id_venta']);
+            $hoja->setCellValue('C' . $fila1, $venta['nombre']);
+            $hoja->setCellValue('D' . $fila1, $venta['precio']);
             $fila1++;
         }
 
@@ -292,9 +302,26 @@ class Estadistica extends BaseController
 
         ];
 
-        $hoja->getStyle('A5:G'.$ultimafila)->applyFromArray($styleArray);
+        $hoja->getStyle('B5:H'.$ultimafila)->applyFromArray($styleArray);
 
-        $hoja->setCellValueExplicit('G'.$fila, '=SUM(G5:G'.$ultimafila.')', 
+
+        $ultimafila1 = $fila1 - 1;
+
+        $styleArray1 = [
+
+            'borders' => [
+
+                'allBorders' => [
+                    'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                    'color' => ['rgb' => '000000'],
+                ]
+            ]
+
+        ];
+
+        $hoja->getStyle('B19:D'.$ultimafila1)->applyFromArray($styleArray);
+
+        $hoja->setCellValueExplicit('H'.$fila, '=SUM(H5:H'.$ultimafila.')', 
         \PhpOffice\PhpSpreadsheet\Cell\DataType::TYPE_FORMULA);
 
 
@@ -312,49 +339,43 @@ class Estadistica extends BaseController
         $this->request = \Config\Services::request();
         $phpExcel = new Spreadsheet();
         $hoja = $phpExcel->getActiveSheet();
-        $hoja->mergeCells('A3:D3');
-        $hoja->getStyle('A5:G5')->getAlignment()->setHorizontal
+        $hoja->mergeCells('B3:D3');
+        $hoja->getStyle('B5:F5')->getAlignment()->setHorizontal
         (\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
-        $hoja->getStyle('A3')->getAlignment()->setHorizontal
+        $hoja->getStyle('B3')->getAlignment()->setHorizontal
         (\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
-        $hoja->getStyle('A3')->getFont()->SetSize(14);
-        $hoja->getStyle('A3')->getFont()->setName('Arial');
-        $hoja->setCellValue('A3', "Reporte de Stock Total de Producto");
-        $hoja->setCellValue('A5', "ID Venta");
-        $hoja->getColumnDimension('A')->setWidth(12);
-        $hoja->setCellValue('B5', "Fecha de Compra");
-        $hoja->getColumnDimension('B')->setWidth(20);
-        $hoja->setCellValue('C5', "Nombres");
+        $hoja->getStyle('B3')->getFont()->SetSize(14);
+        $hoja->getStyle('B3')->getFont()->setName('Arial');
+        $hoja->setCellValue('B3', "Reporte de Stock Total de Producto");
+        $hoja->setCellValue('B5', "Codigo Producto");
+        $hoja->getColumnDimension('B')->setWidth(30);
+        $hoja->setCellValue('C5', "Nombre Producto");
         $hoja->getColumnDimension('C')->setWidth(30);
-        $hoja->setCellValue('D5', "Tipo de Comprobante");
-        $hoja->getColumnDimension('D')->setWidth(25);
-        $hoja->setCellValue('E5', "Cantidad de Producto");
-        $hoja->getColumnDimension('E')->setWidth(25);
-        $hoja->setCellValue('F5', "Forma de Pago");
-        $hoja->getColumnDimension('F')->setWidth(20);
-        $hoja->setCellValue('G5', "Total");
-        $hoja->getColumnDimension('G')->setWidth(10);
+        $hoja->setCellValue('D5', "Marca");
+        $hoja->getColumnDimension('D')->setWidth(30);
+        $hoja->setCellValue('E5', "Stock Critico");
+        $hoja->getColumnDimension('E')->setWidth(30);
+        $hoja->setCellValue('F5', "Stock");
+        $hoja->getColumnDimension('F')->setWidth(30);
         
-        $hoja->getStyle('A5:G5')->getFont()->setBold(true);
+        $hoja->getStyle('B5:F5')->getFont()->setBold(true);
 
 
+        $datosProductos = $this->productos->productosTotales();
 
-        /*$datosProductos = $this->productos->productosTotales();
-        
+        $fila2 = 6;
         foreach ($datosProductos as $p) {
-            $fila = 
-            $hoja->setCellValue('A' . $fila, $datosProductos['id_venta']);
-            $hoja->setCellValue('B' . $fila, $venta['fecha_venta']);
-            $hoja->setCellValue('C' . $fila, $venta['nombres']);
-            $hoja->setCellValue('D' . $fila, $venta['tipo_comprobante']);
-            $hoja->setCellValue('E' . $fila, $venta['cantidad']);
-            $hoja->setCellValue('F' . $fila, $venta['tipo_pago']);
-            $hoja->setCellValue('G' . $fila, $venta['total']);
-
-            $fila++;
+            
+            $hoja->setCellValue('B' . $fila2, " ". $p['id_producto']);
+            $hoja->setCellValue('C' . $fila2, $p['nombre']);
+            $hoja->setCellValue('D' . $fila2, $p['marca']);
+            $hoja->setCellValue('E' . $fila2, $p['stock_critico']);
+            $hoja->setCellValue('F' . $fila2, $p['stock']);
+            
+            $fila2++;
         }
 
-        $ultimafila = $fila - 1;
+        $ultimafila2 = $fila2 - 1;
 
         $styleArray = [
 
@@ -368,16 +389,15 @@ class Estadistica extends BaseController
 
         ];
 
-        $hoja->getStyle('A5:G'.$ultimafila)->applyFromArray($styleArray);
+        $hoja->getStyle('B5:F'.$ultimafila2)->applyFromArray($styleArray);
 
-        $hoja->setCellValueExplicit('G'.$fila, '=SUM(G5:G'.$ultimafila.')', 
+        $hoja->setCellValueExplicit('F'.$fila2, '=SUM(F5:F'.$ultimafila2.')', 
         \PhpOffice\PhpSpreadsheet\Cell\DataType::TYPE_FORMULA);
-
-
+        
         $writer = new Xlsx($phpExcel);
-        $writer->save("reporte_ventas.xlsx");
+        $writer->save("reporte_stock_productos.xlsx");
         return redirect()->to(base_url() . '/Estadistica');
-*/
+
     }
 
     public function datos()
