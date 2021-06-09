@@ -16,19 +16,19 @@ class Despachos extends BaseController
 
 	public function index()
 	{
-
 	}
 
-	public function insertarDespacho($nombre_recibe,$telefono,$costo_despacho,$venta_fk,$costo_comuna_fk)
+	public function insertarDespacho($nombre_recibe, $telefono, $costo_despacho, $venta_fk, $costo_comuna_fk)
 	{
 		$this->despachos->save([
-            'nombre_recibe' => $nombre_recibe,
-            'telefono' => $telefono,
-            'costo_despacho' => $costo_despacho,
-            'estado_despacho' => 'En preparación',
-            'venta_fk' => $venta_fk,
-            'costo_comuna_fk' => $costo_comuna_fk,
-            'costo_peso_fk' => 1
-        ]);
+			'fecha_entrega' => date('Y-m-d G:i:s', strtotime(date('Y-m-d G:i:s') . "+ 5 days")),
+			'nombre_recibe' => $nombre_recibe,
+			'telefono' => $telefono,
+			'costo_despacho' => $costo_despacho,
+			'estado_despacho' => 'En preparación',
+			'venta_fk' => $venta_fk,
+			'costo_comuna_fk' => $costo_comuna_fk,
+			'costo_peso_fk' => 1
+		]);
 	}
 }
