@@ -47,12 +47,20 @@ class ProductosModel extends Model
         return $data;
     }
 
-    public function masvendido(){
-        $this->select('*');     
-        $this->where('estado',1 );
-        $this->orderBy ('fecha_creacion','ASC');
+    public function masvendido()
+    {
+        $this->select('*');
+        $this->where('estado', 1);
+        $this->orderBy('fecha_creacion', 'ASC');
         $data = $this->findAll();
         return $data;
     }
-    
+
+    public function actualizarStock($id_producto, $cantidad)
+    {
+        $this->set('stock', "stock - $cantidad", FALSE);
+        $this->join('detalle_venta AS d', 'producto.id_producto=d.id_producto_fk');
+        $this->where('id_producto', $id_producto);
+        $this->update();
+    }
 }

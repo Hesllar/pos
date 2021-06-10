@@ -81,13 +81,14 @@
                                                     <i class="fa fa-star"></i>
                                                     <i class="fa fa-star"></i>
                                                 </div>
-                                                <h4><a class="nombre-producto" href="product.html"><?php echo $dato['nombre']; ?></a></h4>
+                                                <h4><a class="nombre-producto" href="#"><?php echo $dato['nombre']; ?></a></h4>
                                                 <p><?php echo $configuracion['signo_moneda']; ?><span><?php echo $dato['precio_venta']; ?></span>
                                                     <del class="prev-price"><?php echo $configuracion['signo_moneda']; ?><?php echo $dato['precio_venta'] + 2000; ?></del>
                                                 </p>
+                                                <p>Stock: <?php echo $dato['stock'] ?></p>
                                                 <div class="pro-actions">
                                                     <div class="actions-secondary">
-                                                        <a href="wishlist.html" title="Añadir a favoritos"><i class="fa fa-heart"></i></a>
+                                                        <a href="#" title="Añadir a favoritos"><i class="fa fa-heart"></i></a>
                                                         <button id="<?php echo $dato['id_producto']; ?>" class="add-cart">Añadir al carrito</button>
                                                     </div>
                                                 </div>
