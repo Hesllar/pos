@@ -467,26 +467,28 @@ class Ventas extends BaseController
 		}
 
 		$pdf->Ln(5);
+		if ($datosDespacho != null) {
+            $pdf->Cell(6);
+            $pdf->Cell(-6, 5, utf8_decode("Fecha entrega"), 0, 1, 'C');
+            $pdf->Cell(6);
+            $pdf->Cell(-6, 5, $datosDespacho['fecha_entrega'], 0, 1, 'C');
+            $pdf->Ln(-10);
+            $pdf->Cell(160);
+            $pdf->Cell(-6, 5, utf8_decode("Recibe"), 0, 1, 'C');
+            $pdf->Cell(160);
+            $pdf->Cell(-6, 5, utf8_decode($datosDespacho['nom_recibe']), 0, 1, 'C');
+            $pdf->Ln(10);
+            $pdf->Cell(6);
+            $pdf->Cell(-6, 5, utf8_decode("Comuna de envio"), 0, 1, 'C');
+            $pdf->Cell(6);
+            $pdf->Cell(-6, 5, utf8_decode($datosDespacho['nombre_comuna']), 0, 1, 'C');
+            $pdf->Ln(-10);
+            $pdf->Cell(80);
+            $pdf->Cell(-6, 5, utf8_decode("costo envio"), 0, 1, 'C');
+            $pdf->Cell(80);
+            $pdf->Cell(-6, 5, utf8_decode($datosDespacho['costo_comuna']), 0, 1, 'C');
+        }
 
-		$pdf->Cell(6);
-		$pdf->Cell(-6, 5, utf8_decode("Fecha entrega"), 0, 1, 'C');
-		$pdf->Cell(6);
-		$pdf->Cell(-6, 5, $datosDespacho['fecha_entrega'], 0, 1, 'C');
-		$pdf->Ln(-10);
-		$pdf->Cell(160);
-		$pdf->Cell(-6, 5, utf8_decode("Recibe"), 0, 1, 'C');
-		$pdf->Cell(160);
-		$pdf->Cell(-6, 5, utf8_decode($datosDespacho['nom_recibe']), 0, 1, 'C');
-		$pdf->Ln(10);
-		$pdf->Cell(6);
-		$pdf->Cell(-6, 5, utf8_decode("Comuna de envio"), 0, 1, 'C');
-		$pdf->Cell(6);
-		$pdf->Cell(-6, 5, utf8_decode($datosDespacho['nombre_comuna']), 0, 1, 'C');
-		$pdf->Ln(-10);
-		$pdf->Cell(80);
-		$pdf->Cell(-6, 5, utf8_decode("costo envio"), 0, 1, 'C');
-		$pdf->Cell(80);
-		$pdf->Cell(-6, 5, utf8_decode($datosDespacho['costo_comuna']), 0, 1, 'C');
 
 		$pdf->Ln(5);
 		$pdf->Cell(2);
