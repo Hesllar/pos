@@ -105,7 +105,7 @@ class Registro extends BaseController
 		if ($this->request->getPost('juridico') == 1) {
 			$this->empresa->save([
 				'rut_empresa' => $this->request->getPost('rut_emp'),
-				'dv-empresa' => $this->request->getPost('dv_emp'),
+				'dvempresa' => $this->request->getPost('dv_emp'),
 				'razon_social' => $this->request->getPost('razon'),
 				'giro' => $this->request->getPost('giro'),
 				'telefono' => $this->request->getPost('telefono'),
