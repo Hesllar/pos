@@ -14,6 +14,8 @@ use App\Models\VentaModel;
 use App\Models\FormaPagoModel;
 use App\Models\DetalleVentaModel;
 use CodeIgniter\Session\Session;
+use App\Models\ProductosModel;
+
 
 class Ventas extends BaseController
 {
@@ -21,6 +23,7 @@ class Ventas extends BaseController
 	protected $request;
 	protected $response;
 	protected $session;
+	protected $productos;
 
 	public function __construct()
 	{
@@ -32,7 +35,7 @@ class Ventas extends BaseController
 		$this->desp = new Despachos;
 		$this->session = session();
 
-
+		$this->productos = new ProductosModel();
 		$this->detalle_venta = new DetalleVentaModel;
 		$this->ventas = new VentaModel;
 		$this->configuracion = new ConfiguracionModel;
@@ -258,6 +261,9 @@ class Ventas extends BaseController
 				'id_venta_pk' => $id_venta_pk,
 				'cantidad' => $producto[1]
 			]);
+			$idPro = $producto[0];
+			$cant = $producto[1];
+			$this->productos->actualizarStock($idPro, $cant);
 		}
 	}
 
@@ -425,7 +431,7 @@ class Ventas extends BaseController
 		$pdf->Cell(10, 5, utf8_decode("Detalle de la venta"), 0, 1, 'C');
 		$pdf->Ln(5);
 		$pdf->Cell(6);
-		$pdf->Cell(10, 5, utf8_decode("Datos de la venta N°:"), 0, 1, 'C');
+		$pdf->Cell(10, 5, utf8_decode(" N° de venta:"), 0, 1, 'C');
 		$pdf->Cell(5);
 		$pdf->Cell(10, 5, utf8_decode($datosUser['id_venta']), 0, 1, "C");
 		$pdf->Ln(5);
@@ -467,27 +473,27 @@ class Ventas extends BaseController
 		}
 
 		$pdf->Ln(5);
-
-		$pdf->Cell(6);
-		$pdf->Cell(-6, 5, utf8_decode("Fecha entrega"), 0, 1, 'C');
-		$pdf->Cell(6);
-		$pdf->Cell(-6, 5, $datosDespacho['fecha_entrega'], 0, 1, 'C');
-		$pdf->Ln(-10);
-		$pdf->Cell(160);
-		$pdf->Cell(-6, 5, utf8_decode("Recibe"), 0, 1, 'C');
-		$pdf->Cell(160);
-		$pdf->Cell(-6, 5, utf8_decode($datosDespacho['nom_recibe']), 0, 1, 'C');
-		$pdf->Ln(10);
-		$pdf->Cell(6);
-		$pdf->Cell(-6, 5, utf8_decode("Comuna de envio"), 0, 1, 'C');
-		$pdf->Cell(6);
-		$pdf->Cell(-6, 5, utf8_decode($datosDespacho['nombre_comuna']), 0, 1, 'C');
-		$pdf->Ln(-10);
-		$pdf->Cell(80);
-		$pdf->Cell(-6, 5, utf8_decode("costo envio"), 0, 1, 'C');
-		$pdf->Cell(80);
-		$pdf->Cell(-6, 5, utf8_decode($datosDespacho['costo_comuna']), 0, 1, 'C');
-
+		if ($datosDespacho != null) {
+			$pdf->Cell(6);
+			$pdf->Cell(-6, 5, utf8_decode("Fecha entrega"), 0, 1, 'C');
+			$pdf->Cell(6);
+			$pdf->Cell(-6, 5, $datosDespacho['fecha_entrega'], 0, 1, 'C');
+			$pdf->Ln(-10);
+			$pdf->Cell(160);
+			$pdf->Cell(-6, 5, utf8_decode("Recibe"), 0, 1, 'C');
+			$pdf->Cell(160);
+			$pdf->Cell(-6, 5, utf8_decode($datosDespacho['nom_recibe']), 0, 1, 'C');
+			$pdf->Ln(10);
+			$pdf->Cell(6);
+			$pdf->Cell(-6, 5, utf8_decode("Comuna de envio"), 0, 1, 'C');
+			$pdf->Cell(6);
+			$pdf->Cell(-6, 5, utf8_decode($datosDespacho['nombre_comuna']), 0, 1, 'C');
+			$pdf->Ln(-10);
+			$pdf->Cell(80);
+			$pdf->Cell(-6, 5, utf8_decode("costo envio"), 0, 1, 'C');
+			$pdf->Cell(80);
+			$pdf->Cell(-6, 5, utf8_decode($datosDespacho['costo_comuna']), 0, 1, 'C');
+		}
 		$pdf->Ln(5);
 		$pdf->Cell(2);
 		$pdf->Cell(60, 5, utf8_decode("Nombre poducto"), 1, 0, "C");
@@ -519,5 +525,4 @@ class Ventas extends BaseController
 		$this->response->setHeader('Content-Type', 'application/pdf');
 		$pdf->Output('comprobante.pdf', 'I');
 	}
-
 }
