@@ -14,7 +14,7 @@ use App\Models\VentaModel;
 use App\Models\FormaPagoModel;
 use App\Models\DetalleVentaModel;
 use CodeIgniter\Session\Session;
-use App\Models\ProductosModel;
+use App\Models\ProductosAdminModel;
 
 
 class Ventas extends BaseController
@@ -35,7 +35,7 @@ class Ventas extends BaseController
 		$this->desp = new Despachos;
 		$this->session = session();
 
-		$this->productos = new ProductosModel();
+		$this->productos = new ProductosAdminModel();
 		$this->detalle_venta = new DetalleVentaModel;
 		$this->ventas = new VentaModel;
 		$this->configuracion = new ConfiguracionModel;
@@ -255,10 +255,10 @@ class Ventas extends BaseController
 
 		$productos = $this->request->getVar('arrayProductosDetalle');
 
-		foreach ($productos as $key => $producto) {
+		foreach ($productos as $producto) {
 			$this->detalle_venta->save([
 				'id_producto_pk' => $producto[0],
-				'id_venta_pk' => $id_venta_pk,
+				'id_venta_pk' => $this->request->getVar('ultima_venta'),
 				'cantidad' => $producto[1]
 			]);
 			$idPro = $producto[0];

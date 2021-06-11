@@ -5,16 +5,22 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use App\Models\ConfiguracionModel;
 use App\Models\UsuarioModel;
+use App\Models\SesionModel;
+
 
 class Acceder extends BaseController
 {
+	protected $sesion;
 	protected $configuracion;
 	protected $request;
 	protected $usuarioModal;
 	protected $reglasLogin;
+	protected $session;
 
 	public function __construct()
 	{
+		$this->session = session();
+		$this->sesion = new SesionModel;
 		$this->configuracion = new ConfiguracionModel;
 		$this->usuarioModal = new UsuarioModel;
 		$this->reglasLogin = [
@@ -42,10 +48,6 @@ class Acceder extends BaseController
 		echo view('acceder');
 		echo view('footer');
 	}
-
-
-
-
 	public function valida()
 	{
 		$configuracion = $this->configuracion->First();
@@ -67,9 +69,9 @@ class Acceder extends BaseController
 						'rut_fk' => $datosUsuario['rut_fk'],
 						'nvl_acceso_fk' => $datosUsuario['nvl_acceso_fk'],
 					];
+
 					$data = ['titulo' => 'Validar', 'datos' => $datosSesion, 'configuracion' => $configuracion];
-					$session = session();
-					$session->set($datosSesion);
+					$this->session->set($datosSesion);
 					if ($datosUsuario['nvl_acceso_fk'] == 10) {
 						return redirect()->to(base_url() . '/productosadmin');
 					} elseif ($datosUsuario['nvl_acceso_fk'] == 20) {
@@ -77,6 +79,7 @@ class Acceder extends BaseController
 					} elseif ($datosUsuario['nvl_acceso_fk'] == 30) {
 						return redirect()->to(base_url() . '/#');
 					} elseif ($datosUsuario['nvl_acceso_fk'] == 40) {
+						$this->contarVisitasOn();
 						return redirect()->to(base_url() . '/productos');
 					} elseif ($datosUsuario['nvl_acceso_fk'] == 50) {
 						return redirect()->to(base_url() . '/#');
@@ -143,5 +146,15 @@ class Acceder extends BaseController
 
 		$res['datos'] = $datos;
 		return json_encode($res);
+	}
+
+	public function contarVisitasOn()
+	{
+		$this->sesion->save([
+			'direccion_ip' => 'En proceso',
+			'navegador' => 'En proceso',
+			'usuario_fk' => $this->session->id_usuario,
+			'fecha_sesion' => date('Y-m-d G:i:s')
+		]);
 	}
 }
