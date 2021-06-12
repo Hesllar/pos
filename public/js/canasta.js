@@ -26,15 +26,12 @@ var formatterCLP = new Intl.NumberFormat('es-CL', {
 //Función que lista las regiones
 function listarRegiones() {
     $.ajax({
-        url: "http://localhost/pos/public/Region/listarRegiones",
+        url: "http://localhost/pos/public/Region/listarRegionesDespacho",
         method: "GET",
         dataType: "JSON",
         success: function (data) {
             var html = '<option value="">Seleccione región</option>';
-            for (var count = 0; count < data.length; count++) {
-
-                html += '<option value="' + data[count].id_region + '">' + data[count].nombre_region + '</option>';
-            }
+            html += '<option value="' + data.id_region + '">' + data.nombre_region + '</option>';
             $('#region').html(html);
         }
     });
@@ -62,6 +59,7 @@ function listarComunas() {
             },
             dataType: "JSON",
             success: function (data) {
+                console.log('listarComuna',data);
                 var html = '<option value="">Seleccione comuna</option>';
                 for (var count = 0; count < data.length; count++) {
 
@@ -258,6 +256,10 @@ function realizarCompraWeb(){
     //Productos
     
     alert('Venta realizada');
+    console.log('rut', user_session_js[0]);
+    console.log('comuna_fk', fk_comuna);
+    console.log('total', total_venta);
+    console.log('consto_des', total_venta);
     $.ajax({
         url: "http://localhost/pos/public/Ventas/RealizarVentaWeb",
         method: "POST",
@@ -283,6 +285,7 @@ function realizarCompraWeb(){
     });
         idv = data;
         console.log(idv);
+        console.log(lista);
             $.ajax({
                 url: "http://localhost/pos/public/Ventas/agregarDetalleVenta",
                 method: "POST",
@@ -292,6 +295,7 @@ function realizarCompraWeb(){
                 },
                 dataType: 'JSON',
                 success: function(){
+                    window.location.href = "http://localhost/pos/public/Ventas/pagComprobante";
                 },
             });
         },
@@ -303,7 +307,7 @@ function realizarCompraWeb(){
 
 }
 
-function detalleVenta(){
+/*function detalleVenta(){
     const arrayProductos = document.querySelectorAll('.data-product');
     var lista = new Array();
     arrayProductos.forEach((producto, i) => {
@@ -325,4 +329,4 @@ function detalleVenta(){
         success: function(){
         },
     });
-}
+}*/

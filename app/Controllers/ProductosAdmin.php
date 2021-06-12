@@ -54,7 +54,6 @@ class ProductosAdmin extends BaseController
             'descripcion' => 'required',
             'precio_venta' => 'required',
             'precio_costo' => 'required',
-            'stock' => 'required',
             'stock_critico' => 'required',
             'categoria' => 'required',
         ];

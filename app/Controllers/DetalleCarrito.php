@@ -3,7 +3,7 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
-use App\Models\ProductosModel;
+use App\Models\ProductosAdminModel;
 use App\Models\CategoriaModel;
 use App\Models\ConfiguracionModel;
 
@@ -15,7 +15,7 @@ class DetalleCarrito extends BaseController
 
     public function __construct()
     {
-        $this->productos = new ProductosModel;
+        $this->productos = new ProductosAdminModel;
         $this->configuracion = new ConfiguracionModel;
     }
 
