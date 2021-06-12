@@ -213,7 +213,7 @@ class Ventas extends BaseController
 
 		$this->request = \Config\Services::request();
 		date_default_timezone_set("America/Santiago");
-
+		$ultima_venta = $this->ventas->orderBy('id_venta', 'DESC')->first();
 		$valores_venta = $this->calcularValores($this->request->getVar('total_venta_web'));
 
 		$this->ventas->save([
@@ -242,8 +242,9 @@ class Ventas extends BaseController
 				$cc
 			);
 		}
-		$ultima_venta = $this->ventas->orderBy('id_venta', 'DESC')->first();
-		return ($ultima_venta['id_venta']);
+
+		//$ultima =  $ultima_venta['id_venta'] + 1;
+		//return $ultima;
 	}
 
 	function agregarDetalleVenta()
@@ -251,20 +252,21 @@ class Ventas extends BaseController
 		$this->request = \Config\Services::request();
 
 		$ultima_venta = $this->ventas->orderBy('id_venta', 'DESC')->first();
-		$id_venta_pk = $this->request->getVar('ultima_venta');
+		//$id_venta_pk = $this->request->getVar('ultima_venta');
 
 		$productos = $this->request->getVar('arrayProductosDetalle');
 
 		foreach ($productos as $producto) {
 			$this->detalle_venta->save([
 				'id_producto_pk' => $producto[0],
-				'id_venta_pk' => $this->request->getVar('ultima_venta'),
+				'id_venta_pk' => $ultima_venta['id_venta'],
 				'cantidad' => $producto[1]
 			]);
 			$idPro = $producto[0];
 			$cant = $producto[1];
 			$this->productos->actualizarStock($idPro, $cant);
 		}
+		return json_encode($ultima_venta);
 	}
 
 	function calcularValores($total)
@@ -387,8 +389,8 @@ class Ventas extends BaseController
 		$a = $this->obtenerUltimoIdCom();
 		$e = $a['id_venta'];
 		$this->request = \Config\Services::request();
-		$this->ventas->select('p.nombre AS nombre,dv.cantidad AS cantidad,ROUND(cantidad * (p.precio_venta - (p.precio_venta * 0.19)),0) AS precio_neto,
-		ROUND(cantidad * (p.precio_venta * 0.19),0) AS precio_iva, (p.precio_venta * cantidad) AS precio_venta, total');
+		$this->ventas->select('p.nombre AS nombre,dv.cantidad AS cantidad,CONCAT("$",FORMAT(ROUND(cantidad * (p.precio_venta - (p.precio_venta * 0.19)),0), "")) AS precio_neto,
+		CONCAT("$", FORMAT(ROUND(cantidad * (p.precio_venta * 0.19),0), "")) AS precio_iva, CONCAT("$",FORMAT((p.precio_venta * cantidad), "")) AS precio_venta');
 		$this->ventas->join('detalle_venta AS dv', 'venta.id_venta=dv.id_venta_pk');
 		$this->ventas->join('usuario AS u', 'venta.cliente_fk=u.id_usuario');
 		$this->ventas->join('producto AS p', 'dv.id_producto_pk=p.id_producto');
@@ -399,7 +401,7 @@ class Ventas extends BaseController
 
 	public function datosComprobantePersoUser()
 	{
-		$this->ventas->select('id_venta,cliente_fk,fecha_venta,CONCAT(u.rut_fk,"-", d.dv) AS rut, CONCAT(d.nombres,"-",d.apellidos) AS nombres, tipo_comprobante, total');
+		$this->ventas->select('id_venta,cliente_fk,fecha_venta,CONCAT(u.rut_fk,"-", d.dv) AS rut, CONCAT(d.nombres,"-",d.apellidos) AS nombres, tipo_comprobante, total ');
 		$this->ventas->join('usuario AS u', 'venta.cliente_fk=u.id_usuario');
 		$this->ventas->join('datos_personales AS d', 'u.rut_fk=d.rut');
 		$this->ventas->orderBy('id_venta, fecha_venta', 'DESC');
@@ -492,7 +494,7 @@ class Ventas extends BaseController
 			$pdf->Cell(80);
 			$pdf->Cell(-6, 5, utf8_decode("costo envio"), 0, 1, 'C');
 			$pdf->Cell(80);
-			$pdf->Cell(-6, 5, utf8_decode($datosDespacho['costo_comuna']), 0, 1, 'C');
+			$pdf->Cell(-6, 5, utf8_decode("$" . number_format($datosDespacho['costo_comuna'], 0)), 0, 1, 'C');
 		}
 		$pdf->Ln(5);
 		$pdf->Cell(2);
@@ -512,9 +514,11 @@ class Ventas extends BaseController
 			$pdf->Cell(25, 5, $product['precio_venta'], 1, 0, "C");
 		}
 		if ($datosDespacho == null) {
-			$subtotal = $datosUser['total'] + 0;
+			$valor = $datosUser['total'];
+			$subtotal = "$" . number_format($valor, 0);
 		} else {
-			$subtotal = $datosUser['total'] + $datosDespacho['costo_comuna'];
+			$suma = $datosUser['total'] + $datosDespacho['costo_comuna'];
+			$subtotal = "$" . number_format($suma, 0);
 		}
 
 		$pdf->Ln(5);

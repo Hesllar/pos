@@ -17,10 +17,16 @@ class Region extends BaseController
 
     public function index()
     {
-
     }
 
-    public function listarRegiones(){
+    public function listarRegiones()
+    {
+
         return json_encode($this->region->findAll());
+    }
+
+    public function listarRegionesDespacho()
+    {
+        return json_encode($this->region->where('id_region', 6)->first());
     }
 }
