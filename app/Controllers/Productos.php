@@ -3,9 +3,9 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
-use App\Models\ProductosModel;
 use App\Models\CategoriaModel;
 use App\Models\ConfiguracionModel;
+use App\Models\ProductosAdminModel;
 
 class Productos extends BaseController
 {
@@ -16,7 +16,7 @@ class Productos extends BaseController
 
     public function __construct()
     {
-        $this->productos = new ProductosModel();
+        $this->productos = new ProductosAdminModel();
         $this->categorias = new CategoriaModel();
         $this->configuracion = new ConfiguracionModel;
     }

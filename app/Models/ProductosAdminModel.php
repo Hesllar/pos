@@ -31,10 +31,10 @@ class ProductosAdminModel extends Model
         'estado'
     ];
 
-    protected $useTimestamps = false;
+    protected $useTimestamps = true;
     protected $createdField  = 'fecha_creacion';
-    /*protected $updatedField  = 'updated_at';
-    protected $deletedField  = 'deleted_at';*/
+    protected $updatedField  = '';
+    //protected $deletedField  = 'deleted_at';*/
 
     protected $validationRules    = [];
     protected $validationMessages = [];
@@ -44,8 +44,8 @@ class ProductosAdminModel extends Model
 
     public function orderProducto()
     {
-        $this->select('id_producto, nombre,CONCAT("$",FORMAT(precio_venta,"")) AS precio_venta, stock, categoria');
-        $this->orderBy('fecha_creacion', 'DESC');
+        $this->select('id_producto, nombre,CONCAT("$",FORMAT(precio_venta,"")) AS precio_venta, stock, categoria, imagen, precio_venta, descripcion');
+        $this->orderBy('id_producto', 'DESC');
         $this->where('estado', 1);
         $data = $this->findAll();
         return $data;
@@ -71,5 +71,20 @@ class ProductosAdminModel extends Model
     public function productosTotales()
     {
         return $this->where('estado', 1)->findAll(); // Muestra todos los resultados de la sentencia
+    }
+    public function actualizarStock($id_producto, $cantidad)
+    {
+        $this->set('stock', "stock - $cantidad", FALSE);
+        $this->join('detalle_venta AS d', 'producto.id_producto=d.id_producto_fk');
+        $this->where('id_producto', $id_producto);
+        $this->update();
+    }
+    public function masvendido()
+    {
+        $this->select('*');
+        $this->where('estado', 1);
+        $this->orderBy('fecha_creacion', 'ASC');
+        $data = $this->findAll();
+        return $data;
     }
 }

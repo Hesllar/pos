@@ -229,6 +229,7 @@ class Estadistica extends BaseController
         $hoja->getStyle('C3')->getFont()->SetSize(14);
         $hoja->getStyle('C3')->getFont()->setName('Arial');
         $hoja->setCellValue('C3', "Reportes de Ventas");
+
         $hoja->setCellValue('B5', "ID Venta");
         $hoja->getColumnDimension('B')->setWidth(12);
         $hoja->setCellValue('C5', "Fecha de Compra");
@@ -243,7 +244,7 @@ class Estadistica extends BaseController
         $hoja->getColumnDimension('G')->setWidth(20);
         $hoja->setCellValue('H5', "Total");
         $hoja->getColumnDimension('H')->setWidth(10);
-        
+
         $hoja->getStyle('B5:H5')->getFont()->setBold(true);
 
         $ventaEmp = $this->ventas->datosXPeriodo($this->request->getPost('fecha_inicio'), $this->request->getPost('fecha_termino'));
@@ -258,7 +259,7 @@ class Estadistica extends BaseController
             $hoja->setCellValue('F' . $fila, $venta['cantidad']);
             $hoja->setCellValue('G' . $fila, $venta['tipo_pago']);
             $hoja->setCellValue('H' . $fila, $venta['total']);
-            
+
             $fila++;
         }
         $hoja->mergeCells("J3:L3");
@@ -280,6 +281,7 @@ class Estadistica extends BaseController
         $hoja->getStyle('J5:L5')->getFont()->setBold(true);
 
         $fila1 = 6;
+
         foreach ($ventaProduct as $venta) {
             $hoja->setCellValue('J' . $fila1, $venta['id_venta']);
             $hoja->setCellValue('K' . $fila1, $venta['nombre']);
@@ -302,7 +304,7 @@ class Estadistica extends BaseController
 
         ];
 
-        $hoja->getStyle('B5:H'.$ultimafila)->applyFromArray($styleArray);
+        $hoja->getStyle('B5:H' . $ultimafila)->applyFromArray($styleArray);
 
 
         $ultimafila1 = $fila1 - 1;
@@ -321,15 +323,17 @@ class Estadistica extends BaseController
 
         $hoja->getStyle('J5:L'.$ultimafila1)->applyFromArray($styleArray);
 
-        $hoja->setCellValueExplicit('H'.$fila, '=SUM(H5:H'.$ultimafila.')', 
-        \PhpOffice\PhpSpreadsheet\Cell\DataType::TYPE_FORMULA);
+        $hoja->setCellValueExplicit(
+            'H' . $fila,
+            '=SUM(H5:H' . $ultimafila . ')',
+            \PhpOffice\PhpSpreadsheet\Cell\DataType::TYPE_FORMULA
+        );
 
 
         $writer = new Xlsx($phpExcel);
 
         $writer->save("reporte_ventas.xlsx");
         return redirect()->to(base_url() . '/Estadistica');
-      
     }
 
 
@@ -340,10 +344,8 @@ class Estadistica extends BaseController
         $phpExcel = new Spreadsheet();
         $hoja = $phpExcel->getActiveSheet();
         $hoja->mergeCells('B3:D3');
-        $hoja->getStyle('B5:F5')->getAlignment()->setHorizontal
-        (\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
-        $hoja->getStyle('B3')->getAlignment()->setHorizontal
-        (\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+        $hoja->getStyle('B5:F5')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+        $hoja->getStyle('B3')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
         $hoja->getStyle('B3')->getFont()->SetSize(14);
         $hoja->getStyle('B3')->getFont()->setName('Arial');
         $hoja->setCellValue('B3', "Reporte de Stock Total de Producto");
@@ -357,7 +359,7 @@ class Estadistica extends BaseController
         $hoja->getColumnDimension('E')->setWidth(30);
         $hoja->setCellValue('F5', "Stock");
         $hoja->getColumnDimension('F')->setWidth(30);
-        
+
         $hoja->getStyle('B5:F5')->getFont()->setBold(true);
 
 
@@ -365,13 +367,13 @@ class Estadistica extends BaseController
 
         $fila2 = 6;
         foreach ($datosProductos as $p) {
-            
-            $hoja->setCellValue('B' . $fila2, " ". $p['id_producto']);
+
+            $hoja->setCellValue('B' . $fila2, " " . $p['id_producto']);
             $hoja->setCellValue('C' . $fila2, $p['nombre']);
             $hoja->setCellValue('D' . $fila2, $p['marca']);
             $hoja->setCellValue('E' . $fila2, $p['stock_critico']);
             $hoja->setCellValue('F' . $fila2, $p['stock']);
-            
+
             $fila2++;
         }
 
@@ -389,15 +391,17 @@ class Estadistica extends BaseController
 
         ];
 
-        $hoja->getStyle('B5:F'.$ultimafila2)->applyFromArray($styleArray);
+        $hoja->getStyle('B5:F' . $ultimafila2)->applyFromArray($styleArray);
 
-        $hoja->setCellValueExplicit('F'.$fila2, '=SUM(F5:F'.$ultimafila2.')', 
-        \PhpOffice\PhpSpreadsheet\Cell\DataType::TYPE_FORMULA);
-        
+        $hoja->setCellValueExplicit(
+            'F' . $fila2,
+            '=SUM(F5:F' . $ultimafila2 . ')',
+            \PhpOffice\PhpSpreadsheet\Cell\DataType::TYPE_FORMULA
+        );
+
         $writer = new Xlsx($phpExcel);
         $writer->save("reporte_stock_productos.xlsx");
         return redirect()->to(base_url() . '/Estadistica');
-
     }
 
     public function datos()
