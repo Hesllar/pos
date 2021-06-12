@@ -221,12 +221,15 @@ class Estadistica extends BaseController
         $phpExcel = new Spreadsheet();
         $hoja = $phpExcel->getActiveSheet();
 
-        $hoja->mergeCells('A3:D3');
-        $hoja->getStyle('B5:H5')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
-        $hoja->getStyle('A3')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
-        $hoja->getStyle('A3')->getFont()->SetSize(14);
-        $hoja->getStyle('A3')->getFont()->setName('Arial');
-        $hoja->setCellValue('A3', "Reportes de Ventas");
+        $hoja->mergeCells('C3:E3');
+        $hoja->getStyle('C5:H5')->getAlignment()->setHorizontal
+        (\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+        $hoja->getStyle('C3')->getAlignment()->setHorizontal
+        (\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+        $hoja->getStyle('C3')->getFont()->SetSize(14);
+        $hoja->getStyle('C3')->getFont()->setName('Arial');
+        $hoja->setCellValue('C3', "Reportes de Ventas");
+
         $hoja->setCellValue('B5', "ID Venta");
         $hoja->getColumnDimension('B')->setWidth(12);
         $hoja->setCellValue('C5', "Fecha de Compra");
@@ -259,27 +262,30 @@ class Estadistica extends BaseController
 
             $fila++;
         }
-        $hoja->mergeCells("A16:D16");
+        $hoja->mergeCells("J3:L3");
 
-        $hoja->getStyle('B19:D19')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
-        $hoja->getStyle('A16')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
-        $hoja->getStyle('A16')->getFont()->SetSize(14);
-        $hoja->getStyle('A16')->getFont()->setName('Arial');
-        $hoja->setCellValue("A16", "Reportes de Ventas");
-        $hoja->setCellValue('B19', "Id Venta");
-        $hoja->getColumnDimension('B')->setWidth(12);
-        $hoja->setCellValue('C19', "Nombre Producto");
-        $hoja->getColumnDimension('C')->setWidth(40);
-        $hoja->setCellValue('D19', "Precio Producto");
-        $hoja->getColumnDimension('D')->setWidth(30);
+        $hoja->getStyle('J5:L5')->getAlignment()->setHorizontal
+        (\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+        $hoja->getStyle('J3')->getAlignment()->setHorizontal
+        (\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+        $hoja->getStyle('J3')->getFont()->SetSize(14);
+        $hoja->getStyle('J3')->getFont()->setName('Arial');
+        $hoja->setCellValue("J3", "Reportes de Ventas");
+        $hoja->setCellValue('J5', "Id Venta");
+        $hoja->getColumnDimension('J')->setWidth(12);
+        $hoja->setCellValue('K5', "Nombre Producto");
+        $hoja->getColumnDimension('K')->setWidth(40);
+        $hoja->setCellValue('L5', "Precio Producto");
+        $hoja->getColumnDimension('L')->setWidth(30);
 
-        $hoja->getStyle('B19:D19')->getFont()->setBold(true);
+        $hoja->getStyle('J5:L5')->getFont()->setBold(true);
 
-        $fila1 = 20;
+        $fila1 = 6;
+
         foreach ($ventaProduct as $venta) {
-            $hoja->setCellValue('B' . $fila1, $venta['id_venta']);
-            $hoja->setCellValue('C' . $fila1, $venta['nombre']);
-            $hoja->setCellValue('D' . $fila1, $venta['precio']);
+            $hoja->setCellValue('J' . $fila1, $venta['id_venta']);
+            $hoja->setCellValue('K' . $fila1, $venta['nombre']);
+            $hoja->setCellValue('L' . $fila1, $venta['precio']);
             $fila1++;
         }
 
@@ -315,7 +321,7 @@ class Estadistica extends BaseController
 
         ];
 
-        $hoja->getStyle('B19:D' . $ultimafila1)->applyFromArray($styleArray);
+        $hoja->getStyle('J5:L'.$ultimafila1)->applyFromArray($styleArray);
 
         $hoja->setCellValueExplicit(
             'H' . $fila,
