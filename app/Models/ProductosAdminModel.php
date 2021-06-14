@@ -47,6 +47,7 @@ class ProductosAdminModel extends Model
         $this->select('id_producto, nombre,CONCAT("$",FORMAT(precio_venta,"")) AS precio_venta, stock, categoria, imagen, precio_venta, descripcion');
         $this->orderBy('id_producto', 'DESC');
         $this->where('estado', 1);
+        $this->where('stock >', 0);
         $data = $this->findAll();
         return $data;
     }
