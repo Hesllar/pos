@@ -52,4 +52,9 @@ class Productos extends BaseController
         echo view('administrador/panel_footer');
         echo view('footer');
     }
+
+    public function listarBuscador()
+    {
+        return json_encode($this->productos->findAll());
+    }
 }

@@ -172,6 +172,11 @@ body {
     height: 390px;
 }
 
+.icono {
+    height: 50px;
+    width: 50px;
+}
+
 .popup_off {
     background: hsl(0, 0%, 40%) none repeat scroll 0 0;
     border: 1px solid hsl(0, 0%, 100%);
@@ -1454,6 +1459,18 @@ ul.ht-dropdown.dropdown-style-two li {
 
 .footer-link-list li a:hover {
     color: #fff;
+    border-radius: 5px;
+}
+
+.blanco {
+    color: #fff;
+    margin-left: -20px;
+    margin-top: -3px;
+    height: 37px;
+}
+
+.blanco:hover {
+    color: rgb(175, 175, 175);
 }
 
 .footer-bottom-content p a:hover {
@@ -2550,6 +2567,19 @@ p.checkout-coupon input[type="submit"] {
     color: #222;
 }
 
+.label-campos {
+    color: #333;
+    margin: 0 16px 2px;
+    display: block;
+    font-weight: 500;
+}
+
+.label-checkbox {
+    color: #333;
+    display: inline-block;
+    font-weight: 500;
+}
+
 .country-select label,
 .country-select label,
 .checkout-form-list label {
@@ -3277,6 +3307,19 @@ p.checkout-coupon input[type="submit"] {
     border-color: #363f4d;
 }
 
+.title-pos h2{
+    color: #f1ac06;
+    font-size: 35px;
+    font-weight: 700;
+    line-height: 35px;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+}
+
+.delete-prod{
+    color: #d62a2a;
+}
+
 /*----------------------------------------*/
 /* 15. Error 404 CSS
 /*----------------------------------------*/
@@ -3375,6 +3418,72 @@ p.checkout-coupon input[type="submit"] {
     color: #fff;
 }
 
+
+.boton-compra{
+    background: #f1ac06;
+    border-radius: 5px;
+    color: #ffffff;
+    display: inline;
+    font-size: 16px;
+    font-weight: 500;
+    border: none;
+    margin-left: 30px;
+    margin-right: 20px;
+    margin-bottom: 30px;
+    margin-top: 15px;
+    padding: 8px 30px;
+    /*margin-top: 53px;*/
+    /*padding: 0 30px;*/
+    /*width: 200px;*/
+    text-transform: uppercase;
+    -webkit-transition: .3s;
+    transition: .3s;
+}
+.boton-compra:hover{
+    background: #1a1a1a;
+    color: #ffffff;
+    outline:none;
+}
+.boton-compra:active{
+    background: #4b4b4b;
+    color: #ffffff;
+    outline:none;
+}
+.icono-compra {
+    margin-bottom: 5px;
+    font-size: 25px;
+}
+.btn-aceptar{
+    background: #4bb947;
+    color: #ffffff;
+    outline:none;
+}
+.btn-cancelar{
+    background: #bb3232;
+    color: #ffffff;
+    outline:none;
+}
+
+/* 
+.checkout {
+    background: #f1ac06;
+    color: #fff;
+    border: none;
+    text-align: center;
+    text-transform: uppercase;
+    height: 32px;
+    width: 227px;
+    -webkit-transition: all 0.3s ease 0s;
+    transition: all 0.3s ease 0s;
+}
+
+.checkout:hover {
+    background-color: #9d9d9d;
+    border-color: transparent;
+    color: #fff;
+    outline: none;
+}
+*/
 /*----------------------------------------*/
 /* 16. Regester & LogIn CSS
 /*----------------------------------------*/
@@ -3448,6 +3557,15 @@ legend {
     font-weight: 600;
 }
 
+.require-red:disabled+label {
+    color: #cc0000 !important;
+}
+
+/*
+.require-red {
+    color: #cc0000;
+}
+*/
 .form-horizontal label.control-label {
     padding-top: 0;
 }
@@ -4155,5 +4273,45 @@ legend {
 }
 .container-pdf {
     max-height: 200px !important;
+}
+
+.autocompletar {
+    justify-content: center;
+    margin-top: -9px;
+    margin-left: 127px;
+    width: 413px;
+    color: #666666;
+    font-size: 14px !important;
+}
+
+.autocompletar-items{
+    font-size: 12px !important;
+    text-align: left;
+    padding: 0px 10px 0px 10px;
+    border: 1px solid #e9e9e9;
+    border-left: none;
+    border-right: none;
+    border-bottom: none;
+}
+
+.autocompletar-items:hover{
+    color: #f1f0f0;
+    background-color: #f1ac06;
+}
+
+.autocompletar-items:active{
+    color: #666666;
+    background-color: #f8f8f8;
+}
+
+.autocompletar-bg {
+
+    border: 1px solid #e9e9e9;
+    background-color: #f8f8f8 !important;
+    border-top: none;
+    border-top-left-radius: 0px;
+    
+    border-top-right-radius: 0px;
+    
 }
 
