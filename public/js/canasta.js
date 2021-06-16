@@ -194,6 +194,49 @@ function checkboxEmpresa(){
 
 }
 
+function checkboxDolar(){
+   
+    var idRegion = $('#region').val();
+    var idComuna = $('#comuna').val();
+    var total = $("#compraEstatica").val();
+    var  sacar$ =  total.replace('$','');
+    var  sacarPunto =  sacar$.replace('.','');
+    const totalCompra = document.getElementById('totalCompra');
+    if (idComuna != 0 && idRegion == 6) {
+        
+        $.ajax({
+            url: "http://localhost/pos/public/Comuna/costoComuna",
+            method: "POST",
+            data: {
+                id_comuna: idComuna,
+            },
+            dataType: "JSON",
+            success: function(data){
+                if($("#dolar").prop('checked')){
+                var sumarCostoComuna = (Number(sacarPunto) + Number(data.costo_comuna));
+                var valorDolar = Math.trunc(sumarCostoComuna / 719.50);
+                totalCompra.innerHTML = 'USD' + valorDolar;
+                }else{       
+                    var sumarCostoComuna = (Number(sacarPunto) + Number(data.costo_comuna));
+                    totalCompra.innerHTML = new Intl.NumberFormat("es-CL",{style: 'currency',currency: 'CLP',}).format(sumarCostoComuna);
+                }     
+            }
+        });
+    }else{
+         totalCompra.innerHTML = new Intl.NumberFormat("es-CL",{style: 'currency',currency: 'CLP',}).format(Number(total));
+    }
+    if($("#dolar").prop('checked')){
+            var  sacar$ =  total.replace('$','');
+            var  sacarPunto =  sacar$.replace('.','');
+            var valorDolar = Math.trunc(sacarPunto / 719.50);
+            totalCompra.innerHTML = 'USD' + valorDolar;
+        }else{
+            totalCompra.innerHTML = total;
+        } 
+    
+    
+}
+
 function datosEmpresa(){
     seccionEmpresa.style.display = 'none';
     while ($('#esEmpresa').prop('checked')) {
@@ -256,10 +299,6 @@ function realizarCompraWeb(){
     //Productos
     
     alert('Venta realizada');
-    console.log('rut', user_session_js[0]);
-    console.log('comuna_fk', fk_comuna);
-    console.log('total', total_venta);
-    console.log('consto_des', total_venta);
     $.ajax({
         url: "http://localhost/pos/public/Ventas/RealizarVentaWeb",
         method: "POST",
@@ -284,8 +323,6 @@ function realizarCompraWeb(){
         lista.push([prod,cant]);
     });
         idv = data;
-        console.log(idv);
-        console.log(lista);
             $.ajax({
                 url: "http://localhost/pos/public/Ventas/agregarDetalleVenta",
                 method: "POST",

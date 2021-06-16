@@ -4,7 +4,7 @@
     <div class="d-flex justify-content-between margin-top 15">
         <!-- Botón para agergar productos-->
         <div class="pull-right">
-            <button type="button" class="btn-submit" data-toggle="modal" data-target="#AgregarUsuario">
+            <button type="button" class="btn-submit" data-toggle="modal" data-target="#AgregarUsuario" onclick="text(1)">
                 +Agregar
             </button>
         </div>
@@ -70,16 +70,28 @@
                                             <label for="" id="lbCelular"></label>
                                         </div>
                                     </div>
-                                    <div class="form-group">
-                                        <p> ¿Es Empresa?</p>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="juridico" id="juridico" value="1" onclick="text(0)" checked>
-                                            Si
-                                            <br>
-                                            <input class="form-check-input" type="radio" name="juridico" id="juridico" value="0" onclick="text(1)">
-                                            No
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <p> ¿Es Empresa?</p>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="juridico" id="juridico" value="1" onclick="text(0)">
+                                                Si
+                                                <br>
+                                                <input class="form-check-input" type="radio" name="juridico" id="juridico" value="0" onclick="text(1)" checked>
+                                                No
+                                            </div>
+                                            <label for="" id="lbJuridico"></label>
                                         </div>
-                                        <label for="" id="lbJuridico"></label>
+                                        <div class="form-group col-md-6" id="seccion-prove">
+                                            <p> ¿Es Proveedor?</p>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="prove" id="prove" value="1" onclick="text1(0)">
+                                                Si
+                                                <br>
+                                                <input class="form-check-input" type="radio" name="prove" id="prove" value="0" onclick="text1(1)" checked>
+                                                No
+                                            </div>
+                                        </div>
                                     </div>
                                     <h4 id="titulo">Datos Empresa</h4>
                                     <br>
@@ -98,6 +110,9 @@
                                         </div>
                                         <div class="form-group col-md-6">
                                             <input type="text" class="form-control" id="telefono" name="telefono" placeholder="Ingrese teléfono">
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <input type="text" class="form-control" id="rubro" name="rubro" placeholder="Ingrese rubro">
                                         </div>
                                     </div>
                                     <h5>Datos Ubicación</h5>
@@ -187,7 +202,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary newsletter-btn" id="botton1" data-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="newsletter-btn" value="enviar datos" onclick="success_toast()">Guardar</button>
+                        <button type="submit" class="newsletter-btn" value="enviar datos">Guardar</button>
                     </div>
                 </form>
 
@@ -298,6 +313,7 @@
         var contraseña = $("#contraseña").val();
         var contraseña2 = $("#contraseña2").val();
         var avatar = $("#imagen").val();
+        var rut_emp = $("#rut_emp").val();
 
         if (rut == '') {
             setTimeout(function() {
@@ -349,6 +365,7 @@
 
             $("#juridico").focus();
             return false;
+
         } else if (ciudad == '') {
             setTimeout(function() {
                 $("#lbCiudad").html("<span style='color:red;'> complete el campo ciudad </span>").fadeOut(10000);
@@ -427,6 +444,9 @@
                     "contraseña": contraseña,
                     "contraseña2": contraseña2,
                     "avatar": avatar
+                },
+                success: function() {
+
                 }
             });
         }
@@ -435,15 +455,14 @@
 <!-- Fin Funcion de validar formulario de registro usuario-->
 <script>
     function text(x) {
-
-
         if (x == 0) {
             document.getElementById("rut_emp").style.display = "block",
                 document.getElementById("razon").style.display = "block",
                 document.getElementById("giro").style.display = "block",
                 document.getElementById("telefono").style.display = "block",
                 document.getElementById("titulo").style.display = "block",
-                document.getElementById("dv_emp").style.display = "block";
+                document.getElementById("dv_emp").style.display = "block",
+                document.getElementById("seccion-prove").style.display = "block";
 
         } else
             document.getElementById("rut_emp").style.display = "none",
@@ -451,7 +470,22 @@
             document.getElementById("giro").style.display = "none",
             document.getElementById("telefono").style.display = "none",
             document.getElementById("titulo").style.display = "none",
-            document.getElementById("dv_emp").style.display = "none";
+            document.getElementById("dv_emp").style.display = "none",
+            document.getElementById("rubro").style.display = "none",
+            document.getElementById("seccion-prove").style.display = "none";
+        return;
+    }
+</script>
+
+<script>
+    function text1(x) {
+
+
+        if (x == 0) {
+            document.getElementById("rubro").style.display = "block";
+
+        } else
+            document.getElementById("rubro").style.display = "none";
         return;
     }
 </script>

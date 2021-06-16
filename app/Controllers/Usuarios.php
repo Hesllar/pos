@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use App\Controllers\DatosPersonales;
+use App\Controllers\Proveedor;
 use App\Models\UsuarioModel;
 use App\Models\ConfiguracionModel;
 use App\Models\DatosPersonalesModel;
@@ -13,11 +14,13 @@ use App\Models\ComunaModel;
 use App\Models\DireccionModel;
 use App\Models\EmpresaModel;
 use App\Models\EmpleadoModel;
+use App\Models\ProveedorModel;
 
 class Usuarios extends BaseController
 {
 	protected $session;
-
+	protected $proveedor;
+	protected $proveedorController;
 	protected $empleado;
 	protected $empresa;
 	protected $nivel;
@@ -34,6 +37,7 @@ class Usuarios extends BaseController
 	public function __construct()
 	{
 		$this->session = session();
+		$this->proveedor = new ProveedorModel;
 		$this->empleado = new EmpleadoModel;
 		$this->empresa = new EmpresaModel;
 		$this->direccion = new DireccionModel;
@@ -44,6 +48,7 @@ class Usuarios extends BaseController
 		$this->datosPersonales = new DatosPersonalesModel;
 		$this->usuarioModal = new UsuarioModel;
 		$this->configuracion = new ConfiguracionModel;
+		$this->proveedorController = new Proveedor;
 	}
 
 	public function logout()
@@ -184,6 +189,16 @@ class Usuarios extends BaseController
 				'direccion_empresa' => $this->datosPersonalesControl->buscarIdDireccion()
 			]);
 		}
+
+		//Acá insertamos los datos a la tabla empresa
+		if ($this->request->getPost('prove') == 1) {
+			$this->proveedor->save([
+				'rubro' => $this->request->getPost('rubro'),
+				'usuario_fk' => $this->proveedorController->BuscarIdUsuario()
+			]);
+		}
+
+
 		//Acá insertamos los datos a la tabla empleado
 		if (
 			$this->request->getPost('nivel_acceso') == 20
@@ -194,6 +209,7 @@ class Usuarios extends BaseController
 				'usuario_fk' => $this->buscarUltiomoIdUser()
 			]);
 		}
+
 
 		return redirect()->to(base_url() . '/Usuarios');
 	}

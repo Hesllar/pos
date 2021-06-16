@@ -6,6 +6,7 @@ use App\Controllers\BaseController;
 use App\Models\ConfiguracionModel;
 use App\Models\ProductosAdminModel;
 use App\Models\VentaModel;
+use App\Models\SesionModel;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
@@ -17,10 +18,12 @@ class Estadistica extends BaseController
     protected $ventas;
     protected $response;
     protected $request;
+    protected $session;
 
 
     public function __construct()
     {
+        $this->session = new SesionModel;
         $this->ventas = new VentaModel;
         $this->productos = new ProductosAdminModel;
         $this->configuracion = new ConfiguracionModel;
@@ -28,6 +31,7 @@ class Estadistica extends BaseController
 
     public function index()
     {
+        $contarVisitas = $this->session->contarVisitas();
         $totalVentas = $this->ventas->totalVentas();
         $totalProduc = $this->productos->totalProductos();
         $todasLasVentas = $this->ventas->todasLasVentas();
@@ -35,7 +39,7 @@ class Estadistica extends BaseController
         $configuracion = $this->configuracion->First();
         $data = [
             'configuracion' => $configuracion, 'productos' => $totalProduc, 'ventas' => $todasLasVentas,
-            'sumaTotal' => $totalVentas, 'stock_minimo' => $stockCritico
+            'sumaTotal' => $totalVentas, 'stock_minimo' => $stockCritico, 'contar' => $contarVisitas
         ];
         $estados = [
             'e_venta' => '',
@@ -210,22 +214,22 @@ class Estadistica extends BaseController
         //$pdf->Ln();
         //$pdf->Cell(20, 5, $venta['total'], 1, 3, 'C', false, 'C');
         $this->response->setHeader('Content-Type', 'application/pdf');
-
         $pdf->Output('ventasXEmpleado.pdf', 'I');
     }
 
     public function excelVentas()
     {
+        header('Content-Type: application/vnd.ms-excel');
+        header('Content-Disposition: attachment; filename="file.xls"');
+
 
         $this->request = \Config\Services::request();
         $phpExcel = new Spreadsheet();
         $hoja = $phpExcel->getActiveSheet();
 
         $hoja->mergeCells('C3:E3');
-        $hoja->getStyle('C5:H5')->getAlignment()->setHorizontal
-        (\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
-        $hoja->getStyle('C3')->getAlignment()->setHorizontal
-        (\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+        $hoja->getStyle('C5:H5')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+        $hoja->getStyle('C3')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
         $hoja->getStyle('C3')->getFont()->SetSize(14);
         $hoja->getStyle('C3')->getFont()->setName('Arial');
         $hoja->setCellValue('C3', "Reportes de Ventas");
@@ -264,10 +268,8 @@ class Estadistica extends BaseController
         }
         $hoja->mergeCells("J3:L3");
 
-        $hoja->getStyle('J5:L5')->getAlignment()->setHorizontal
-        (\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
-        $hoja->getStyle('J3')->getAlignment()->setHorizontal
-        (\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+        $hoja->getStyle('J5:L5')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+        $hoja->getStyle('J3')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
         $hoja->getStyle('J3')->getFont()->SetSize(14);
         $hoja->getStyle('J3')->getFont()->setName('Arial');
         $hoja->setCellValue("J3", "Reportes de Ventas");
@@ -321,7 +323,7 @@ class Estadistica extends BaseController
 
         ];
 
-        $hoja->getStyle('J5:L'.$ultimafila1)->applyFromArray($styleArray);
+        $hoja->getStyle('J5:L' . $ultimafila1)->applyFromArray($styleArray);
 
         $hoja->setCellValueExplicit(
             'H' . $fila,
@@ -331,8 +333,7 @@ class Estadistica extends BaseController
 
 
         $writer = new Xlsx($phpExcel);
-
-        $writer->save("reporte_ventas.xlsx");
+        $writer->save('C:\Users\hesll\Desktop/' . 'reporte_ventas.xls');
         return redirect()->to(base_url() . '/Estadistica');
     }
 
@@ -414,5 +415,22 @@ class Estadistica extends BaseController
         $datos =  $this->ventas->findAll();
 
         echo json_encode($datos);
+    }
+
+    public function pagManual()
+    {
+        $configuracion = $this->configuracion->First();
+        $data = [
+            'configuracion' => $configuracion
+        ];
+        echo view('header', $data);
+        echo view('administrador/manual');
+        echo view('footer');
+    }
+    public function cargarManual()
+    {
+        $this->response = \Config\Services::response();
+        $this->response->setHeader('Content-Type', 'application/pdf');
+        readfile('C:\Users\hesll\Desktop/' . 'beta.pdf');
     }
 }
