@@ -33,4 +33,9 @@ class SesionModel extends Model
     protected $validationRules    = [];
     protected $validationMessages = [];
     protected $skipValidation     = false;
+
+    public function contarVisitas()
+    {
+        return $this->select()->countAllResults();
+    }
 }

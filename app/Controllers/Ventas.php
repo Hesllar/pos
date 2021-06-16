@@ -15,6 +15,7 @@ use App\Models\FormaPagoModel;
 use App\Models\DetalleVentaModel;
 use CodeIgniter\Session\Session;
 use App\Models\ProductosAdminModel;
+use App\Models\DespachoModel;
 
 
 class Ventas extends BaseController
@@ -41,6 +42,7 @@ class Ventas extends BaseController
 		$this->configuracion = new ConfiguracionModel;
 		$this->forma_pago = new FormaPagoModel;
 		$this->boletas = new VentaModel;
+		$this->despacho = new DespachoModel;
 	}
 
 	public function index()
@@ -52,6 +54,7 @@ class Ventas extends BaseController
 		$forma_pago = $this->forma_pago->findAll();
 		$v_boletas = $this->ventas->where('tipo_comprobante', 'boleta')->findAll();
 		$facturas = $this->ventas->where('tipo_comprobante', 'factura')->findAll();
+
 
 		$test = ['msje' => 'ddd'];
 
@@ -76,7 +79,7 @@ class Ventas extends BaseController
 		$data = [
 			'titulo' => 'Usuarios', 'datos' => $ventas,
 			'boletas' => $boletas, 'facturas' => $facturas,
-			'configuracion' => $configuracion
+			'configuracion' => $configuracion,
 		];
 
 		$estados = [
@@ -286,8 +289,13 @@ class Ventas extends BaseController
 
 	public function datosDespacho($id_venta)
 	{
-		$this->ventas->select('dp.fecha_entrega AS fecha_entrega,dp.nombre_recibe AS nom_recibe,dp.telefono AS telefono, dp.estado_despacho AS est_desp,
-		c.nombre_comuna AS nombre_comuna, cc.costo_comuna AS costo_comuna, (total + costo_comuna) AS totales');
+		$this->ventas->select('dp.fecha_entrega AS fecha_entrega,
+		dp.nombre_recibe AS nom_recibe,
+		dp.telefono AS telefono, 
+		dp.estado_despacho AS est_desp,
+		c.nombre_comuna AS nombre_comuna, 
+		CONCAT("$", FORMAT(cc.costo_comuna, "")) AS costo_comuna, 
+		CONCAT("$", FORMAT((total + costo_comuna), "")) AS totales');
 		$this->ventas->join('despacho AS dp', 'venta.id_venta=dp.venta_fk');
 		$this->ventas->join('costo_comuna AS cc', 'dp.costo_comuna_fk=cc.id_costo');
 		$this->ventas->join('comuna AS c', 'cc.comuna_fk=c.id_comuna');
@@ -310,7 +318,11 @@ class Ventas extends BaseController
 
 	public function datosBoleta($id_venta)
 	{
-		$this->ventas->select('id_venta, fecha_venta, CONCAT(d.rut, "-",d.dv) AS rut, CONCAT(d.nombres, " ",d.apellidos) AS nombres, total');
+		$this->ventas->select('id_venta, 
+		fecha_venta, 
+		CONCAT(d.rut, "-",d.dv) AS rut, 
+		CONCAT(d.nombres, " ",d.apellidos) AS nombres, 
+		CONCAT("$",FORMAT(total, "")) AS total,');
 		$this->ventas->join('usuario AS u', 'venta.cliente_fk=u.id_usuario');
 		$this->ventas->join('datos_personales AS d', 'u.rut_fk=d.rut');
 		$this->ventas->where('id_venta', $id_venta);
@@ -321,8 +333,15 @@ class Ventas extends BaseController
 
 	public function datosProductoBoleta($id_venta)
 	{
-		$this->ventas->select('p.nombre AS nombre, dt.cantidad AS cantidad, id_venta, fecha_venta, (cantidad * (p.precio_venta - (p.precio_venta * 0.19))) AS precio_neto, total, (valor_neto+valor_iva) AS costo,
-		(p.precio_venta * cantidad) AS precio_venta,(cantidad * (p.precio_venta * 0.19)) AS precio_iva');
+		$this->ventas->select('p.nombre AS nombre, 
+		dt.cantidad AS cantidad, 
+		id_venta, 
+		fecha_venta,
+		CONCAT("$",FORMAT(ROUND(cantidad * (p.precio_venta - (p.precio_venta * 0.19)),0), "")) AS precio_neto, 
+		CONCAT("$",FORMAT(total, "")) AS total, 
+		(valor_neto+valor_iva) AS costo,
+		 CONCAT("$",FORMAT((p.precio_venta * cantidad), "")) AS precio_venta,
+		CONCAT("$", FORMAT(ROUND(cantidad * (p.precio_venta * 0.19),0), "")) AS precio_iva');
 		$this->ventas->join('detalle_venta AS dt', 'venta.id_venta=dt.id_venta_pk');
 		$this->ventas->join('producto AS p', 'dt.id_producto_pk=p.id_producto');
 		$this->ventas->where('id_venta', $id_venta);

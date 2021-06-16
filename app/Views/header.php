@@ -141,10 +141,18 @@ $user_session = session();
                                         <li><a href="<?php echo base_url(); ?>/contacto">contacto</a></li>
                                         <?php
 
+                                        if ($user_session->nvl_acceso_fk == 40) {
+
+                                        ?>
+                                            <li><a href="<?php echo base_url() ?>/Estadistica/pagManual">Ayuda</a></li>
+                                        <?php } ?>
+                                        <?php
+
                                         if ($user_session->nvl_acceso_fk == 10) {
 
                                         ?>
                                             <li><a href="<?php echo base_url(); ?>/productosAdmin">Administracion</a></li>
+                                            <li><a href="<?php echo base_url() ?>/Estadistica/pagManual">Ayuda</a></li>
                                         <?php } ?>
                                     </ul>
                                 </nav>
@@ -165,6 +173,7 @@ $user_session = session();
                                                 <li><a href="<?php echo base_url() ?>" data-toggle="modal" data-target="#perfil" onclick="allFunctionc(<?php echo $user_session->id_usuario ?>)">perfil</a></li>
                                                 <li><a href="<?php echo base_url() ?>">cambiar clave</a></li>
                                                 <li><a href="<?php echo base_url() ?>/Usuarios/logout">Cerrar sesion</a></li>
+                                                <li><a href="<?php echo base_url() ?>/Estadistica/pagManual">Ayuda</a></li>
                                             </ul>
                                         </li>
                                     <?php
@@ -290,43 +299,43 @@ $user_session = session();
                                         <div class=" form-group col-md-6">
                                             <label for="rut">*Rut</label>
                                             <input type="number" class="form-control" id="per_rut" name="rut" disabled>
-                                            <label for="" id="lbRut"></label>
+
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label for="dv">*Dv</label>
                                             <input type="text" class="form-control" id="per_dv" name="dv" disabled>
-                                            <label for="" id="lbDv"></label>
+
                                         </div>
                                     </div>
                                     <div class="form-row">
                                         <div class="form-group col-md-6" id="casilla_nombre">
                                             <label for="nombre">*Nombres</label>
                                             <input type="text" class="form-control" id="per_nombre" name="nombre" disabled>
-                                            <label for="" id="lbNombre"></label>
+
                                         </div>
                                         <div class="form-group col-md-6" id="cailla_apellido">
                                             <label for="apellidos">*Apellidos</label>
                                             <input type="text" class="form-control" id="per_apellidos" name="apellidos" disabled>
-                                            <label for="" id="lbApellido"></label>
+
                                         </div>
                                     </div>
                                     <div class="form-row">
                                         <div class="form-group col-md-6" id="casilla_email">
                                             <label for="email">*Email</label>
                                             <input type="email" class="form-control" id="per_email" name="email" disabled>
-                                            <label for="" id="lbCorreo"></label>
+
                                         </div>
                                         <div class="form-group col-md-6" id="casilla_celular">
                                             <label for="celular">*Celular</label>
                                             <input type="number" class="form-control" id="per_celular" name="celular" disabled>
-                                            <label for="" id="lbCelular"></label>
+
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <p> ¿Es empresa?</p>
                                         <div class="form-check">
                                         </div>
-                                        <label for="" id="lbJuridico"></label>
+
                                     </div>
                                     <h4 id="per_titulo">Datos empresa</h4>
                                     <br>
@@ -367,19 +376,19 @@ $user_session = session();
                                         <div class="form-group col-md-12" id="casilla_ciudad">
                                             <label for="ciudad">*Ciudad</label>
                                             <input type="text" class="form-control" id="per_ciudad" name="ciudad" disabled>
-                                            <label for="" id="lbCiudad"></label>
+
                                         </div>
                                     </div>
                                     <div class="form-row">
                                         <div class="form-group col-md-6" id="casilla_calle">
                                             <label for="calle">*Calle</label>
                                             <input type="text" class="form-control" id="per_calle" name="calle" disabled>
-                                            <label for="" id="lbCalle"></label>
+
                                         </div>
                                         <div class="form-group col-md-6" id="cailla_numero">
                                             <label for="numero">*Numero</label>
                                             <input type="number" class="form-control" id="per_numero" name="numero" disabled>
-                                            <label for="" id="lbNumero"></label>
+
                                         </div>
                                     </div>
                                     <h5>Datos Usuarios</h5>
@@ -388,7 +397,7 @@ $user_session = session();
                                         <div class="form-group col-md-12" id="casilla_nombr_usuario">
                                             <label for="nombre_usuario">*Nombre usuario</label>
                                             <input type="text" class="form-control" id="per_nombre_usuario" name="nombre_usuario" disabled>
-                                            <label for="" id="lbNomUsuario"></label>
+
                                         </div>
                                     </div>
                                     <h5>Nivel de Acceso</h5>

@@ -273,6 +273,14 @@
                          <div class="order-button-payment">
                              <input id="realizarCompra" type="submit" value="Realizar Compra" onclick="realizarCompraWeb()" />
                          </div>
+                         <div class="row pb-30">
+                             <div class="col-sm-12 d-flex justify-content-center">
+                                 <div class="form-check header-top-left">
+                                     <input class="form-check-input position-static" type="checkbox" id="dolar" value="0" onclick="checkboxDolar()">
+                                     Pago con dolar
+                                 </div>
+                             </div>
+                         </div>
                      </div>
                  </div>
              </div>

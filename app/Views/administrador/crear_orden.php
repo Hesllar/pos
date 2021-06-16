@@ -93,7 +93,7 @@
                 <label for="" id="lbGiroEmp"></label>
             </div>
             <div class="pull-center col-md-4">
-                <button type="button" id="agregarProTabla" class="btn-submit" onclick="agregarProductos(id_producto.value, cantidad.value)">
+                <button type="button" id="agregarProTabla" class="btn-submit">
                     Agregar
                 </button>
             </div>
@@ -256,33 +256,7 @@
                                 $("#nombre").val(resultado.datos.nombre);
                                 $("#marca").val(resultado.datos.marca);
                                 $("#precio_costo").val(resultado.datos.precio_costo);
-
-
-                                /*document.getElementById("id_producto").innerHTML = resultado.datos.id_producto;
-                                document.getElementById("nombre").innerHTML = resultado.datos.nombre;
-                                document.getElementById("marca").innerHTML = resultado.datos.marca;
-                                document.getElementById("precio").innerHTML = resultado.datos.precio_costo;
-                                document.getElementById("stock").innerHTML = resultado.datos.stock;
-                                document.getElementById("stock_soli").style.visibility = "visible"
-                                document.getElementById("nombre").style.visibility = "visible"
-                                document.getElementById("marca").style.visibility = "visible"
-                                document.getElementById("precio").style.visibility = "visible"
-                                document.getElementById("stock").style.visibility = "visible"
-                                document.getElementById("btn_colicitar").style.visibility = "visible"
-                                //document.formulario.miInput.style.visibility = "hidden";
-                                //document.formulario.miInput.style.visibility = "visible";
-                                //$("#rubro").val(resultado.datos.rubro);
-                                //$("#razon").val(resultado.datos.razon);
-                                //$("#telefono").val(resultado.datos.telefono);
-                                //$("#giro").val(resultado.datos.giro);*/
-
                             } else {
-                                /*document.getElementById("nombre").style.visibility = "hidden"
-                                document.getElementById("precio").style.visibility = "hidden"
-                                document.getElementById("marca").style.visibility = "hidden"
-                                document.getElementById("stock").style.visibility = "hidden"
-                                document.getElementById("stock_soli").style.visibility = "hidden"
-                                document.getElementById("btn_colicitar").style.visibility = "hidden"*/
                                 $("#id_producto").val('');
                                 $("#nombre").val('');
                                 $("#marca").val('');
@@ -310,56 +284,17 @@
         }
     }
 </script>
-<script>
-    function agregarProductos(id_producto, cantidad, id_emp) {
-        if (id_producto != null && id_producto != 0 && cantidad > 0) {
 
-            $.ajax({
-                url: '<?php echo base_url(); ?>/TemporalCompra/insertarTemporal/' + id_producto + "/" + cantidad + "/" + id_emp,
-                success: function(resultado) {
-                    if (resultado == 0) {
-                        console.log(resultado)
-                    } else {
-                        /*
-                        $(tagId).removeClass('has-error');
-                        $("#resultado_error").html(resultado.error);
-
-                        if (resultado.existe) {
-                            $("#id_proveedor").val(resultado.datos.id_proveedor);
-                            $("#rut_emp").val(resultado.datos.rut_emp);
-                            $("#dv_emp").val(resultado.datos.dv_empresa);
-                            $("#rubro").val(resultado.datos.rubro);
-                            $("#razon").val(resultado.datos.razon);
-                            $("#telefono").val(resultado.datos.telefono);
-                            $("#giro").val(resultado.datos.giro);
-
-                        } else {
-                            $("#id_proveedor").val('');
-                            $("#rut_emp").val('');
-                            $("#dv_emp").val('');
-                            $("#rubro").val('');
-                            $("#razon").val('');
-                            $("#telefono").val('');
-                            $("#giro").val('');
-                        }
-                    */
-                    }
-                }
-            })
-        }
-    }
-</script>
-<!--
 <script>
     const contenedorProductos = document.querySelector('#lista-producto');
     const btnAgregar = document.getElementById('agregarProTabla');
-    //btnAgregar.addEventListener('click', agregarProducto);
+    btnAgregar.addEventListener('click', agregarProducto);
 
     function agregarProducto(event) {
-        //var id_producto = $("#id_producto").val();
+        var id_producto = $("#id_producto").val();
         var listaProductos = document.querySelectorAll('#lista-producto');
         listaProductos.forEach(lp => {
-            /*if (lp.querySelector('#id_pro') != null) {
+            if (lp.querySelector('#id_pro') != null) {
                 var idPro = lp.querySelector('#id_pro');
                 if (idPro.value == id_producto) {
                     alert('El producto ya existe en la orden');
@@ -369,7 +304,7 @@
 
             } else {
                 alert('nulo');
-            }*/
+            }
             var id_producto = $("#id_producto").val();
             var nombre = $("#nombre").val();
             var marca = $("#marca").val();
@@ -419,10 +354,6 @@
         actualizarTotal()
     }
 
-    function eliminarProducto() {
-
-    }
-
     function cambiarCantidad(event) {
         const entrada = event.target;
         entrada.value <= 0 ? (entrada.value = 1) : null;
@@ -445,8 +376,5 @@
             var total = precioProducto * cantidadProducto;
             var totalFinal = $("#cantidadSub").val(total);
         });
-        //let ttt = formatter.format(total.toFixed(0));
-        //totalCarrito.innerHTML = `${ttt}`;
     }
 </script>
--->
