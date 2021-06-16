@@ -15,6 +15,7 @@
                         <ul>
                             <li><a href="#">Ver todo</a></li>
                             <?php foreach ($categorias as $categoria) { ?>
+                                <input type="hidden" id="id_cate" name="id_cate" value="<?php echo $categoria['id_categoria'] ?>">
                                 <li><a href="#"><?php echo $categoria['nombre_categoria']; ?></a></li>
                             <?php } ?>
                         </ul>

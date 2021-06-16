@@ -151,20 +151,20 @@ $session = session();
                                                                 <div class="form-group col-sm-4">
                                                                     <span class="fuente-titulo">Rut Empresa</span>
                                                                     <div class="col-sm-12">
-                                                                        <span class="fuente-parrafo"><input type="text" id="rut_emp"></span>
+                                                                        <span class="fuente-parrafo"><input type="text" id="rut_emp" disabled></span>
                                                                     </div>
                                                                 </div>
                                                                 <div class="form-group col-sm-4">
                                                                     <span class="fuente-titulo">Raz&oacute;n
                                                                         Social</span>
                                                                     <div class="col-sm-12">
-                                                                        <span class="fuente-parrafo"><input type="text" id="social"></span>
+                                                                        <span class="fuente-parrafo"><input type="text" id="social" disabled></span>
                                                                     </div>
                                                                 </div>
                                                                 <div class="form-group col-sm-4">
                                                                     <span class="fuente-titulo">Giro</span>
                                                                     <div class="col-sm-12">
-                                                                        <span class="fuente-parrafo"><input type="text" id="giro"></span>
+                                                                        <span class="fuente-parrafo"><input type="text" id="giro" disabled></span>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -172,7 +172,7 @@ $session = session();
                                                                 <div class="form-group col-sm-6">
                                                                     <span class="fuente-titulo">Nombre del Empleado</span>
                                                                     <div class="col-sm-12">
-                                                                        <span class="fuente-parrafo"><input type="text" id="nom_empleado"></span>
+                                                                        <span class="fuente-parrafo"><input type="text" id="nom_empleado" disabled></span>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -219,31 +219,31 @@ $session = session();
                                                                 <div class="form-group col-sm-4">
                                                                     <span class="fuente-titulo">Estado del env&iacute;o</span>
                                                                     <div class="col-sm-12">
-                                                                        <span class="fuente-parrafo"><input type="text" id="est_despacho"></span>
+                                                                        <span class="fuente-parrafo"><input type="text" id="est_despacho" disabled></span>
                                                                     </div>
                                                                 </div>
                                                                 <div class="form-group col-sm-4">
                                                                     <span class="fuente-titulo">Fecha de entrega</span>
                                                                     <div class="col-sm-12">
-                                                                        <span class="fuente-parrafo"><input type="text" id="fecha_entrega"></span>
+                                                                        <span class="fuente-parrafo"><input type="text" id="fecha_entrega" disabled></span>
                                                                     </div>
                                                                 </div>
                                                                 <div class="form-group col-sm-4">
                                                                     <span class="fuente-titulo">Recibido por</span>
                                                                     <div class="col-sm-12">
-                                                                        <span class="fuente-parrafo"><input type="text" id="nom_recibe"></span>
+                                                                        <span class="fuente-parrafo"><input type="text" id="nom_recibe" disabled></span>
                                                                     </div>
                                                                 </div>
                                                                 <div class="form-group col-sm-4">
                                                                     <span class="fuente-titulo">Comuna de env&iacute;o</span>
                                                                     <div class="col-sm-12">
-                                                                        <span class="fuente-parrafo"><input type="text" id="nom_comuna"></span>
+                                                                        <span class="fuente-parrafo"><input type="text" id="nom_comuna" disabled></span>
                                                                     </div>
                                                                 </div>
                                                                 <div class="form-group col-sm-4">
                                                                     <span class="fuente-titulo">Costo de env&iacute;o</span>
                                                                     <div class="col-sm-12">
-                                                                        <span class="fuente-parrafo"><input type="text" id="costo_envio"></span>
+                                                                        <span class="fuente-parrafo"><input type="text" id="costo_envio" disabled></span>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -305,13 +305,14 @@ $session = session();
                                     <tr>
                                         <td><?php echo $boleta['id_venta']; ?></td>
                                         <td><?php echo $boleta['fecha_venta']; ?></td>
-                                        <td><?php echo $configuracion['signo_moneda']; ?><?php echo $boleta['total']; ?>
+                                        <td><?php echo $configuracion['signo_moneda']; ?><?php echo number_format($boleta['total'], 0); ?>
                                         </td>
                                         <td><?php echo $boleta['despacho_str']; ?></td>
                                         <td><?php echo $boleta['estado_str']; ?></td>
                                         <td><a href="#"><?php echo $boleta['nom_empleado']; ?></a></td>
                                         <td>
                                             <a class="view" data-toggle="modal" data-target="#detalle" id="btnbuscar" onclick="todo(<?php echo $boleta['id_venta'] ?>)">
+                                                <i class="fa fa-bars"></i>
                                             </a>
 
                                         </td>
@@ -341,7 +342,7 @@ $session = session();
                                     <tr>
                                         <td><?php echo $factura['id_venta']; ?></td>
                                         <td><?php echo $factura['fecha_venta']; ?></td>
-                                        <td><?php echo $configuracion['signo_moneda']; ?><?php echo $factura['total']; ?>
+                                        <td><?php echo $configuracion['signo_moneda']; ?><?php echo number_format($factura['total'], 0);  ?>
                                         </td>
                                         <td><?php echo $factura['despacho']; ?></td>
                                         <td><?php echo $factura['estado_venta']; ?></td>

@@ -36,6 +36,14 @@
                         <a class="card-footer text-white" href="<?php echo base_url() ?>/Estadistica/pagStockMin">Ver Detalle (PDF)</a>
                     </div>
                 </div>
+                <div class="col-4">
+                    <div class="card text-white bg-info">
+                        <div class="card-body">
+                            Cantidad de visitas:
+                            <?php echo $contar ?>
+                        </div>
+                    </div>
+                </div>
             </div>
             <br>
             <div class="row">

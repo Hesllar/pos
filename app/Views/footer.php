@@ -103,6 +103,7 @@
  <!-- ajax-->
  <script src="<?php echo base_url() ?>/js/ajax-mail.js"></script>
  <!-- Modal de alerta-->
+ <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
  <script>
      $('#Eliminar').on('show.bs.modal', function(e) {
@@ -112,12 +113,7 @@
  <!-- codigo mensajes flash-->
  <script>
      toastr.options = {
-         "closeButton": false,
-         "debug": false,
-         "newestOnTop": false,
-         "progressBar": false,
          "positionClass": "toast-top-center",
-         "preventDuplicates": false,
          "onclick": null,
          "showDuration": "300",
          "hideDuration": "1000",
@@ -130,9 +126,8 @@
      }
 
      function success_toast() {
-         toastr.success("Producto agregado correctamente")
+         toastr.success("Producto agregado correctamente");
      }
-     window.close();
  </script>
 
  </body>

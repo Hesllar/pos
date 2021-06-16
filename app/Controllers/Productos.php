@@ -7,8 +7,10 @@ use App\Models\CategoriaModel;
 use App\Models\ConfiguracionModel;
 use App\Models\ProductosAdminModel;
 
+
 class Productos extends BaseController
 {
+    protected $request;
     protected $productos;
     protected $categorias;
     protected $producto_dispo;
@@ -23,6 +25,7 @@ class Productos extends BaseController
 
     public function index()
     {
+        $this->request = \Config\Services::request();
         #Condicion para mostrar los productos mayor al stock critico
         $productos = $this->productos->orderProducto();
         $categorias = $this->categorias->findAll();
