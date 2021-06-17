@@ -82,22 +82,10 @@ $user_session = session();
                             <div class="header-top-right">
                                 <ul class="header-list-menu f-right">
                                     <!-- Language Start -->
-                                    <li><a href="#">Idioma: Espa&ntilde;ol <i class="fa fa-angle-down"></i></a>
-                                        <ul class="ht-dropdown">
-                                            <li><a href="#">Espa&ntilde;ol</a></li>
-                                            <li><a href="#">Ingl&eacute;s</a></li>
-                                        </ul>
-                                    </li>
+                             
                                     <!-- Language End -->
                                     <!-- Currency Start -->
-                                    <li><a href="#">Divisa: CLP <i class="fa fa-angle-down"></i></a>
-                                        <ul class="ht-dropdown">
-                                            <li><a href="#">CLP</a></li>
-                                            <li><a href="#">USD</a></li>
-                                            <li><a href="#">GBP</a></li>
-                                            <li><a href="#">EUR</a></li>
-                                        </ul>
-                                    </li>
+                             
                                     <!-- Currency End -->
                                 </ul>
                                 <!-- Header-list-menu End -->
