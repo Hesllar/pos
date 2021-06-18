@@ -66,6 +66,13 @@ class DatosPersonales extends BaseController
 		return json_encode(array_merge($datoPersonal,$direccion));
 	}
 
+	public function buscarPorRutDv($idRut,$dv)
+	{
+		$this->datospersonales->select('*');
+		$datoPersonal = $this->datospersonales->where('rut', $idRut)->where('dv', $dv)->First();
+		return json_encode($datoPersonal);
+	}
+
 	public function listar()
 	{
 		$datospersonales = $this->datospersonales->FindAll();

@@ -4292,11 +4292,15 @@ legend {
     border-left: none;
     border-right: none;
     border-bottom: none;
+    cursor:pointer !important; 
+    cursor: hand !important;
 }
 
 .autocompletar-items:hover{
     color: #f1f0f0;
     background-color: #f1ac06;
+    cursor:pointer !important; 
+    cursor: hand !important;
 }
 
 .autocompletar-items:active{
@@ -4305,12 +4309,10 @@ legend {
 }
 
 .autocompletar-bg {
-
     border: 1px solid #e9e9e9;
     background-color: #f8f8f8 !important;
     border-top: none;
     border-top-left-radius: 0px;
-    
     border-top-right-radius: 0px;
     
 }
