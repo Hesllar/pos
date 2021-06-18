@@ -424,6 +424,12 @@ class Usuarios extends BaseController
 		return $buscarid['id_usuario'];
 	}
 
+	public function buscarPorRutJson($rut)
+	{
+		$user = $this->usuarioModal->where('rut_fk', $rut)->First();
+		return json_encode($user['id_usuario']);
+	}
+
 
 
 
