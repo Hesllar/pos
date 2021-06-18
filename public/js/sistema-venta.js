@@ -26,10 +26,10 @@ $("#rutCliente").on({
 var datosTabla = new Array();
 var rutStatic = "";
 var productosObject = {};
-/*
+
 listarRegiones();
 btnEmpresa();
-*/
+
 var tbl = $('#listaProductos').DataTable({
     "searching": false,
     "paging": false,
@@ -201,7 +201,7 @@ $('#btnCompra').on('click', function() {
 
     });
 });
-/*
+
 function buscarUsuario(rut) {
     $.ajax({
         url: "http://localhost/pos/public/Usuarios/buscarPorRutJson/" + rut,
@@ -258,5 +258,3 @@ function listarComunas() {
         });
     }
 }
-
-*/
