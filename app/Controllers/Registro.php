@@ -98,7 +98,8 @@ class Registro extends BaseController
 			'estado_usuario' => 1,
 			'avatar' => $newName,
 			'nvl_acceso_fk' => 40,
-			'rut_fk' =>  $this->request->getPost('rut')
+			'rut_fk' =>  $this->request->getPost('rut'),
+			'id_sucursal_fk' => 3
 		]);
 
 		//Acá insertamos los datos a la tabla empresa

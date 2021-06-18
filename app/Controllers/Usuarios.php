@@ -62,12 +62,13 @@ class Usuarios extends BaseController
 
 	public function index()
 	{
+		$this->request = \Config\Services::request();
 		if (!isset($this->session->id_usuario)) {
 			return redirect()->to(base_url() . '/Acceder');
 		}
 		$nvl_acceso = $this->nivel->findAll();
 		$region = $this->region->findAll();
-		$usuario = $this->usuarioModal->DatosPersonales();
+		$usuario = $this->usuarioModal->DatosPersonalesSucur1($this->session->id_sucursal_fk);
 		$configuracion = $this->configuracion->First();
 
 		$data = [
@@ -168,14 +169,31 @@ class Usuarios extends BaseController
 		}
 		$hash = password_hash($this->request->getPost('contraseña'), PASSWORD_DEFAULT);
 		//Acá insertamos los datos a la tabla usuario
-		$this->usuarioModal->save([
-			'nom_usuario' => $this->request->getPost('nombre_usuario'),
-			'contrasena' => $hash,
-			'estado_usuario' => 1,
-			'avatar' => $newName,
-			'nvl_acceso_fk' => $this->request->getPost('nivel_acceso'),
-			'rut_fk' =>  $this->request->getPost('rut')
-		]);
+		if ($this->session->id_sucursal_fk == 1) {
+			$this->usuarioModal->save([
+				'nom_usuario' => $this->request->getPost('nombre_usuario'),
+				'contrasena' => $hash,
+				'estado_usuario' => 1,
+				'avatar' => $newName,
+				'nvl_acceso_fk' => $this->request->getPost('nivel_acceso'),
+				'rut_fk' =>  $this->request->getPost('rut'),
+				'id_sucursal_fk' => 1
+			]);
+		} else {
+			$this->usuarioModal->save([
+				'nom_usuario' => $this->request->getPost('nombre_usuario'),
+				'contrasena' => $hash,
+				'estado_usuario' => 1,
+				'avatar' => $newName,
+				'nvl_acceso_fk' => $this->request->getPost('nivel_acceso'),
+				'rut_fk' =>  $this->request->getPost('rut'),
+				'id_sucursal_fk' => 2
+			]);
+		}
+
+
+
+
 
 		//Acá insertamos los datos a la tabla empresa
 		if ($this->request->getPost('juridico') == 1) {
@@ -200,12 +218,20 @@ class Usuarios extends BaseController
 
 
 		//Acá insertamos los datos a la tabla empleado
-		if (
-			$this->request->getPost('nivel_acceso') == 20
-			|| $this->request->getPost('nivel_acceso') == 10
-		) {
-			$this->empleado->save([
 
+		if ($this->request->getPost('nivel_acceso') == 10) {
+			$this->empleado->save([
+				'cargo_fk' => 4,
+				'usuario_fk' => $this->buscarUltiomoIdUser()
+			]);
+		} else if ($this->request->getPost('nivel_acceso') == 20) {
+			$this->empleado->save([
+				'cargo_fk' => 2,
+				'usuario_fk' => $this->buscarUltiomoIdUser()
+			]);
+		} else if ($this->request->getPost('nivel_acceso') == 30) {
+			$this->empleado->save([
+				'cargo_fk' => 3,
 				'usuario_fk' => $this->buscarUltiomoIdUser()
 			]);
 		}
@@ -433,9 +459,7 @@ class Usuarios extends BaseController
 
 	public function buscarUltiomoIdUser()
 	{
-		if (!isset($this->session->id_usuario)) {
-			return redirect()->to(base_url() . '/Acceder');
-		}
+
 		$buscarid = $this->usuarioModal->orderBy('id_usuario', 'DESC')->first();
 		return $buscarid['id_usuario'];
 	}

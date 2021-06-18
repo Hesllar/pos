@@ -317,4 +317,19 @@
             });
         }
     });
+
+    function userSucursal() {
+        var id_sucursal = $("id_sucursal").val();
+        $.ajax({
+            url: "<?php echo base_url(); ?>/productosadmin/",
+            method: "POST",
+            data: {
+                id_sucu = id_sucursal
+            },
+            success: function(data) {
+
+            }
+        })
+
+    }
 </script>
