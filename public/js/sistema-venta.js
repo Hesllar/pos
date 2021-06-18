@@ -156,6 +156,9 @@ $("#rutCliente").keypress(function(e) {
                 $("#textRutCliente").text(rut + "-" + dv);
                 $("#textNombreCliente").text(data.nombres + " " + data.apellidos);
                 $("#infoCliente").removeClass('d-none');
+                $("#agregarCliente").collapse('hide');
+                $("#iconCli").removeClass('fa-caret-down');
+                $("#iconCli").addClass('fa-caret-right');
             },
         });
 
@@ -258,3 +261,97 @@ function listarComunas() {
         });
     }
 }
+
+function agregarCliente(idDireccion){
+    var rutNuevoCli = $("#rut_cli").val();
+    var dvNuevoCli = $("#dv_cli").val();
+    var nombreNuevoCli = $("#nombres_cli").val();
+    var apellidosNuevoCli = $("#apellidos_cli").val();
+    var celularNuevoCli = $("#celular_cli").val();
+    var correoNuevoCli = $("#correo_cli").val();
+    $.ajax({
+        url: "http://localhost/pos/public/DatosPersonales/insertarDatosAjax",
+        method: "POST",
+        data: {
+            c_rut : rutNuevoCli,
+            c_dv : dvNuevoCli,
+            c_nombre : nombreNuevoCli,
+            c_apellidos : apellidosNuevoCli,
+            c_celular : celularNuevoCli,
+            c_correo : correoNuevoCli,
+            c_direccion_id : idDireccion
+        },
+        dataType: "JSON",
+        success: function () {
+            console.log('CORRECTO');
+        }
+        
+    });
+
+
+}
+
+function agregarDireccion(tipo){
+    var textCalle = '';
+    var textNumero = '';
+    var nCiudad = '';
+    var idComuna = '';
+    var idDire = null;
+    switch (tipo) {
+        case 'c':
+            textCalle = $( "#c_direccion").val();
+            textNumero = $( "#n_direccion").val();
+            nCiudad = $( "#ciudad").val();
+            idComuna = $( "#comuna option:selected").val();
+            break;
+        case 'e':
+            textCalle = $( "#c_direccion_emp").val();
+            textNumero = $( "#n_direccion_emp").val();
+            nCiudad = $( "#ciudad_emp").val();
+            idComuna = $( "#comuna_emp option:selected").val();
+            break;
+    }
+    $.ajax({
+        url: "http://localhost/pos/public/Direcciones/agregarDireccion",
+        method: "POST",
+        data: {
+            d_calle : textCalle,
+            d_numero : textNumero,
+            d_ciudad : nCiudad,
+            d_comuna_id : idComuna,
+        },
+        dataType: "JSON",
+        success: function (id_direccion) {
+            idDire = id_direccion;
+            console.log('id_dire',id_direccion);
+            console.log('2',idDire);   return idDire;
+        }
+        
+    });
+    console.log('4',idDire);   
+ 
+}
+
+$('#btnGuardar').on('click', function() {
+    var esCliente = true;
+    $('#asociarEmpresa').prop('checked') ? esCliente = false : null ;
+
+    if(esCliente){
+
+        fk_direccion = agregarDireccion('c');
+        console.log('fkfk',fk_direccion);
+        agregarCliente(fk_direccion);
+    }
+});
+/*
+function clienteEsEmpresa(){
+
+}
+
+function agregarEmpresa(){
+
+}
+*/
+
+
+

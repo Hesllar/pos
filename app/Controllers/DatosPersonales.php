@@ -103,4 +103,20 @@ class DatosPersonales extends BaseController
 		$buscarid =  $this->direccion->orderBy('id_direccion', 'DESC')->First();
 		return $buscarid['id_direccion'];
 	}
+
+	public function insertarDatosAjax()
+	{
+		$this->request = \Config\Services::request();
+		$this->datospersonales->save([
+			'rut' => $this->request->getVar('c_rut'),
+			'dv' => $this->request->getVar('c_dv'),
+			'nombres' => $this->request->getVar('c_nombre'),
+			'apellidos' => $this->request->getVar('c_apellidos'),
+			'correo' => $this->request->getVar('c_correo'),
+			'celular' => $this->request->getVar('c_celular'),
+			'natural_juridico' => 0,
+			'direccion_fk' => $this->request->getVar('c_direccion_id')
+		]);
+	}
+
 }
