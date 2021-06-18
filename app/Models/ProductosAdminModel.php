@@ -28,7 +28,8 @@ class ProductosAdminModel extends Model
         'stock_critico',
         'categoria',
         'detalle_fk',
-        'estado'
+        'estado',
+        'id_sucursal_fk'
     ];
 
     protected $useTimestamps = true;
@@ -42,12 +43,22 @@ class ProductosAdminModel extends Model
 
 
 
-    public function orderProducto()
+    public function orderProducto($id_sucur)
     {
         $this->select('id_producto, nombre,CONCAT("$",FORMAT(precio_venta,"")) AS precio_venta, stock, categoria, imagen, precio_venta, descripcion');
+        $this->where('estado', 1);
+        $this->where('id_sucursal_fk', $id_sucur);
+        $this->where('stock >', 0);
         $this->orderBy('id_producto', 'DESC');
+        $data = $this->findAll();
+        return $data;
+    }
+    public function orderAllProducto()
+    {
+        $this->select('id_producto, nombre,CONCAT("$",FORMAT(precio_venta,"")) AS precio_venta, stock, categoria, imagen, precio_venta, descripcion');
         $this->where('estado', 1);
         $this->where('stock >', 0);
+        $this->orderBy('id_producto', 'DESC');
         $data = $this->findAll();
         return $data;
     }

@@ -68,6 +68,7 @@ class Acceder extends BaseController
 						'ultima_conexion' => $datosUsuario['ultima_conexion'],
 						'rut_fk' => $datosUsuario['rut_fk'],
 						'nvl_acceso_fk' => $datosUsuario['nvl_acceso_fk'],
+						'id_sucursal_fk' => $datosUsuario['id_sucursal_fk'],
 					];
 
 					$data = ['titulo' => 'Validar', 'datos' => $datosSesion, 'configuracion' => $configuracion];

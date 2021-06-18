@@ -8,8 +8,10 @@ use App\Models\ConfiguracionModel;
 use App\Models\ProductosAdminModel;
 
 
+
 class Productos extends BaseController
 {
+    protected $session;
     protected $request;
     protected $productos;
     protected $categorias;
@@ -18,6 +20,7 @@ class Productos extends BaseController
 
     public function __construct()
     {
+        $this->session = session();
         $this->productos = new ProductosAdminModel();
         $this->categorias = new CategoriaModel();
         $this->configuracion = new ConfiguracionModel;
@@ -27,7 +30,11 @@ class Productos extends BaseController
     {
         $this->request = \Config\Services::request();
         #Condicion para mostrar los productos mayor al stock critico
-        $productos = $this->productos->orderProducto();
+        if ($this->session->id_sucursal_fk == 3) {
+            $productos = $this->productos->orderAllProducto();
+        } else {
+            $productos = $this->productos->orderProducto($this->session->id_sucursal_fk);
+        }
         $categorias = $this->categorias->findAll();
         $configuracion = $this->configuracion->First();
         $data = ['titulo' => 'Productos', 'datos' => $productos, 'categorias' => $categorias, 'configuracion' => $configuracion];
@@ -39,7 +46,7 @@ class Productos extends BaseController
 
     public function productoEmp()
     {
-        $productos = $this->productos->orderProducto();
+        $productos = $this->productos->orderProducto($this->session->id_sucursal_fk);
         $categorias = $this->categorias->findAll();
         $configuracion = $this->configuracion->First();
         $data = ['titulo' => 'Productos', 'datos' => $productos, 'categorias' => $categorias, 'configuracion' => $configuracion];

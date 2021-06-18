@@ -14,37 +14,37 @@
     <link href="https://fonts.googleapis.com/css?family=Lily+Script+One" rel="stylesheet">
 
     <!-- mobile menu css -->
-    <link rel="stylesheet" href="css/meanmenu.min.css">
+    <link rel="stylesheet" href="<?php echo base_url(); ?>/css/meanmenu.min.css">
     <!-- animate css -->
-    <link rel="stylesheet" href="css/animate.css">
+    <link rel="stylesheet" href="<?php echo base_url(); ?>/css/animate.css">
     <!-- nivo slider css -->
-    <link rel="stylesheet" href="css/nivo-slider.css">
+    <link rel="stylesheet" href="<?php echo base_url(); ?>/css/nivo-slider.css">
     <!-- owl carousel css -->
-    <link rel="stylesheet" href="css/owl.carousel.min.css">
+    <link rel="stylesheet" href="<?php echo base_url(); ?>/css/owl.carousel.min.css">
     <!-- slick css -->
-    <link rel="stylesheet" href="css/slick.css">
+    <link rel="stylesheet" href="<?php echo base_url(); ?>/css/slick.css">
     <!-- price slider css -->
-    <link rel="stylesheet" href="css/jquery-ui.min.css">
+    <link rel="stylesheet" href="<?php echo base_url(); ?>/css/jquery-ui.min.css">
     <!-- fontawesome css -->
-    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="<?php echo base_url(); ?>/css/font-awesome.min.css">
     <!-- fancybox css -->
-    <link rel="stylesheet" href="css/jquery.fancybox.css">
+    <link rel="stylesheet" href="<?php echo base_url(); ?>/css/jquery.fancybox.css">
     <!-- bootstrap css -->
-    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="<?php echo base_url(); ?>/css/bootstrap.min.css">
     <!-- default css  -->
-    <link rel="stylesheet" href="css/default.css">
+    <link rel="stylesheet" href="<?php echo base_url(); ?>/css/default.css">
     <!-- style css -->
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="<?php echo base_url(); ?>/style.css">
     <!-- responsive css -->
-    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="<?php echo base_url(); ?>/css/responsive.css">
     <!-- fontawesome css -->
-    <link rel="stylesheet" href="css/all.min.css">
+    <link rel="stylesheet" href="<?php echo base_url(); ?>/css/all.min.css">
     <!-- Toggle -->
-    <link rel="stylesheet" href="css/toggle.min.css">
+    <link rel="stylesheet" href="<?php echo base_url(); ?>/css/toggle.min.css">
     <!-- DataTables -->
-    <link rel="stylesheet" href="css/datatables.min.min.css">
+    <link rel="stylesheet" href="<?php echo base_url(); ?>/css/datatables.min.css">
     <!-- modernizr js -->
-    <script src="js/vendor/modernizr-2.8.3.min.js"></script>
+    <script src="<?php echo base_url(); ?>/js/vendor/modernizr-2.8.3.min.js"></script>
 </head>
 
 <body>
@@ -71,9 +71,8 @@
                     <div class="col-md-7">
                         <div class="error-wrapper text-center">
                             <div class="search-error">
-                                <form id="search-form" action="#">
-                                    <input id="input-buscar" type="text"
-                                        placeholder="Ingrese código de barras o nombre producto" onkeyup="buscador()">
+                                <form id="search-form" autocomplete="off">
+                                    <input id="input-buscar" type="text" placeholder="Ingrese código de barras o nombre producto" onkeyup="buscador()">
                                     <button><i class="fa fa-search"></i></button>
                                 </form>
                                 <div id="productos-encontrados" class="position-absolute autocompletar fade">
@@ -89,8 +88,7 @@
                             </div>
                             <div>
 
-                                <table id="listaProductos" class="table table-striped table-bordered"
-                                    style="width:100%">
+                                <table id="listaProductos" class="table table-striped table-bordered" style="width:100%">
                                     <thead>
                                         <tr>
                                             <th style="width: 10%;">#</th>
@@ -121,13 +119,10 @@
                                                 <div class="input-group-prepend">
                                                     <div class="input-group-text"><i class="far fa-id-card"></i></div>
                                                 </div>
-                                                <input id="rutCliente" type="text" class="form-control pro-content"
-                                                    placeholder="Ingrese rut cliente" maxlength="12">
+                                                <input id="rutCliente" type="text" class="form-control pro-content" placeholder="Ingrese rut cliente" maxlength="12">
                                             </div>
                                         </div>
-                                        <button id="addCli" class="btn btn-link btn-block text-center" type="button"
-                                            data-toggle="collapse" data-target="#agregarCliente" aria-expanded="true"
-                                            aria-controls="collapseOne">
+                                        <button id="addCli" class="btn btn-link btn-block text-center" type="button" data-toggle="collapse" data-target="#agregarCliente" aria-expanded="true" aria-controls="collapseOne">
                                             <i id="iconCli" class="fas fa-caret-right"></i>
                                             Nuevo Cliente
                                         </button>
@@ -145,17 +140,14 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div id="agregarCliente" class="collapse hide" aria-labelledby="headingOne"
-                                    data-parent="#accordionExample">
+                                <div id="agregarCliente" class="collapse hide" aria-labelledby="headingOne" data-parent="#accordionExample">
                                     <div class="card">
                                         <div class="card-body">
                                             <div class="row">
                                                 <div class="col-sm-12">
                                                     <div class="form-group form-check pull-right">
-                                                        <input type="checkbox" class="form-check-input"
-                                                            id="asociarEmpresa">
-                                                        <label class="form-check-label label-checkbox"
-                                                            for="asociarEmpresa">Asociar empresa</label>
+                                                        <input type="checkbox" class="form-check-input" id="asociarEmpresa" onclick="btnEmpresa()" on="btnEmpresa()">
+                                                        <label class="form-check-label label-checkbox" for="asociarEmpresa">Asociar empresa</label>
                                                     </div>
 
                                                 </div>
@@ -163,12 +155,10 @@
                                                     <div class="form-group">
                                                         <div class="input-group">
                                                             <div class="input-group-prepend">
-                                                                <div class="input-group-text"><i
-                                                                        class="fas fa-user"></i>
+                                                                <div class="input-group-text"><i class="fas fa-user"></i>
                                                                 </div>
                                                             </div>
-                                                            <input id="rut-cli" type="text" class="form-control"
-                                                                placeholder="Rut Cliente">
+                                                            <input id="rut-cli" type="text" class="form-control" placeholder="Rut Cliente">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -180,7 +170,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-3 pt-1">
-                                                    <button class="blanco btn btn-warning pull-left">
+                                                    <button id="buscar-rut" class="blanco btn btn-warning pull-left">
                                                         <i class="fas fa-search"></i>
                                                     </button>
                                                 </div>
@@ -188,12 +178,10 @@
                                                     <div class="form-group">
                                                         <div class="input-group">
                                                             <div class="input-group-prepend">
-                                                                <div class="input-group-text"><i
-                                                                        class="fas fa-address-card"></i>
+                                                                <div class="input-group-text"><i class="fas fa-address-card"></i>
                                                                 </div>
                                                             </div>
-                                                            <input type="text" class="form-control"
-                                                                placeholder="Nombre(s)">
+                                                            <input type="text" class="form-control" placeholder="Nombre(s)">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -201,12 +189,10 @@
                                                     <div class="form-group">
                                                         <div class="input-group">
                                                             <div class="input-group-prepend">
-                                                                <div class="input-group-text"><i
-                                                                        class="far fa-address-card"></i>
+                                                                <div class="input-group-text"><i class="far fa-address-card"></i>
                                                                 </div>
                                                             </div>
-                                                            <input type="text" class="form-control"
-                                                                placeholder="Apellidos">
+                                                            <input type="text" class="form-control" placeholder="Apellidos">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -214,12 +200,10 @@
                                                     <div class="form-group">
                                                         <div class="input-group">
                                                             <div class="input-group-prepend">
-                                                                <div class="input-group-text"><i
-                                                                        class="fas fa-phone"></i>
+                                                                <div class="input-group-text"><i class="fas fa-phone"></i>
                                                                 </div>
                                                             </div>
-                                                            <input type="text" class="form-control"
-                                                                placeholder="Celular">
+                                                            <input type="text" class="form-control" placeholder="Celular">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -227,12 +211,10 @@
                                                     <div class="form-group">
                                                         <div class="input-group">
                                                             <div class="input-group-prepend">
-                                                                <div class="input-group-text"><i
-                                                                        class="fas fa-mail-bulk"></i>
+                                                                <div class="input-group-text"><i class="fas fa-mail-bulk"></i>
                                                                 </div>
                                                             </div>
-                                                            <input type="text" class="form-control"
-                                                                placeholder="Correo electrónico">
+                                                            <input type="text" class="form-control" placeholder="Correo electrónico">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -240,12 +222,10 @@
                                                     <div class="form-group">
                                                         <div class="input-group">
                                                             <div class="input-group-prepend">
-                                                                <div class="input-group-text"><i
-                                                                        class="fas fa-map-marker-alt"></i>
+                                                                <div class="input-group-text"><i class="fas fa-map-marker-alt"></i>
                                                                 </div>
                                                             </div>
-                                                            <input type="text" class="form-control"
-                                                                placeholder="Dirección">
+                                                            <input type="text" class="form-control" placeholder="Dirección">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -253,26 +233,10 @@
                                                     <div class="form-group">
                                                         <div class="input-group">
                                                             <div class="input-group-prepend">
-                                                                <div class="input-group-text"><i
-                                                                        class="fas fa-map-marked-alt"></i>
+                                                                <div class="input-group-text"><i class="fas fa-map-marked-alt"></i>
                                                                 </div>
                                                             </div>
-                                                            <input type="text" class="form-control"
-                                                                placeholder="Ciudad">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-6">
-                                                    <div class="form-group">
-                                                        <div class="input-group">
-                                                            <div class="input-group-prepend">
-                                                                <div class="input-group-text">
-                                                                    <i class="fas fa-copyright"></i>
-                                                                </div>
-                                                            </div>
-                                                            <select class=" country-select form-control" id="region">
-                                                                <option value="">Comuna</option>
-                                                            </select>
+                                                            <input type="text" class="form-control" placeholder="Ciudad">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -284,27 +248,41 @@
                                                                     <i class="fas fa-registered"></i>
                                                                 </div>
                                                             </div>
-                                                            <select class=" country-select form-control" id="region">
+                                                            <select class=" country-select form-control" id="region" onclick="listarComunas()">
                                                                 <option value="">Región</option>
                                                             </select>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="card-body label-campos">
-                                                <h5>Datos Empresa</h5>
-                                            </div>
-                                            <div class="row">
                                                 <div class="col-sm-6">
                                                     <div class="form-group">
                                                         <div class="input-group">
                                                             <div class="input-group-prepend">
-                                                                <div class="input-group-text"><i
-                                                                        class="fas fa-user"></i>
+                                                                <div class="input-group-text">
+                                                                    <i class="fas fa-copyright"></i>
                                                                 </div>
                                                             </div>
-                                                            <input type="text" class="form-control"
-                                                                placeholder="Rut Empresa">
+                                                            <select class=" country-select form-control" id="comuna">
+                                                                <option value="">Comuna</option>
+                                                                <option value="">Seleccione región</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <div class="card-body label-campos emp">
+                                                <h5>Datos Empresa</h5>
+                                            </div>
+                                            <div class="row emp">
+                                                <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                        <div class="input-group">
+                                                            <div class="input-group-prepend">
+                                                                <div class="input-group-text"><i class="fas fa-user"></i>
+                                                                </div>
+                                                            </div>
+                                                            <input type="text" class="form-control" placeholder="Rut Empresa">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -319,12 +297,10 @@
                                                     <div class="form-group">
                                                         <div class="input-group">
                                                             <div class="input-group-prepend">
-                                                                <div class="input-group-text"><i
-                                                                        class="fas fa-address-card"></i>
+                                                                <div class="input-group-text"><i class="fas fa-address-card"></i>
                                                                 </div>
                                                             </div>
-                                                            <input type="text" class="form-control"
-                                                                placeholder="Razón Social">
+                                                            <input type="text" class="form-control" placeholder="Razón Social">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -332,8 +308,7 @@
                                                     <div class="form-group">
                                                         <div class="input-group">
                                                             <div class="input-group-prepend">
-                                                                <div class="input-group-text"><i
-                                                                        class="far fa-address-card"></i>
+                                                                <div class="input-group-text"><i class="far fa-address-card"></i>
                                                                 </div>
                                                             </div>
                                                             <input type="text" class="form-control" placeholder="Giro">
@@ -344,12 +319,10 @@
                                                     <div class="form-group">
                                                         <div class="input-group">
                                                             <div class="input-group-prepend">
-                                                                <div class="input-group-text"><i
-                                                                        class="fas fa-phone"></i>
+                                                                <div class="input-group-text"><i class="fas fa-phone"></i>
                                                                 </div>
                                                             </div>
-                                                            <input type="text" class="form-control"
-                                                                placeholder="Celular">
+                                                            <input type="text" class="form-control" placeholder="Celular">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -357,12 +330,10 @@
                                                     <div class="form-group">
                                                         <div class="input-group">
                                                             <div class="input-group-prepend">
-                                                                <div class="input-group-text"><i
-                                                                        class="fas fa-map-marker-alt"></i>
+                                                                <div class="input-group-text"><i class="fas fa-map-marker-alt"></i>
                                                                 </div>
                                                             </div>
-                                                            <input type="text" class="form-control"
-                                                                placeholder="Dirección">
+                                                            <input type="text" class="form-control" placeholder="Dirección">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -370,12 +341,10 @@
                                                     <div class="form-group">
                                                         <div class="input-group">
                                                             <div class="input-group-prepend">
-                                                                <div class="input-group-text"><i
-                                                                        class="fas fa-map-marked-alt"></i>
+                                                                <div class="input-group-text"><i class="fas fa-map-marked-alt"></i>
                                                                 </div>
                                                             </div>
-                                                            <input type="text" class="form-control"
-                                                                placeholder="Ciudad">
+                                                            <input type="text" class="form-control" placeholder="Ciudad">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -408,7 +377,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="error-button">
+                                            <div class="boton-compra">
                                                 <a href="#">Guardar</a>
                                             </div>
                                         </div>
@@ -420,16 +389,14 @@
                                     <div class="row">
                                         <div class="col-sm-6">
                                             <div class="custom-control custom-radio custom-control-inline">
-                                                <input type="radio" id="boleta" name="tipo_comprobante"
-                                                    class="custom-control-input" checked>
+                                                <input type="radio" id="boleta" name="tipo_comprobante" class="custom-control-input" checked>
                                                 <label class="custom-control-label label-campos" for="boleta">Emitir
                                                     Boleta</label>
                                             </div>
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="custom-control custom-radio custom-control-inline">
-                                                <input type="radio" id="factura" name="tipo_comprobante"
-                                                    class="custom-control-input require-red" disabled>
+                                                <input type="radio" id="factura" name="tipo_comprobante" class="custom-control-input require-red" disabled>
                                                 <label class="custom-control-label label-campos" for="factura">Emitir
                                                     Factura</label>
                                             </div>
@@ -447,8 +414,7 @@
                                                         <div class="input-group-text"><i class="fas fa-dollar-sign"></i>
                                                         </div>
                                                     </div>
-                                                    <input id="totalPagar" type="number" class="form-control pro-content" value="0"
-                                                        disabled>
+                                                    <input id="totalPagar" type="number" class="form-control pro-content" value="0" disabled>
                                                 </div>
                                             </div>
                                         </div>
@@ -463,8 +429,7 @@
                                                             <i class="fas fa-wallet"></i>
                                                         </div>
                                                     </div>
-                                                    <select class=" country-select form-control pro-content"
-                                                        id="region">
+                                                    <select class=" country-select form-control pro-content" id="region">
                                                         <option value="">Efectivo</option>
                                                         <option value="">Debito</option>
                                                     </select>
@@ -481,8 +446,7 @@
                                                         <div class="input-group-text"><i class="fas fa-dollar-sign"></i>
                                                         </div>
                                                     </div>
-                                                    <input id="inputTotal" type="text" class="form-control pro-content"
-                                                        placeholder="0" maxlength="8">
+                                                    <input id="inputTotal" type="text" class="form-control pro-content" placeholder="0" maxlength="8">
                                                 </div>
                                             </div>
                                         </div>
@@ -515,97 +479,68 @@
     </div>
     <!-- Wrapper End -->
     <!-- jquery 3.12.4 -->
-    <script src="js/vendor/jquery-1.12.4.min.js"></script>
+    <script src="<?php echo base_url(); ?>/js/vendor/jquery-3.6.0.min.js"></script>
     <!-- mobile menu js  -->
-    <script src="js/jquery.meanmenu.min.js"></script>
+    <script src="<?php echo base_url(); ?>/js/jquery.meanmenu.min.js"></script>
     <!-- scroll-up js -->
-    <script src="js/jquery.scrollUp.js"></script>
+    <script src="<?php echo base_url(); ?>/js/jquery.scrollUp.js"></script>
     <!-- owl-carousel js -->
-    <script src="js/owl.carousel.min.js"></script>
+    <script src="<?php echo base_url(); ?>/js/owl.carousel.min.js"></script>
     <!-- slick js -->
-    <script src="js/slick.min.js"></script>
+    <script src="<?php echo base_url(); ?>/js/slick.min.js"></script>
     <!-- wow js -->
-    <script src="js/wow.min.js"></script>
+    <script src="<?php echo base_url(); ?>/js/wow.min.js"></script>
     <!-- price slider js -->
-    <script src="js/jquery-ui.min.js"></script>
-    <script src="js/jquery.countdown.min.js"></script>
+    <script src="<?php echo base_url(); ?>/js/jquery-ui.min.js"></script>
+    <script src="<?php echo base_url(); ?>/js/jquery.countdown.min.js"></script>
     <!-- nivo slider js -->
-    <script src="js/jquery.nivo.slider.js"></script>
+    <script src="<?php echo base_url(); ?>/js/jquery.nivo.slider.js"></script>
     <!-- fancybox js -->
-    <script src="js/jquery.fancybox.min.js"></script>
+    <script src="<?php echo base_url(); ?>/js/jquery.fancybox.min.js"></script>
     <!-- bootstrap -->
-    <script src="js/bootstrap.min.js"></script>
+    <script src="<?php echo base_url(); ?>/js/bootstrap.min.js"></script>
     <!-- popper -->
-    <script src="js/popper.js"></script>
+    <script src="<?php echo base_url(); ?>/js/popper.js"></script>
     <!-- plugins -->
-    <script src="js/plugins.js"></script>
+    <script src="<?php echo base_url(); ?>/js/plugins.js"></script>
     <!-- main js -->
-    <script src="js/main.js"></script>
+    <script src="<?php echo base_url(); ?>/js/main.js"></script>
     <!-- Toggle js -->
-    <script src="js/toggle.min.js"></script>
+    <script src="<?php echo base_url(); ?>/js/toggle.min.js"></script>
     <!-- DataTables js -->
-    <script src="js/datatables.min.js"></script>
+    <script src="<?php echo base_url(); ?>/js/datatables.min.js"></script>
 
     <script>
         $("#inputTotal").on({
-            "focus": function (event) {
+            "focus": function(event) {
                 $(event.target).select();
             },
-            "keyup": function (event) {
-                $(event.target).val(function (index, value) {
+            "keyup": function(event) {
+                $(event.target).val(function(index, value) {
                     return value.replace(/\D/g, "")
                         .replace(/([0-9])([0-9]{3})$/, '$1.$2')
                         .replace(/\B(?=(\d{3})+(?!\d)\.?)/g, ".");
                 });
             }
         });
-        //$("#infoCliente").hide();
         $("#rutCliente").on({
-            "focus": function (event) {
+            "focus": function(event) {
                 $(event.target).select();
             },
-            "keyup": function (event) {
-                $(event.target).val(function (index, value) {
+            "keyup": function(event) {
+                $(event.target).val(function(index, value) {
                     return value.replace(/\D/g, "")
-                        .replace(/^(\d{1,2})(\d{3})(\d{3})(\w{1})$/, '$1.$2.$3-$4')
-                        //.replace(/\B(?=(\d{3})+(?!\d)\.?)/g, ".")
-                        ;
+                        .replace(/^(\d{1,2})(\d{3})(\d{3})(\w{1})$/, '$1.$2.$3-$4');
                 });
             }
         });
-        /*
-                $('#listaProductos').DataTable();
-                function addrow() {
-                    $('#listaProductos').dataTable().fnAddData([
-                        $('#fname').val(),
-                        $('#lname').val(),
-                        $('#email').val()]);
-        
-                }
-        */
+
         datosTablaObj = new Object();
         var datosTabla = new Array();
-        var tableData = [
-            ["277722293571", "Spray pro imprimante fondo blanco", "10790", "1", "10790", "<i class='delete-prod fas fa-minus-circle'></i>"],
-            ["277722293571", "Esmalte antiderrapante gris 1gl", "34990", "1", "34990", "<i class='delete-prod fas fa-minus-circle'></i>"]];
-        tableData.push(["277722293571", "Spray pro imprimante fondo blanco", "10790", "1", "10790", "<i class='delete-prod fas fa-minus-circle'></i>"]);
-        /*
-                $('#listaProductos').DataTable({
-                    "searching": false,
-                    "paging": false,
-                    "info": false,
-                    "bProcessing": true,
-                    "data": tableData,
-                    "columns": [
-                        { "data": "ID" },
-                        { "data": "Producto" },
-                        { "data": "Precio" },
-                        { "data": "Cant" },
-                        { "data": "Total" },
-                        { "data": "Eliminar" }
-                    ]
-                });
-        */
+        var rutStatic = "";
+        var productosObject = {};
+        listarRegiones();
+        btnEmpresa();
 
         var tbl = $('#listaProductos').DataTable({
             "searching": false,
@@ -617,26 +552,19 @@
             "aaData": datosTabla
         });
 
-        var countries = ["Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Anguilla", "Antigua &amp; Barbuda", "Argentina", "Armenia", "Aruba", "Australia", "Austria", "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bermuda", "Bhutan", "Bolivia", "Bosnia &amp; Herzegovina", "Botswana", "Brazil", "British Virgin Islands", "Brunei", "Bulgaria", "Burkina Faso", "Burundi", "Cambodia", "Cameroon", "Canada", "Cape Verde", "Cayman Islands", "Central Arfrican Republic", "Chad", "Chile", "China", "Colombia", "Congo", "Cook Islands", "Costa Rica", "Cote D Ivoire", "Croatia", "Cuba", "Curacao", "Cyprus", "Czech Republic", "Denmark", "Djibouti", "Dominica", "Dominican Republic", "Ecuador", "Egypt", "El Salvador", "Equatorial Guinea", "Eritrea", "Estonia", "Ethiopia", "Falkland Islands", "Faroe Islands", "Fiji", "Finland", "France", "French Polynesia", "French West Indies", "Gabon", "Gambia", "Georgia", "Germany", "Ghana", "Gibraltar", "Greece", "Greenland", "Grenada", "Guam", "Guatemala", "Guernsey", "Guinea", "Guinea Bissau", "Guyana", "Haiti", "Honduras", "Hong Kong", "Hungary", "Iceland", "India", "Indonesia", "Iran", "Iraq", "Ireland", "Isle of Man", "Israel", "Italy", "Jamaica", "Japan", "Jersey", "Jordan", "Kazakhstan", "Kenya", "Kiribati", "Kosovo", "Kuwait", "Kyrgyzstan", "Laos", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya", "Liechtenstein", "Lithuania", "Luxembourg", "Macau", "Macedonia", "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Marshall Islands", "Mauritania", "Mauritius", "Mexico", "Micronesia", "Moldova", "Monaco", "Mongolia", "Montenegro", "Montserrat", "Morocco", "Mozambique", "Myanmar", "Namibia", "Nauro", "Nepal", "Netherlands", "Netherlands Antilles", "New Caledonia", "New Zealand", "Nicaragua", "Niger", "Nigeria", "North Korea", "Norway", "Oman", "Pakistan", "Palau", "Palestine", "Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines", "Poland", "Portugal", "Puerto Rico", "Qatar", "Reunion", "Romania", "Russia", "Rwanda", "Saint Pierre &amp; Miquelon", "Samoa", "San Marino", "Sao Tome and Principe", "Saudi Arabia", "Senegal", "Serbia", "Seychelles", "Sierra Leone", "Singapore", "Slovakia", "Slovenia", "Solomon Islands", "Somalia", "South Africa", "South Korea", "South Sudan", "Spain", "Sri Lanka", "St Kitts &amp; Nevis", "St Lucia", "St Vincent", "Sudan", "Suriname", "Swaziland", "Sweden", "Switzerland", "Syria", "Taiwan", "Tajikistan", "Tanzania", "Thailand", "Timor L'Este", "Togo", "Tonga", "Trinidad &amp; Tobago", "Tunisia", "Turkey", "Turkmenistan", "Turks &amp; Caicos", "Tuvalu", "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "United States of America", "Uruguay", "Uzbekistan", "Vanuatu", "Vatican City", "Venezuela", "Vietnam", "Virgin Islands (US)", "Yemen", "Zambia", "Zimbabwe"];
 
-        //autocompletar(document.getElementById("input-Buscar"), countries);
-
-        var producto = [
-            ["277722293571", "Spray pro imprimante fondo blanco", "10790", "1", "10790", "<i class='delete-prod fas fa-minus-circle'></i>"],
-            ["277722293576", "Esmalte antiderrapante gris 1gl", "34990", "1", "34990", "<i class='delete-prod fas fa-minus-circle'></i>"]];
-        producto.push(["277722293574", "Spray pro imprimante fondo blanco", "10790", "1", "10790", "<i class='delete-prod fas fa-minus-circle'></i>"]);
-        var productosObject = {};
         $.ajax({
             url: "http://localhost/pos/public/Productos/listarBuscador",
             method: "POST",
             dataType: "JSON",
-            success: function (data) {
+            success: function(data) {
                 productosObject = data;
             },
         });
 
 
-        buscador(null, null);
+        //buscador(null);
+
         function buscador(productos) {
             iBuscar = $("#input-buscar");
 
@@ -663,7 +591,8 @@
             }
 
         }
-        $('#lista-productos-encontrados').on('click', 'p', function () {
+
+        $('#lista-productos-encontrados').on('click', 'p', function() {
             var idProd = $(this).attr('id');
             $("#input-buscar").val('');
             $("#productos-encontrados").addClass('fade');
@@ -684,11 +613,12 @@
                     if (agregar == 'si') {
                         var iconEliminar = "<a href='#'><i id='" + product.id_producto + "' class='delete-prod fas fa-minus-circle'></i></a>";
                         var arrProducto = [product.id_producto,
-                        product.nombre,
-                        product.precio_venta,
+                            product.nombre,
+                            product.precio_venta,
                             1,
-                        product.precio_venta,
-                            iconEliminar];
+                            product.precio_venta,
+                            iconEliminar
+                        ];
                         datosTabla.push(arrProducto);
                     }
                 }
@@ -697,7 +627,7 @@
             calcularTotal();
         });
 
-        $('#listaProductos').on('click', 'i', function () {
+        $('#listaProductos').on('click', 'i', function() {
             borrarProductoArray(datosTabla, $(this).attr('id'));
             $('#listaProductos').DataTable().clear().draw();
             $('#listaProductos').DataTable().rows.add(datosTabla).draw();
@@ -712,7 +642,7 @@
             }
             datosTabla = arr;
         }
-        
+
         function calcularTotal() {
             var valorTotal = 0;
             for (let i = 0; i < datosTabla.length; i++) {
@@ -723,50 +653,121 @@
         }
 
         $("#rutCliente").keypress(function(e) {
-        if(e.which == 13) {
-          var rutString = $("#rutCliente").val();
-          var dv = rutString[rutString.length -1];
-          var r = rutString.replace("-","");
-          var ru = r.replace(/\./g,'');
-          var rut = ru.substring(0, ru.length - 1);
+            if (e.which == 13) {
+                var rutString = $("#rutCliente").val();
+                var dv = rutString[rutString.length - 1];
+                var r = rutString.replace("-", "");
+                var ru = r.replace(/\./g, '');
+                var rut = ru.substring(0, ru.length - 1);
+                rutStatic = rut;
+                $.ajax({
+                    url: "http://localhost/pos/public/DatosPersonales/buscarPorRutDv/" + rut + "/" + dv,
+                    method: "POST",
+                    dataType: "JSON",
+                    success: function(data) {
+                        $("#textRutCliente").text(rut + "-" + dv);
+                        $("#textNombreCliente").text(data.nombres + " " + data.apellidos);
+                        $("#infoCliente").removeClass('d-none');
+                    },
+                });
 
-          $.ajax({
-            url: "http://localhost/pos/public/DatosPersonales/buscarPorRutDv/" + rut +"/"+ dv,
-            method: "POST",
-            dataType: "JSON",
-            success: function (data) {
-                $("#textRutCliente").text(rut + "-" + dv);
-                $("#textNombreCliente").text(data.nombres + " " + data.apellidos);
-                console.log('rut',data);
-                $("#infoCliente").removeClass('d-none');
-            },
+
+            }
         });
 
-
-        }
-      });
-      $('#addCli').on('click', function () {
-          switch ($("#iconCli").attr('class')) {
-            case "fas fa-caret-right":
+        $('#addCli').on('click', function() {
+            switch ($("#iconCli").attr('class')) {
+                case "fas fa-caret-right":
                     $("#iconCli").removeClass('fa-caret-right');
                     $("#iconCli").addClass('fa-caret-down');
-                  break;
-            case "fas fa-caret-down":
+                    break;
+                case "fas fa-caret-down":
                     $("#iconCli").removeClass('fa-caret-down');
                     $("#iconCli").addClass('fa-caret-right');
-                  break;
-          }
+                    break;
+            }
+        });
+
+        $('#btnCompra').on('click', function() {
+            var boleta_factura = '';
+            $('#boleta').prop('checked') ? boleta_factura = 'Factura' : boleta_factura = 'Boleta';
             
-          
+            var fecha = new Date().toISOString().slice(0, 19).replace('T', ' ');
+            var total_venta = $("#totalPagar").val();
+            var despacho = 0;
+            var rutCliente = $("#rutCli").text();
+            var idUsuario = buscarUsuario(rutStatic);
+            $.ajax({
+                url: "http://localhost/pos/public/SistemaVenta/nuevaVenta",
+                method: "POST",
+                data: {
+                    tipo_comprobante: boleta_factura,
+                    fecha_venta: fecha,
+                    total: total_venta,
+                    venta_despacho: despacho,
+                    cliente_fk: 19143313,
+                },
+                success: function() {
+                    alert('Venta Realizada -  //TablaVenta');
+                }
 
+            });
         });
 
-        $('#btnCompra').on('click', function () {
-             
-          
+        function buscarUsuario(rut) {
+            $.ajax({
+                url: "http://localhost/pos/public/Usuarios/buscarPorRutJson/" + rut,
+                method: "POST",
+                success: function(resp) {
+                    return resp;
+                }
+            });
+        }
 
-        });
+        function listarRegiones() {
+            $.ajax({
+                url: "http://localhost/pos/public/Region/listarRegiones",
+                method: "GET",
+                dataType: "JSON",
+                success: function(data) {
+                    var html = '<option value="">Región</option>';
+                    for (var count = 0; count < data.length; count++) {
+                        nomRegion = data[count].nombre_region.replace('Región del', '').replace('Región de', '');
 
+                        html += '<option value="' + data[count].id_region + '">' + nomRegion + '</option>';
+                    }
+                    $('#region').html(html);
+                }
+            });
+        }
+
+
+        function btnEmpresa() {
+            $('#asociarEmpresa').prop('checked') ? $('#buscar-rut').show() : $('#buscar-rut').hide();
+            $('#asociarEmpresa').prop('checked') ? $('.emp').show() : $('.emp').hide();
+        }
+
+        function listarComunas() {
+            var reg_id = $('#region').val();
+            var action = 'get_comuna';
+            if (reg_id != '') {
+                $.ajax({
+                    url: "http://localhost/pos/public/Comuna/listarComuna",
+                    method: "POST",
+                    data: {
+                        id_region: reg_id,
+                    },
+                    dataType: "JSON",
+                    success: function(data) {
+                        var html = '<option value="">Comuna</option>';
+                        for (var count = 0; count < data.length; count++) {
+                            html += '<option value="' + data[count].id_comuna + '">' + data[count].nombre_comuna + '</option>';
+                        }
+                        $('#comuna').html(html);
+                    }
+                });
+            }
+        }
     </script>
 </body>
 
