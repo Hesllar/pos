@@ -1,5 +1,8 @@
+<?php $session = session();
+?>
 <div id="usuarios" class="tab-pane <?php echo $e_usuario; ?>">
     <h3>Control de Usuarios </h3>
+    <input type="hidden" id="id_sucursal" name="id_sucursal" value="<?php echo $session->id_sucursal_fk ?>">
     <!-- Botón para agergar usuario-->
     <div class="d-flex justify-content-between margin-top 15">
         <!-- Botón para agergar productos-->
@@ -451,9 +454,7 @@
             });
         }
     });
-</script>
-<!-- Fin Funcion de validar formulario de registro usuario-->
-<script>
+    //Fin Funcion de validar formulario de registro usuario
     function text(x) {
         if (x == 0) {
             document.getElementById("rut_emp").style.display = "block",
@@ -475,9 +476,7 @@
             document.getElementById("seccion-prove").style.display = "none";
         return;
     }
-</script>
 
-<script>
     function text1(x) {
 
 
@@ -487,5 +486,17 @@
         } else
             document.getElementById("rubro").style.display = "none";
         return;
+    }
+
+    function datosSucursal() {
+        var id_sucursal = $("#id_sucursal").val();
+        console.log(id_sucursal);
+        $.ajax({
+            url: "<?php echo base_url(); ?>/Usuarios",
+            method: "GET",
+            data: {
+                id_sucursal_fk: id_sucursal
+            }
+        })
     }
 </script>
