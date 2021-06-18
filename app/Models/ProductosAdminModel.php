@@ -52,6 +52,14 @@ class ProductosAdminModel extends Model
         $data = $this->findAll();
         return $data;
     }
+    public function orderAllProducto()
+    {
+        $this->select('id_producto, nombre,CONCAT("$",FORMAT(precio_venta,"")) AS precio_venta, stock, categoria, imagen, precio_venta, descripcion');
+        $this->where('estado', 1);
+        $this->orderBy('id_producto', 'DESC');
+        $data = $this->findAll();
+        return $data;
+    }
 
     public function totalProductos()
     {
