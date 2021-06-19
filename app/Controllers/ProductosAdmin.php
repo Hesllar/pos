@@ -408,10 +408,6 @@ class ProductosAdmin extends BaseController
         echo view('footer');
     }
 
-
-
-
-
     public function reingresarProd($id, $estado = 1)
     {
         if (!isset($this->session->id_usuario)) {

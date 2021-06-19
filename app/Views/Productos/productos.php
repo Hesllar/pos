@@ -112,7 +112,7 @@
                                     <!-- Product Image Start -->
                                     <div class="pro-img">
                                         <a href="#">
-                                            <img class="primary-img" src="<?php echo $dato['imagen'] ?>" alt="single-product">
+                                            <img class="primary-img" src="img/productos/<?php echo $dato['imagen'] ?>" alt="single-product">
                                         </a>
                                     </div>
                                     <!-- Product Image End -->

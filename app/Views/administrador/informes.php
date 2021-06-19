@@ -62,10 +62,14 @@
                                     <input type="date" class="form-control" id="fecha_termino" name="fecha_termino" required>
                                 </div>
                                 <div class="form-group col-md-4">
-                                    <button type="submit" name="buscar" value="Buscar" class="btn btn-outline-success">Generar Reporte</button>
+                                    <button type="submit" name="buscar" value="1" class="btn btn-outline-success">Generar pdf</button>
                                 </div>
-                            </form>
+                                <div class="form-group col-md-4">
+                                    <button type="submit" name="buscar" value="2" class="btn btn-outline-success">Generar excel</button>
+                                </div>
                         </div>
+                        </form>
+
                     </div>
                 </div>
             </div>
@@ -96,7 +100,7 @@
             </div>
         </div>
     </div>
-
+    <script src="<?php echo base_url(); ?>/js/vendor/jquery-3.6.0.min.js"></script>
     <script>
         var paramTotal = [];
         var paramNombre = [];
