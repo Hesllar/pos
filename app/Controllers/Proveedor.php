@@ -55,7 +55,7 @@ class Proveedor extends BaseController
 		#Condicion para mostrar los productos mayor al stock critico
 
 		$regionAll = $this->region->findall();
-		$proveedor = $this->dtsProveedor();
+		$proveedor = $this->dtsProveedor($this->session->id_sucursal_fk);
 		$configuracion = $this->configuracion->First();
 		$data = ['datos' => $proveedor, 'configuracion' => $configuracion, 'region' => $regionAll];
 		$estados = [
@@ -189,7 +189,7 @@ class Proveedor extends BaseController
 	}*/
 
 
-	public function dtsProveedor()
+	public function dtsProveedor($id_sucur)
 	{
 		if (!isset($this->session->id_usuario)) {
 			return redirect()->to(base_url() . '/Acceder');
@@ -200,6 +200,8 @@ class Proveedor extends BaseController
 		$this->datospersonalesmodel->join('empresa as e', 'datos_personales.rut=e.DATOS_PERSONALES_rut');
 		$this->datospersonalesmodel->join('usuario as u', 'datos_personales.rut=u.rut_fk');
 		$this->datospersonalesmodel->join('proveedor as p', 'u.id_usuario=p.usuario_fk');
+		$this->datospersonalesmodel->where('u.estado_usuario', 1);
+		$this->datospersonalesmodel->where('u.id_sucursal_fk', $id_sucur);
 		$this->datospersonalesmodel->orderBy('id_proveedor', 'DESC');
 		$datos = $this->datospersonalesmodel->findAll();
 		return $datos;
@@ -210,7 +212,7 @@ class Proveedor extends BaseController
 		if (!isset($this->session->id_usuario)) {
 			return redirect()->to(base_url() . '/Acceder');
 		}
-		$proveedor = $this->dtsProveedor();
+		$proveedor = $this->dtsProveedor($this->session->id_sucursal_fk);
 		$productos = $this->productos->findAll();
 		$configuracion = $this->configuracion->First();
 		$data = ['datos' => $proveedor, 'configuracion' => $configuracion, 'productos' => $productos];
