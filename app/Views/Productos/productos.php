@@ -1,3 +1,7 @@
+<?php
+$user_session = session();
+?>
+
 <!-- Header Area End -->
 <!-- Shop Page Start -->
 <div class="main-shop-page pb-60" id="main-producto">
@@ -20,12 +24,6 @@
                             <?php } ?>
                         </ul>
                     </div>
-                    <!-- Single Banner Start -->
-                    <div class="single-sidebar single-banner zoom pt-20">
-                        <a href="#" class="hidden-sm"><img src="img/banner/8.jpg" alt="slider-banner"></a>
-                        <a href="#" class="visible-sm"><img src="img/banner/6.jpg" alt="slider-banner"></a>
-                    </div>
-                    <!-- Single Banner End -->
                 </div>
             </div>
             <!-- Sidebar Shopping Option End -->
@@ -56,14 +54,14 @@
                     <!-- Toolbar Short Area End -->
                 </div>
                 <!-- Grid & List View End -->
-                <div class="main-categorie">
+                <div class="main-categorie  border ">
                     <!-- Grid & List Main Area End -->
                     <div class="tab-content fix">
                         <div id="grid-view" class="tab-pane active">
                             <div class="row">
                                 <!-- Single Product Start -->
                                 <?php foreach ($datos as $dato) { ?>
-                                    <div class="col-lg-4 col-sm-6">
+                                    <div class="col-lg-4 col-sm-6  border ">
                                         <div class="single-product">
                                             <input class="id_produc" value="<?php echo $dato['id_producto']; ?>" hidden>
                                             <!-- Product Image Start -->
@@ -87,10 +85,20 @@
                                                     <del class="prev-price"><?php echo $configuracion['signo_moneda']; ?><?php echo $dato['precio_venta'] + 2000; ?></del>
                                                 </p>
                                                 <p>Stock: <?php echo $dato['stock'] ?></p>
-                                                <div class="pro-actions">
-                                                    <div class="actions-secondary">
-                                                        <a href="#" title="Añadir a favoritos"><i class="fa fa-heart"></i></a>
-                                                        <button id="<?php echo $dato['id_producto']; ?>" class="add-cart">Añadir al carrito</button>
+                                                <div class="pro-actions d-flex justify-content-center">
+                                                    <div class="actions-secondary ">
+                                                        <?php
+                                                        if ($user_session->id_usuario != null) {
+                                                        ?>
+                                                            <a href="#" title="Añadir a favoritos"><i class="fa fa-heart"></i></a>
+                                                            <button id="<?php echo $dato['id_producto']; ?>" class="add-cart">Añadir al carrito</button>
+
+                                                        <?php
+                                                        } else {
+                                                        ?>
+                                                            <a href=" <?php echo base_url() ?>/acceder" class="add-cart">Iniciar sesion</a>
+                                                        <?php
+                                                        } ?>
                                                     </div>
                                                 </div>
                                             </div>

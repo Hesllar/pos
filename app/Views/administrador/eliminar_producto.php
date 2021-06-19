@@ -24,7 +24,7 @@
                      <tr>
                          <td><?php echo $producto['id_producto']; ?></td>
                          <td><?php echo $producto['nombre']; ?></td>
-                         <td>$<?php echo $producto['precio_venta']; ?></td>
+                         <td><?php echo $producto['precio_venta']; ?></td>
                          <td><?php echo $producto['stock']; ?></td>
                          <td><?php echo $producto['categoria']; ?></td>
                          <td><a class="view" href="<?php echo base_url() . '/productosadmin/reingresarProd/' . $producto['id_producto']; ?>"> <i class="fa fa-upload"></i></i></a>
