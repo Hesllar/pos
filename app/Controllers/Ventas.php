@@ -28,6 +28,7 @@ class Ventas extends BaseController
 
 	public function __construct()
 	{
+
 		$this->session = session();
 		$this->usuarios = new Usuarios;
 		$this->empleados = new Empleados;
@@ -215,10 +216,10 @@ class Ventas extends BaseController
 	{
 
 		$this->request = \Config\Services::request();
-		date_default_timezone_set("America/Santiago");
+
 		$ultima_venta = $this->ventas->orderBy('id_venta', 'DESC')->first();
 		$valores_venta = $this->calcularValores($this->request->getVar('total_venta_web'));
-
+		date_default_timezone_set("America/Santiago");
 		$this->ventas->save([
 			'tipo_comprobante' => $this->request->getVar('tipo_comprobante'),
 			'fecha_venta' => date('Y-m-d H:i:s'),
@@ -253,6 +254,7 @@ class Ventas extends BaseController
 	function agregarDetalleVenta()
 	{
 		$this->request = \Config\Services::request();
+
 
 		$ultima_venta = $this->ventas->orderBy('id_venta', 'DESC')->first();
 		//$id_venta_pk = $this->request->getVar('ultima_venta');

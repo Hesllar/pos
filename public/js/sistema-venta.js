@@ -197,11 +197,12 @@ $('#btnCompra').on('click', function() {
         },
         success: function() {
             alert('Venta Realizada -  //TablaVenta');
+            guardarDetalle();
         }
 
     });
 });
-/*
+
 function buscarUsuario(rut) {
     $.ajax({
         url: "http://localhost/pos/public/Usuarios/buscarPorRutJson/" + rut,
@@ -259,4 +260,21 @@ function listarComunas() {
     }
 }
 
-*/
+function guardarDetalle()
+{
+    var arrayProductos = datosTabla;
+    var final = [];
+     for(i = 0; i < arrayProductos.length; i++){
+        lista = [arrayProductos[i][0],arrayProductos[i][3]];
+        final.push(lista);
+    }
+    $.ajax({
+        url: "http://localhost/pos/public/Ventas/agregarDetalleVenta",
+        method: "POST",
+        data: {
+             arrayProductosDetalle : final,
+            },
+    }   
+    )
+}
+
