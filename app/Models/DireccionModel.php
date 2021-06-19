@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Models;
+
 use CodeIgniter\Model;
 
 class DireccionModel extends Model
@@ -14,12 +15,14 @@ class DireccionModel extends Model
     protected $returnType     = 'array';
     protected $useSoftDeletes = false;
 
-    protected $allowedFields = ['calle',
-                                'numero',
-                                'piso',
-                                'referencia',
-                                'ciudad'
-                                ];
+    protected $allowedFields = [
+        'calle',
+        'numero',
+        'piso',
+        'referencia',
+        'ciudad',
+        'comuna_fk'
+    ];
 
     protected $useTimestamps = false;
     /*
@@ -32,4 +35,3 @@ class DireccionModel extends Model
     protected $validationMessages = [];
     protected $skipValidation     = false;
 }
-?>

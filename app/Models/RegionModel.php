@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Models;
+
 use CodeIgniter\Model;
 
 class RegionModel extends Model
@@ -27,4 +28,3 @@ class RegionModel extends Model
     protected $validationMessages = [];
     protected $skipValidation     = false;
 }
-?>

@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Models;
+
 use CodeIgniter\Model;
 
 class EmpleadoModel extends Model
@@ -14,10 +15,10 @@ class EmpleadoModel extends Model
     protected $returnType     = 'array';
     protected $useSoftDeletes = false;
 
-   /* protected $allowedFields = ['no tiene atributos']; */
+    protected $allowedFields = ['cargo_fk', 'usuario_fk'];
 
     protected $useTimestamps = false;
-    
+
     /*
     protected $createdField  = 'fecha_registro';
     protected $updatedField  = 'fecha_entrega';
@@ -28,4 +29,3 @@ class EmpleadoModel extends Model
     protected $validationMessages = [];
     protected $skipValidation     = false;
 }
-?>
