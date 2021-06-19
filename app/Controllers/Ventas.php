@@ -56,7 +56,6 @@ class Ventas extends BaseController
 		$v_boletas = $this->ventas->where('tipo_comprobante', 'boleta')->findAll();
 		$facturas = $this->ventas->where('tipo_comprobante', 'factura')->findAll();
 
-
 		$test = ['msje' => 'ddd'];
 
 		foreach ($v_boletas as $boleta) {

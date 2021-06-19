@@ -45,31 +45,31 @@
                     </div>
                 </div>
             </div>
-            <br>
+        </div>
+        <br>
+        <div class="container-fluid">
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-12">
                     <div class="panel">
-                        <h4>Generar Reportes Ventas por Periodo (Excel)</h4>
+                        <h4 class="d-flex justify-content-center">Generar Reportes Ventas por Periodo (Excel)</h4>
                         <br>
-                        <div class="form-row">
+                        <div class="form-row d-flex justify-content-center">
                             <form action="<?php echo base_url() ?>/Estadistica/excelVentas" method="POST">
-                                <div class="form-group col-md-12">
+                                <div class="form-group col-6">
                                     <label for="">Fecha Inicio</label>
                                     <input type="date" class="form-control" id="fecha_inicio" name="fecha_inicio" required>
                                 </div>
-                                <div class="form-group col-md-12">
+                                <div class="form-group col-6">
                                     <label for="">Fecha Termino</label>
                                     <input type="date" class="form-control" id="fecha_termino" name="fecha_termino" required>
                                 </div>
-                                <div class="form-group col-md-4">
-                                    <button type="submit" name="buscar" value="1" class="btn btn-outline-success">Generar pdf</button>
-                                </div>
-                                <div class="form-group col-md-4">
+
+                                <div class="form-group col-6 d-flex justify-content-around">
+                                    <button type="submit" name="buscar" value="1" class="btn btn-outline-success" target="_blank">Generar pdf</button>
                                     <button type="submit" name="buscar" value="2" class="btn btn-outline-success">Generar excel</button>
                                 </div>
                         </div>
                         </form>
-
                     </div>
                 </div>
             </div>

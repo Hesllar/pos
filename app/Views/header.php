@@ -82,10 +82,10 @@ $user_session = session();
                             <div class="header-top-right">
                                 <ul class="header-list-menu f-right">
                                     <!-- Language Start -->
-                             
+
                                     <!-- Language End -->
                                     <!-- Currency Start -->
-                             
+
                                     <!-- Currency End -->
                                 </ul>
                                 <!-- Header-list-menu End -->
@@ -189,8 +189,17 @@ $user_session = session();
                                                     <input id="tt" name="tt" value="50" hidden>
                                                     <h5>total: $<span class="f-right total">0</span></h5>
                                                     <div class="cart-actions">
-                                                        <!--<a href="#" id="realizar-compra" class="checkout">Comprar</a> -->
-                                                        <button type="submit" id="realizar-compra" class="checkout" data-toggle="modal" data-target="#comprarProducto">Ver carrito</a>
+                                                        <?php
+                                                        if ($user_session->id_usuario != null) {
+                                                        ?>
+                                                            <button type="submit" id="realizar-compra" class="checkout" data-toggle="modal" data-target="#comprarProducto">Ver carrito</a>
+                                                            <?php
+                                                        } else {
+                                                            ?>
+                                                                <button type="submit" id="realizar-compra" class="checkout" data-toggle="modal" data-target="#comprarProducto" hidden>Ver carrito</a>
+                                                                <?php
+                                                            } ?>
+                                                                <!--<a href="#" id="realizar-compra" class="checkout">Comprar</a> -->
                                                     </div>
                                                 </div>
                                             </li>
