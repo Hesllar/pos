@@ -53,6 +53,15 @@ class ProductosAdminModel extends Model
         $data = $this->findAll();
         return $data;
     }
+    public function orderProductoDelete($id_sucur)
+    {
+        $this->select('id_producto, nombre,CONCAT("$",FORMAT(precio_venta,"")) AS precio_venta, stock, categoria');
+        $this->where('estado', 0);
+        $this->where('id_sucursal_fk', $id_sucur);
+        $this->orderBy('id_producto', 'DESC');
+        $data = $this->findAll();
+        return $data;
+    }
     public function orderAllProducto()
     {
         $this->select('id_producto, nombre,CONCAT("$",FORMAT(precio_venta,"")) AS precio_venta, stock, categoria, imagen, precio_venta, descripcion');

@@ -241,7 +241,7 @@ class Estadistica extends BaseController
         $pdf = new \FPDF('P', 'mm', 'letter');
         $pdf->AddPage();
         $pdf->SetMargins(5, 10, 10);
-        $pdf->SetFont("Arial", 'B', 10);
+        $pdf->SetFont("Helvetica", 'B', 10);
         $pdf->Image("img/logo/logo1.png", 10, 7);
         $pdf->Cell(0, 5, utf8_decode("Reporte Ventas"), 0, 1, 'C');
         $pdf->Ln(10);
@@ -249,7 +249,7 @@ class Estadistica extends BaseController
         $pdf->Cell(50, 5, utf8_decode("Fecha compra"), 1, 0, "C");
         $pdf->Cell(50, 5, utf8_decode("Nombres"), 1, 0, "C");
         $pdf->Cell(30, 5, utf8_decode("Comprobante"), 1, 0, "C");
-        $pdf->Cell(10, 5, utf8_decode("C/producto"), 1, 0, "C");
+        $pdf->Cell(10, 5, utf8_decode("C/p"), 1, 0, "C");
         $pdf->Cell(30, 5, utf8_decode("Forma pago"), 1, 0, "C");
         $pdf->Cell(20, 5, utf8_decode("total"), 1, 0, "C");
         foreach ($ventaEmp as $venta) {

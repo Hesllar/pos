@@ -264,7 +264,6 @@
                                              <input id="compraEstatica" type="hidden" value="<?php echo $totalCompra; ?>" />
                                          </th>
                                          <td><strong><span id="totalCompra" class="amount"><?php echo $totalCompra; ?></span></strong>
-
                                          </td>
                                      </tr>
                                  </tfoot>
@@ -286,7 +285,6 @@
              </div>
          </div>
      </div>
-
      <div class="pull-right ">
          <button type="button" id="btnIniciarSesion" style="display: none;" data-toggle="modal" data-target="#iniciarSesion">
              ++
@@ -298,37 +296,21 @@
              <div class="modal-content">
                  <div class="modal-header">
                      <h5 class="modal-title" id="exampleModalLabel">Iniciar Sesión</h5>
-                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                         <span aria-hidden="true">&times;</span>
-                     </button>
+                     <a href="<?php echo base_url(); ?>/Productos"><button type="button" class="close">
+                             <span aria-hidden="true">&times;</span>
+                         </button></a>
                  </div>
-                 <div class="modal-body">
-                     <div class="row">
-                         <div class="col-sm-12">
-                             <p class="pro-img">Inicie sesión para continuar la compra, si no está registrado
-                                 <a href="#">¡Registrese Aqu&iacute;!</a>
-                             </p>
+                 <div class="row d-flex justify-content-around">
+                     <div class="col-7">
+                         <div class="modal-footer">
+                             <a href="<?php echo base_url(); ?>/Acceder"><button type="button" class="newsletter-btn">Acceder</button></a>
                          </div>
                      </div>
-                     <div class="row">
-                         <div class="col-sm-12">
-                             <fieldset>
-                                 <div class="form-group">
-                                     <label class="control-label" for="nombre_usuario">Nombre de usuario</label>
-                                     <div class="col-sm-10 pro-img">
-                                         <input type="text" class="form-control" id="nombre_usuario" name="nombre_usuario" placeholder="Nombre de usuario">
-                                     </div>
-                                     <label class="control-label" for="nombre_usuario">Contrase&ntilde;a</label>
-                                     <div class="col-sm-10">
-                                         <input type="text" class="form-control" id="clave" name="clave" placeholder="Contraseña">
-                                     </div>
-                                 </div>
-                             </fieldset>
+                     <div class="col-7">
+                         <div class="modal-footer d-flex justify-content-center">
+                             <a href="<?php echo base_url(); ?>/Registro"><button type="button" class="newsletter-btn">Registrarse</button></a>
                          </div>
                      </div>
-                 </div>
-                 <div class="modal-footer">
-                     <button type="submit" class="newsletter-btn">Acceder</button>
                  </div>
              </div>
          </div>
