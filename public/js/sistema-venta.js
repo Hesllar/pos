@@ -26,10 +26,10 @@ $("#rutCliente").on({
 var datosTabla = new Array();
 var rutStatic = "";
 var productosObject = {};
-/*
+
 listarRegiones();
 btnEmpresa();
-*/
+
 var tbl = $('#listaProductos').DataTable({
     "searching": false,
     "paging": false,
@@ -179,7 +179,7 @@ $('#addCli').on('click', function() {
 $('#btnCompra').on('click', function() {
     var boleta_factura = '';
     $('#boleta').prop('checked') ? boleta_factura = 'Factura' : boleta_factura = 'Boleta';
-    
+
     var fecha = new Date().toISOString().slice(0, 19).replace('T', ' ');
     var total_venta = $("#totalPagar").val();
     var despacho = 0;
@@ -258,6 +258,7 @@ function listarComunas() {
             }
         });
     }
+
 }
 
 function guardarDetalle()
@@ -276,5 +277,8 @@ function guardarDetalle()
             },
     }   
     )
+}
+
+
 }
 
