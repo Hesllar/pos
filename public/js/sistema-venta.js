@@ -261,24 +261,19 @@ function listarComunas() {
 
 }
 
-function guardarDetalle()
-{
+function guardarDetalle() {
     var arrayProductos = datosTabla;
     var final = [];
-     for(i = 0; i < arrayProductos.length; i++){
-        lista = [arrayProductos[i][0],arrayProductos[i][3]];
+    for (i = 0; i < arrayProductos.length; i++) {
+        lista = [arrayProductos[i][0], arrayProductos[i][3]];
         final.push(lista);
     }
     $.ajax({
         url: "http://localhost/pos/public/Ventas/agregarDetalleVenta",
         method: "POST",
         data: {
-             arrayProductosDetalle : final,
-            },
-    }   
-    )
+            arrayProductosDetalle: final,
+        },
+    })
 }
-
-
-
 
