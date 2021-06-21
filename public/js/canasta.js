@@ -214,7 +214,7 @@ function checkboxDolar(){
             success: function(data){
                 if($("#dolar").prop('checked')){
                 var sumarCostoComuna = (Number(sacarPunto) + Number(data.costo_comuna));
-                var valorDolar = Math.trunc(sumarCostoComuna / 719.50);
+                var valorDolar = parseFloat(sumarCostoComuna / 719.50).toFixed(2);
                 totalCompra.innerHTML = 'USD' + valorDolar;
                 }else{       
                     var sumarCostoComuna = (Number(sacarPunto) + Number(data.costo_comuna));
@@ -228,7 +228,7 @@ function checkboxDolar(){
     if($("#dolar").prop('checked')){
             var  sacar$ =  total.replace('$','');
             var  sacarPunto =  sacar$.replace('.','');
-            var valorDolar = Math.trunc(sacarPunto / 719.50);
+            var valorDolar = parseFloat(sacarPunto / 719.50).toFixed(2);
             totalCompra.innerHTML = 'USD' + valorDolar;
         }else{
             totalCompra.innerHTML = total;

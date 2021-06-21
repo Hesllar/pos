@@ -32,4 +32,16 @@ class ProveedorModel extends Model
     protected $validationRules    = [];
     protected $validationMessages = [];
     protected $skipValidation     = false;
+
+
+    public function ordenDatos($id_user)
+    {
+        $this->select('fecha_emision,valor_total,estado_orden,dt.nombres AS nombres');
+        $this->join('orden_de_compra as oc', 'proveedor.id_proveedor=oc.proveedor_fk');
+        $this->join('empleado as e', 'oc.empleado_fk=e.id_empleado');
+        $this->join('usuario as u', 'e.usuario_fk=u.id_usuario');
+        $this->join('datos_personales as dt', 'u.rut_fk=dt.rut');
+        $this->where('proveedor.usuario_fk', $id_user);
+        return $this->findAll();
+    }
 }

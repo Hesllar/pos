@@ -10,12 +10,12 @@ $session = session();
     <div class="container">
         <div class="row">
             <div class="col-sm-12">
-                <div class="pull-right">
+                <!--<div class="pull-right">
                     <button type="button" class="btn-submit" data-toggle="modal" data-target="#exampleModal">
                         <i class="fa fa-plus"></i>
                         <span>Agregar venta</span>
                     </button>
-                </div>
+                </div>-->
 
                 <!-- Ventana Emergente -->
                 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -254,7 +254,7 @@ $session = session();
                                             <div class="row pull-right billing-address" id="total-des">
                                                 <div class="form-group col-sm-9">
                                                     <span class="fuente-parrafo">Total</span>
-                                                    <span class="fuente-titulo"><input type="text" id="totales"></span>
+                                                    <span class="fuente-titulo"><input type="text" id="totales" disabled></span>
                                                 </div>
                                             </div>
 
