@@ -21,6 +21,7 @@
                                 <li><a class="<?php echo $e_usuario; ?>" href="<?php echo base_url() ?>/usuarios">Usuarios</a></li>
                                 <li><a class="<?php echo $e_notacredito; ?>" href="<?php echo base_url() ?>/notascredito" hidden>Notas de cr&eacute;dito</a></li>
                                 <li><a class="<?php echo $e_estadistica; ?>" href="<?php echo base_url() ?>/Estadistica">Reportes</a></li>
+
                                 <li><a href="<?php echo base_url() ?>/Usuarios/logout">Cerrar Sesión</a></li>
                             </ul>
                         </div>

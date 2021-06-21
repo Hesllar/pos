@@ -2,7 +2,6 @@
 
     $user_session = session();
     ?>
-
  <!doctype html>
  <html class="no-js" lang="en-US">
 
@@ -81,15 +80,27 @@
                          <!-- Header Top Right Start -->
                          <div class="col-lg-4 col-md-12">
                              <div class="header-top-right">
-                                 <ul class="header-list-menu f-right">
-                                     <!-- Language Start -->
-
-                                     <!-- Language End -->
-                                     <!-- Currency Start -->
-
-                                     <!-- Currency End -->
-                                 </ul>
-                                 <!-- Header-list-menu End -->
+                                 <?php
+                                    if ($user_session->id_usuario != null) {
+                                    ?>
+                                     <?php
+                                        if ($user_session->id_sucursal_fk == 1) {
+                                        ?>
+                                         <p>Sucursal:1</p>
+                                         <p>Dirección: Av.Industrial 1250, Valparaiso</p>
+                                     <?php } ?>
+                                     <?php
+                                        if ($user_session->id_sucursal_fk == 2) {
+                                        ?>
+                                         <p>Sucursal:2</p>
+                                         <p>Dirección: Lomos plateado 321, Viña del mar</p>
+                                     <?php } ?>
+                                     <?php
+                                        if ($user_session->id_sucursal_fk == 3) {
+                                        ?>
+                                     <?php } ?>
+                                 <?php }
+                                    ?>
                              </div>
                          </div>
                          <!-- Header Top Right End -->

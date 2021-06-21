@@ -508,6 +508,6 @@ class Estadistica extends BaseController
     {
         $this->response = \Config\Services::response();
         $this->response->setHeader('Content-Type', 'application/pdf');
-        readfile('C:\Users\hesll\Desktop/' . 'beta.pdf');
+        readfile('C:\xampp\htdocs\pos\public\Manual/' . 'Manual_Usuario.pdf');
     }
 }
