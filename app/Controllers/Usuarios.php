@@ -66,7 +66,6 @@ class Usuarios extends BaseController
 		if (!isset($this->session->id_usuario)) {
 			return redirect()->to(base_url() . '/Acceder');
 		}
-
 		$nvl_acceso = $this->nivel->findAll();
 		$region = $this->region->findAll();
 		$usuario = $this->usuarioModal->DatosPersonalesSucur1($this->session->id_sucursal_fk);

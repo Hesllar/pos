@@ -171,7 +171,6 @@
 
             </div>
         </div>
-
     </div>
     <div id="respuesta"></div>
     <div class="table-responsive">
