@@ -1,3 +1,6 @@
+<?php
+$user_session = session();
+?>
 <!-- Slider Area Start -->
 <div class="slider-area slider-style-three">
     <div class="container">
@@ -5,7 +8,7 @@
             <div class="col-md-8">
                 <div class="slider-wrapper theme-default">
                     <!-- Slider Background  Image Start-->
-                    
+
                     <div id="slider" class="nivoSlider">
                         <a href="shop.html"> <img src="img/slider/5.jpg" data-thumb="img/slider/5.jpg" alt="" title="#slider-1-caption1" /></a>
                         <a href="shop.html"><img src="img/slider/6.jpg" data-thumb="img/slider/6.jpg" alt="" title="#slider-1-caption2" /></a>
@@ -90,12 +93,19 @@
                                             <p><?php echo $configuracion['signo_moneda']; ?><span><?php echo $destacado['precio_venta']; ?></span>
                                                 <del class="prev-price"><?php echo $configuracion['signo_moneda']; ?><?php echo $destacado['precio_venta'] + 2000; ?></del>
                                             </p>
-                                            <div class="pro-actions">
-                                                <div class="actions-secondary">
-                                                    <a href="wishlist.html" title="Añadir a favoritos"><i class="fa fa-heart"></i></a>
-                                                    <button id="<?php echo $destacado['id_producto']; ?>" class="add-cart" title="Añadir al carro">Añadir carro</button>
-                                                    <!-- <a class="add-cart" href="" data-toggle="tooltip" title="Añadir al carro">Añadir</a>-->
-
+                                            <div class="pro-actions d-flex justify-content-center">
+                                                <div class="actions-secondary ">
+                                                    <?php
+                                                    if ($user_session->id_usuario != null) {
+                                                    ?>
+                                                        <a href="#" title="Añadir a favoritos"><i class="fa fa-heart"></i></a>
+                                                        <button id="<?php echo $destacado['id_producto']; ?>" class="add-cart">Añadir al carrito</button>
+                                                    <?php
+                                                    } else {
+                                                    ?>
+                                                        <a href=" <?php echo base_url() ?>/acceder" class="add-cart">Iniciar sesion</a>
+                                                    <?php
+                                                    } ?>
                                                 </div>
                                             </div>
                                         </div>
@@ -126,12 +136,12 @@
                                 <!-- Single Product Start -->
                                 <div class="single-product">
 
-                                
-                                
-                                
+
+
+
                                 </div>
-            
-                 
+
+
                             </div>
                             <!-- New Products Activation End -->
                         </div>
@@ -211,38 +221,38 @@
 <div class="brand-area pb-60">
     <div class="container">
         <!-- Brand Banner Start -->
-         <div class="brand-banner owl-carousel">
-                                <div class="single-brand">
-                                    <a href="#"><img class="img" src="<?php echo base_url(); ?>/img/brand/1.png" alt="brand-image"></a>
-                                </div>
-                                <div class="single-brand">
-                                    <a href="#"><img src="<?php echo base_url(); ?>/img/brand/2.png" alt="brand-image"></a>
-                                </div>
-                                <div class="single-brand">
-                                    <a href="#"><img src="<?php echo base_url(); ?>/img/brand/3.png" alt="brand-image"></a>
-                                </div>
-                                <div class="single-brand">
-                                    <a href="#"><img src="<?php echo base_url(); ?>/img/brand/4.png" alt="brand-image"></a>
-                                </div>
-                                <div class="single-brand">
-                                    <a href="#"><img src="<?php echo base_url(); ?>/img/brand/5.png" alt="brand-image"></a>
-                                </div>
-                                <div class="single-brand">
-                                    <a href="#"><img class="img" src="<?php echo base_url(); ?>/img/brand/1.png" alt="brand-image"></a>
-                                </div>
-                                <div class="single-brand">
-                                    <a href="#"><img src="<?php echo base_url(); ?>/img/brand/2.png" alt="brand-image"></a>
-                                </div>
-                                <div class="single-brand">
-                                    <a href="#"><img src="<?php echo base_url(); ?>/img/brand/3.png" alt="brand-image"></a>
-                                </div>
-                                <div class="single-brand">
-                                    <a href="#"><img src="<?php echo base_url(); ?>/img/brand/4.png" alt="brand-image"></a>
-                                </div>
-                                <div class="single-brand">
-                                    <a href="#"><img src="<?php echo base_url(); ?>/img/brand/5.png" alt="brand-image"></a>
-                                </div>
-                            </div>
+        <div class="brand-banner owl-carousel">
+            <div class="single-brand">
+                <a href="#"><img class="img" src="<?php echo base_url(); ?>/img/brand/1.png" alt="brand-image"></a>
+            </div>
+            <div class="single-brand">
+                <a href="#"><img src="<?php echo base_url(); ?>/img/brand/2.png" alt="brand-image"></a>
+            </div>
+            <div class="single-brand">
+                <a href="#"><img src="<?php echo base_url(); ?>/img/brand/3.png" alt="brand-image"></a>
+            </div>
+            <div class="single-brand">
+                <a href="#"><img src="<?php echo base_url(); ?>/img/brand/4.png" alt="brand-image"></a>
+            </div>
+            <div class="single-brand">
+                <a href="#"><img src="<?php echo base_url(); ?>/img/brand/5.png" alt="brand-image"></a>
+            </div>
+            <div class="single-brand">
+                <a href="#"><img class="img" src="<?php echo base_url(); ?>/img/brand/1.png" alt="brand-image"></a>
+            </div>
+            <div class="single-brand">
+                <a href="#"><img src="<?php echo base_url(); ?>/img/brand/2.png" alt="brand-image"></a>
+            </div>
+            <div class="single-brand">
+                <a href="#"><img src="<?php echo base_url(); ?>/img/brand/3.png" alt="brand-image"></a>
+            </div>
+            <div class="single-brand">
+                <a href="#"><img src="<?php echo base_url(); ?>/img/brand/4.png" alt="brand-image"></a>
+            </div>
+            <div class="single-brand">
+                <a href="#"><img src="<?php echo base_url(); ?>/img/brand/5.png" alt="brand-image"></a>
+            </div>
+        </div>
         <!-- Brand Banner End -->
     </div>
 </div>

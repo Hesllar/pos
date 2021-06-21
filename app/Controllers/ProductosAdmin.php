@@ -9,11 +9,14 @@ use App\Models\ConfiguracionModel;
 use App\Models\CategoriaModel;
 use App\Controllers\Categorias;
 use App\Models\DetalleProductoModel;
+use App\Models\DetalleOrdenCompraModel;
+
 
 
 
 class ProductosAdmin extends BaseController
 {
+    protected $detalle_orden;
     protected $productos;
     protected $categorias;
     protected $request;
@@ -25,7 +28,7 @@ class ProductosAdmin extends BaseController
 
     public function __construct()
     {
-
+        $this->detalle_orden = new DetalleOrdenCompraModel;
         $this->detalle_productoModel = new DetalleProductoModel;
         $this->productos = new ProductosAdminModel;
         $this->configuracion = new ConfiguracionModel;
@@ -435,15 +438,16 @@ class ProductosAdmin extends BaseController
         $this->productos->update($id, ['estado' => $estado]);
         return redirect()->to(base_url() . '/productosadmin/pagEliminarPro ');
     }
-    public function eliminar($id)
+    public function eliminar($id, $id_detalle, $pro_orden)
     {
         if (!isset($this->session->id_usuario)) {
             return redirect()->to(base_url() . '/Acceder');
         }
         $this->request = \Config\Services::request();
         //$producto_eliminado = $this->productos->where('id_producto', $id)->first();
-        //$this->detalle_productoModel->where('id_detalle_prod', $producto_eliminado['detalle_fk'])->delete();
         $this->productos->where('id_producto', $id)->delete();
+        $this->detalle_orden->where('id_producto_pk', $pro_orden)->delete();
+        //$this->detalle_productoModel->where('id_detalle_prod', $id_detalle)->delete();
         return redirect()->to(base_url() . '/productosadmin/pagEliminarPro ');
     }
 }

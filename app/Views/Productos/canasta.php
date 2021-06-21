@@ -45,13 +45,13 @@
                                  <div class="col-md-6">
                                      <div class="checkout-form-list">
                                          <label>Nombre quien recibe <span class="required">*</span></label>
-                                         <input id="nombre_recibe" type="text" placeholder="" />
+                                         <input id="nombre_recibe" type="text" placeholder="" required />
                                      </div>
                                  </div>
                                  <div class="col-md-5">
                                      <div class="checkout-form-list mb-30">
                                          <label>Teléfono <span class="required">*</span></label>
-                                         <input id="tel_contacto col-md-5" type="text" placeholder="87654321" />
+                                         <input id="tel_contacto col-md-5" type="text" placeholder="87654321" required />
                                      </div>
                                  </div>
                                  <div class="col-md-11">
@@ -315,9 +315,6 @@
              </div>
          </div>
      </div>
-
-
-
 
      <!-- Canasta-->
      <script src="<?php echo base_url() ?>/js/canasta.js"></script>

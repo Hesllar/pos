@@ -1,3 +1,6 @@
+<?php
+$user_session = session();
+?>
 <!doctype html>
 <html class="no-js" lang="es-ES">
 
@@ -42,7 +45,7 @@
     <!-- Toggle -->
     <link rel="stylesheet" href="css/toggle.min.css">
     <!-- DataTables -->
-    
+
     <!-- modernizr js -->
     <script src="<?php echo base_url(); ?>/js/vendor/modernizr-2.8.3.min.js"></script>
 </head>
@@ -55,10 +58,17 @@
     <div class="wrapper">
         <!-- Header Area Start -->
         <!-- Breadcrumb Start -->
+
         <div class="breadcrumb-area">
             <div class="container">
                 <div class="title-pos breadcrumb">
                     <h2><i class="fas fa-cash-register"></i> Punto de Ventas</h2>
+                </div>
+                <div class="cart-box text-right">
+                    <h3 class="d-flex justify-content-end">Vendedor:
+                        <?php echo $user_session->nom_usuario; ?>
+                        <i class="fa fa-user fa-fw"></i>
+                    </h3>
                 </div>
             </div>
             <!-- Container End -->
@@ -236,7 +246,7 @@
                                                                     <i class="fas fa-registered"></i>
                                                                 </div>
                                                             </div>
-                                                            <select class=" country-select form-control" id="region" onclick="listarComunas()" >
+                                                            <select class=" country-select form-control" id="region" onclick="listarComunas()">
                                                                 <option value="">Región</option>
                                                             </select>
                                                         </div>
@@ -455,7 +465,12 @@
                                             <span>Realizar Venta</span>
                                         </button>
                                     </div>
+
                                 </div>
+
+                            </div>
+                            <div class="text-right">
+                                <a href="<?php echo base_url() ?>/Usuarios/logout" class="newsletter-btn">Cerrar Sesión</a>
                             </div>
                         </div>
                     </div>
@@ -500,7 +515,7 @@
 
     <script src="js/sistema-venta.js"></script>
 
-    
+
 </body>
 
 </html>
