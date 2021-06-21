@@ -4,28 +4,13 @@ $user_session = session();
 
 <!-- Header Area End -->
 <!-- Shop Page Start -->
-<div class="main-shop-page pb-60" id="main-producto">
-    <div class="container">
+<div class="main-shop-page pb-60 " id="main-producto">
+    <div class="container ">
         <!-- Row End -->
-        <div class="row">
+        <div class="row d-flex justify-content-center">
 
             <!-- Sidebar Shopping Option Start -->
-            <div class="col-lg-3  order-2">
-                <div class="sidebar white-bg">
-                    <div class="single-sidebar">
-                        <div class="group-title">
-                            <h2 id="catt">categorias</h2>
-                        </div>
-                        <ul>
-                            <li><a href="#">Ver todo</a></li>
-                            <?php foreach ($categorias as $categoria) { ?>
-                                <input type="hidden" id="id_cate" name="id_cate" value="<?php echo $categoria['id_categoria'] ?>">
-                                <li><a href="#"><?php echo $categoria['nombre_categoria']; ?></a></li>
-                            <?php } ?>
-                        </ul>
-                    </div>
-                </div>
-            </div>
+
             <!-- Sidebar Shopping Option End -->
             <!-- Product Categorie List Start -->
             <div class="col-lg-9 order-lg-2">
@@ -66,20 +51,14 @@ $user_session = session();
                                             <input class="id_produc" value="<?php echo $dato['id_producto']; ?>" hidden>
                                             <!-- Product Image Start -->
                                             <div class="pro-img">
-                                                <a href="product.html">
-                                                    <img class="primary-img" src="<?php echo base_url() . '/img/productos/' . $dato['imagen']; ?>" alt="imagen">
-                                                </a>
+
+                                                <img class="primary-img" src="<?php echo base_url() . '/img/productos/' . $dato['imagen']; ?>" alt="imagen">
+
                                             </div>
                                             <!-- Product Image End -->
                                             <!-- Product Content Start -->
                                             <div class="pro-content">
-                                                <div class="product-rating">
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                </div>
+
                                                 <h4><a class="nombre-producto" href="#"><?php echo $dato['nombre']; ?></a></h4>
                                                 <p><?php echo $configuracion['signo_moneda']; ?><span><?php echo $dato['precio_venta']; ?></span>
                                                     <del class="prev-price"><?php echo $configuracion['signo_moneda']; ?><?php echo $dato['precio_venta'] + 2000; ?></del>
@@ -128,26 +107,15 @@ $user_session = session();
                                     <!-- Product Content Start -->
 
                                     <div class="pro-content">
-                                        <div class="product-rating">
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                        </div>
-
                                         <h4><?php echo $dato['nombre']; ?></h4>
                                         <p><span class="price"><?php echo $configuracion['signo_moneda']; ?><?php echo $dato['precio_venta']; ?></span>
                                             <!--<del class="prev-price">$32.00</del> Precio oferta-->
                                         </p>
                                         <p> <?php echo $dato['descripcion']; ?></p>
                                         <div class="pro-actions">
-                                            <div class="actions-secondary">
-                                                <a href="wishlist.html" data-toggle="tooltip" title="Añadir a favoritos"><i class="fa fa-heart"></i></a>
-                                            </div>
+
                                         </div>
                                     </div>
-
                                     <!-- Product Content End -->
                                 </div>
                             <?php } ?>

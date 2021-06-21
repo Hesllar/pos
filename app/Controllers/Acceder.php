@@ -78,12 +78,12 @@ class Acceder extends BaseController
 					} elseif ($datosUsuario['nvl_acceso_fk'] == 20) {
 						return redirect()->to(base_url() . '/proveedor');
 					} elseif ($datosUsuario['nvl_acceso_fk'] == 30) {
-						return redirect()->to(base_url() . '/#');
+						return redirect()->to(base_url() . '/SistemaVenta');
 					} elseif ($datosUsuario['nvl_acceso_fk'] == 40) {
 						$this->contarVisitasOn();
 						return redirect()->to(base_url() . '/productos');
 					} elseif ($datosUsuario['nvl_acceso_fk'] == 50) {
-						return redirect()->to(base_url() . '/#');
+						return redirect()->to(base_url() . '/Proveedor/pagProovedorView');
 					}
 				} else {
 					$data1 = ['configuracion' => $configuracion];
