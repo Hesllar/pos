@@ -53,6 +53,12 @@ $.ajax({
 
 //buscador(null);
 
+function buscadorOnBlur(){
+    $("#productos-encontrados").addClass('fade');
+    $("#lista-productos-encontrados").empty();
+    $("#input-buscar").val('');
+}
+
 function buscador(productos) {
     iBuscar = $("#input-buscar");
 
@@ -160,22 +166,48 @@ $("#rutCliente").keypress(function (e) {
                     $("#agregarCliente").collapse('hide');
                     $("#iconCli").removeClass('fa-caret-down');
                     $("#iconCli").addClass('fa-caret-right');
-
+                    $.ajax({
+                        url: "http://localhost/pos/public/Empresas/boolClienteEmpresa/" + rut,
+                        method: "POST",
+                        dataType: "JSON",
+                        success: function (resp) {
+                            resp == true ?
+                                $('#factura').prop('disabled', false) :
+                                $('#factura').prop('disabled', true);
+                        }
+                    });
+                    $.ajax({
+                        url: "http://localhost/pos/public/Usuarios/buscarPorRutJson/" + rut,
+                        method: "POST",
+                        dataType: "JSON",
+                        success: function (idUsuario) {
+                            console.log("text id cli ", idUsuario)
+                            $("#textIdCliente").text(idUsuario);
+                        }
+                    });
                 } else {
-                    $("#infoCliente").addClass('d-none');
-                    $('#factura').prop('disabled', true);
-                    ventanaNotificacion('[404] - No encontrado', "El rut ingresado no está registrado en el sistema.");
+                    $.ajax({
+                        url: "http://localhost/pos/public/Empresas/buscarPorRutEmpresa/" + rut,
+                        method: "POST",
+                        dataType: "JSON",
+                        success: function (resp) {
+                            if (resp != null) {
+                                $('#factura').prop('disabled', false);
+                                $("#textRutCliente").text(resp.rut_empresa + "-" + resp.dvempresa);
+                                $("#textNombreCliente").text(resp.razon_social);
+                                $("#infoCliente").removeClass('d-none');
+                                $("#agregarCliente").collapse('hide');
+                                $("#iconCli").removeClass('fa-caret-down');
+                                $("#iconCli").addClass('fa-caret-right');
+                            } else {
+                                $('#factura').prop('disabled', true);
+                                ventanaNotificacion('[404] - No encontrado', "El rut ingresado no está registrado en el sistema.");
+                                $("#infoCliente").addClass('d-none');
+                            }
+
+                        }
+                    });
                 }
-                $.ajax({
-                    url: "http://localhost/pos/public/Empresas/boolClienteEmpresa/" + rut,
-                    method: "POST",
-                    dataType: "JSON",
-                    success: function (data) {
-                        data == true ?
-                            $('#factura').prop('disabled', true) :
-                            $('#factura').prop('disabled', false);
-                    }
-                });
             },
         });
 
@@ -208,45 +240,55 @@ $('#addCli').on('click', function () {
 });
 
 $('#btnCompra').on('click', function () {
-    var boleta_factura = '';
-    $('#boleta').prop('checked') ? boleta_factura = 'Boleta' : boleta_factura = 'Factura';
-    var fecha = new Date().toISOString().slice(0, 19).replace('T', ' ');
-    var total_venta = $("#totalPagar").val();
-    var pago = $("#f_pago option:selected").val();
-    var despacho = 0;
-    $.ajax({
-        url: "http://localhost/pos/public/SistemaVenta/nuevaVenta",
-        method: "POST",
-        data: {
-            tipo_comprobante: boleta_factura,
-            fecha_venta: fecha,
-            total: total_venta,
-            f_pago: pago,
-            venta_despacho: despacho,
-            cliente_fk: 19143313,
-        },
-        success: function () {
-            alert('Venta Realizada -  //TablaVenta');
-            $.ajax({
-                url: "http://localhost/pos/public/SistemaVenta/nuevoDetalleVenta",
-                method: "POST",
-                data: {
-                    arrayProductosDetalle: datatableToArray(datosTabla),
-                },
-                dataType: 'JSON',
-                success: function () {
-                    ventanaNotificacion("Venta Correcta","La venta ha sido realizada correctamente.");
-                },
-            });
-        }
+    var monto_recibido = parseInt($("#inputTotal").val().replace(".", ""));
+    var costo_total = parseInt($("#totalPagar").val().replace(".", ""));
+    if (monto_recibido < costo_total) {
+        ventanaNotificacion("Error al realizar venta","El monto recibido no puede ser menor al total a pagar.");
+    } else {
+        var boleta_factura = '';
+        $('#boleta').prop('checked') ? boleta_factura = 'Boleta' : boleta_factura = 'Factura';
+        var fecha = new Date().toISOString().slice(0, 19).replace('T', ' ');
+        var total_venta = $("#totalPagar").val();
+        var pago = $("#f_pago option:selected").val();
+        var despacho = 0;
+        var cli = parseInt($("#textIdCliente").text());
+        var user_id =  $("#id_usuario").val();
+        $("#rutCliente").val() != '' ? rut = $("#rutCliente").val() : null;
+        $.ajax({
+            url: "http://localhost/pos/public/SistemaVenta/nuevaVenta",
+            method: "POST",
+            data: {
+                tipo_comprobante: boleta_factura,
+                fecha_venta: fecha,
+                total: total_venta,
+                f_pago: pago,
+                venta_despacho: despacho,
+                cliente_fk: cli,
+                id_usuario: user_id
+            },
+            success: function () {
+                alert('Venta Realizada -  //TablaVenta');
+                $.ajax({
+                    url: "http://localhost/pos/public/SistemaVenta/nuevoDetalleVenta",
+                    method: "POST",
+                    data: {
+                        arrayProductosDetalle: datatableToArray(datosTabla),
+                    },
+                    dataType: 'JSON',
+                    success: function () {
+                        ventanaNotificacion("Venta Correcta", "La venta ha sido realizada correctamente.");
+                    },
+                });
+            }
 
-    });
+        });
+    }
 });
 
 function datatableToArray(arr) {
     arraySalida = [];
     arr.forEach(function (p, i) {
-        arrayTemp = [p[0],p[3]];
+        arrayTemp = [p[0], p[3]];
         arraySalida.push(arrayTemp);
     });
     console.log(arraySalida);
@@ -431,7 +473,7 @@ function agregarDireccion(tipo) {
                 },
                 dataType: "JSON"
             });
-            console.log('agregado');
+            crearUsuario();
             $msje = "El cliente " +
                 nombreNuevoCli +
                 " " +
@@ -449,7 +491,6 @@ function agregarDireccion(tipo) {
 $('#btnGuardar').on('click', function () {
     var esCliente = true;
     $('#asociarEmpresa').prop('checked') ? esCliente = false : null;
-
     if (esCliente) {
         agregarDireccion('c'); //agregarDireccion y cliente
     } else {
@@ -467,7 +508,7 @@ $('#btnCancelar').on('click', function () {
     $("#agregarCliente").collapse('hide');
     $('#rutCliente').val("");
     limpiarCampos();
-    ventanaNotificacion("Vaciar Productos","Carrito de ventas ha sido limpiado.");
+    ventanaNotificacion("Vaciar Productos", "Carrito de ventas ha sido limpiado.");
 });
 
 $('#btnBuscarCliente').on('click', function () {
@@ -534,14 +575,6 @@ function agregarEmpresa() {
         },
         dataType: "JSON",
         success: function (id_direccion) {
-            console.log(
-                'rut_e:', $('#rut_emp').val(),
-                'dv_e:', $('#dv_emp').val(),
-                'r_e:', $('#razon_emp').val(),
-                'g_e:', $('#giro_emp').val(),
-                't_e:', $('#celular_emp').val()
-            );
-
             $.ajax({
                 url: "http://localhost/pos/public/Empresas/agregarEmpresa",
                 method: "POST",
@@ -554,7 +587,19 @@ function agregarEmpresa() {
                     t_e: $('#celular_emp').val()
                 },
                 success: function (data) {
-                    return data;
+                    rutNJ = $('#rut_cli').val();
+                    $.ajax({
+                        url: "http://localhost/pos/public/DatosPersonales/naturalJuridico" +
+                            rutNJ +
+                            1,
+                        method: "POST"
+                    });
+                    $msje = "La empresa " +
+                        $('#razon_emp').val() +
+                        " (" + $('#rut_emp').val() + "-" + $('#dv_emp').val() + ")" +
+                        " ha sido registrado exitosamente en el sistema. \n" +
+                        "¡Ahora puedes asociar el rut en sus ventas con boleta o factura!";
+                    ventanaNotificacion("Registro Existoso", $msje);
                 }
             });
         }
