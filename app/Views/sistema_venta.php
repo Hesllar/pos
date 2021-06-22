@@ -503,10 +503,10 @@ $user_session = session();
             </div>
         </div>
         <!-- Button trigger modal -->
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalVenta">
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalVenta" hidden>
             TestModal
         </button>
-        <button id="btnTest" type="button" class="btn btn-primary">
+        <button id="btnTest" type="button" class="btn btn-primary" hidden>
             Test
         </button>
 

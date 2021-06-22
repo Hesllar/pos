@@ -351,13 +351,13 @@ $session = session();
                                             <a class="view" data-toggle="modal" href="#detalle" onclick="todo(<?php echo $factura['id_venta'] ?>)">
                                                 <i class="fa fa-bars"></i>
                                             </a>
-                                            <a class="view-alerta" href="" onclick="anular(<?php echo $factura['id_venta'] ?>)">
+                                            <!--<a class="view-alerta" href="" onclick="anular(<?php echo $factura['id_venta'] ?>)">
                                                 <i class="fa fa-bars"></i>
                                             </a>
                                             <a class="view-alerta" href="" onclick="bpp(<?php echo $factura['id_venta'] ?>)">
                                                 <i class="fa fa-bars"></i>
                                             </a>
-                                            <button id="anular" name="anular" type="button" class="btn btn-danger btn-sm delete" data-id="<?php $factura['id_venta'] ?>">Anular</button>
+                                            <button id="anular" name="anular" type="button" class="btn btn-danger btn-sm delete" data-id="<?php $factura['id_venta'] ?>">Anular</button>-->
                                         </td>
                                     </tr>
                                 <?php } ?>
