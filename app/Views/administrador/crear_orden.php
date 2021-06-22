@@ -122,7 +122,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Datos categoria</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Datos proveedores</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -153,7 +153,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Datos categoria</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Datos productos</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -163,7 +163,7 @@
                     <thead>
                         <tr>
                             <th>Id_producto</th>
-                            <th>Marca</th>
+                            <th>Nombre</th>
                         </tr>
                     </thead>
                     <tbody>
