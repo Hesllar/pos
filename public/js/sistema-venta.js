@@ -181,7 +181,6 @@ $("#rutCliente").keypress(function (e) {
                         method: "POST",
                         dataType: "JSON",
                         success: function (idUsuario) {
-                            console.log("text id cli ", idUsuario)
                             $("#textIdCliente").text(idUsuario);
                         }
                     });
@@ -238,11 +237,21 @@ $('#addCli').on('click', function () {
             break;
     }
 });
+idEmpleado();
+function idEmpleado(){
+    $.ajax({
+        url: "http://localhost/pos/public/Empleados/buscarPorIdUsuario/" + $("#id_usuario").val(),
+        method: "POST",
+        success: function(empleadoId){
+            $("#id_empleado").val(empleadoId);
+        }
+    });
+}
 
 $('#btnCompra').on('click', function () {
     var monto_recibido = parseInt($("#inputTotal").val().replace(".", ""));
     var costo_total = parseInt($("#totalPagar").val().replace(".", ""));
-    if (monto_recibido < costo_total) {
+    if (monto_recibido < costo_total || $("#inputTotal").val() == "") {
         ventanaNotificacion("Error al realizar venta","El monto recibido no puede ser menor al total a pagar.");
     } else {
         var boleta_factura = '';
@@ -252,7 +261,7 @@ $('#btnCompra').on('click', function () {
         var pago = $("#f_pago option:selected").val();
         var despacho = 0;
         var cli = parseInt($("#textIdCliente").text());
-        var user_id =  $("#id_usuario").val();
+        var user_id =  $("#id_empleado").val();
         $("#rutCliente").val() != '' ? rut = $("#rutCliente").val() : null;
         $.ajax({
             url: "http://localhost/pos/public/SistemaVenta/nuevaVenta",
@@ -267,17 +276,13 @@ $('#btnCompra').on('click', function () {
                 id_usuario: user_id
             },
             success: function () {
-                alert('Venta Realizada -  //TablaVenta');
+                ventanaNotificacion("Venta Correcta", "La venta ha sido realizada correctamente.");
                 $.ajax({
                     url: "http://localhost/pos/public/SistemaVenta/nuevoDetalleVenta",
                     method: "POST",
                     data: {
                         arrayProductosDetalle: datatableToArray(datosTabla),
-                    },
-                    dataType: 'JSON',
-                    success: function () {
-                        ventanaNotificacion("Venta Correcta", "La venta ha sido realizada correctamente.");
-                    },
+                    }
                 });
             }
 
@@ -291,7 +296,6 @@ function datatableToArray(arr) {
         arrayTemp = [p[0], p[3]];
         arraySalida.push(arrayTemp);
     });
-    console.log(arraySalida);
     return arraySalida;
 }
 
@@ -544,7 +548,6 @@ function agregarCamposCliente() {
         method: "POST",
         dataType: "JSON",
         success: function (data) {
-            console.log('rutrut', data);
             $('#nombres_cli').val(data.nombres);
             $('#apellidos_cli').val(data.apellidos);
             $('#celular_cli').val(data.celular);
@@ -607,19 +610,16 @@ function agregarEmpresa() {
 }
 
 function crearUsuario() {
+    var r_c = $('#rut_cli').val();
+    var d_c = $('#dv_cli').val();
+    var n_c = $('#nombres_cli').val();
+    var a_c = $('#apellidos_cli').val();
     $.ajax({
-        url: "http://localhost/pos/public/Usuarios/crearUsuarioVenta/",
+        url: "http://localhost/pos/public/Usuarios/crearUsuarioVenta/" +
+        r_c + "/" +
+        n_c + "/" +
+        a_c ,
         method: "POST",
-        dataType: "JSON",
-        data: {
-            cli_rut: $('#rut_cli').val(),
-            cli_dv: $('#dv_cli').val(),
-            cli_nombres: $('#nombres_cli').val(),
-            cli_apellidos: $('#apellidos_cli').val()
-        },
-        success: function (data) {
-            return data;
-        }
     });
 }
 $('#btnTest').on('click', function () {

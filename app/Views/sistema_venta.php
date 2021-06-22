@@ -73,11 +73,11 @@ $user_session = session();
                             <i class="fa fa-user"></i>
                             Vendedor: 
                             <?php
-                            isset($user_sessio) ? print_r($user_session->nom_usuario) : print_r("Predeterminado");
-                            isset($user_sessio) ? $id_user = $user_session->id_usuario : $id_user = 301;
+                            print_r($user_session->nom_usuario);
+                            $id_user = $user_session->id_usuario;
                             echo '<input type="hidden" id="id_usuario" value="'. $id_user .'">';
                             ?>
-                            
+                            <input type="hidden" id="id_empleado" value="301">
                             </div>
                             <div class="pro-content">
                                 <a href="<?php echo base_url() ?>/Usuarios/logout">
