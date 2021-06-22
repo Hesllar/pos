@@ -30,7 +30,7 @@
                          <td><a class="view" href="<?php echo base_url() . '/productosadmin/reingresarProd/' . $producto['id_producto']; ?>"> <i class="fa fa-upload"></i></i></a>
                          </td>
                          <td><a class="view" data-href="<?php echo base_url() . '/productosadmin/eliminar/' . $producto['id_producto'] . '/' .
-                                                            $producto['detalle_fk'] . '/' . $producto['id_producto']; ?>" data-toggle="modal" data-target="#Eliminar" data-placement="top">
+                                                            $producto['detalle_fk']; ?>" data-toggle="modal" data-target="#Eliminar" data-placement="top">
                                  <i class="fa fa-trash"></i></a>
                          </td>
                      </tr>
