@@ -42,7 +42,7 @@
     <!-- Toggle -->
     <link rel="stylesheet" href="css/toggle.min.css">
     <!-- DataTables -->
-    
+
     <!-- modernizr js -->
     <script src="js/vendor/modernizr-2.8.3.min.js"></script>
 </head>
@@ -158,7 +158,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-3 pt-1">
-                                                    <button id="buscar-rut-relleno" class="blanco btn btn-warning pull-left">
+                                                    <button id="btnBuscarCliente" class="blanco btn btn-warning pull-left">
                                                         <i class="fas fa-search"></i>
                                                     </button>
                                                 </div>
@@ -247,7 +247,7 @@
                                                                     <i class="fas fa-registered"></i>
                                                                 </div>
                                                             </div>
-                                                            <select class=" country-select form-control" id="region" onclick="listarComunas()" >
+                                                            <select class="country-select form-control" id="region" onclick="listarComunas()">
                                                                 <option value="">Región</option>
                                                             </select>
                                                         </div>
@@ -380,15 +380,18 @@
                                                                     <i class="fas fa-registered"></i>
                                                                 </div>
                                                             </div>
-                                                            <select class="country-select form-control" id="region_emp">
+                                                            <select class="country-select form-control" id="region_emp" onclick="listarComunasEmpresa()">
                                                                 <option value="">Región</option>
                                                             </select>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
+                                            <div class="col-sm-6">
+                                                <p id="boolEmpresa" class="blanco-color">noEmpresa</p>
+                                            </div>
                                             <div class="boton-compra cart-box">
-                                                <a id="btnGuardar" href="#">Guardar</a>
+                                                <a class="a-guardar" id="btnGuardar" href="#">Guardar</a>
                                             </div>
                                         </div>
                                     </div>
@@ -439,9 +442,9 @@
                                                             <i class="fas fa-wallet"></i>
                                                         </div>
                                                     </div>
-                                                    <select class=" country-select form-control pro-content" id="region">
-                                                        <option value="">Efectivo</option>
-                                                        <option value="">Debito</option>
+                                                    <select class=" country-select form-control pro-content" id="f_pago">
+                                                        <option value="1">Efectivo</option>
+                                                        <option value="2">Debito</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -462,11 +465,11 @@
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
-                                        <button class="boton-compra btn-cancelar">
+                                        <button id="btnCancelar" class="boton-compra btn-cancelar">
                                             <div>
                                                 <i class="fas fa-window-close"></i>
                                             </div>
-                                            <span>Cancelar Venta</span>
+                                            <span>Limpiar Campos</span>
                                         </button>
                                     </div>
                                     <div class="col-sm-6">
@@ -480,6 +483,52 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalVenta">
+            TestModal
+        </button>
+        <button id="btnTest" type="button" class="btn btn-primary">
+            Test
+        </button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="modalNotificacion" tabindex="-1" role="dialog" aria-labelledby="modalNotificacionLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalNotificacionLabel">Titulo</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p id="mensaje">...</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Aceptar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal -->
+        <div class="modal fade" id="modalVenta" tabindex="-1" role="dialog" aria-labelledby="modalNotificacionLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalNotificacionLabel">Titulo</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p id="mensaje">...</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Aceptar</button>
                     </div>
                 </div>
             </div>
@@ -522,7 +571,7 @@
 
     <script src="js/sistema-venta.js"></script>
 
-    
+
 </body>
 
 </html>

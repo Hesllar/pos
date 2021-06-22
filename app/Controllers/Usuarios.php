@@ -430,7 +430,39 @@ class Usuarios extends BaseController
 		return json_encode($user['id_usuario']);
 	}
 
+	public function crearUsuarioVenta()
+	{
+		$this->request = \Config\Services::request();
+		$rutCliente = $this->request->getVar('cli_rut');
+		$nombreCliente = $this->request->getVar('cli_nombres');
+		$apellidoCliente = $this->request->getVar('cli_apellidos');
+		$nombreHash = $this->crearNombreYHash($rutCliente, $nombreCliente ,$apellidoCliente);
+		$fecha = date_create();
+		date_timestamp_get($fecha);
+		$this->usuario->save([
+			'nom_usuario' => $nombreHash['nombre_usuario'],
+			'contrasena' => $nombreHash['password'],
+			'estado_usuario' => 1,
+			'avatar' => 'Juan.png',
+			'ultima_conexion' => $fecha,
+			'rut_fk' => $rutCliente,
+			'nvl_acceso_fk' => 40,
+			'id_sucursal_fk' => 3,
+		]);
 
+	}
+
+	public function crearNombreYHash($rut, $nombre, $apellido)
+	{
+		$subNombre = substr($nombre, 0, 3);
+		$subApellido = substr($apellido, 0, 5);
+		$nick = $subNombre.$subApellido;
+		$subRut = substr($apellido, 0, 5); //19143
+		$pss = password_hash($subRut, PASSWORD_DEFAULT);
+
+		return ['nombre_usuario' => $nick ,'password' => $pss  ];
+
+	}
 
 
 

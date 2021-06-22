@@ -14,6 +14,7 @@ class Empresas extends BaseController
 	protected $empresas;
 	protected $direccion;
 	protected $ventas;
+	protected $request;
 
 	public function __construct()
 	{
@@ -35,14 +36,10 @@ class Empresas extends BaseController
 
 	public function boolClienteEmpresa($rut_cliente)
 	{
-		$resultado = [
-			'existe' => 'false'
-		];
+		$resultado = false;
 		$empresa = $this->empresas->where('DATOS_PERSONALES_rut', $rut_cliente)->first();
 		if ($empresa) {
-			$resultado = [
-				'existe' => 'true'
-			];
+			$resultado = true;
 		}
 		return json_encode($resultado);
 	}
@@ -58,5 +55,28 @@ class Empresas extends BaseController
 
 		$res['datos'] = $datos;
 		return json_encode($res);
+	}
+
+	public function agregarEmpresa(){
+		$dr = $this->direccion->orderBy('id_direccion', 'DESC')->First();
+		$this->request = \Config\Services::request();
+		$rutC = $this->request->getPost('rut_c');
+		$rut = $this->request->getPost('rut_e');
+		$dv = $this->request->getPost('dv_e');
+		$razon = $this->request->getPost('r_e');
+		$giro = $this->request->getPost('g_e');
+		$tel = $this->request->getPost('t_e');
+
+		$this->empresas->save([
+			'rut_empresa' => $rut,
+			'dvempresa' => $dv,
+			'razon_social' => $razon,
+			'giro' => $giro,
+			'telefono' => $tel,
+			'DATOS_PERSONALES_rut' => $rutC,
+			'direccion_empresa' => $dr['id_direccion']
+		]);
+
+		return json_encode($this->request->getPost('rut_e'));
 	}
 }
