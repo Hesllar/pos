@@ -119,4 +119,11 @@ class DatosPersonales extends BaseController
 		]);
 	}
 
+	public function naturalJuridico($rut,$estado)
+	{
+		$this->datosPersonales->update($rut, [
+			'natural_juridico' => $estado
+		]);
+	}
+
 }
