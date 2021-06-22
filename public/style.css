@@ -1463,6 +1463,10 @@ ul.ht-dropdown.dropdown-style-two li {
     border-radius: 5px;
 }
 
+.blanco-color {
+    color: #fff !important;
+}
+
 .blanco {
     color: #fff;
     margin-left: -20px;
@@ -3419,6 +3423,17 @@ p.checkout-coupon input[type="submit"] {
     color: #fff;
 }
 
+.a-guardar {
+    color: #fff;
+}
+
+.a-guardar:hover{
+    color: #f1ac06;
+}
+
+.a-guardar:active{
+    color: #fff;
+}
 
 .boton-compra{
     background: #f1ac06;

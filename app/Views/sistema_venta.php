@@ -156,19 +156,19 @@ $user_session = session();
                                                                 <div class="input-group-text"><i class="fas fa-user"></i>
                                                                 </div>
                                                             </div>
-                                                            <input id="rut-cli" type="text" class="form-control" placeholder="Rut Cliente">
+                                                            <input id="rut_cli" type="text" class="form-control" placeholder="Rut Cliente">
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-3">
                                                     <div class="form-group">
                                                         <div class="input-group">
-                                                            <input type="number" class="form-control" placeholder="dv">
+                                                            <input id="dv_cli" type="number" class="form-control" placeholder="dv">
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-3 pt-1">
-                                                    <button id="buscar-rut" class="blanco btn btn-warning pull-left">
+                                                    <button id="btnBuscarCliente" class="blanco btn btn-warning pull-left">
                                                         <i class="fas fa-search"></i>
                                                     </button>
                                                 </div>
@@ -179,7 +179,7 @@ $user_session = session();
                                                                 <div class="input-group-text"><i class="fas fa-address-card"></i>
                                                                 </div>
                                                             </div>
-                                                            <input type="text" class="form-control" placeholder="Nombre(s)">
+                                                            <input id="nombres_cli" type="text" class="form-control" placeholder="Nombre(s)">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -190,7 +190,7 @@ $user_session = session();
                                                                 <div class="input-group-text"><i class="far fa-address-card"></i>
                                                                 </div>
                                                             </div>
-                                                            <input type="text" class="form-control" placeholder="Apellidos">
+                                                            <input id="apellidos_cli" type="text" class="form-control" placeholder="Apellidos">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -201,7 +201,7 @@ $user_session = session();
                                                                 <div class="input-group-text"><i class="fas fa-phone"></i>
                                                                 </div>
                                                             </div>
-                                                            <input type="text" class="form-control" placeholder="Celular">
+                                                            <input id="celular_cli" type="text" class="form-control" placeholder="Celular">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -212,29 +212,40 @@ $user_session = session();
                                                                 <div class="input-group-text"><i class="fas fa-mail-bulk"></i>
                                                                 </div>
                                                             </div>
-                                                            <input type="text" class="form-control" placeholder="Correo electrónico">
+                                                            <input id="correo_cli" type="text" class="form-control" placeholder="Correo">
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-sm-6">
+                                                <div class="col-sm-8">
                                                     <div class="form-group">
                                                         <div class="input-group">
                                                             <div class="input-group-prepend">
                                                                 <div class="input-group-text"><i class="fas fa-map-marker-alt"></i>
                                                                 </div>
                                                             </div>
-                                                            <input type="text" class="form-control" placeholder="Dirección">
+                                                            <input id="c_direccion" type="text" class="form-control" placeholder="Dirección">
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-sm-6">
+                                                <div class="col-sm-4">
+                                                    <div class="form-group">
+                                                        <div class="input-group">
+                                                            <div class="input-group-prepend">
+                                                                <div class="input-group-text"><i class="fas fa-hashtag"></i>
+                                                                </div>
+                                                            </div>
+                                                            <input id="n_direccion" type="text" class="form-control" placeholder="Número">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-12">
                                                     <div class="form-group">
                                                         <div class="input-group">
                                                             <div class="input-group-prepend">
                                                                 <div class="input-group-text"><i class="fas fa-map-marked-alt"></i>
                                                                 </div>
                                                             </div>
-                                                            <input type="text" class="form-control" placeholder="Ciudad">
+                                                            <input id="ciudad" type="text" class="form-control" placeholder="Ciudad">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -246,7 +257,7 @@ $user_session = session();
                                                                     <i class="fas fa-registered"></i>
                                                                 </div>
                                                             </div>
-                                                            <select class=" country-select form-control" id="region" onclick="listarComunas()">
+                                                            <select class="country-select form-control" id="region" onclick="listarComunas()">
                                                                 <option value="">Región</option>
                                                             </select>
                                                         </div>
@@ -280,14 +291,14 @@ $user_session = session();
                                                                 <div class="input-group-text"><i class="fas fa-user"></i>
                                                                 </div>
                                                             </div>
-                                                            <input type="text" class="form-control" placeholder="Rut Empresa">
+                                                            <input id="rut_emp" type="text" class="form-control" placeholder="Rut Empresa">
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-3">
                                                     <div class="form-group">
                                                         <div class="input-group">
-                                                            <input type="number" class="form-control" placeholder="dv">
+                                                            <input id="dv_emp" type="number" class="form-control" placeholder="dv">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -298,7 +309,7 @@ $user_session = session();
                                                                 <div class="input-group-text"><i class="fas fa-address-card"></i>
                                                                 </div>
                                                             </div>
-                                                            <input type="text" class="form-control" placeholder="Razón Social">
+                                                            <input id="razon_emp" type="text" class="form-control" placeholder="Razón Social">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -309,7 +320,7 @@ $user_session = session();
                                                                 <div class="input-group-text"><i class="far fa-address-card"></i>
                                                                 </div>
                                                             </div>
-                                                            <input type="text" class="form-control" placeholder="Giro">
+                                                            <input id="giro_emp" type="text" class="form-control" placeholder="Giro">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -320,29 +331,40 @@ $user_session = session();
                                                                 <div class="input-group-text"><i class="fas fa-phone"></i>
                                                                 </div>
                                                             </div>
-                                                            <input type="text" class="form-control" placeholder="Celular">
+                                                            <input id="celular_emp" type="text" class="form-control" placeholder="Celular">
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-sm-6">
+                                                <div class="col-sm-8">
                                                     <div class="form-group">
                                                         <div class="input-group">
                                                             <div class="input-group-prepend">
                                                                 <div class="input-group-text"><i class="fas fa-map-marker-alt"></i>
                                                                 </div>
                                                             </div>
-                                                            <input type="text" class="form-control" placeholder="Dirección">
+                                                            <input id="c_direccion_emp" type="text" class="form-control" placeholder="Dirección">
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-sm-6">
+                                                <div class="col-sm-4">
+                                                    <div class="form-group">
+                                                        <div class="input-group">
+                                                            <div class="input-group-prepend">
+                                                                <div class="input-group-text"><i class="fas fa-hashtag"></i>
+                                                                </div>
+                                                            </div>
+                                                            <input id="n_direccion_emp" type="text" class="form-control" placeholder="Número">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-12">
                                                     <div class="form-group">
                                                         <div class="input-group">
                                                             <div class="input-group-prepend">
                                                                 <div class="input-group-text"><i class="fas fa-map-marked-alt"></i>
                                                                 </div>
                                                             </div>
-                                                            <input type="text" class="form-control" placeholder="Ciudad">
+                                                            <input id="ciudad_emp" type="text" class="form-control" placeholder="Ciudad">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -354,7 +376,7 @@ $user_session = session();
                                                                     <i class="fas fa-copyright"></i>
                                                                 </div>
                                                             </div>
-                                                            <select class=" country-select form-control" id="region">
+                                                            <select class=" country-select form-control" id="comuna_emp">
                                                                 <option value="">Comuna</option>
                                                             </select>
                                                         </div>
@@ -368,15 +390,18 @@ $user_session = session();
                                                                     <i class="fas fa-registered"></i>
                                                                 </div>
                                                             </div>
-                                                            <select class=" country-select form-control" id="region">
+                                                            <select class="country-select form-control" id="region_emp" onclick="listarComunasEmpresa()">
                                                                 <option value="">Región</option>
                                                             </select>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="boton-compra">
-                                                <a href="#">Guardar</a>
+                                            <div class="col-sm-6">
+                                                <p id="boolEmpresa" class="blanco-color">noEmpresa</p>
+                                            </div>
+                                            <div class="boton-compra cart-box">
+                                                <a class="a-guardar" id="btnGuardar" href="#">Guardar</a>
                                             </div>
                                         </div>
                                     </div>
@@ -427,9 +452,9 @@ $user_session = session();
                                                             <i class="fas fa-wallet"></i>
                                                         </div>
                                                     </div>
-                                                    <select class=" country-select form-control pro-content" id="region">
-                                                        <option value="">Efectivo</option>
-                                                        <option value="">Debito</option>
+                                                    <select class=" country-select form-control pro-content" id="f_pago">
+                                                        <option value="1">Efectivo</option>
+                                                        <option value="2">Debito</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -450,11 +475,11 @@ $user_session = session();
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
-                                        <button class="boton-compra btn-cancelar">
+                                        <button id="btnCancelar" class="boton-compra btn-cancelar">
                                             <div>
                                                 <i class="fas fa-window-close"></i>
                                             </div>
-                                            <span>Cancelar Venta</span>
+                                            <span>Limpiar Campos</span>
                                         </button>
                                     </div>
                                     <div class="col-sm-6">
@@ -473,6 +498,52 @@ $user_session = session();
                                 <a href="<?php echo base_url() ?>/Usuarios/logout" class="newsletter-btn">Cerrar Sesión</a>
                             </div>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalVenta">
+            TestModal
+        </button>
+        <button id="btnTest" type="button" class="btn btn-primary">
+            Test
+        </button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="modalNotificacion" tabindex="-1" role="dialog" aria-labelledby="modalNotificacionLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalNotificacionLabel">Titulo</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p id="mensaje">...</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Aceptar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal -->
+        <div class="modal fade" id="modalVenta" tabindex="-1" role="dialog" aria-labelledby="modalNotificacionLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalNotificacionLabel">Titulo</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p id="mensaje">...</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Aceptar</button>
                     </div>
                 </div>
             </div>
