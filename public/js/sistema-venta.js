@@ -285,7 +285,6 @@ $('#btnCompra').on('click', function () {
                     }
                 });
             }
-
         });
     }
 });

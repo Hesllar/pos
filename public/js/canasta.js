@@ -3,6 +3,8 @@ listarRegiones();
 //Metodo Factura vía ajax
 checkboxEmpresa();
 
+cargarValorMoneda();
+
 var user_session_js = new Array(); //Variable ArraySession
 let user_data_js = new Array(); //Variable datos del usuario
 let venta_despacho = 1;
@@ -194,8 +196,13 @@ function checkboxEmpresa(){
 
 }
 
-function checkboxDolar(){
+function aplicarMoneda(){
    
+    var ejemplo = $('#valor_moneda').val();
+    if(ejemplo == ''){
+        var ejemplo = 1;
+    }
+    console.log(ejemplo);
     var idRegion = $('#region').val();
     var idComuna = $('#comuna').val();
     var total = $("#compraEstatica").val();
@@ -225,16 +232,15 @@ function checkboxDolar(){
     }else{
          totalCompra.innerHTML = new Intl.NumberFormat("es-CL",{style: 'currency',currency: 'CLP',}).format(Number(total));
     }
-    if($("#dolar").prop('checked')){
+    if($("valor_moneda") == 1){
+            totalCompra.innerHTML = total.toFixed(1);
+        }else{
+            
             var  sacar$ =  total.replace('$','');
             var  sacarPunto =  sacar$.replace('.','');
-            var valorDolar = parseFloat(sacarPunto / 719.50).toFixed(2);
-            totalCompra.innerHTML = 'USD' + valorDolar;
-        }else{
-            totalCompra.innerHTML = total;
+            var valorDolar = parseFloat(sacarPunto / ejemplo).toFixed(2);
+            totalCompra.innerHTML = valorDolar;
         } 
-    
-    
 }
 
 function datosEmpresa(){
@@ -342,6 +348,20 @@ function realizarCompraWeb(){
     //setTimeout(detalleVenta(),2000);
     
 
+}
+
+function cargarValorMoneda(){
+                $.ajax({
+                    url: "http://localhost/pos/public/Moneda/obtValor",
+                    dataType: "JSON",
+                    success: function(data) {
+                    var html = '<option value="">Seleccione Moneda</option>';
+                    for (var count = 0; count < data.length; count++) {
+                            html += '<option value="' + data[count].valor_moneda+'">' + data[count].nombre_moneda +'</option>';
+                        };
+               return $('#valor_moneda').html(html);
+            }
+        });
 }
 
 /*function detalleVenta(){
