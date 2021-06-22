@@ -1,3 +1,6 @@
+<?php
+$user_session = session();
+?>
 <!doctype html>
 <html class="no-js" lang="es-ES">
 
@@ -44,7 +47,7 @@
     <!-- DataTables -->
 
     <!-- modernizr js -->
-    <script src="js/vendor/modernizr-2.8.3.min.js"></script>
+    <script src="<?php echo base_url(); ?>/js/vendor/modernizr-2.8.3.min.js"></script>
 </head>
 
 <body>
@@ -55,10 +58,17 @@
     <div class="wrapper">
         <!-- Header Area Start -->
         <!-- Breadcrumb Start -->
+
         <div class="breadcrumb-area">
             <div class="container">
                 <div class="title-pos breadcrumb">
                     <h2><i class="fas fa-cash-register"></i> Punto de Ventas</h2>
+                </div>
+                <div class="cart-box text-right">
+                    <h3 class="d-flex justify-content-end">Vendedor:
+                        <?php echo $user_session->nom_usuario; ?>
+                        <i class="fa fa-user fa-fw"></i>
+                    </h3>
                 </div>
             </div>
             <!-- Container End -->
@@ -480,7 +490,12 @@
                                             <span>Realizar Venta</span>
                                         </button>
                                     </div>
+
                                 </div>
+
+                            </div>
+                            <div class="text-right">
+                                <a href="<?php echo base_url() ?>/Usuarios/logout" class="newsletter-btn">Cerrar Sesión</a>
                             </div>
                         </div>
                     </div>
@@ -538,7 +553,7 @@
     </div>
     <!-- Wrapper End -->
     <!-- jquery 3.12.4 -->
-    <script src="js/vendor/jquery-3.6.0.min.js"></script>
+    <script src="js/vendor/jquery-1.12.4.min.js"></script>
     <!-- mobile menu js  -->
     <script src="js/jquery.meanmenu.min.js"></script>
     <!-- scroll-up js -->

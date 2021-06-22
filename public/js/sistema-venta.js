@@ -210,8 +210,6 @@ $('#addCli').on('click', function () {
 $('#btnCompra').on('click', function () {
     var boleta_factura = '';
     $('#boleta').prop('checked') ? boleta_factura = 'Boleta' : boleta_factura = 'Factura';
-
-
     var fecha = new Date().toISOString().slice(0, 19).replace('T', ' ');
     var total_venta = $("#totalPagar").val();
     var pago = $("#f_pago option:selected").val();
@@ -340,6 +338,23 @@ function listarComunas() {
             }
         });
     }
+
+}
+
+function guardarDetalle() {
+    var arrayProductos = datosTabla;
+    var final = [];
+    for (i = 0; i < arrayProductos.length; i++) {
+        lista = [arrayProductos[i][0], arrayProductos[i][3]];
+        final.push(lista);
+    }
+    $.ajax({
+        url: "http://localhost/pos/public/Ventas/agregarDetalleVenta",
+        method: "POST",
+        data: {
+            arrayProductosDetalle: final,
+        },
+    })
 }
 
 function listarComunasEmpresa() {
@@ -573,7 +588,3 @@ function ventanaNotificacion(titulo, mensaje) {
     $('#mensaje').text(mensaje);
     $('#modalNotificacion').modal('show');
 }
-
-
-
-

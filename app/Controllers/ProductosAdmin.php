@@ -9,11 +9,14 @@ use App\Models\ConfiguracionModel;
 use App\Models\CategoriaModel;
 use App\Controllers\Categorias;
 use App\Models\DetalleProductoModel;
+use App\Models\DetalleOrdenCompraModel;
+
 
 
 
 class ProductosAdmin extends BaseController
 {
+    protected $detalle_orden;
     protected $productos;
     protected $categorias;
     protected $request;
@@ -25,7 +28,7 @@ class ProductosAdmin extends BaseController
 
     public function __construct()
     {
-
+        $this->detalle_orden = new DetalleOrdenCompraModel;
         $this->detalle_productoModel = new DetalleProductoModel;
         $this->productos = new ProductosAdminModel;
         $this->configuracion = new ConfiguracionModel;
@@ -54,7 +57,6 @@ class ProductosAdmin extends BaseController
             'descripcion' => 'required',
             'precio_venta' => 'required',
             'precio_costo' => 'required',
-            'stock' => 'required',
             'stock_critico' => 'required',
             'categoria' => 'required',
         ];
@@ -69,7 +71,7 @@ class ProductosAdmin extends BaseController
         $productos = $this->productos->findAll();
         $data = ['titulo' => 'Productos', 'datos' => $productos]; */
         $categorias = $this->categorias->findAll();
-        $productos = $this->productos->orderProducto();
+        $productos = $this->productos->orderProducto($this->session->id_sucursal_fk);
 
         $configuracion = $this->configuracion->First();
         $data = ['titulo' => 'Productos', 'datos' => $productos, 'configuracion' => $configuracion, 'categorias' => $categorias];
@@ -120,21 +122,40 @@ class ProductosAdmin extends BaseController
         }
 
 
+        if ($this->session->id_sucursal_fk == 1) {
+            $this->productos->save([
+                'imagen' => $newName,
+                //'id_producto' => $this->request->getPost('Codigo_barra'),
+                'nombre' => $this->request->getPost('nombre_producto'),
+                'marca' => $this->request->getPost('marca'),
+                'descripcion' => $this->request->getPost('descripcion'),
+                'precio_venta' => $this->request->getPost('precio_venta'),
+                'precio_costo' => $this->request->getPost('precio_costo'),
+                'stock' => $this->request->getPost('stock'),
+                'stock_critico' => $this->request->getPost('stock_critico'),
+                'categoria' => $this->request->getPost('categoria'),
+                'detalle_fk' => $this->detalle_producto->buscarId(),
+                'estado' => 1,
+                'id_sucursal_fk' => 1
+            ]);
+        } else {
+            $this->productos->save([
+                'imagen' => $newName,
+                //'id_producto' => $this->request->getPost('Codigo_barra'),
+                'nombre' => $this->request->getPost('nombre_producto'),
+                'marca' => $this->request->getPost('marca'),
+                'descripcion' => $this->request->getPost('descripcion'),
+                'precio_venta' => $this->request->getPost('precio_venta'),
+                'precio_costo' => $this->request->getPost('precio_costo'),
+                'stock' => $this->request->getPost('stock'),
+                'stock_critico' => $this->request->getPost('stock_critico'),
+                'categoria' => $this->request->getPost('categoria'),
+                'detalle_fk' => $this->detalle_producto->buscarId(),
+                'estado' => 1,
+                'id_sucursal_fk' => 2
+            ]);
+        }
 
-        $this->productos->save([
-            'imagen' => $newName,
-            //'id_producto' => $this->request->getPost('Codigo_barra'),
-            'nombre' => $this->request->getPost('nombre_producto'),
-            'marca' => $this->request->getPost('marca'),
-            'descripcion' => $this->request->getPost('descripcion'),
-            'precio_venta' => $this->request->getPost('precio_venta'),
-            'precio_costo' => $this->request->getPost('precio_costo'),
-            'stock' => $this->request->getPost('stock'),
-            'stock_critico' => $this->request->getPost('stock_critico'),
-            'categoria' => $this->request->getPost('categoria'),
-            'detalle_fk' => $this->detalle_producto->buscarId(),
-            'estado' => 1,
-        ]);
         return redirect()->to(base_url() . '/productosadmin');
     }
 
@@ -168,20 +189,39 @@ class ProductosAdmin extends BaseController
 
 
 
-        $this->productos->save([
-            'imagen' => $newName,
-            //'id_producto' => $this->request->getPost('Codigo_barra'),
-            'nombre' => $this->request->getPost('nombre_producto'),
-            'marca' => $this->request->getPost('marca'),
-            'descripcion' => $this->request->getPost('descripcion'),
-            'precio_venta' => $this->request->getPost('precio_venta'),
-            'precio_costo' => $this->request->getPost('precio_costo'),
-            'stock' => $this->request->getPost('stock'),
-            'stock_critico' => $this->request->getPost('stock_critico'),
-            'categoria' => $this->request->getPost('categoria'),
-            'detalle_fk' => $this->detalle_producto->buscarId(),
-            'estado' => 1,
-        ]);
+        if ($this->session->id_sucursal_fk == 1) {
+            $this->productos->save([
+                'imagen' => $newName,
+                //'id_producto' => $this->request->getPost('Codigo_barra'),
+                'nombre' => $this->request->getPost('nombre_producto'),
+                'marca' => $this->request->getPost('marca'),
+                'descripcion' => $this->request->getPost('descripcion'),
+                'precio_venta' => $this->request->getPost('precio_venta'),
+                'precio_costo' => $this->request->getPost('precio_costo'),
+                'stock' => $this->request->getPost('stock'),
+                'stock_critico' => $this->request->getPost('stock_critico'),
+                'categoria' => $this->request->getPost('categoria'),
+                'detalle_fk' => $this->detalle_producto->buscarId(),
+                'estado' => 1,
+                'id_sucursal_fk' => 1
+            ]);
+        } else {
+            $this->productos->save([
+                'imagen' => $newName,
+                //'id_producto' => $this->request->getPost('Codigo_barra'),
+                'nombre' => $this->request->getPost('nombre_producto'),
+                'marca' => $this->request->getPost('marca'),
+                'descripcion' => $this->request->getPost('descripcion'),
+                'precio_venta' => $this->request->getPost('precio_venta'),
+                'precio_costo' => $this->request->getPost('precio_costo'),
+                'stock' => $this->request->getPost('stock'),
+                'stock_critico' => $this->request->getPost('stock_critico'),
+                'categoria' => $this->request->getPost('categoria'),
+                'detalle_fk' => $this->detalle_producto->buscarId(),
+                'estado' => 1,
+                'id_sucursal_fk' => 2
+            ]);
+        }
 
         return redirect()->to(base_url() . '/Productos/productoEmp');
     }
@@ -380,7 +420,7 @@ class ProductosAdmin extends BaseController
             return redirect()->to(base_url() . '/Acceder');
         }
         $this->request = \Config\Services::request();
-        $productos = $this->productos->where('estado', 0)->findAll();
+        $productos = $this->productos->orderProductoDelete($this->session->id_sucursal_fk);
         $configuracion = $this->configuracion->First();
         $data = ['datos' => $productos, 'configuracion' => $configuracion,];
 
@@ -390,10 +430,6 @@ class ProductosAdmin extends BaseController
         echo view('footer');
     }
 
-
-
-
-
     public function reingresarProd($id, $estado = 1)
     {
         if (!isset($this->session->id_usuario)) {
@@ -402,15 +438,16 @@ class ProductosAdmin extends BaseController
         $this->productos->update($id, ['estado' => $estado]);
         return redirect()->to(base_url() . '/productosadmin/pagEliminarPro ');
     }
-    public function eliminar($id)
+    public function eliminar($id, $id_detalle, $pro_orden)
     {
         if (!isset($this->session->id_usuario)) {
             return redirect()->to(base_url() . '/Acceder');
         }
         $this->request = \Config\Services::request();
         //$producto_eliminado = $this->productos->where('id_producto', $id)->first();
-        //$this->detalle_productoModel->where('id_detalle_prod', $producto_eliminado['detalle_fk'])->delete();
         $this->productos->where('id_producto', $id)->delete();
+        $this->detalle_orden->where('id_producto_pk', $pro_orden)->delete();
+        //$this->detalle_productoModel->where('id_detalle_prod', $id_detalle)->delete();
         return redirect()->to(base_url() . '/productosadmin/pagEliminarPro ');
     }
 }

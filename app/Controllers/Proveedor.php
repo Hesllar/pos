@@ -55,7 +55,7 @@ class Proveedor extends BaseController
 		#Condicion para mostrar los productos mayor al stock critico
 
 		$regionAll = $this->region->findall();
-		$proveedor = $this->dtsProveedor();
+		$proveedor = $this->dtsProveedor($this->session->id_sucursal_fk);
 		$configuracion = $this->configuracion->First();
 		$data = ['datos' => $proveedor, 'configuracion' => $configuracion, 'region' => $regionAll];
 		$estados = [
@@ -119,14 +119,28 @@ class Proveedor extends BaseController
 			$img->move('img/Usuarios', $newName);
 		}
 		$hash = password_hash($this->request->getPost('contraseña'), PASSWORD_DEFAULT);
-		$this->usuarioModal->save([
-			'nom_usuario' => $this->request->getPost('nombre_usuario'),
-			'contrasena' => $hash,
-			'estado_usuario' => 1,
-			'avatar' => $newName,
-			'nvl_acceso_fk' => 50,
-			'rut_fk' =>  $this->request->getPost('rut')
-		]);
+		if ($this->session->id_sucursal_fk == 1) {
+			$this->usuarioModal->save([
+				'nom_usuario' => $this->request->getPost('nombre_usuario'),
+				'contrasena' => $hash,
+				'estado_usuario' => 1,
+				'avatar' => $newName,
+				'nvl_acceso_fk' => 50,
+				'rut_fk' =>  $this->request->getPost('rut'),
+				'id_sucursal_fk' => 1
+			]);
+		} else {
+			$this->usuarioModal->save([
+				'nom_usuario' => $this->request->getPost('nombre_usuario'),
+				'contrasena' => $hash,
+				'estado_usuario' => 1,
+				'avatar' => $newName,
+				'nvl_acceso_fk' => 50,
+				'rut_fk' =>  $this->request->getPost('rut'),
+				'id_sucursal_fk' => 2
+			]);
+		}
+
 
 		//Acá se obtienen los datos de la tabla proveedor
 		$this->proveedor->save([
@@ -189,7 +203,7 @@ class Proveedor extends BaseController
 	}*/
 
 
-	public function dtsProveedor()
+	public function dtsProveedor($id_sucur)
 	{
 		if (!isset($this->session->id_usuario)) {
 			return redirect()->to(base_url() . '/Acceder');
@@ -200,6 +214,8 @@ class Proveedor extends BaseController
 		$this->datospersonalesmodel->join('empresa as e', 'datos_personales.rut=e.DATOS_PERSONALES_rut');
 		$this->datospersonalesmodel->join('usuario as u', 'datos_personales.rut=u.rut_fk');
 		$this->datospersonalesmodel->join('proveedor as p', 'u.id_usuario=p.usuario_fk');
+		$this->datospersonalesmodel->where('u.estado_usuario', 1);
+		$this->datospersonalesmodel->where('u.id_sucursal_fk', $id_sucur);
 		$this->datospersonalesmodel->orderBy('id_proveedor', 'DESC');
 		$datos = $this->datospersonalesmodel->findAll();
 		return $datos;
@@ -210,7 +226,7 @@ class Proveedor extends BaseController
 		if (!isset($this->session->id_usuario)) {
 			return redirect()->to(base_url() . '/Acceder');
 		}
-		$proveedor = $this->dtsProveedor();
+		$proveedor = $this->dtsProveedor($this->session->id_sucursal_fk);
 		$productos = $this->productos->findAll();
 		$configuracion = $this->configuracion->First();
 		$data = ['datos' => $proveedor, 'configuracion' => $configuracion, 'productos' => $productos];
@@ -299,5 +315,21 @@ class Proveedor extends BaseController
 		}
 
 		echo json_encode($res);
+	}
+
+	public function pagProovedorView()
+	{
+		$orden_compra = $this->proveedor->ordenDatos($this->session->id_usuario);
+		$configuracion = $this->configuracion->First();
+		$data = ['configuracion' => $configuracion, 'datos' => $orden_compra];
+		$estados = [
+			'e_ordencompra' => '',
+			'e_config' => 'active'
+		];
+		echo view('header', $data);
+		echo view('panel_header_prov', $estados);
+		echo view('proovedor_view');
+		echo view('administrador/panel_footer');
+		echo view('footer');
 	}
 }

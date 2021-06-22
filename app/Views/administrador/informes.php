@@ -6,43 +6,80 @@
                 <div class="col-4">
                     <div class="card text-white bg-primary">
                         <div class="card-body">
-                            Total de productos
+                            Total de Productos:
                             <?php echo $productos ?>
                         </div>
-                        <a class="card-footer text-white" href="<?php echo base_url() ?>/ProductosAdmin">Ver detalle</a>
+                        <a class="card-footer text-white" href="<?php echo base_url() ?>/Estadistica/cargarstockTotal">Ver Detalle (PDF)</a>
+                        <a class="card-footer text-white" href="<?php echo base_url() ?>/Estadistica/excelTotalProductos">Generar Reporte (Excel)</a>
                     </div>
                 </div>
                 <div class="col-4">
                     <div class="card text-white bg-success">
                         <div class="card-body">
-                            Ventas del día
+                            Ventas del día:
                             <?php echo $ventas ?>
                             <br>
-                            Total ventas:
+                            Total Ventas:
                             <?php echo $sumaTotal['total'] ?>
                         </div>
-                        <a class="card-footer text-white" href="<?php echo base_url() ?>/Estadistica/pagVentaXEmp">Ver detalle</a>
-                        <a class="card-footer text-white" id="btnbuscar" href="#" data-toggle="modal" data-target="#grafico">Ver grafico</a>
+
+                        <a class="card-footer text-white" href="<?php echo base_url() ?>/Estadistica/pagVentaXEmp">Ver Detalle (PDF)</a>
+                        <a class="card-footer text-white" id="btnbuscar" href="#" data-toggle="modal" data-target="#grafico">Ver Grafico</a>
                     </div>
                 </div>
                 <div class="col-4">
                     <div class="card text-white bg-danger">
                         <div class="card-body">
-                            Productos con sotck minimo
+                            Productos con Stock Minimo:
                             <?php echo $stock_minimo ?>
                         </div>
-                        <a class="card-footer text-white" href="<?php echo base_url() ?>/Estadistica/pagStockMin">Ver detalle</a>
+                        <a class="card-footer text-white" href="<?php echo base_url() ?>/Estadistica/pagStockMin">Ver Detalle (PDF)</a>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="card text-white bg-info">
+                        <div class="card-body">
+                            Cantidad de visitas:
+                            <?php echo $contar ?>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+        <br>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12">
+                    <div class="panel">
+                        <h4 class="d-flex justify-content-center">Generar Reportes Ventas por Periodo (Excel)</h4>
+                        <br>
+                        <div class="form-row d-flex justify-content-center">
+                            <form action="<?php echo base_url() ?>/Estadistica/excelVentas" method="POST">
+                                <div class="form-group col-6">
+                                    <label for="">Fecha Inicio</label>
+                                    <input type="date" class="form-control" id="fecha_inicio" name="fecha_inicio" required>
+                                </div>
+                                <div class="form-group col-6">
+                                    <label for="">Fecha Termino</label>
+                                    <input type="date" class="form-control" id="fecha_termino" name="fecha_termino" required>
+                                </div>
 
+                                <div class="form-group col-6 d-flex justify-content-around">
+                                    <button type="submit" name="buscar" value="1" class="btn btn-outline-success" target="_blank">Generar pdf</button>
+                                    <button type="submit" name="buscar" value="2" class="btn btn-outline-success">Generar excel</button>
+                                </div>
+                        </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     </main>
     <div class="modal fade" id="grafico" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Datos grafico</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Datos Grafico</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -63,7 +100,7 @@
             </div>
         </div>
     </div>
-
+    <script src="<?php echo base_url(); ?>/js/vendor/jquery-3.6.0.min.js"></script>
     <script>
         var paramTotal = [];
         var paramNombre = [];
@@ -83,7 +120,7 @@
                     data: {
                         labels: paramNombre,
                         datasets: [{
-                            label: 'Total de ventas por cajero',
+                            label: 'Total de Ventas por Cajero',
                             data: paramTotal,
                             backgroundColor: [
                                 'rgba(255, 99, 132, 0.2)',

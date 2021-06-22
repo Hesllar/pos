@@ -93,7 +93,7 @@
                 <label for="" id="lbGiroEmp"></label>
             </div>
             <div class="pull-center col-md-4">
-                <button type="button" id="agregarProTabla" class="btn-submit" onclick="agregarProductos(id_producto.value, cantidad.value)">
+                <button type="button" id="agregarProTabla" class="btn-submit" onclick="agregarProducto()">
                     Agregar
                 </button>
             </div>
@@ -253,36 +253,11 @@
 
                             if (resultado.existe) {
                                 $("#id_producto").val(resultado.datos.id_producto);
+                                console.log('ID_PRODUCT: ',resultado.datos.id_producto);
                                 $("#nombre").val(resultado.datos.nombre);
                                 $("#marca").val(resultado.datos.marca);
                                 $("#precio_costo").val(resultado.datos.precio_costo);
-
-
-                                /*document.getElementById("id_producto").innerHTML = resultado.datos.id_producto;
-                                document.getElementById("nombre").innerHTML = resultado.datos.nombre;
-                                document.getElementById("marca").innerHTML = resultado.datos.marca;
-                                document.getElementById("precio").innerHTML = resultado.datos.precio_costo;
-                                document.getElementById("stock").innerHTML = resultado.datos.stock;
-                                document.getElementById("stock_soli").style.visibility = "visible"
-                                document.getElementById("nombre").style.visibility = "visible"
-                                document.getElementById("marca").style.visibility = "visible"
-                                document.getElementById("precio").style.visibility = "visible"
-                                document.getElementById("stock").style.visibility = "visible"
-                                document.getElementById("btn_colicitar").style.visibility = "visible"
-                                //document.formulario.miInput.style.visibility = "hidden";
-                                //document.formulario.miInput.style.visibility = "visible";
-                                //$("#rubro").val(resultado.datos.rubro);
-                                //$("#razon").val(resultado.datos.razon);
-                                //$("#telefono").val(resultado.datos.telefono);
-                                //$("#giro").val(resultado.datos.giro);*/
-
                             } else {
-                                /*document.getElementById("nombre").style.visibility = "hidden"
-                                document.getElementById("precio").style.visibility = "hidden"
-                                document.getElementById("marca").style.visibility = "hidden"
-                                document.getElementById("stock").style.visibility = "hidden"
-                                document.getElementById("stock_soli").style.visibility = "hidden"
-                                document.getElementById("btn_colicitar").style.visibility = "hidden"*/
                                 $("#id_producto").val('');
                                 $("#nombre").val('');
                                 $("#marca").val('');
@@ -310,117 +285,64 @@
         }
     }
 </script>
-<script>
-    function agregarProductos(id_producto, cantidad, id_emp) {
-        if (id_producto != null && id_producto != 0 && cantidad > 0) {
 
-            $.ajax({
-                url: '<?php echo base_url(); ?>/TemporalCompra/insertarTemporal/' + id_producto + "/" + cantidad + "/" + id_emp,
-                success: function(resultado) {
-                    if (resultado == 0) {
-                        console.log(resultado)
-                    } else {
-                        /*
-                        $(tagId).removeClass('has-error');
-                        $("#resultado_error").html(resultado.error);
-
-                        if (resultado.existe) {
-                            $("#id_proveedor").val(resultado.datos.id_proveedor);
-                            $("#rut_emp").val(resultado.datos.rut_emp);
-                            $("#dv_emp").val(resultado.datos.dv_empresa);
-                            $("#rubro").val(resultado.datos.rubro);
-                            $("#razon").val(resultado.datos.razon);
-                            $("#telefono").val(resultado.datos.telefono);
-                            $("#giro").val(resultado.datos.giro);
-
-                        } else {
-                            $("#id_proveedor").val('');
-                            $("#rut_emp").val('');
-                            $("#dv_emp").val('');
-                            $("#rubro").val('');
-                            $("#razon").val('');
-                            $("#telefono").val('');
-                            $("#giro").val('');
-                        }
-                    */
-                    }
-                }
-            })
-        }
-    }
-</script>
-<!--
 <script>
     const contenedorProductos = document.querySelector('#lista-producto');
-    const btnAgregar = document.getElementById('agregarProTabla');
-    //btnAgregar.addEventListener('click', agregarProducto);
+    const arrayProductos = [];
 
     function agregarProducto(event) {
-        //var id_producto = $("#id_producto").val();
         var listaProductos = document.querySelectorAll('#lista-producto');
         listaProductos.forEach(lp => {
-            /*if (lp.querySelector('#id_pro') != null) {
-                var idPro = lp.querySelector('#id_pro');
-                if (idPro.value == id_producto) {
-                    alert('El producto ya existe en la orden');
+            if(arrayProductos.length === 0){
+                agregarProductotabla();
+                arrayProductos.push(id_producto);
+            }else{
+                var newIdProd = $("#id_producto").val();
+                if (arrayProductos.includes(newIdProd)) {
+                    alert('ACTUALIZA');
                 } else {
-
+                    agregarProductotabla();
+                    
                 }
-
-            } else {
-                alert('nulo');
-            }*/
-            var id_producto = $("#id_producto").val();
-            var nombre = $("#nombre").val();
-            var marca = $("#marca").val();
-            var precio_costo = $("#precio_costo").val();
-            var cantidad = $("#cantidad").val();
-            var subtotal = $("#subtotal").val();
-            agregarProductotabla(id_producto, nombre, marca, precio_costo, cantidad, subtotal);
+            }
         });
-
     }
 
-    function agregarProductotabla(id_producto, nombre, marca, precio_costo, cantidad, subtotal) {
+    function agregarProductotabla() {
+        var id_producto = $("#id_producto").val();
+        var nombre = $("#nombre").val();
+        var marca = $("#marca").val();
+        var precio_costo = $("#precio_costo").val();
+        var cantidad = $("#cantidad").val();
+        var subtotal = $("#subtotal").val();
         const productoEnFila = document.createElement('tr');
+        productoEnFila.setAttribute('id', 'producto-'+id_producto);
         const contenedor = `
-                    <th>
-                        <input id="id_pro" name="id_pro" type="hidden" value="${id_producto}" disabled>
-                        ${nombre}
-                    </th>
-                    <th>
-                        ${marca}
-                    </th>
-                    <th>
-                        <input id="precio_costo" name="precio_costo" type="text" class="cantidad" value="${precio_costo}" disabled>
-                    </th>
-                    <th>
-                        <input id="cantidadComprar" name="cantidadComprar" class="cantidad" type="number" value="${cantidad}" onclick="actualizarTotal(event)">
-                    </th>
-                    <th>
-                        <input id="cantidadSub" name="cantidadSub" class="cantidad" type="text" value="${subtotal}" disabled>
-                    </th>
-                    <th>
-                        <button type="button" class="btn-submit">
-                         <i class="fa fa-trash"></i>
-                        </button>
-                    </th> `;
+            <th>
+                <input id="id_pro" name="id_pro" type="hidden" value="${id_producto}" disabled>
+                ${nombre}
+            </th>
+            <th>
+                ${marca}
+            </th>
+            <th>
+                <input id="precio_costo" name="precio_costo" type="text" class="cantidad" value="${precio_costo}" disabled>
+            </th>
+            <th>
+                <input id="cantidadComprar" onchange="cambiarCantidad()" name="cantidadComprar" class="cantidad" type="number" value="${cantidad}" onclick="actualizarTotal(event)">
+            </th>
+            <th>
+                <input id="cantidadSub" name="cantidadSub" class="cantidad" type="text" value="${subtotal}" disabled>
+            </th>
+            <th>
+                <button type="button" class="btn-submit" onclick="eliminarProducto(${id_producto})">
+                 <i class="fa fa-trash"></i>
+                </button>
+            </th> `;
         productoEnFila.innerHTML = contenedor;
         contenedorProductos.append(productoEnFila);
-        if (productoEnFila) {
-            productoEnFila
-                .querySelector('.fa-trash')
-                .addEventListener('click', eliminarProducto);
-
-            productoEnFila
-                .querySelector('#cantidadComprar')
-                .addEventListener('change', cambiarCantidad);
-        }
-        actualizarTotal()
-    }
-
-    function eliminarProducto() {
-
+        arrayProductos.push(id_producto);
+        actualizarTotal();
     }
 
     function cambiarCantidad(event) {
@@ -445,8 +367,9 @@
             var total = precioProducto * cantidadProducto;
             var totalFinal = $("#cantidadSub").val(total);
         });
-        //let ttt = formatter.format(total.toFixed(0));
-        //totalCarrito.innerHTML = `${ttt}`;
+    }
+
+    function eliminarProducto(id){
+        $('#producto-'+id).hide();
     }
 </script>
--->

@@ -165,13 +165,12 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary newsletter-btn" id="botton1" data-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="newsletter-btn" value="enviar datos" onclick="success_toast()">Guardar</button>
+                        <button id="succes_produc" type="submit" class="newsletter-btn" value="enviar datos">Guardar</button>
                     </div>
                 </form>
 
             </div>
         </div>
-
     </div>
     <div id="respuesta"></div>
     <div class="table-responsive">
@@ -310,6 +309,8 @@
                     "stockCritico": stockCritico,
                     "descri": descri,
                     "imagen": img,
+                },
+                success: function(data) {
 
                 }
             });

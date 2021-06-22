@@ -26,15 +26,12 @@ var formatterCLP = new Intl.NumberFormat('es-CL', {
 //Función que lista las regiones
 function listarRegiones() {
     $.ajax({
-        url: "http://localhost/pos/public/Region/listarRegiones",
+        url: "http://localhost/pos/public/Region/listarRegionesDespacho",
         method: "GET",
         dataType: "JSON",
         success: function (data) {
             var html = '<option value="">Seleccione región</option>';
-            for (var count = 0; count < data.length; count++) {
-
-                html += '<option value="' + data[count].id_region + '">' + data[count].nombre_region + '</option>';
-            }
+            html += '<option value="' + data.id_region + '">' + data.nombre_region + '</option>';
             $('#region').html(html);
         }
     });
@@ -62,6 +59,7 @@ function listarComunas() {
             },
             dataType: "JSON",
             success: function (data) {
+                console.log('listarComuna',data);
                 var html = '<option value="">Seleccione comuna</option>';
                 for (var count = 0; count < data.length; count++) {
 
@@ -196,6 +194,49 @@ function checkboxEmpresa(){
 
 }
 
+function checkboxDolar(){
+   
+    var idRegion = $('#region').val();
+    var idComuna = $('#comuna').val();
+    var total = $("#compraEstatica").val();
+    var  sacar$ =  total.replace('$','');
+    var  sacarPunto =  sacar$.replace('.','');
+    const totalCompra = document.getElementById('totalCompra');
+    if (idComuna != 0 && idRegion == 6) {
+        
+        $.ajax({
+            url: "http://localhost/pos/public/Comuna/costoComuna",
+            method: "POST",
+            data: {
+                id_comuna: idComuna,
+            },
+            dataType: "JSON",
+            success: function(data){
+                if($("#dolar").prop('checked')){
+                var sumarCostoComuna = (Number(sacarPunto) + Number(data.costo_comuna));
+                var valorDolar = parseFloat(sumarCostoComuna / 719.50).toFixed(2);
+                totalCompra.innerHTML = 'USD' + valorDolar;
+                }else{       
+                    var sumarCostoComuna = (Number(sacarPunto) + Number(data.costo_comuna));
+                    totalCompra.innerHTML = new Intl.NumberFormat("es-CL",{style: 'currency',currency: 'CLP',}).format(sumarCostoComuna);
+                }     
+            }
+        });
+    }else{
+         totalCompra.innerHTML = new Intl.NumberFormat("es-CL",{style: 'currency',currency: 'CLP',}).format(Number(total));
+    }
+    if($("#dolar").prop('checked')){
+            var  sacar$ =  total.replace('$','');
+            var  sacarPunto =  sacar$.replace('.','');
+            var valorDolar = parseFloat(sacarPunto / 719.50).toFixed(2);
+            totalCompra.innerHTML = 'USD' + valorDolar;
+        }else{
+            totalCompra.innerHTML = total;
+        } 
+    
+    
+}
+
 function datosEmpresa(){
     seccionEmpresa.style.display = 'none';
     while ($('#esEmpresa').prop('checked')) {
@@ -282,7 +323,6 @@ function realizarCompraWeb(){
         lista.push([prod,cant]);
     });
         idv = data;
-        console.log(idv);
             $.ajax({
                 url: "http://localhost/pos/public/Ventas/agregarDetalleVenta",
                 method: "POST",
@@ -292,6 +332,7 @@ function realizarCompraWeb(){
                 },
                 dataType: 'JSON',
                 success: function(){
+                    window.location.href = "http://localhost/pos/public/Ventas/pagComprobante";
                 },
             });
         },
@@ -303,7 +344,7 @@ function realizarCompraWeb(){
 
 }
 
-function detalleVenta(){
+/*function detalleVenta(){
     const arrayProductos = document.querySelectorAll('.data-product');
     var lista = new Array();
     arrayProductos.forEach((producto, i) => {
@@ -325,4 +366,4 @@ function detalleVenta(){
         success: function(){
         },
     });
-}
+}*/

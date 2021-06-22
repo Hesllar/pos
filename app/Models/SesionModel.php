@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Models;
+
 use CodeIgniter\Model;
 
 class SesionModel extends Model
@@ -14,14 +15,17 @@ class SesionModel extends Model
     protected $returnType     = 'array';
     protected $useSoftDeletes = false;
 
-    protected $allowedFields = ['direccion_ip',
-                                'navegador'
-                                ];
+    protected $allowedFields = [
+        'direccion_ip',
+        'navegador',
+        'usuario_fk',
+        'fecha_sesion'
+    ];
 
     protected $useTimestamps = false;
+
+    /*protected $createdField  = 'fecha_registro';
     
-    protected $createdField  = 'fecha_registro';
-    /*
     protected $updatedField  = 'fecha_entrega';
     protected $deletedField  = 'deleted_at';
     */
@@ -29,5 +33,9 @@ class SesionModel extends Model
     protected $validationRules    = [];
     protected $validationMessages = [];
     protected $skipValidation     = false;
+
+    public function contarVisitas()
+    {
+        return $this->select()->countAllResults();
+    }
 }
-?>

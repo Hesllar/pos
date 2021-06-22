@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use App\Controllers\DatosPersonales;
+use App\Controllers\Proveedor;
 use App\Models\UsuarioModel;
 use App\Models\ConfiguracionModel;
 use App\Models\DatosPersonalesModel;
@@ -13,11 +14,13 @@ use App\Models\ComunaModel;
 use App\Models\DireccionModel;
 use App\Models\EmpresaModel;
 use App\Models\EmpleadoModel;
+use App\Models\ProveedorModel;
 
 class Usuarios extends BaseController
 {
 	protected $session;
-
+	protected $proveedor;
+	protected $proveedorController;
 	protected $empleado;
 	protected $empresa;
 	protected $nivel;
@@ -34,6 +37,7 @@ class Usuarios extends BaseController
 	public function __construct()
 	{
 		$this->session = session();
+		$this->proveedor = new ProveedorModel;
 		$this->empleado = new EmpleadoModel;
 		$this->empresa = new EmpresaModel;
 		$this->direccion = new DireccionModel;
@@ -44,6 +48,7 @@ class Usuarios extends BaseController
 		$this->datosPersonales = new DatosPersonalesModel;
 		$this->usuarioModal = new UsuarioModel;
 		$this->configuracion = new ConfiguracionModel;
+		$this->proveedorController = new Proveedor;
 	}
 
 	public function logout()
@@ -57,12 +62,13 @@ class Usuarios extends BaseController
 
 	public function index()
 	{
+		$this->request = \Config\Services::request();
 		if (!isset($this->session->id_usuario)) {
 			return redirect()->to(base_url() . '/Acceder');
 		}
 		$nvl_acceso = $this->nivel->findAll();
 		$region = $this->region->findAll();
-		$usuario = $this->usuarioModal->DatosPersonales();
+		$usuario = $this->usuarioModal->DatosPersonalesSucur1($this->session->id_sucursal_fk);
 		$configuracion = $this->configuracion->First();
 
 		$data = [
@@ -70,7 +76,7 @@ class Usuarios extends BaseController
 			'configuracion' => $configuracion,
 			'usuarios' => $usuario,
 			'nvl_acceso' => $nvl_acceso,
-			'region' => $region
+			'region' => $region,
 		];
 
 		$estados = [
@@ -163,20 +169,37 @@ class Usuarios extends BaseController
 		}
 		$hash = password_hash($this->request->getPost('contraseña'), PASSWORD_DEFAULT);
 		//Acá insertamos los datos a la tabla usuario
-		$this->usuarioModal->save([
-			'nom_usuario' => $this->request->getPost('nombre_usuario'),
-			'contrasena' => $hash,
-			'estado_usuario' => 1,
-			'avatar' => $newName,
-			'nvl_acceso_fk' => $this->request->getPost('nivel_acceso'),
-			'rut_fk' =>  $this->request->getPost('rut')
-		]);
+		if ($this->session->id_sucursal_fk == 1) {
+			$this->usuarioModal->save([
+				'nom_usuario' => $this->request->getPost('nombre_usuario'),
+				'contrasena' => $hash,
+				'estado_usuario' => 1,
+				'avatar' => $newName,
+				'nvl_acceso_fk' => $this->request->getPost('nivel_acceso'),
+				'rut_fk' =>  $this->request->getPost('rut'),
+				'id_sucursal_fk' => 1
+			]);
+		} else {
+			$this->usuarioModal->save([
+				'nom_usuario' => $this->request->getPost('nombre_usuario'),
+				'contrasena' => $hash,
+				'estado_usuario' => 1,
+				'avatar' => $newName,
+				'nvl_acceso_fk' => $this->request->getPost('nivel_acceso'),
+				'rut_fk' =>  $this->request->getPost('rut'),
+				'id_sucursal_fk' => 2
+			]);
+		}
+
+
+
+
 
 		//Acá insertamos los datos a la tabla empresa
 		if ($this->request->getPost('juridico') == 1) {
 			$this->empresa->save([
 				'rut_empresa' => $this->request->getPost('rut_emp'),
-				'dv-empresa' => $this->request->getPost('dv_emp'),
+				'dvempresa' => $this->request->getPost('dv_emp'),
 				'razon_social' => $this->request->getPost('razon'),
 				'giro' => $this->request->getPost('giro'),
 				'telefono' => $this->request->getPost('telefono'),
@@ -184,16 +207,35 @@ class Usuarios extends BaseController
 				'direccion_empresa' => $this->datosPersonalesControl->buscarIdDireccion()
 			]);
 		}
-		//Acá insertamos los datos a la tabla empleado
-		if (
-			$this->request->getPost('nivel_acceso') == 20
-			|| $this->request->getPost('nivel_acceso') == 10
-		) {
-			$this->empleado->save([
 
+		//Acá insertamos los datos a la tabla empresa
+		if ($this->request->getPost('prove') == 1) {
+			$this->proveedor->save([
+				'rubro' => $this->request->getPost('rubro'),
+				'usuario_fk' => $this->proveedorController->BuscarIdUsuario()
+			]);
+		}
+
+
+		//Acá insertamos los datos a la tabla empleado
+
+		if ($this->request->getPost('nivel_acceso') == 10) {
+			$this->empleado->save([
+				'cargo_fk' => 4,
+				'usuario_fk' => $this->buscarUltiomoIdUser()
+			]);
+		} else if ($this->request->getPost('nivel_acceso') == 20) {
+			$this->empleado->save([
+				'cargo_fk' => 2,
+				'usuario_fk' => $this->buscarUltiomoIdUser()
+			]);
+		} else if ($this->request->getPost('nivel_acceso') == 30) {
+			$this->empleado->save([
+				'cargo_fk' => 3,
 				'usuario_fk' => $this->buscarUltiomoIdUser()
 			]);
 		}
+
 
 		return redirect()->to(base_url() . '/Usuarios');
 	}
@@ -417,9 +459,7 @@ class Usuarios extends BaseController
 
 	public function buscarUltiomoIdUser()
 	{
-		if (!isset($this->session->id_usuario)) {
-			return redirect()->to(base_url() . '/Acceder');
-		}
+
 		$buscarid = $this->usuarioModal->orderBy('id_usuario', 'DESC')->first();
 		return $buscarid['id_usuario'];
 	}

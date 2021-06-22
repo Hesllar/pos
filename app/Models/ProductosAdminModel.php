@@ -28,13 +28,14 @@ class ProductosAdminModel extends Model
         'stock_critico',
         'categoria',
         'detalle_fk',
-        'estado'
+        'estado',
+        'id_sucursal_fk'
     ];
 
-    protected $useTimestamps = false;
+    protected $useTimestamps = true;
     protected $createdField  = 'fecha_creacion';
-    /*protected $updatedField  = 'updated_at';
-    protected $deletedField  = 'deleted_at';*/
+    protected $updatedField  = '';
+    //protected $deletedField  = 'deleted_at';*/
 
     protected $validationRules    = [];
     protected $validationMessages = [];
@@ -42,18 +43,38 @@ class ProductosAdminModel extends Model
 
 
 
-    public function orderProducto()
+    public function orderProducto($id_sucur)
     {
-        $this->select('id_producto, nombre,CONCAT("$",FORMAT(precio_venta,"")) AS precio_venta, stock, categoria');
-        $this->orderBy('fecha_creacion', 'DESC');
+        $this->select('id_producto, nombre,CONCAT("$",FORMAT(precio_venta,"")) AS precio_venta, stock, categoria, imagen, precio_venta, descripcion');
         $this->where('estado', 1);
+        $this->where('id_sucursal_fk', $id_sucur);
+        $this->where('stock >', 0);
+        $this->orderBy('id_producto', 'DESC');
+        $data = $this->findAll();
+        return $data;
+    }
+    public function orderProductoDelete($id_sucur)
+    {
+        $this->select('id_producto, nombre,CONCAT("$",FORMAT(precio_venta,"")) AS precio_venta, stock, categoria,detalle_fk');
+        $this->where('estado', 0);
+        $this->where('id_sucursal_fk', $id_sucur);
+        $this->orderBy('id_producto', 'DESC');
+        $data = $this->findAll();
+        return $data;
+    }
+    public function orderAllProducto()
+    {
+        $this->select('id_producto, nombre,CONCAT("$",FORMAT(precio_venta,"")) AS precio_venta, stock, categoria, imagen, precio_venta, descripcion');
+        $this->where('estado', 1);
+        $this->where('stock >', 0);
+        $this->orderBy('id_producto', 'DESC');
         $data = $this->findAll();
         return $data;
     }
 
     public function totalProductos()
     {
-        return $this->where('estado', 1)->countAllResults(); // Cuanta todos los resultados de la sentencia
+        return $this->where('estado', 1)->countAllResults(); // Cuenta todos los resultados de la sentencia
     }
 
 
@@ -66,5 +87,25 @@ class ProductosAdminModel extends Model
     {
         $where = "stock_critico >= stock AND estado=1";
         return $this->where($where)->findAll();
+    }
+
+    public function productosTotales()
+    {
+        return $this->where('estado', 1)->findAll(); // Muestra todos los resultados de la sentencia
+    }
+    public function actualizarStock($id_producto, $cantidad)
+    {
+        $this->set('stock', "stock - $cantidad", FALSE);
+        $this->join('detalle_venta AS d', 'producto.id_producto=d.id_producto_fk');
+        $this->where('id_producto', $id_producto);
+        $this->update();
+    }
+    public function masvendido()
+    {
+        $this->select('*');
+        $this->where('estado', 1);
+        $this->orderBy('fecha_creacion', 'ASC');
+        $data = $this->findAll();
+        return $data;
     }
 }

@@ -15,6 +15,7 @@ class SistemaVenta extends BaseController
 	public function __construct()
 	{
 
+
 		//$this->configuracion = new ConfiguracionModel;
 		$this->ventas = new VentaModel;
 		$this->detalle_venta = new DetalleVentaModel;
@@ -26,14 +27,17 @@ class SistemaVenta extends BaseController
 		echo view('sistema_venta');
 	}
 
-	public function nuevaVenta(){
+	public function nuevaVenta()
+	{
+		date_default_timezone_set("America/Santiago");
 		$this->request = \Config\Services::request();
 		$totalCompra = $this->request->getVar('total');
 		$this->ventas->save([
 			'tipo_comprobante' => $this->request->getVar('tipo_comprobante'),
 			'fecha_venta' => date('Y-m-d H:i:s'),
-			'valor_neto' => ($totalCompra-($totalCompra*0.19)),
-			'valor_iva' => ($totalCompra*0.19),
+
+			'valor_neto' => ($totalCompra - ($totalCompra * 0.19)),
+			'valor_iva' => ($totalCompra * 0.19),
 			'total' => $totalCompra,
 			'despacho' => $this->request->getVar('venta_despacho'),
 			'estado_venta' => 1,

@@ -5,16 +5,22 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use App\Models\ConfiguracionModel;
 use App\Models\UsuarioModel;
+use App\Models\SesionModel;
+
 
 class Acceder extends BaseController
 {
+	protected $sesion;
 	protected $configuracion;
 	protected $request;
 	protected $usuarioModal;
 	protected $reglasLogin;
+	protected $session;
 
 	public function __construct()
 	{
+		$this->session = session();
+		$this->sesion = new SesionModel;
 		$this->configuracion = new ConfiguracionModel;
 		$this->usuarioModal = new UsuarioModel;
 		$this->reglasLogin = [
@@ -42,10 +48,6 @@ class Acceder extends BaseController
 		echo view('acceder');
 		echo view('footer');
 	}
-
-
-
-
 	public function valida()
 	{
 		$configuracion = $this->configuracion->First();
@@ -66,20 +68,22 @@ class Acceder extends BaseController
 						'ultima_conexion' => $datosUsuario['ultima_conexion'],
 						'rut_fk' => $datosUsuario['rut_fk'],
 						'nvl_acceso_fk' => $datosUsuario['nvl_acceso_fk'],
+						'id_sucursal_fk' => $datosUsuario['id_sucursal_fk'],
 					];
+
 					$data = ['titulo' => 'Validar', 'datos' => $datosSesion, 'configuracion' => $configuracion];
-					$session = session();
-					$session->set($datosSesion);
+					$this->session->set($datosSesion);
 					if ($datosUsuario['nvl_acceso_fk'] == 10) {
 						return redirect()->to(base_url() . '/productosadmin');
 					} elseif ($datosUsuario['nvl_acceso_fk'] == 20) {
 						return redirect()->to(base_url() . '/proveedor');
 					} elseif ($datosUsuario['nvl_acceso_fk'] == 30) {
-						return redirect()->to(base_url() . '/#');
+						return redirect()->to(base_url() . '/SistemaVenta');
 					} elseif ($datosUsuario['nvl_acceso_fk'] == 40) {
+						$this->contarVisitasOn();
 						return redirect()->to(base_url() . '/productos');
 					} elseif ($datosUsuario['nvl_acceso_fk'] == 50) {
-						return redirect()->to(base_url() . '/#');
+						return redirect()->to(base_url() . '/Proveedor/pagProovedorView');
 					}
 				} else {
 					$data1 = ['configuracion' => $configuracion];
@@ -119,11 +123,12 @@ class Acceder extends BaseController
 	public function perfil($id_user)
 	{
 		$this->usuarioModal->select('rut,dv,nombres,apellidos,celular,correo,natural_juridico,d.ciudad AS ciudad,
-		r.nombre_region AS region, c.nombre_comuna AS comuna, d.calle AS calle, d.numero AS numero, nom_usuario');
+		r.nombre_region AS region, c.nombre_comuna AS comuna, d.calle AS calle, d.numero AS numero, nom_usuario, na.nivel_acceso AS nivel_acceso');
 		$this->usuarioModal->join('datos_personales AS dt', 'usuario.rut_fk=dt.rut');
 		$this->usuarioModal->join('direccion AS d', 'dt.direccion_fk=d.id_direccion');
 		$this->usuarioModal->join('comuna AS c', 'd.comuna_fk=c.id_comuna');
 		$this->usuarioModal->join('region AS r', 'c.region_fk=r.id_region');
+		$this->usuarioModal->join('nivel_acceso AS na', 'usuario.nvl_acceso_fk=na.id_nivel');
 		$this->usuarioModal->where('id_usuario', $id_user);
 		$datos = $this->usuarioModal->first();
 
@@ -142,5 +147,15 @@ class Acceder extends BaseController
 
 		$res['datos'] = $datos;
 		return json_encode($res);
+	}
+
+	public function contarVisitasOn()
+	{
+		$this->sesion->save([
+			'direccion_ip' => 'En proceso',
+			'navegador' => 'En proceso',
+			'usuario_fk' => $this->session->id_usuario,
+			'fecha_sesion' => date('Y-m-d G:i:s')
+		]);
 	}
 }

@@ -98,14 +98,15 @@ class Registro extends BaseController
 			'estado_usuario' => 1,
 			'avatar' => $newName,
 			'nvl_acceso_fk' => 40,
-			'rut_fk' =>  $this->request->getPost('rut')
+			'rut_fk' =>  $this->request->getPost('rut'),
+			'id_sucursal_fk' => 3
 		]);
 
 		//Acá insertamos los datos a la tabla empresa
 		if ($this->request->getPost('juridico') == 1) {
 			$this->empresa->save([
 				'rut_empresa' => $this->request->getPost('rut_emp'),
-				'dv-empresa' => $this->request->getPost('dv_emp'),
+				'dvempresa' => $this->request->getPost('dv_emp'),
 				'razon_social' => $this->request->getPost('razon'),
 				'giro' => $this->request->getPost('giro'),
 				'telefono' => $this->request->getPost('telefono'),
