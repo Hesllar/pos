@@ -272,12 +272,12 @@
                          <div class="order-button-payment">
                              <input id="realizarCompra" type="submit" value="Realizar Compra" onclick="realizarCompraWeb()" />
                          </div>
-                         <div class="row pb-30">
-                             <div class="col-sm-12 d-flex justify-content-center">
-                                 <div class="form-check header-top-left">
-                                     <input class="form-check-input position-static" type="checkbox" id="dolar" value="0" onclick="checkboxDolar()">
-                                     Pago con dolar
-                                 </div>
+                         <div class="form-row">
+                             <div class="form-group col-md-6">
+                                 <label for="comuna">*Tipo de monedas</label>
+                                 <select name="valor_moneda" id="valor_moneda" onclick="aplicarMoneda()" required>
+                                     <option value="">Seleccione Moneda</option>
+                                 </select>
                              </div>
                          </div>
                      </div>

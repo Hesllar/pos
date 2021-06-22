@@ -449,7 +449,6 @@ $session = session();
     function obtnDatosPro(id_venta) {
         $.ajax({
             url: "<?php echo base_url() ?>/Ventas/datosProductoBoleta/" + id_venta,
-
             dataType: 'json',
             success: function(respuesta) {
                 $('.listProduct').html('')

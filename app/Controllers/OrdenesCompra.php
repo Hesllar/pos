@@ -28,7 +28,8 @@ class OrdenesCompra extends BaseController
 			'e_usuario' => '',
 			'e_notacredito' => '',
 			'e_config' => '',
-			'e_estadistica' => ''
+			'e_estadistica' => '',
+			'e_tipomoneda' => ''
 		];
 
 		echo view('header', $data);
