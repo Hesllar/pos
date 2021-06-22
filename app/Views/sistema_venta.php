@@ -61,18 +61,39 @@ $user_session = session();
 
         <div class="breadcrumb-area">
             <div class="container">
-                <div class="title-pos breadcrumb">
-                    <h2><i class="fas fa-cash-register"></i> Punto de Ventas</h2>
+                <div class="row breadcrumb">
+                    <div class="col-sm-9">
+                        <div class="title-pos">
+                            <h2><i class="fas fa-cash-register"></i> Punto de Ventas</h2>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="pull-right">
+                            <div class="product-header">
+                            <i class="fa fa-user"></i>
+                            Vendedor: 
+                            <?php
+                            isset($user_sessio) ? print_r($user_session->nom_usuario) : print_r("Predeterminado");
+                            isset($user_sessio) ? $id_user = $user_session->id_usuario : $id_user = 301;
+                            echo '<input type="hidden" id="id_usuario" value="'. $id_user .'">';
+                            ?>
+                            
+                            </div>
+                            <div class="pro-content">
+                                <a href="<?php echo base_url() ?>/Usuarios/logout">
+                                <i class="fas fa-sign-out-alt logout-icon"></i>
+                                (Cerrar Sesión)
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="cart-box text-right">
-                    <h3 class="d-flex justify-content-end">Vendedor:
-                        <?php echo $user_session->nom_usuario; ?>
-                        <i class="fa fa-user fa-fw"></i>
-                    </h3>
-                </div>
+
+
             </div>
             <!-- Container End -->
         </div>
+
         <!-- Breadcrumb End -->
         <!-- Error 404 Area Start -->
         <div class="error404-area pb-60 pt-20">
@@ -129,6 +150,7 @@ $user_session = session();
                                                 <div class="row text-center">
                                                     <div class="col-sm-4">
                                                         <span id="textRutCliente"></span>
+                                                        <span id="textIdCliente" class="fade">4</span>
                                                     </div>
                                                     <div class="col-sm-8">
                                                         <span id="textNombreCliente"></span>
@@ -373,11 +395,11 @@ $user_session = session();
                                                         <div class="input-group">
                                                             <div class="input-group-prepend">
                                                                 <div class="input-group-text">
-                                                                    <i class="fas fa-copyright"></i>
+                                                                    <i class="fas fa-registered"></i>
                                                                 </div>
                                                             </div>
-                                                            <select class=" country-select form-control" id="comuna_emp">
-                                                                <option value="">Comuna</option>
+                                                            <select class="country-select form-control" id="region_emp" onclick="listarComunasEmpresa()">
+                                                                <option value="">Región</option>
                                                             </select>
                                                         </div>
                                                     </div>
@@ -387,11 +409,12 @@ $user_session = session();
                                                         <div class="input-group">
                                                             <div class="input-group-prepend">
                                                                 <div class="input-group-text">
-                                                                    <i class="fas fa-registered"></i>
+                                                                    <i class="fas fa-copyright"></i>
                                                                 </div>
                                                             </div>
-                                                            <select class="country-select form-control" id="region_emp" onclick="listarComunasEmpresa()">
-                                                                <option value="">Región</option>
+                                                            <select class=" country-select form-control" id="comuna_emp">
+                                                                <option value="">Comuna</option>
+                                                                <option value="">Seleccione región</option>
                                                             </select>
                                                         </div>
                                                     </div>
@@ -494,7 +517,7 @@ $user_session = session();
                                 </div>
 
                             </div>
-                            <div class="text-right">
+                            <div class="text-right fade">
                                 <a href="<?php echo base_url() ?>/Usuarios/logout" class="newsletter-btn">Cerrar Sesión</a>
                             </div>
                         </div>
@@ -502,13 +525,6 @@ $user_session = session();
                 </div>
             </div>
         </div>
-        <!-- Button trigger modal -->
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalVenta">
-            TestModal
-        </button>
-        <button id="btnTest" type="button" class="btn btn-primary">
-            Test
-        </button>
 
         <!-- Modal -->
         <div class="modal fade" id="modalNotificacion" tabindex="-1" role="dialog" aria-labelledby="modalNotificacionLabel" aria-hidden="true">

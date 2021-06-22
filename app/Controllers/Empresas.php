@@ -34,6 +34,12 @@ class Empresas extends BaseController
 		return json_encode(array_merge($empresa, $direccion));
 	}
 
+	public function buscarPorRutEmpresa($rut_empresa)
+	{
+		$empresa = $this->empresas->where('rut_empresa', $rut_empresa)->first();
+		return json_encode($empresa);
+	}
+
 	public function boolClienteEmpresa($rut_cliente)
 	{
 		$resultado = false;
