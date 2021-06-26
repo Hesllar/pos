@@ -43,12 +43,13 @@ class Estadistica extends BaseController
         ];
         $estados = [
             'e_venta' => '',
-            'e_producto' => 'active',
+            'e_producto' => '',
             'e_ordencompra' => '',
             'e_usuario' => '',
             'e_notacredito' => '',
             'e_config' => '',
-            'e_estadistica' => ''
+            'e_estadistica' => 'active',
+            'e_tipomoneda' => ''
         ];
 
         echo view('header', $data);

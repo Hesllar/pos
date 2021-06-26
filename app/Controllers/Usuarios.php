@@ -86,7 +86,8 @@ class Usuarios extends BaseController
 			'e_usuario' => 'active',
 			'e_notacredito' => '',
 			'e_config' => '',
-			'e_estadistica' => ''
+			'e_estadistica' => '',
+			'e_tipomoneda' => ''
 		];
 
 		echo view('header', $data);
@@ -470,38 +471,38 @@ class Usuarios extends BaseController
 		return json_encode($user['id_usuario']);
 	}
 
-	public function crearUsuarioVenta()
+	public function crearUsuarioVenta($rutCliente, $nombreCliente, $apellidoCliente)
 	{
+		/*
 		$this->request = \Config\Services::request();
 		$rutCliente = $this->request->getVar('cli_rut');
 		$nombreCliente = $this->request->getVar('cli_nombres');
 		$apellidoCliente = $this->request->getVar('cli_apellidos');
-		$nombreHash = $this->crearNombreYHash($rutCliente, $nombreCliente ,$apellidoCliente);
+		*/
+		$nombreHash = $this->crearNombreYHash($rutCliente, $nombreCliente, $apellidoCliente);
 		$fecha = date_create();
 		date_timestamp_get($fecha);
-		$this->usuario->save([
+		$this->usuarioModal->save([
 			'nom_usuario' => $nombreHash['nombre_usuario'],
 			'contrasena' => $nombreHash['password'],
 			'estado_usuario' => 1,
 			'avatar' => 'Juan.png',
-			'ultima_conexion' => $fecha,
+			'ultima_conexion' => date('Y-m-d H:i:s'),
 			'rut_fk' => $rutCliente,
 			'nvl_acceso_fk' => 40,
 			'id_sucursal_fk' => 3,
 		]);
-
 	}
 
 	public function crearNombreYHash($rut, $nombre, $apellido)
 	{
 		$subNombre = substr($nombre, 0, 3);
 		$subApellido = substr($apellido, 0, 5);
-		$nick = $subNombre.$subApellido;
+		$nick = $subNombre . $subApellido;
 		$subRut = substr($apellido, 0, 5); //19143
 		$pss = password_hash($subRut, PASSWORD_DEFAULT);
 
-		return ['nombre_usuario' => $nick ,'password' => $pss  ];
-
+		return ['nombre_usuario' => $nick, 'password' => $pss];
 	}
 
 

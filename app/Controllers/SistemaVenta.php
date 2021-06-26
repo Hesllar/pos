@@ -41,8 +41,8 @@ class SistemaVenta extends BaseController
 			'total' => $totalCompra,
 			'despacho' => $this->request->getVar('venta_despacho'),
 			'estado_venta' => 1,
-			'empleado_fk' => 301,
-			'cliente_fk' => 10,
+			'empleado_fk' => $this->request->getVar('id_usuario'),
+			'cliente_fk' => $this->request->getVar('cliente_fk'),
 			'forma_pago_fk' => $this->request->getVar('f_pago'),
 		]);
 	}

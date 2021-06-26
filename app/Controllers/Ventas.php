@@ -89,7 +89,8 @@ class Ventas extends BaseController
 			'e_usuario' => '',
 			'e_notacredito' => '',
 			'e_config' => '',
-			'e_estadistica' => ''
+			'e_estadistica' => '',
+			'e_tipomoneda' => ''
 		];
 
 		echo view('header', $data);
@@ -219,18 +220,36 @@ class Ventas extends BaseController
 		$ultima_venta = $this->ventas->orderBy('id_venta', 'DESC')->first();
 		$valores_venta = $this->calcularValores($this->request->getVar('total_venta_web'));
 		date_default_timezone_set("America/Santiago");
-		$this->ventas->save([
-			'tipo_comprobante' => $this->request->getVar('tipo_comprobante'),
-			'fecha_venta' => date('Y-m-d H:i:s'),
-			'valor_neto' => $valores_venta['valor_neto'],
-			'valor_iva' => $valores_venta['iva'],
-			'total' => $valores_venta['total'],
-			'despacho' => $this->request->getVar('despacho'),
-			'estado_venta' => 1,
-			'empleado_fk' => 301,
-			'cliente_fk' => $this->request->getVar('cliente_fk'),
-			'forma_pago_fk' => 2,
-		]);
+		if ($this->request->getVar('id_money') == 0) {
+			$this->ventas->save([
+				'tipo_comprobante' => $this->request->getVar('tipo_comprobante'),
+				'fecha_venta' => date('Y-m-d H:i:s'),
+				'valor_neto' => $valores_venta['valor_neto'],
+				'valor_iva' => $valores_venta['iva'],
+				'total' => $valores_venta['total'],
+				'despacho' => $this->request->getVar('despacho'),
+				'estado_venta' => 1,
+				'empleado_fk' => 301,
+				'cliente_fk' => $this->request->getVar('cliente_fk'),
+				'forma_pago_fk' => 2,
+				'tipo_moneda_fk' => null
+			]);
+		} else {
+			$this->ventas->save([
+				'tipo_comprobante' => $this->request->getVar('tipo_comprobante'),
+				'fecha_venta' => date('Y-m-d H:i:s'),
+				'valor_neto' => $valores_venta['valor_neto'],
+				'valor_iva' => $valores_venta['iva'],
+				'total' => $valores_venta['total'],
+				'despacho' => $this->request->getVar('despacho'),
+				'estado_venta' => 1,
+				'empleado_fk' => 301,
+				'cliente_fk' => $this->request->getVar('cliente_fk'),
+				'forma_pago_fk' => 2,
+				'tipo_moneda_fk' => $this->request->getVar('id_money')
+			]);
+		}
+
 		if ($this->request->getVar('despacho') == 1) {
 			$ultimoId = $this->obtenerUltimoId();
 			$ui = $ultimoId['id_venta'];
