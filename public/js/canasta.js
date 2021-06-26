@@ -197,20 +197,16 @@ function checkboxEmpresa(){
 }
 
 function aplicarMoneda(){
-   
-    var ejemplo = $('#valor_moneda').val();
-    if(ejemplo == ''){
-        var ejemplo = 1;
-    }
-    console.log(ejemplo);
+
+    var id_moneda = $('#valor_moneda').val();
     var idRegion = $('#region').val();
     var idComuna = $('#comuna').val();
     var total = $("#compraEstatica").val();
     var  sacar$ =  total.replace('$','');
     var  sacarPunto =  sacar$.replace('.','');
     const totalCompra = document.getElementById('totalCompra');
-    if (idComuna != 0 && idRegion == 6) {
-        
+    if($('#despacho').prop('checked')){
+        if (idComuna != 0 && idRegion == 6) {
         $.ajax({
             url: "http://localhost/pos/public/Comuna/costoComuna",
             method: "POST",
@@ -219,28 +215,65 @@ function aplicarMoneda(){
             },
             dataType: "JSON",
             success: function(data){
-                if($("#dolar").prop('checked')){
-                var sumarCostoComuna = (Number(sacarPunto) + Number(data.costo_comuna));
-                var valorDolar = parseFloat(sumarCostoComuna / 719.50).toFixed(2);
-                totalCompra.innerHTML = 'USD' + valorDolar;
-                }else{       
-                    var sumarCostoComuna = (Number(sacarPunto) + Number(data.costo_comuna));
-                    totalCompra.innerHTML = new Intl.NumberFormat("es-CL",{style: 'currency',currency: 'CLP',}).format(sumarCostoComuna);
-                }     
+                $.ajax({
+                    url: "http://localhost/pos/public/Moneda/obtDatosMoneda",
+                    method: "POST",
+                    data:{
+                        id_mone:id_moneda
+                        },
+                    dataType: "JSON",
+                    success: function(respuesta){
+                        if(id_moneda !=0){
+                            var sumarCostoComuna = (Number(sacarPunto) + Number(data.costo_comuna));
+                            var valorDolar = parseFloat(sumarCostoComuna / Number(respuesta.data.valor_moneda)).toFixed(2);
+                            totalCompra.innerHTML =  respuesta.data.nombre_moneda +  valorDolar;  
+                        }else{
+                            var sumarCostoComuna = (Number(sacarPunto) + Number(data.costo_comuna));
+                            totalCompra.innerHTML = new Intl.NumberFormat("es-CL",{style: 'currency',currency: 'CLP',}).format(sumarCostoComuna);       
+                        }
+                    }
+                })    
             }
         });
     }else{
-         totalCompra.innerHTML = new Intl.NumberFormat("es-CL",{style: 'currency',currency: 'CLP',}).format(Number(total));
-    }
-    if($("valor_moneda") == 1){
-            totalCompra.innerHTML = total.toFixed(1);
+         $.ajax({
+        url: "http://localhost/pos/public/Moneda/obtDatosMoneda",
+        method: "POST",
+        data:{
+            id_mone:id_moneda
+        },
+        dataType: "JSON",
+        success: function(respuesta){ 
+        if(id_moneda == 0){
+            totalCompra.innerHTML = total;  
         }else{
-            
-            var  sacar$ =  total.replace('$','');
-            var  sacarPunto =  sacar$.replace('.','');
-            var valorDolar = parseFloat(sacarPunto / ejemplo).toFixed(2);
-            totalCompra.innerHTML = valorDolar;
-        } 
+            var valorDolar = parseFloat(sacarPunto / Number(respuesta.data.valor_moneda)).toFixed(2);
+            totalCompra.innerHTML = respuesta.data.nombre_moneda +  valorDolar;       
+        }
+        }
+    });
+    }
+    }
+    if($('#tienda').prop('checked')){
+        $.ajax({
+        url: "http://localhost/pos/public/Moneda/obtDatosMoneda",
+        method: "POST",
+        data:{
+            id_mone:id_moneda
+        },
+        dataType: "JSON",
+        success: function(respuesta){ 
+        if(id_moneda == 0){
+            totalCompra.innerHTML = total;  
+        }else{
+            var valorDolar = parseFloat(sacarPunto / Number(respuesta.data.valor_moneda)).toFixed(2);
+            totalCompra.innerHTML = respuesta.data.nombre_moneda +  valorDolar;       
+        }
+        }
+    });
+    }
+    
+     
 }
 
 function datosEmpresa(){
@@ -278,6 +311,7 @@ function agregarDatosEmpresa(datos_empresa){
 
 function realizarCompraWeb(){
     //Venta
+    var id_moneda = $('#valor_moneda').val();
     var boleta_factura = '';
     $('#esEmpresa').prop('checked') ? boleta_factura = 'Factura' : boleta_factura = 'Boleta';
     
@@ -309,6 +343,7 @@ function realizarCompraWeb(){
         url: "http://localhost/pos/public/Ventas/RealizarVentaWeb",
         method: "POST",
         data: {
+            id_money:id_moneda,
             tipo_comprobante : boleta_factura,
             fecha_venta : fecha,
             total_venta_web : total_venta,
@@ -355,11 +390,11 @@ function cargarValorMoneda(){
                     url: "http://localhost/pos/public/Moneda/obtValor",
                     dataType: "JSON",
                     success: function(data) {
-                    var html = '<option value="">Seleccione Moneda</option>';
+                    var html = '<option value="0">Seleccione Moneda</option>';
                     for (var count = 0; count < data.length; count++) {
-                            html += '<option value="' + data[count].valor_moneda+'">' + data[count].nombre_moneda +'</option>';
+                            html += '<option value="' + data[count].id_moneda+'">' + data[count].nombre_moneda +'</option>';
                         };
-               return $('#valor_moneda').html(html);
+                $('#valor_moneda').html(html);
             }
         });
 }

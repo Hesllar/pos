@@ -194,7 +194,7 @@
                                             <select name="nivel_acceso" id="nivel_acceso" required>
                                                 <option value="">Seleccione</option>
                                                 <?php foreach ($nvl_acceso as $nvl) { ?>
-                                                    <option value="<?php echo $nvl['id_nivel']; ?>"><?php echo $nvl['nivel_acceso']; ?></option>
+                                                    <option value="<?php echo $nvl['id_nivel']; ?>"><?php echo $nvl['nivel_acceso']; ?> </option>
                                                 <?php } ?>
                                             </select>
                                         </div>

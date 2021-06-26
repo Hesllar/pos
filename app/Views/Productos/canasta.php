@@ -28,7 +28,7 @@
                      <div class="checkbox-form">
                          <div class="btn-group btn-group-toggle" data-toggle="buttons" onclick="retiro(event)">
                              <label class="btn btn-secondary active">
-                                 <input type="radio" name="opciones" id="despacho"> Despacho a domicilio
+                                 <input type="radio" name="opciones" id="despacho" checked> Despacho a domicilio
                              </label>
                              <label class="btn btn-secondary">
                                  <input type="radio" name="opciones" id="tienda"> Retiro en tienda
