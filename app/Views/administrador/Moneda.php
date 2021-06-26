@@ -1,5 +1,5 @@
 <div class="tab-pane active">
-    <h3>Productos</h3>
+    <h3>Moneda</h3>
     <div class="d-flex justify-content-between margin-top 15">
         <!-- Botón para agergar productos-->
         <div class="pull-right">
@@ -65,7 +65,7 @@
                     <tr>
                         <td><?php echo $dtsMoneda['nombre_moneda']; ?></td>
                         <td><?php echo $dtsMoneda['valor_moneda']; ?></td>
-                        <td><a class="view" href=""> <i class="fa fa-pencil"></i></a>
+                        <td><a class="view" href="<?php echo base_url() . '/Moneda/editarMoneda/' . $dtsMoneda['id_moneda']; ?>"> <i class="fa fa-pencil"></i></a>
                         </td>
                         <td><a class="view" data-href="" data-toggle="modal" data-target="#Eliminar">
                                 <i class="fa fa-trash"></i></a>
