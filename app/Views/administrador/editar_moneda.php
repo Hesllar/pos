@@ -12,7 +12,7 @@
                         </div>
                         <div class="form-group col-md-6">
                             <label for="inputState">*Valor moneda</label>
-                            <input type="number" class="form-control" step="0.01" id="val_moneda" value="<?php echo $datos['valor_moneda']; ?>" name="val_moneda" required>
+                            <input type="number" class="form-control" step="0.0001" id="val_moneda" value="<?php echo $datos['valor_moneda']; ?>" name="val_moneda" required>
                         </div>
                     </div>
                     <div class="row">

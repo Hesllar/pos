@@ -35,7 +35,7 @@
                                     <div class="form-group">
                                         <label class="control-label" for="valor"><span class="require">*</span>Valor</label>
                                         <div class="col-sm-10">
-                                            <input type="number" step="0.01" class="form-control" id="valor" name="valor" placeholder="Ingrese valor de la moneda">
+                                            <input type="number" step="0.0001" class="form-control" id="valor" name="valor" placeholder="Ingrese valor de la moneda">
                                         </div>
                                     </div>
                                 </fieldset>
