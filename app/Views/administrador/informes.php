@@ -16,7 +16,7 @@
                 <div class="col-4">
                     <div class="card text-white bg-success">
                         <div class="card-body">
-                            Ventas del día:
+                            Ventas del Día:
                             <?php echo $ventas ?>
                             <br>
                             Total Ventas:
@@ -39,7 +39,7 @@
                 <div class="col-4">
                     <div class="card text-white bg-info">
                         <div class="card-body">
-                            Cantidad de visitas:
+                            Cantidad de Visitas:
                             <?php echo $contar ?>
                         </div>
                     </div>
@@ -51,7 +51,7 @@
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-12">
                     <div class="panel">
-                        <h4 class="d-flex justify-content-center">Generar Reportes Ventas por Periodo (Excel)</h4>
+                        <h4 class="d-flex justify-content-center">Generar Reportes Ventas por Periodo (PDF y Excel)</h4>
                         <br>
                         <div class="form-row d-flex justify-content-center">
                             <form action="<?php echo base_url() ?>/Estadistica/excelVentas" method="POST">
@@ -65,8 +65,8 @@
                                 </div>
 
                                 <div class="form-group col-6 d-flex justify-content-around">
-                                    <button type="submit" name="buscar" value="1" class="btn btn-outline-success" target="_blank">Generar pdf</button>
-                                    <button type="submit" name="buscar" value="2" class="btn btn-outline-success">Generar excel</button>
+                                    <button type="submit" name="buscar" value="1" class="btn btn-outline-success" target="_blank">Generar PDF</button>
+                                    <button type="submit" name="buscar" value="2" class="btn btn-outline-success">Generar Excel</button>
                                 </div>
                         </div>
                         </form>
