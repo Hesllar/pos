@@ -83,7 +83,8 @@ class Estadistica extends BaseController
             'e_usuario' => '',
             'e_notacredito' => '',
             'e_config' => '',
-            'e_estadistica' => ''
+            'e_estadistica' => '',
+            'e_tipomoneda' => '' 
         ];
 
         echo view('header', $data);
@@ -178,7 +179,8 @@ class Estadistica extends BaseController
             'e_usuario' => '',
             'e_notacredito' => '',
             'e_config' => '',
-            'e_estadistica' => ''
+            'e_estadistica' => '',
+            'e_tipomoneda' => '' 
         ];
 
         echo view('header', $data);
@@ -199,19 +201,19 @@ class Estadistica extends BaseController
         $pdf->SetTitle("Stock criticos");
         $pdf->SetFont("Arial", 'B', 10);
         $pdf->Image("img/logo/logo1.png", 10, 7);
-        $pdf->Cell(0, 5, utf8_decode("Reporte Ventas de Empleado"), 0, 1, 'C');
+        $pdf->Cell(0, 5, utf8_decode("Reporte Ventas de Empleados"), 0, 1, 'C');
         $pdf->Ln(10);
-        $pdf->Cell(50, 5, utf8_decode("Código Empleado"), 1, 0, "C");
-        $pdf->Cell(30, 5, utf8_decode("Rut"), 1, 0, "C");
-        $pdf->Cell(42, 5, utf8_decode("Nombre"), 1, 0, "C");
+        $pdf->Cell(40, 5, utf8_decode("Código Empleado"), 1, 0, "C");
+        $pdf->Cell(25, 5, utf8_decode("Rut"), 1, 0, "C");
+        $pdf->Cell(50, 5, utf8_decode("Nombre"), 1, 0, "C");
         $pdf->Cell(20, 5, "Ventas", 1, 0, "C");
         $pdf->Cell(22, 5, "Total Venta", 1, 0, "C");
         $ventaEmp = $this->ventas->ventasXEmpleado();
         foreach ($ventaEmp as $venta) {
             $pdf->Ln();
-            $pdf->Cell(50, 5, $venta['empleado'], 1, 0, "C");
-            $pdf->Cell(30, 5, $venta['rut'], 1, 0, "C");
-            $pdf->Cell(42, 5, $venta['nombre'], 1, 0, "C");
+            $pdf->Cell(40, 5, $venta['empleado'], 1, 0, "C");
+            $pdf->Cell(25, 5, $venta['rut'], 1, 0, "C");
+            $pdf->Cell(50, 5, $venta['nombre'], 1, 0, "C");
             $pdf->Cell(20, 5, $venta['venta'], 1, 0, "C");
             $pdf->Cell(22, 5, $venta['total'], 1, 0, "C");
         }
@@ -282,7 +284,8 @@ class Estadistica extends BaseController
             'e_usuario' => '',
             'e_notacredito' => '',
             'e_config' => '',
-            'e_estadistica' => ''
+            'e_estadistica' => '',
+            'e_tipomoneda' => '' 
         ];
 
         echo view('header', $data);
