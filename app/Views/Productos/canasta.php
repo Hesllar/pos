@@ -23,6 +23,7 @@
      <div class="checkout-area pt-30  pb-60">
          <div class="container">
              <input type="hidden" id="idUs" name="IdUs" value="<?php echo $user_session->id_usuario ?>">
+             <input type="hidden" id="rut_hidden" name="rut_hidden" value="<?php echo $user_session->rut_fk ?>">
              <div class="row">
                  <div class="col-lg-6 col-md-6">
                      <div class="checkbox-form">
@@ -87,8 +88,13 @@
                              <div class="row pb-30">
                                  <div class="col-sm-12">
                                      <div class="form-check header-top-left">
-                                         <input class="form-check-input position-static" type="checkbox" id="esEmpresa" value="0" aria-label="empresa" onclick="datosEmpresa()">
-                                         Comprar con factura
+                                         <div class="col-4">
+                                             <label id="labelEsEmp" for="">Comprar con factura </label>
+                                         </div>
+                                         <div class="col-4">
+                                             <input class="form-check-input position-static" type="checkbox" id="esEmpresa" value="0" aria-label="empresa" onclick="datosEmpresa()">
+                                         </div>
+
                                      </div>
                                  </div>
                              </div>

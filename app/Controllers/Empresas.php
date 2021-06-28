@@ -27,6 +27,16 @@ class Empresas extends BaseController
 	{
 	}
 
+	public function pruebaRutEmp($rut_cliente)
+	{
+
+		$empresa = $this->empresas->where('DATOS_PERSONALES_rut', $rut_cliente)->first();
+
+		$data['datos'] = $empresa;
+
+		return json_encode($data);
+	}
+
 	public function buscarPorRutCliente($rut_cliente)
 	{
 		$empresa = $this->empresas->where('DATOS_PERSONALES_rut', $rut_cliente)->first();
@@ -63,7 +73,8 @@ class Empresas extends BaseController
 		return json_encode($res);
 	}
 
-	public function agregarEmpresa(){
+	public function agregarEmpresa()
+	{
 		$dr = $this->direccion->orderBy('id_direccion', 'DESC')->First();
 		$this->request = \Config\Services::request();
 		$rutC = $this->request->getPost('rut_c');

@@ -2,8 +2,12 @@
 listarRegiones();
 //Metodo Factura vía ajax
 checkboxEmpresa();
-
+//Carga el combo de las monedas
 cargarValorMoneda();
+//Esconde el check si el usuario no tiene empresa asignada
+escondeChexEmp();
+//
+esconderBotonCompra();
 
 var user_session_js = new Array(); //Variable ArraySession
 let user_data_js = new Array(); //Variable datos del usuario
@@ -182,6 +186,19 @@ function agregarDatosCliente(datos_usuario) {
     $('#ciudad').html(datos_usuario.ciudad);
 }
 
+
+function esconderBotonCompra(){
+    console.log('si')
+    var arrayProductos = document.querySelectorAll('.data-product');
+    console.log(arrayProductos);
+    if(arrayProductos.length == 0){
+        document.getElementById('realizarCompra').style.display='none'
+    }else{
+        
+        document.getElementById('realizarCompra').style.display='block'
+    }
+}
+
 function checkboxEmpresa() {
     const rut_fk = document.getElementById('rut-cli').textContent;
     $.ajax({
@@ -293,6 +310,25 @@ function aplicarMoneda() {
 
 
 }
+
+function escondeChexEmp(){
+    var rut_fk = $('#rut_hidden').val();
+    $.ajax({
+        url: "http://localhost/pos/public/Empresas/pruebaRutEmp/" + rut_fk,
+        method: "POST",
+        dataType: "JSON",
+        success:function(data){
+            if(data.datos != null){
+                document.getElementById("esEmpresa").style.display='block';
+                document.getElementById("labelEsEmp").style.display='block';
+            }else{
+                document.getElementById("esEmpresa").style.display='none';
+                document.getElementById("labelEsEmp").style.display='none';
+            }
+        }
+    })
+}
+
 
 function datosEmpresa() {
     seccionEmpresa.style.display = 'none';
