@@ -67,9 +67,6 @@
                         <td><?php echo $dtsMoneda['valor_moneda']; ?></td>
                         <td><a class="view" href="<?php echo base_url() . '/Moneda/editarMoneda/' . $dtsMoneda['id_moneda']; ?>"> <i class="fa fa-pencil"></i></a>
                         </td>
-                        <td><a class="view" data-href="" data-toggle="modal" data-target="#Eliminar">
-                                <i class="fa fa-trash"></i></a>
-                        </td>
                     </tr>
                 <?php } ?>
             </tbody>
