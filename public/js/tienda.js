@@ -3,6 +3,7 @@ const contenedorProductos = document.querySelector('.lista-carrito');
 const btnComprar = document.getElementById('realizar-compra');
 var contador = 0;
 
+
 // Create our number formatter.
 var formatter = new Intl.NumberFormat('es-CL', {
     style: 'currency',
@@ -27,6 +28,7 @@ function agregarAlCarroClick(event) {
     const itemImagen = item.querySelector('img').src;
     agregarProducto(itemCodigo, itemNombre, itemPrecio, itemImagen);
 }
+
 
 function actualizarContador(c, rev){
     const numeroContador = document.querySelector('.cart-counter');
