@@ -88,6 +88,8 @@
  <script src="<?php echo base_url(); ?>/js/jquery.fancybox.min.js"></script>
  <!-- bootstrap -->
  <script src="<?php echo base_url(); ?>/js/bootstrap.min.js"></script>
+
+ <script src="<?php echo base_url(); ?>/js/bootstrap-tooltip.js"></script>
  <!-- popper -->
  <script src="<?php echo base_url(); ?>/js/popper.js"></script>
  <!-- plugins -->
