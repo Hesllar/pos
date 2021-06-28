@@ -1,12 +1,12 @@
 <style type="text/css">
-    .btn-buscar{
+    .btn-buscar {
         margin-top: 2px;
         height: 35px;
         border-radius: 5px;
         margin-left: -15px;
     }
 
-    #div-total{
+    #div-total {
         text-align: right;
         font-size: 20px;
     }
@@ -22,12 +22,12 @@
             </a>
         </div>
     </div>
-    
+
     <div class="row">
         <div class="col-md-4">
             <input type="hidden" id="id_empleado" name="id_empleado">
             <input type="hidden" id="id_proveedor" name="id_proveedor">
-            <input type="text" class="form-control" id="id_prove" name="id_prove" placeholder="Ingrese ID de Proveedor"  autofocus>
+            <input type="text" class="form-control" id="id_prove" name="id_prove" placeholder="Ingrese ID de Proveedor" autofocus>
             <label for="id_prove" id="resultado_error" style="color: red"></label>
         </div>
         <div class="col-md-2">
@@ -74,7 +74,7 @@
 
     <div class="row">
         <div class="col-md-2">
-            <label class="control-label" for="number"><span class="require">*</span>ID Proveedor</label>
+            <label class="control-label" for="number"><span class="require">*</span>ID Producto</label>
         </div>
         <div class="col-md-2 pull-right" style="text-align-last: end;">
             <a href="#" class="btn" data-toggle="modal" data-target="#productos">
@@ -130,7 +130,6 @@
             </div>
         </div>
     </form>
-
     <div class=" row">
         <table id="tablaProducto" class="table">
             <thead>
@@ -153,6 +152,8 @@
             <br>
             <input type="hidden" name="total" id="hidden-total" value="0">
             <span class="span-total">TOTAL: </span><span id="cantidad-total" class="span-total"></span>
+            <br>
+            <button type="button" onclick="generarOrden()" class="newsletter-btn">Solicitar</button>
         </div>
     </div>
 </div>
@@ -253,7 +254,7 @@
                     }
                 }
             }
-        })  
+        })
     }
 
     function buscarPro(e, tagIdPro, codigo) {
@@ -270,7 +271,7 @@
 
                     if (resultado.existe) {
                         $("#id_producto").val(resultado.datos.id_producto);
-                        console.log('ID_PRODUCT: ',resultado.datos.id_producto);
+                        console.log('ID_PRODUCT: ', resultado.datos.id_producto);
                         $("#nombre").val(resultado.datos.nombre);
                         $("#marca").val(resultado.datos.marca);
                         $("#precio_costo").val(resultado.datos.precio_costo);
@@ -304,20 +305,20 @@
 <script>
     const contenedorProductos = document.querySelector('#lista-producto');
     const arrayProductos = [];
-    
+
     function agregarProducto(event) {
         var id_producto = $("#id_producto").val();
         var listaProductos = document.querySelectorAll('#lista-producto');
         listaProductos.forEach(lp => {
-            if(arrayProductos.length === 0){
+            if (arrayProductos.length === 0) {
                 agregarProductotabla();
                 arrayProductos.push(id_producto);
-            }else{
+            } else {
                 if (arrayProductos.includes(id_producto)) {
                     actualizarProducto(id_producto);
                 } else {
                     agregarProductotabla(id_producto);
-                    
+
                 }
             }
         });
@@ -327,13 +328,13 @@
         var id_producto = $("#id_producto").val();
         var nombre = $("#nombre").val();
         var marca = $("#marca").val();
-        var precio_costo = $("#precio_costo").val().replace('$','');
+        var precio_costo = $("#precio_costo").val().replace('$', '');
         var cantidad = $("#cantidad").val();
         var subtotal = $("#subtotal").val();
         var hiddenTotal = $('#hidden-total').val();
         const productoEnFila = document.createElement('tr');
 
-        productoEnFila.setAttribute('id', 'producto-'+id_producto);
+        productoEnFila.setAttribute('id', 'producto-' + id_producto);
         const contenedor = `
             <th>${nombre}</th>
             <th>${marca}</th>
@@ -360,7 +361,7 @@
         var newTotal = parseInt(hiddenTotal) + parseInt(subtotal);
 
         $('#hidden-total').val(newTotal);
-        $('#cantidad-total').text('$ '+newTotal);
+        $('#cantidad-total').text('$ ' + newTotal);
         $('#div-total').show();
     }
 
@@ -371,9 +372,9 @@
         var precio_costo = $("#precio_costo").val();
         var cantidad = $("#cantidad").val();
         var subtotal = $("#subtotal").val();
-        $('#cantidad-'+id_producto).val(cantidad).text(cantidad);
-        $('#sub-total-'+id_producto).val(subtotal).text('$ '+subtotal);
-        $('#hidden-sub-total-'+id_producto).val(subtotal);
+        $('#cantidad-' + id_producto).val(cantidad).text(cantidad);
+        $('#sub-total-' + id_producto).val(subtotal).text('$ ' + subtotal);
+        $('#hidden-sub-total-' + id_producto).val(subtotal);
         actualizarTotal();
 
     }
@@ -384,18 +385,48 @@
         // actualizarTotal()
     }
 
-    function actualizarTotal (){
+    function actualizarTotal() {
         var aux = 0;
-        $('.sub-total-table').each(function (index, elem){
+        $('.sub-total-table').each(function(index, elem) {
             aux = parseInt(aux) + parseInt($(elem).val());
         });
 
         $('#hidden-total').val(aux);
-        $('#cantidad-total').text('$ '+aux);
+        $('#cantidad-total').text('$ ' + aux);
     }
 
-    function eliminarProducto(id){
-        $('#producto-'+id).remove();
+    function eliminarProducto(id) {
+        $('#producto-' + id).remove();
         actualizarTotal();
+    }
+
+    function generarOrden() {
+        var input_prove = document.getElementById('id_prove').value;
+        console.log(input_prove)
+        var input_produc = document.getElementById('id_prod').value;
+        console.log(input_produc)
+        var valorTotal = $('#hidden-total').val();
+        var neto = (valorTotal - (valorTotal * 0.19));
+        var iva = valorTotal * 0.19;
+        var id_prov = $('#id_proveedor').val();
+        if (input_prove != '' && input_produc != '') {
+            $.ajax({
+                url: '<?php echo base_url(); ?>/OrdenesCompra/generarOrden',
+                method: "POST",
+                data: {
+                    valorTotal: valorTotal,
+                    neto: neto,
+                    iva: iva,
+                    id_prov: id_prov
+                },
+                success: function(data) {
+                    alert('Orden generada correctamente');
+
+                    window.location.href = '<?php echo base_url(); ?>/ordenescompra'
+                }
+            });
+        } else {
+            alert('Debe completar los campos');
+        }
     }
 </script>

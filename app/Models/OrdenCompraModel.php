@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Models;
+
 use CodeIgniter\Model;
 
 class OrdenCompraModel extends Model
@@ -14,14 +15,18 @@ class OrdenCompraModel extends Model
     protected $returnType     = 'array';
     protected $useSoftDeletes = false;
 
-    protected $allowedFields = ['valo_neto',
-                                'valor_iva',
-                                'valor_total',
-                                'estado_orden',
-                                'conversion_moneda'];
+    protected $allowedFields = [
+        'valor_neto',
+        'valor_iva',
+        'valor_total',
+        'estado_orden',
+        'conversion_moneda',
+        'empleado_fk',
+        'proveedor_fk'
+    ];
 
     protected $useTimestamps = false;
-    
+
     protected $createdField  = 'fecha_emision';
     /*
     protected $updatedField  = 'fecha_entrega';
@@ -32,4 +37,3 @@ class OrdenCompraModel extends Model
     protected $validationMessages = [];
     protected $skipValidation     = false;
 }
-?>
