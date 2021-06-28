@@ -9,9 +9,12 @@ use App\Models\ConfiguracionModel;
 class OrdenesCompra extends BaseController
 {
 	protected $ordenescompra;
+	protected $request;
+	protected $session;
 
 	public function __construct()
 	{
+		$this->session = session();
 		$this->ordenescompra = new OrdenCompraModel;
 		$this->configuracion = new ConfiguracionModel;
 	}
@@ -57,5 +60,18 @@ class OrdenesCompra extends BaseController
 		echo view('administrador/ordenes_compra');
 		echo view('administrador/panel_footer');
 		echo view('footer');
+	}
+
+	public function generarOrden()
+	{
+		$this->request = \Config\Services::request();
+		$this->ordenescompra->save([
+			'valor_neto' => $this->request->getVar('neto'),
+			'valor_iva' => $this->request->getVar('iva'),
+			'valor_total' => $this->request->getVar('valorTotal'),
+			'estado_orden' => 1,
+			'empleado_fk' => 301,
+			'proveedor_fk' => $this->request->getVar('id_prov'),
+		]);
 	}
 }
