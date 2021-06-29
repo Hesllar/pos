@@ -266,7 +266,7 @@ $session = session();
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn-estilo btn-cancelar" data-dismiss="modal">Cancelar</button>
-                                <button type="button" class="btn-estilo btn-cancelar" data-dismiss="modal">Anular
+                                <button type="button" class="btn-estilo btn-cancelar btn-anular" data-dismiss="modal">Anular
                                     venta</button>
                                 <button type="button" class="btn-estilo btn-aceptar" data-dismiss="modal">Aceptar</button>
                             </div>
@@ -286,9 +286,8 @@ $session = session();
             </ul>
             <!-- Product Thumbnail Tab Content Start -->
             <div class="tab-content thumb-content border-default">
-                <div id="boletas" class="tab-pane">
-                    <div class="table-responsive">
-                        <table class="table">
+                <div id="boletas" class="tab-pane in active">
+                        <table id="tabla-boletas" class="table table-striped table-bordered">
                             <thead>
                                 <tr>
                                     <th>N° Venta</th>
@@ -300,32 +299,11 @@ $session = session();
                                     <th>Acciones</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <?php foreach ($boletas as $boleta) { ?>
-                                    <tr>
-                                        <td><?php echo $boleta['id_venta']; ?></td>
-                                        <td><?php echo $boleta['fecha_venta']; ?></td>
-                                        <td><?php echo $configuracion['signo_moneda']; ?><?php echo number_format($boleta['total'], 0); ?>
-                                        </td>
-                                        <td><?php echo $boleta['despacho_str']; ?></td>
-                                        <td><?php echo $boleta['estado_str']; ?></td>
-                                        <td><a href="#"><?php echo $boleta['nom_empleado']; ?></a></td>
-                                        <td>
-                                            <a class="view" data-toggle="modal" data-target="#detalle" id="btnbuscar" onclick="todo(<?php echo $boleta['id_venta'] ?>)">
-                                                <i class="fa fa-bars"></i>
-                                            </a>
-
-                                        </td>
-                                    </tr>
-                                <?php } ?>
-                            </tbody>
-
                         </table>
-                    </div>
                 </div>
-                <div id="facturas" class="tab-pane in active">
-                    <div class="table-responsive">
-                        <table class="table">
+
+                <div id="facturas" class="tab-pane">
+                        <table id="tabla-facturas" class="table table-striped table-bordered">
                             <thead>
                                 <tr>
                                     <th>N° Venta</th>
@@ -337,33 +315,7 @@ $session = session();
                                     <th>Acciones</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <?php foreach ($facturas as $factura) { ?>
-                                    <tr>
-                                        <td><?php echo $factura['id_venta']; ?></td>
-                                        <td><?php echo $factura['fecha_venta']; ?></td>
-                                        <td><?php echo $configuracion['signo_moneda']; ?><?php echo number_format($factura['total'], 0);  ?>
-                                        </td>
-                                        <td><?php echo $factura['despacho']; ?></td>
-                                        <td><?php echo $factura['estado_venta']; ?></td>
-                                        <td><a href="#"><?php echo $factura['empleado_fk']; ?></a></td>
-                                        <td>
-                                            <a class="view" data-toggle="modal" href="#detalle" onclick="todo(<?php echo $factura['id_venta'] ?>)">
-                                                <i class="fa fa-bars"></i>
-                                            </a>
-                                            <!--<a class="view-alerta" href="" onclick="anular(<?php echo $factura['id_venta'] ?>)">
-                                                <i class="fa fa-bars"></i>
-                                            </a>
-                                            <a class="view-alerta" href="" onclick="bpp(<?php echo $factura['id_venta'] ?>)">
-                                                <i class="fa fa-bars"></i>
-                                            </a>
-                                            <button id="anular" name="anular" type="button" class="btn btn-danger btn-sm delete" data-id="<?php $factura['id_venta'] ?>">Anular</button>-->
-                                        </td>
-                                    </tr>
-                                <?php } ?>
-                            </tbody>
                         </table>
-                    </div>
                 </div>
             </div>
             <!-- Product Thumbnail Tab Content End -->
@@ -374,154 +326,4 @@ $session = session();
 </div>
 <!-- Product Thumbnail Description End -->
 </div>
-<div id="resultado">Nada</div>
 
-
-<!-- jquery 3.12.4 -->
-<script src="<?php echo base_url(); ?>/js/vendor/jquery-1.12.4.min.js"></script>
-<script>
-    $(document).ready(function() {
-
-    });
-
-    function bpp(codigo) {
-
-        alert('Run function bpp');
-        $.ajax({
-            url: "<?php echo base_url() ?>/ventas/anularventa/" + codigo,
-            datatype: 'json',
-            success: function(resultado) {
-                alert('FInishes');
-                alert(resultado.datos.id_venta);
-                //$("#resultado").html(resultado.datos.id_venta);
-                //$("#IdBoleta").html(resultado.datos.id_venta);
-            }
-        })
-    };
-</script>
-
-
-<script>
-    //jQuery("#resultado").html('response');
-    function anular(id_venta) {
-        alert('Si');
-        if (id_venta != null) {
-            $.ajax({
-                url: "<?php echo base_url('/ventas/anularventa/') ?>" + id_venta,
-                type: "POST",
-                dataType: 'json',
-                data: {
-                    'id_venta': id_venta
-                },
-                success: function(respuesta) {
-                    alert('FInishes');
-                }
-            });
-        }
-    }
-</script>
-
-
-<script>
-    function todo(id_venta) {
-        obtnDatos(id_venta);
-        obtnDatosPro(id_venta);
-        obtDatosEmp(id_venta);
-        obtDatosEmpleado(id_venta);
-        obtDatosDespacho(id_venta);
-
-    }
-
-    function obtnDatos(id_venta) {
-        $.ajax({
-            url: "<?php echo base_url() ?>/Ventas/datosBoleta/" + id_venta,
-            dataType: 'json',
-            success: function(respuesta) {
-                $("#idBoleta").val(respuesta.datos.id_venta);
-                $("#fecha_emision").val(respuesta.datos.fecha_venta);
-                $("#rut_user").val(respuesta.datos.rut);
-                $("#nombre_cliente").val(respuesta.datos.nombres);
-                $("#subtotal").val(respuesta.datos.total);
-            }
-        });
-    }
-
-    function obtnDatosPro(id_venta) {
-        $.ajax({
-            url: "<?php echo base_url() ?>/Ventas/datosProductoBoleta/" + id_venta,
-            dataType: 'json',
-            success: function(respuesta) {
-                $('.listProduct').html('')
-                $.each(respuesta.datos, function(i, value) {
-                    $('.listProduct').append('<tr>\
-                    <td>' + value['nombre'] + '</td>\
-                    <td>' + value['cantidad'] + '</td>\
-                    <td>' + value['precio_neto'] + '</td>\
-                    <td>' + value['precio_iva'] + '</td>\
-                    <td>' + value['precio_venta'] + '</td>\
-                    ')
-                })
-            }
-        });
-    }
-
-    function obtDatosEmp(id_venta) {
-        $.ajax({
-            url: "<?php echo base_url() ?>/Empresas/datosEmp/" + id_venta,
-            dataType: 'json',
-            success: function(resp) {
-                if (resp.datos != null) {
-                    $("#rut_emp").val(resp.datos.rut_emp);
-                    $("#social").val(resp.datos.social);
-                    $("#giro").val(resp.datos.giro);
-                    document.getElementById("datos_emp").style.display = ""
-
-                } else {
-                    document.getElementById("datos_emp").style.display = "none"
-                }
-            }
-        });
-    }
-
-    function obtDatosEmpleado(id_venta) {
-        console.log(id_venta);
-        $.ajax({
-            url: "<?php echo base_url() ?>/Ventas/datosEmpleado/" + id_venta,
-            dataType: 'json',
-            success: function(resp) {
-                console.log(resp);
-                if (resp.datos != null) {
-                    $("#nom_empleado").val(resp.datos.nom_empleado);
-                }
-            }
-        });
-    }
-
-    function obtDatosDespacho(id_venta) {
-        $.ajax({
-            url: "<?php echo base_url() ?>/Ventas/datosDespacho/" + id_venta,
-            dataType: 'json',
-            success: function(resp) {
-
-                if (resp.datos != null) {
-                    if (resp.datos.est_desp == 1) {
-                        $("#est_despacho").val('Entregado')
-                    } else {
-                        $("#est_despacho").val('No entregado')
-                    }
-                    $("#nom_recibe").val(resp.datos.nom_recibe);
-                    $("#nom_comuna").val(resp.datos.nombre_comuna);
-                    $("#costo_envio").val(resp.datos.costo_comuna);
-                    $("#fecha_entrega").val(resp.datos.fecha_entrega);
-                    $("#fecha_entrega").val(resp.datos.fecha_entrega);
-                    $("#totales").val(resp.datos.totales);
-                    document.getElementById("despacho").style.display = ""
-                    document.getElementById("total-des").style.display = ""
-                } else {
-                    document.getElementById("despacho").style.display = "none"
-                    document.getElementById("total-des").style.display = "none"
-                }
-            }
-        });
-    }
-</script>

@@ -243,7 +243,7 @@ function idEmpleado(){
         url: "http://localhost/pos/public/Empleados/buscarPorIdUsuario/" + $("#id_usuario").val(),
         method: "POST",
         success: function(empleadoId){
-            $("#id_empleado").val(empleadoId);
+            empleadoId != "" ? $("#id_empleado").val(empleadoId) : null ;
         }
     });
 }
@@ -351,6 +351,8 @@ function camposCliente(estado) {
 }
 
 function limpiarCampos() {
+    $('#boleta').prop('checked', true);
+    $('#inputTotal').val('');
     $('#nombres_cli').val('');
     $('#apellidos_cli').val('');
     $('#celular_cli').val('');
@@ -499,6 +501,15 @@ $('#btnGuardar').on('click', function () {
     } else {
         agregarEmpresa();
     }
+    datosTabla = [];
+    $('#listaProductos').DataTable().clear().draw();
+    $('#factura').prop('disabled', true);
+    $("#textRutCliente").text("-");
+    $("#textNombreCliente").text("");
+    $("#infoCliente").addClass('d-none');
+    $("#agregarCliente").collapse('hide');
+    $('#rutCliente').val("");
+    limpiarCampos();
 });
 
 $('#btnCancelar').on('click', function () {
