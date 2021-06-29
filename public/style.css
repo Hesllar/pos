@@ -1213,8 +1213,19 @@ ul.ht-dropdown.dropdown-style-two li {
     width: 100%;
     background: #fff;
 }
+.bg-no {
+    background: none !important;
+}
 .actions-secondary a:hover {
     background: #f1ac06;
+    color: #fff;
+}
+
+.borders-a-s {
+    background-color: #ffc65d5d;
+}
+.delete:hover {
+    background: #f13506fb !important;
     color: #fff;
 }
 
@@ -4113,24 +4124,28 @@ legend {
 .dashboard-content .table-responsive .table > thead > tr > th {
     font-size: 14px;
     font-weight: 500;
+    text-align: center;
 }
 
 .dashboard-content .table-responsive .table > tbody > tr > td {
     color: #7b7b7b;
     font-size: 13px;
     padding: 15px 8px;
+    text-align: center;
 }
 
 #dashboard a {
     color: #f1ac06;
     text-transform: capitalize;
 }
+
 .view-alerta {
     background: hsl(0, 87%, 38%) none repeat scroll 0 0;
     color: #fff;
     padding: 5px 12px;
     text-transform: capitalize;
 }
+
 .view,.view-cart,.view-alerta {
   background: #f1ac06  none repeat scroll 0 0;
   color: #fff;

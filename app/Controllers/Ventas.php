@@ -97,6 +97,7 @@ class Ventas extends BaseController
 		echo view('administrador/ventas', $test);
 		echo view('administrador/panel_footer');
 		echo view('footer', $data);
+		echo view('ventajs');
 	}
 
 	public function despachoString($valor)
@@ -136,72 +137,17 @@ class Ventas extends BaseController
 		return $venta;
 	}
 
-	public function anularVenta($id_venta = 1002)
+	public function anularVenta($i_venta)
 	{
-		$this->ventas->select('*');
-		$this->ventas->where('id_venta', $id_venta);
-		$datos = $this->ventas->get()->getRow();
-		(isset($tester)) ? print_r($tester) : print_r('Sin datos');
-		$res['datos'] = '';
+		$venta = $this->ventas->where('id_venta', $i_venta)->First();
 
-		if ($datos) {
-			$res['datos'] = $datos;
-			$res['error'] = 'No Error';
-		} else {
-			$res['error'] = 'Error';
+		if (gettype($venta) != null) {
+			if ($venta['estado_venta'] != 0) {
+				$this->ventas->update($i_venta, ['estado_venta' => 0,]);
+				return ('Venta anulada');
+			}
 		}
-
-		echo json_encode($res);
-
-		/*
-        $request = $this->request = \Config\Services::request();
-		
-		echo $request->getVar('id_venta');
-		echo 'TEEST0';
-		$id_venta = $this->input->post("id_venta");
-		if($id_venta != null) {
-			$data = $this->ventas->buscarId($id_venta);
-	  
-		  header('Content-Type: application/json');
-		  echo json_encode($data);
-		}
-		
-		$id_venta = 1002;
-		echo json_encode($id_venta);
-		$id = $this->input->post('id');
-		echo $id;
-		
-        $request = $this->request = \Config\Services::request();
-		
-		echo $request->getVar('id_venta');
-		if($request->getVar('id_venta')){
-			$id_venta = $request->getVar('id_venta');
-			$venta = $this->ventas->where('id_venta', $id_venta);
-			$venta['estado_venta'] = 0;
-			$this->ventas->update($id_venta,$venta);
-
-			echo json_encode($id_venta);
-
-			#$this->ventas->where('id_venta', $id_venta)->update($id_venta,['estado_venta' => 0]);
-
-			echo 'div class="alert alert-success"></div>';
-
-
-			#$venta = $this->ventas->update($id_venta,['estado_venta' => 0]);
-		}
-		*/
-		/*
-		$venta = $this->ventas->where('id_venta',$id)->First();
-		echo 'teste';
-		$venta = $this->ventas->update($id,['estado_venta' => 0]);
-		return $venta;
-		*/
-		#return $this->response->redirect(site_url('/ventas'));
-		/*echo view('header');
-		echo view('administrador/panel_header');
-		echo view('administrador/ventas');
-		echo view('administrador/panel_footer');
-		echo view('footer');*/
+		return ('Error al anular venta');
 	}
 
 	function obtenerUltimoId()
@@ -548,5 +494,64 @@ class Ventas extends BaseController
 
 		$this->response->setHeader('Content-Type', 'application/pdf');
 		$pdf->Output('comprobante.pdf', 'I');
+	}
+
+	public function rellenoDatatables($tipo)
+	{
+		//$arrWhere = array('tipo_comprobante' => $tipo, 'estado_venta' => 1);
+		$arrayDT = $this->objToDT($this->ventas->where('tipo_comprobante', $tipo)->findAll());
+		return json_encode($arrayDT);
+	}
+
+	public function btnAccion($idVenta, $estado){
+		$divHeader = '<div class="actions-secondary bg-no">';
+		$divFooter = '</div>';
+		$btnVer = '<a class="borders-a-s" data-toggle="modal" href="#detalle" onclick="todo('.$idVenta.')">
+					<i class="fa fa-eye"></i></a>';
+		$btnAnular = '<a class="borders-a-s delete" onclick="anulacion('.$idVenta.')" href="#" id="'.$idVenta.'">
+					<i class="fa fa-ban"></i></a>';
+
+		if($estado == 1){
+			return $divHeader.$btnVer.$btnAnular.$divFooter;
+		}else{
+			return $divHeader.$btnVer.$divFooter;
+		}
+                                            
+	}
+
+	public function objToDT($arr)
+	{
+		$arraySalida = [];
+		foreach ($arr as $i => $val) {
+			if($val['despacho'] == 1){
+				$valor_total = $this->valorDespacho($val['id_venta']) + (int)$val['total'];
+				$despacho = 'Sí';
+			}else{
+				$valor_total = (int)$val['total'];
+				$despacho = 'No';
+			}
+
+			$val['estado_venta'] == 1 ?
+			$eVenta = 'Realizada' :
+			$eVenta = 'Anulada';
+
+			$arrTemp = [
+				$val['id_venta'],
+				$val['fecha_venta'],
+				'$'.$valor_total,
+				$despacho,
+				$eVenta,
+				$val['empleado_fk'],
+				$this->btnAccion($val['id_venta'], $val['estado_venta'])
+			];
+			array_push($arraySalida, $arrTemp);
+		}
+		return ($arraySalida);
+	}
+
+	public function valorDespacho($venta_fk)
+	{
+		$desp = $this->despacho->where('venta_fk', $venta_fk)->First();
+		return (int)$desp['costo_despacho'];
 	}
 }

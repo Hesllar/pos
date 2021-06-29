@@ -43,11 +43,13 @@
      <link rel="stylesheet" href="<?php echo base_url(); ?>/css/responsive.css">
      <!-- mensajes flash css -->
      <link rel="stylesheet" href="<?php echo base_url(); ?>/css/toastr.min.css">
+     <!-- datatables css -->
+     <link rel="stylesheet" href="<?php echo base_url(); ?>/DataTables/datatables.min.css">
 
 
-     <!-- jquery 3.12.4 -->
+     <!-- jquery 3.12.4 
 
-     <script src="<?php echo base_url(); ?>/js/vendor/jquery-1.12.4.min.js"></script>
+     <script src="<?php // echo base_url(); ?>/js/vendor/jquery-1.12.4.min.js"></script>-->
      <!-- modernizr js -->
      <script src="<?php echo base_url(); ?>/js/vendor/modernizr-2.8.3.min.js"></script>
 
