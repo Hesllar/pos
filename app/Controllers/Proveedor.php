@@ -234,6 +234,7 @@ class Proveedor extends BaseController
 		echo view('header', $data);
 		echo view('administrador/crear_orden');
 		echo view('footer');
+		echo view('ordenjs');
 	}
 
 

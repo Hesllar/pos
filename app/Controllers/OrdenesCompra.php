@@ -5,24 +5,28 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use App\Models\OrdenCompraModel;
 use App\Models\ConfiguracionModel;
+use App\Models\DetalleOrdenCompraModel;
 
 class OrdenesCompra extends BaseController
 {
 	protected $ordenescompra;
 	protected $request;
 	protected $session;
+	protected $detalle;
 
 	public function __construct()
 	{
 		$this->session = session();
 		$this->ordenescompra = new OrdenCompraModel;
 		$this->configuracion = new ConfiguracionModel;
+		$this->detalle = new DetalleOrdenCompraModel;
 	}
 
 	public function index()
 	{
 		$configuracion = $this->configuracion->First();
-		$data = ['titulo' => 'configuracion', 'configuracion' => $configuracion];
+		$ordenescompra = $this->ordenescompra->findAll();
+		$data = ['titulo' => 'configuracion', 'configuracion' => $configuracion, 'ordenCompra' => $ordenescompra,];
 
 		$estados = [
 			'e_venta' => '',
@@ -73,5 +77,23 @@ class OrdenesCompra extends BaseController
 			'empleado_fk' => 301,
 			'proveedor_fk' => $this->request->getVar('id_prov'),
 		]);
+	}
+
+	public function generarDetalleOrd()
+	{
+		$this->request = \Config\Services::request();
+		$ultimoOrden = $this->ordenescompra->orderBy('id_orden', 'DESC')->first();
+		$lista = $this->request->getVar('lista');
+
+		foreach ($lista as $producto) {
+			$this->detalle->save([
+				'n_orden_pk' => $ultimoOrden['id_orden'],
+				'id_producto_pk' => $producto[0],
+				'cantidad' => $producto[1],
+				'cantidad_recibida' => 0,
+				'precio_costo' => $producto[2],
+				'valor_total' => $producto[3]
+			]);
+		}
 	}
 }

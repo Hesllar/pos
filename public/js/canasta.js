@@ -444,7 +444,7 @@ function cargarValorMoneda() {
         url: "http://localhost/pos/public/Moneda/obtValor",
         dataType: "JSON",
         success: function(data) {
-            var html = '<option value="0">Seleccione Moneda</option>';
+            var html = '<option value="0">CLP</option>';
             for (var count = 0; count < data.length; count++) {
                 html += '<option value="' + data[count].id_moneda + '">' + data[count].nombre_moneda + '</option>';
             };

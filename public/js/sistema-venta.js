@@ -427,6 +427,12 @@ function listarComunasEmpresa() {
 
 
 function agregarDireccion(tipo) {
+    var rutNuevoCli = $("#rut_cli").val();
+    var dvNuevoCli = $("#dv_cli").val();
+    var nombreNuevoCli = document.getElementById('nombres_cli').value;
+    var apellidosNuevoCli = $("#apellidos_cli").val();
+    var celularNuevoCli = $("#celular_cli").val();
+    var correoNuevoCli = $("#correo_cli").val();
     var textCalle = '';
     var textNumero = '';
     var nCiudad = '';
@@ -458,12 +464,7 @@ function agregarDireccion(tipo) {
         dataType: "JSON",
         success: function (id_direccion) {
 
-            var rutNuevoCli = $("#rut_cli").val();
-            var dvNuevoCli = $("#dv_cli").val();
-            var nombreNuevoCli = $("#nombres_cli").val();
-            var apellidosNuevoCli = $("#apellidos_cli").val();
-            var celularNuevoCli = $("#celular_cli").val();
-            var correoNuevoCli = $("#correo_cli").val();
+            
             $.ajax({
                 url: "http://localhost/pos/public/DatosPersonales/insertarDatosAjax",
                 method: "POST",
@@ -478,7 +479,7 @@ function agregarDireccion(tipo) {
                 },
                 dataType: "JSON"
             });
-            crearUsuario();
+            crearUsuario(rutNuevoCli,nombreNuevoCli,apellidosNuevoCli);
             $msje = "El cliente " +
                 nombreNuevoCli +
                 " " +
@@ -619,16 +620,17 @@ function agregarEmpresa() {
     });
 }
 
-function crearUsuario() {
+function crearUsuario(r,nom,ape) {
     var r_c = $('#rut_cli').val();
     var d_c = $('#dv_cli').val();
     var n_c = $('#nombres_cli').val();
     var a_c = $('#apellidos_cli').val();
+    console.log(r_c ,d_c,n_c,a_c);
     $.ajax({
         url: "http://localhost/pos/public/Usuarios/crearUsuarioVenta/" +
-        r_c + "/" +
-        n_c + "/" +
-        a_c ,
+        r+ "/" +
+        nom + "/" +
+        ape ,
         method: "POST",
     });
 }
