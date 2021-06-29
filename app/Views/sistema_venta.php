@@ -70,6 +70,7 @@ $user_session = session();
                     <div class="col-sm-3">
                         <div class="pull-right">
                             <div class="product-header">
+
                             <i class="fa fa-user"></i>
                             Vendedor: 
                             <?php
@@ -78,11 +79,12 @@ $user_session = session();
                             echo '<input type="hidden" id="id_usuario" value="'. $id_user .'">';
                             ?>
                             <input type="hidden" id="id_empleado" value="301">
+
                             </div>
                             <div class="pro-content">
                                 <a href="<?php echo base_url() ?>/Usuarios/logout">
-                                <i class="fas fa-sign-out-alt logout-icon"></i>
-                                (Cerrar Sesión)
+                                    <i class="fas fa-sign-out-alt logout-icon"></i>
+                                    (Cerrar Sesión)
                                 </a>
                             </div>
                         </div>
@@ -525,6 +527,13 @@ $user_session = session();
                 </div>
             </div>
         </div>
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalVenta" hidden>
+            TestModal
+        </button>
+        <button id="btnTest" type="button" class="btn btn-primary" hidden>
+            Test
+        </button>
 
         <!-- Modal -->
         <div class="modal fade" id="modalNotificacion" tabindex="-1" role="dialog" aria-labelledby="modalNotificacionLabel" aria-hidden="true">
