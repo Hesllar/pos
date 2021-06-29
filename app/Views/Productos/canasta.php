@@ -282,7 +282,7 @@
                              <div class="form-group col-md-6">
                                  <label for="comuna">*Tipo de monedas</label>
                                  <select name="valor_moneda" id="valor_moneda" onclick="aplicarMoneda()" required>
-                                     <option value="">Seleccione Moneda</option>
+                                     <option value="">CLP</option>
                                  </select>
                              </div>
                          </div>
