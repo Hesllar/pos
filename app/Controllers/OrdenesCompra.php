@@ -3,26 +3,40 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
+
 use App\Models\OrdenCompraModel;
 use App\Models\ConfiguracionModel;
+use App\Models\DetalleOrdenCompraModel;
+use App\Models\ProveedorModel;
+use App\Models\ProductosAdminModel;
+
 
 class OrdenesCompra extends BaseController
 {
 	protected $ordenescompra;
 	protected $request;
 	protected $session;
+	protected $detalle;
+	protected $proveedor;
+	protected $productos;
+
+
 
 	public function __construct()
 	{
 		$this->session = session();
+		$this->productos = new ProductosAdminModel;
+		$this->proveedor = new ProveedorModel;
 		$this->ordenescompra = new OrdenCompraModel;
 		$this->configuracion = new ConfiguracionModel;
+		$this->detalle = new DetalleOrdenCompraModel;
 	}
 
 	public function index()
 	{
 		$configuracion = $this->configuracion->First();
-		$data = ['titulo' => 'configuracion', 'configuracion' => $configuracion];
+		$ordenescompra = $this->ordenescompra->findAll();
+		$data = ['titulo' => 'configuracion', 'configuracion' => $configuracion, 'ordenCompra' => $ordenescompra,];
 
 		$estados = [
 			'e_venta' => '',
@@ -73,5 +87,63 @@ class OrdenesCompra extends BaseController
 			'empleado_fk' => 301,
 			'proveedor_fk' => $this->request->getVar('id_prov'),
 		]);
+	}
+
+	public function generarDetalleOrd()
+	{
+		$this->request = \Config\Services::request();
+		$ultimoOrden = $this->ordenescompra->orderBy('id_orden', 'DESC')->first();
+		$lista = $this->request->getVar('lista');
+
+		foreach ($lista as $producto) {
+			$this->detalle->save([
+				'n_orden_pk' => $ultimoOrden['id_orden'],
+				'id_producto_pk' => $producto[0],
+				'cantidad' => $producto[1],
+				'cantidad_recibida' => 0,
+				'precio_costo' => $producto[2],
+				'valor_total' => $producto[3]
+			]);
+		}
+	}
+
+	public function eliminarOrden($idOrdenDetalle, $idOrden)
+	{
+		$this->detalle->where('n_orden_pk', $idOrdenDetalle)->delete();
+		$this->ordenescompra->where('id_orden', $idOrden)->delete();
+		return redirect()->to(base_url() . '/OrdenesCompra');
+	}
+
+	public function editarOrden($idOrden)
+	{
+
+		$configuracion = $this->configuracion->First();
+		$prove = $this->proveedor->dtsProv($this->session->id_sucursal_fk);
+		$orden = $this->ordenescompra->allDatosProv($idOrden);
+
+		$productos = $this->productos->findAll();
+		$listado = $this->cargarProductosSoli($idOrden);
+
+		$data = [
+			'datos' => $orden,
+			'configuracion' => $configuracion,
+			'productos' => $productos,
+			'proveedor' => $prove,
+			'producSoli' => $this->cargarProductosSoli($idOrden)
+		];
+
+
+
+		echo view('header', $data);
+		echo view('administrador/editar_orden_compra');
+		echo view('footer');
+		echo view('ordenjs');
+	}
+
+	public function cargarProductosSoli($id_orden)
+	{
+		$datos = $this->ordenescompra->obtProductosSoli($id_orden);
+
+		return $datos;
 	}
 }

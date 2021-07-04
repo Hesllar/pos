@@ -29,7 +29,8 @@
             <input type="hidden" id="nvl_acces" value="<?php echo $user->nvl_acceso_fk; ?>">
             <input type="hidden" id="id_empleado" name="id_empleado">
             <input type="hidden" id="id_proveedor" name="id_proveedor">
-            <input type="text" class="form-control" id="id_prove" name="id_prove" placeholder="Ingrese ID de Proveedor" autofocus>
+            <input type="hidden" id="id_orden_edit" name="id_orden_edit" value="<?php echo $datos['id_orden'] ?>">
+            <input type="text" class="form-control" id="id_prove" name="id_prove" placeholder="Ingrese ID de Proveedor" value="<?php echo $datos['id_proveedor'] ?>">
             <label for="id_prove" id="resultado_error" style="color: red"></label>
         </div>
         <div class="col-md-2">
@@ -44,31 +45,31 @@
         </div>
         <div class="form-group col-md-4">
             <label for="rubro">*Rut empresa</label>
-            <input type="number" class="form-control" id="rut_emp" name="rut_emp" disabled>
+            <input type="number" class="form-control" id="rut_emp" name="rut_emp" value="<?php echo $datos['rut_emp'] ?>" disabled>
             <label for="" id="lbRutEmp"></label>
         </div>
         <div class="form-group col-md-4">
             <label for="rubro">*Dv</label>
-            <input type="text" class="form-control" id="dv_emp" name="dv_emp" disabled>
+            <input type="text" class="form-control" id="dv_emp" name="dv_emp" value="<?php echo $datos['dv_emp'] ?>" disabled>
             <label for="" id="lbDvEmp"></label>
         </div>
         <div class="form-group col-md-4">
             <label for="rubro">*Rubro</label>
-            <input type="text" class="form-control" id="rubro" name="rubro" disabled>
+            <input type="text" class="form-control" id="rubro" name="rubro" value="<?php echo $datos['rubro'] ?>" disabled>
             <label for="" id="lbRubroEmp"></label>
         </div>
         <div class="form-group col-md-4">
             <label for="rubro">*Razón social</label>
-            <input type="text" class="form-control" id="razon" name="razon" disabled>
+            <input type="text" class="form-control" id="razon" name="razon" value="<?php echo $datos['razon'] ?>" disabled>
             <label for="" id="lbRazonEmp"></label>
         </div>
         <div class="form-group col-md-4">
             <label for="rubro">°Teléfono</label>
-            <input type="number" class="form-control" id="telefono" name="telefono" disabled>
+            <input type="number" class="form-control" id="telefono" name="telefono" value="<?php echo $datos['telefono'] ?>" disabled>
         </div>
         <div class="form-group col-md-4">
             <label for="rubro">*Giro</label>
-            <input type="text" class="form-control" id="giro" name="giro" disabled>
+            <input type="text" class="form-control" id="giro" name="giro" value="<?php echo $datos['giro'] ?>" disabled>
             <label for="" id="lbGiroEmp"></label>
         </div>
     </div>
@@ -145,8 +146,34 @@
                 </tr>
             </thead>
             <tbody id="lista-producto">
+                <?php foreach ($producSoli as $pro) { ?>
+                    <tr id="<?php echo $pro['id_pro'] ?>">
+                        <td><?php echo $pro['nombre']; ?></td>
+                        <td><?php echo $pro['marca']; ?></td>
+                        <td><?php echo $pro['precio']; ?></td>
+                        <td><input class="cambiarCantidad" type="number" value="<?php echo $pro['cantidad']; ?>" min=0></td>
+                        <td><input class="sub-total-table" type="hidden" value="<?php echo $pro['total']; ?>" id="hidden-sub-total-<?php echo $pro['id_pro'] ?>">
+                            <span id="<?php echo $pro['total']; ?>"><?php echo $pro['total']; ?></span>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-sm btn-danger" onclick="eliminarProducto(<?php echo $pro['id_pro'] ?>)">
+                                <i class="fa fa-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                <?php } ?>
+
             </tbody>
         </table>
+    </div>
+    <div class="row" id="div-total">
+        <div class="col-md-12">
+            <br>
+            <input type="hidden" name="total" id="hidden-total" value="0">
+            <span class="span-total">TOTAL: </span><span id="cantidad-total" class="span-total"></span>
+            <br>
+            <button type="button" onclick="generarOrden()" class="newsletter-btn">Solicitar</button>
+        </div>
     </div>
 
     <div class="row" style="display: none" id="div-total">
@@ -178,7 +205,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach ($datos as $prove) { ?>
+                        <?php foreach ($proveedor as $prove) { ?>
                             <tr>
                                 <td><?php echo $prove['id_proveedor']; ?></td>
                                 <td><?php echo $prove['rubro']; ?></td>
