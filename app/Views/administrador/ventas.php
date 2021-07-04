@@ -326,3 +326,4 @@ $session = session();
 </div>
 <!-- Product Thumbnail Description End -->
 </div>
+

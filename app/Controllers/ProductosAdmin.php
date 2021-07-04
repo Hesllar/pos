@@ -85,7 +85,8 @@ class ProductosAdmin extends BaseController
             'e_usuario' => '',
             'e_notacredito' => '',
             'e_config' => '',
-            'e_estadistica' => ''
+            'e_estadistica' => '',
+            'e_tipomoneda' => ''
         ];
 
         echo view('header', $data);
@@ -483,7 +484,7 @@ Buscar en
         $this->productos->update($id, ['estado' => $estado]);
         return redirect()->to(base_url() . '/productosadmin/pagEliminarPro ');
     }
-    public function eliminar($id, $id_detalle, $pro_orden)
+    public function eliminar($id, $id_detalle)
     {
         if (!isset($this->session->id_usuario)) {
             return redirect()->to(base_url() . '/Acceder');
@@ -491,8 +492,7 @@ Buscar en
         $this->request = \Config\Services::request();
         //$producto_eliminado = $this->productos->where('id_producto', $id)->first();
         $this->productos->where('id_producto', $id)->delete();
-        $this->detalle_orden->where('id_producto_pk', $pro_orden)->delete();
-        //$this->detalle_productoModel->where('id_detalle_prod', $id_detalle)->delete();
+        $this->detalle_productoModel->where('id_detalle_prod', $id_detalle)->delete();
         return redirect()->to(base_url() . '/productosadmin/pagEliminarPro ');
     }
 }

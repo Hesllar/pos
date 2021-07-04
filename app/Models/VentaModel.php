@@ -23,10 +23,10 @@ class VentaModel extends Model
         'total',
         'despacho',
         'estado_venta',
-        'conversion_moneda',
         'empleado_fk',
         'cliente_fk',
         'forma_pago_fk',
+        'tipo_moneda_fk'
     ];
 
     protected $useTimestamps = false;
