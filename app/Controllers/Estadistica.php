@@ -84,7 +84,7 @@ class Estadistica extends BaseController
             'e_notacredito' => '',
             'e_config' => '',
             'e_estadistica' => '',
-            'e_tipomoneda' => '' 
+            'e_tipomoneda' => ''
         ];
 
         echo view('header', $data);
@@ -180,7 +180,7 @@ class Estadistica extends BaseController
             'e_notacredito' => '',
             'e_config' => '',
             'e_estadistica' => '',
-            'e_tipomoneda' => '' 
+            'e_tipomoneda' => ''
         ];
 
         echo view('header', $data);
@@ -198,7 +198,7 @@ class Estadistica extends BaseController
         $pdf = new \FPDF('P', 'mm', 'letter');
         $pdf->AddPage();
         $pdf->SetMargins(30, 10, 10);
-        $pdf->SetTitle("Stock criticos");
+        $pdf->SetTitle("Ventas por empleados");
         $pdf->SetFont("Arial", 'B', 10);
         $pdf->Image("img/logo/logo1.png", 10, 7);
         $pdf->Cell(0, 5, utf8_decode("Reporte Ventas de Empleados"), 0, 1, 'C');
@@ -285,7 +285,7 @@ class Estadistica extends BaseController
             'e_notacredito' => '',
             'e_config' => '',
             'e_estadistica' => '',
-            'e_tipomoneda' => '' 
+            'e_tipomoneda' => ''
         ];
 
         echo view('header', $data);

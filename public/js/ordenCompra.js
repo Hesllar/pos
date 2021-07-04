@@ -1,4 +1,7 @@
+//obtDtsProve();
+
 function buscarProveedor(e, tagId) {
+
         var codigo = $('#id_prove').val();
         $.ajax({
             url: '/pos/public/Proveedor/buscarIdProveedor/' + codigo,
@@ -87,12 +90,14 @@ function buscarProveedor(e, tagId) {
         listaProductos.forEach(lp => {
             if (arrayProductos.length === 0) {
                 agregarProductotabla();
-                arrayProductos.push(id_producto);
+                //arrayProductos.push(id_producto);
             } else {
                 if (arrayProductos.includes(id_producto)) {
+                    
                     actualizarProducto(id_producto);
                 } else {
                     agregarProductotabla(id_producto);
+                     
 
                 }
             }
@@ -109,7 +114,7 @@ function buscarProveedor(e, tagId) {
         var hiddenTotal = $('#hidden-total').val();
         const productoEnFila = document.createElement('tr');
 
-        productoEnFila.setAttribute('id', id_producto);
+        productoEnFila.setAttribute('id',  id_producto);
         const contenedor = `
             <th>${nombre}</th>
             <th>${marca}</th>
@@ -117,11 +122,11 @@ function buscarProveedor(e, tagId) {
                 <span class="cantidad costo" id="${id_producto}" >$ ${precio_costo}</span>
             </th>
             <th>
-                <span class="cantidad base" id="${id_producto}" value="${cantidad}">${cantidad}</span>
+                <span class="cantidad-${id_producto} base base-${id_producto}" id="${id_producto}" value="${cantidad}">${cantidad}</span>
             </th>
             <th>
                 <input class="sub-total-table" type="hidden" value="${subtotal}" id="hidden-sub-total-${id_producto}">
-                <span class="cantidad total" id="${id_producto}">$ ${subtotal}</span>
+                <span class="cantidad total total-${id_producto}" id="${id_producto}">$ ${subtotal}</span>
 
             </th>
             <th>
@@ -130,7 +135,7 @@ function buscarProveedor(e, tagId) {
                 </button>
             </th> `;
         productoEnFila.innerHTML = contenedor;
-       contenedorProductosOrden.append(productoEnFila);
+        contenedorProductosOrden.append(productoEnFila);
         arrayProductos.push(id_producto);
 
         var newTotal = parseInt(hiddenTotal) + parseInt(subtotal);
@@ -145,11 +150,15 @@ function buscarProveedor(e, tagId) {
         var nombre = $("#nombre").val();
         var marca = $("#marca").val();
         var precio_costo = $("#precio_costo").val();
-        var cantidad = $("#cantidad").val();
-        var subtotal = $("#subtotal").val();
-        $('#cantidad-' + id_producto).val(cantidad).text(cantidad);
-        $('#sub-total-' + id_producto).val(subtotal).text('$ ' + subtotal);
-        $('#hidden-sub-total-' + id_producto).val(subtotal);
+        var cantidad = $(".base-" + id_producto).text();
+        var cantiSoli = Number(cantidad) + Number($("#cantidad").val());
+        var subtotal = Number($(".total-" + id_producto).text().replace('$ ', ''));
+        console.log(subtotal);
+        var sumarSubtotal = subtotal + Number($('#subtotal').val());
+
+        $('.cantidad-' + id_producto).val(cantiSoli).text(cantiSoli);
+        $('.total-' + id_producto).val(sumarSubtotal).text('$ ' + sumarSubtotal);
+        $('#hidden-sub-total-' + id_producto).val(sumarSubtotal);
         actualizarTotal();
 
     }
@@ -171,7 +180,7 @@ function buscarProveedor(e, tagId) {
     }
 
     function eliminarProducto(id) {
-        $('#producto-' + id).remove();
+        $('#' + id).remove();
         actualizarTotal();
     }
 
@@ -232,4 +241,35 @@ function buscarProveedor(e, tagId) {
         } else {
             alert('Debe completar los campos');
         }
+    }
+
+    /*function obtDtsProve(){
+        var id_prov = $('#id_prove_edit').val();
+        console.log(id_prov);
+        //var id_orden = $('#id_orden_edit').val();
+        
+        $.ajax({
+            url: '/pos/public/OrdenesCompra/datosProvEdit',
+            method:"POST",
+            dataType: "json",
+            data:{
+                prove:id_prov
+            },
+            success: function(){
+
+            }
+        });
+    }*/
+
+    //Zona de edicion
+
+    
+
+    if($("#tablaProducto").length > 0){
+        actualizarTotal();
+
+        $('.cambiarCantidad').change( function(){
+            console.log(event);
+        });
+
     }
