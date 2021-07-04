@@ -75,7 +75,7 @@ class ProductosAdmin extends BaseController
         $productos = $this->productos->orderProducto($this->session->id_sucursal_fk);
 
         $configuracion = $this->configuracion->First();
-        $data = ['titulo' => 'Productos', 'datos' => $productos, 'configuracion' => $configuracion, 'categorias' => $categorias];
+        $data = ['titulo' => 'Productos', 'datos' => $productos, 'configuracion' => $configuracion, 'categorias' => $categorias, 'test' => $this->arrayFormat($productos), 'scripts' => base_url('js/productos-admin.js')];
 
 
         $estados = [
@@ -94,6 +94,22 @@ class ProductosAdmin extends BaseController
         echo view('administrador/productos_admin', $data);
         echo view('administrador/panel_footer');
         echo view('footer', $data);
+    }
+    public function arrayFormat($arr){
+        $output = [];
+        foreach ($arr as $key => $a) {
+            $temp = [];
+            $html = array("btn_accion" => "<a class='view' href='".$a['id_producto']."'>
+                    <i class='fa fa-pencil'></i>
+                    </a>
+                    <a href='#' class='view rojo'>
+                    <i class='fa fa-trash'></i>
+                    </a>");
+            unset($a['id_producto'],$a['imagen'],$a['descripcion']);
+            array_merge($a,$html);
+            array_push($output, array_merge($a,$html));
+        }
+        return $output;
     }
     // Funcion del administrador
     public function NuevoProducto()
