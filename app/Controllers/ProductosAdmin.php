@@ -10,9 +10,8 @@ use App\Models\CategoriaModel;
 use App\Controllers\Categorias;
 use App\Models\DetalleProductoModel;
 use App\Models\DetalleOrdenCompraModel;
-
-
-
+use App\Models\ProovedorModel;
+use App\Models\ProveedorModel;
 
 class ProductosAdmin extends BaseController
 {
@@ -25,6 +24,7 @@ class ProductosAdmin extends BaseController
     protected $categoria;
     protected $reglas;
     protected $session;
+    protected $proveedor;
 
     public function __construct()
     {
@@ -35,6 +35,7 @@ class ProductosAdmin extends BaseController
         $this->categorias = new CategoriaModel;
         $this->detalle_producto = new DetalleProducto;
         $this->categoria = new Categorias;
+        $this->proveedor = new ProveedorModel;
         $this->session = session();
         helper(['form', 'upload']);
         /*$this->reglas = [
@@ -122,19 +123,52 @@ class ProductosAdmin extends BaseController
             $img->move('img/productos', $newName);
         }
 
+        /*
+
+999, los primeros tres dígitos corresponden al ID del Proveedor.
+- 999, los tres siguientes dígitos corresponden a la familia del producto, 
+como por ejemplo Clavos.
+- 99999999, los siguientes 8 dígitos corresponden a la fecha de vencimiento, ymd dmy
+si no tienen fecha de vencimiento se debe llenar con ceros.
+Docente Diseñador Antonio Velásquez Revisor metodológico Paulina Sanhueza
+- 999, los siguientes tres dígitos corresponden a un número secuencial que 
+corresponde al tipo de producto. Por ejemplo: Clavo de 1”.
+-----
+Buscar en Productos ultimoID, capturarlo se le suma 1
+Capturar IDcategoria
+Capturar Fecha y pasarla a string
+Buscar en el detalle de orden de compra IDproducto, capturar IDorden
+Buscar en Orden de compra IDorden, capturar proveedorFK
+-----
+Buscar en
+        */
+        $ultimoProducto = $this->productos->orderBy('id_producto','DESC')->First();
+        $idProveedor = null;
+        $idCategoria = $this->request->getPost('categoria');
+        $fechaVencimiento = $this->request->getPost('fecha_vencimiento');
+        $nSecuencial = $ultimoProducto['id_producto'];
+
+        if(strlen($nSecuencial) > 3){
+            $nSecuencial = substr($nSecuencial,-3,strlen($nSecuencial));
+        }
+        $stringFecha = str_replace('-','',$fechaVencimiento);
+        $registro = 'sec:'.$nSecuencial.' fecha1:'.$stringFecha.' fecha2:'.$fechaVencimiento.' cat:'.$idCategoria;
+
+        echo $registro;
 
         if ($this->session->id_sucursal_fk == 1) {
             $this->productos->save([
                 'imagen' => $newName,
+                'n_registro' => $registro,
                 //'id_producto' => $this->request->getPost('Codigo_barra'),
                 'nombre' => $this->request->getPost('nombre_producto'),
                 'marca' => $this->request->getPost('marca'),
-                'descripcion' => $this->request->getPost('descripcion'),
+                'descripcion' => $registro,//$this->request->getPost('descripcion'),
                 'precio_venta' => $this->request->getPost('precio_venta'),
                 'precio_costo' => $this->request->getPost('precio_costo'),
                 'stock' => $this->request->getPost('stock'),
                 'stock_critico' => $this->request->getPost('stock_critico'),
-                'categoria' => $this->request->getPost('categoria'),
+                'categoria' => $idCategoria,
                 'detalle_fk' => $this->detalle_producto->buscarId(),
                 'estado' => 1,
                 'id_sucursal_fk' => 1
@@ -142,10 +176,11 @@ class ProductosAdmin extends BaseController
         } else {
             $this->productos->save([
                 'imagen' => $newName,
+                'n_registro' => $registro,
                 //'id_producto' => $this->request->getPost('Codigo_barra'),
                 'nombre' => $this->request->getPost('nombre_producto'),
                 'marca' => $this->request->getPost('marca'),
-                'descripcion' => $this->request->getPost('descripcion'),
+                'descripcion' => $registro,//$this->request->getPost('descripcion'),
                 'precio_venta' => $this->request->getPost('precio_venta'),
                 'precio_costo' => $this->request->getPost('precio_costo'),
                 'stock' => $this->request->getPost('stock'),
@@ -156,7 +191,7 @@ class ProductosAdmin extends BaseController
                 'id_sucursal_fk' => 2
             ]);
         }
-
+        
         return redirect()->to(base_url() . '/productosadmin');
     }
 
@@ -186,13 +221,22 @@ class ProductosAdmin extends BaseController
             $newName = $img->getName();
             $img->move('img/productos', $newName);
         }
+        $ultimoProducto = $this->productos->orderBy('id_producto','DESC')->First();
+        $idProveedor = null;
+        $idCategoria = $this->request->getPost('categoria');
+        $fechaVencimiento = $this->request->getPost('fecha_vencimiento');
+        $stringVencimiento = null;
+        $nSecuencial = $ultimoProducto['id_producto'];
 
+        $registro = 'sec:'.$nSecuencial.' fecha:'.$fechaVencimiento.' cat:'.$idCategoria;
+        echo $registro;
 
 
 
         if ($this->session->id_sucursal_fk == 1) {
             $this->productos->save([
                 'imagen' => $newName,
+                'n_registro' => $registro,
                 //'id_producto' => $this->request->getPost('Codigo_barra'),
                 'nombre' => $this->request->getPost('nombre_producto'),
                 'marca' => $this->request->getPost('marca'),
@@ -209,6 +253,7 @@ class ProductosAdmin extends BaseController
         } else {
             $this->productos->save([
                 'imagen' => $newName,
+                'n_registro' => $registro,
                 //'id_producto' => $this->request->getPost('Codigo_barra'),
                 'nombre' => $this->request->getPost('nombre_producto'),
                 'marca' => $this->request->getPost('marca'),
