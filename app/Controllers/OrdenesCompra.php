@@ -3,9 +3,13 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
+
 use App\Models\OrdenCompraModel;
 use App\Models\ConfiguracionModel;
 use App\Models\DetalleOrdenCompraModel;
+use App\Models\ProveedorModel;
+use App\Models\ProductosAdminModel;
+
 
 class OrdenesCompra extends BaseController
 {
@@ -13,10 +17,16 @@ class OrdenesCompra extends BaseController
 	protected $request;
 	protected $session;
 	protected $detalle;
+	protected $proveedor;
+	protected $productos;
+
+
 
 	public function __construct()
 	{
 		$this->session = session();
+		$this->productos = new ProductosAdminModel;
+		$this->proveedor = new ProveedorModel;
 		$this->ordenescompra = new OrdenCompraModel;
 		$this->configuracion = new ConfiguracionModel;
 		$this->detalle = new DetalleOrdenCompraModel;
@@ -95,5 +105,45 @@ class OrdenesCompra extends BaseController
 				'valor_total' => $producto[3]
 			]);
 		}
+	}
+
+	public function eliminarOrden($idOrdenDetalle, $idOrden)
+	{
+		$this->detalle->where('n_orden_pk', $idOrdenDetalle)->delete();
+		$this->ordenescompra->where('id_orden', $idOrden)->delete();
+		return redirect()->to(base_url() . '/OrdenesCompra');
+	}
+
+	public function editarOrden($idOrden)
+	{
+
+		$configuracion = $this->configuracion->First();
+		$prove = $this->proveedor->dtsProv($this->session->id_sucursal_fk);
+		$orden = $this->ordenescompra->allDatosProv($idOrden);
+
+		$productos = $this->productos->findAll();
+		$listado = $this->cargarProductosSoli($idOrden);
+
+		$data = [
+			'datos' => $orden,
+			'configuracion' => $configuracion,
+			'productos' => $productos,
+			'proveedor' => $prove,
+			'producSoli' => $this->cargarProductosSoli($idOrden)
+		];
+
+
+
+		echo view('header', $data);
+		echo view('administrador/editar_orden_compra');
+		echo view('footer');
+		echo view('ordenjs');
+	}
+
+	public function cargarProductosSoli($id_orden)
+	{
+		$datos = $this->ordenescompra->obtProductosSoli($id_orden);
+
+		return $datos;
 	}
 }
