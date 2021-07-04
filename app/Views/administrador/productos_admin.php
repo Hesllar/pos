@@ -4,23 +4,27 @@
         <!-- Botón para agergar productos-->
         <div class="pull-right">
             <button type="button" class="btn-submit" data-toggle="modal" data-target="#AgregarProducto">
-                +Agregar
+                <i class="fa fa-plus"></i>
+                Agregar
             </button>
         </div>
         <!-- Botón para agergar categoria-->
         <div class="pull-right ">
             <button type="button" class="btn-submit" data-toggle="modal" data-target="#categoria">
-                +Categoria
+                <i class="fa fa-list-ol"></i>
+                Categoria
             </button>
         </div>
         <!-- Botón para ir a la pagina de productos eliminados -->
         <div class="pull-right ">
-            <a href="<?php echo base_url(); ?>/productosadmin/pagEliminarPro"> <button type="button" class="btn-submit">
-                    Pro. eliminados </button> </a>
+            <a href="<?php echo base_url(); ?>/productosadmin/pagEliminarPro">
+                <button type="button" class="btn-submit">
+                    <i class="fa fa-trash"></i>
+                    Pro. eliminados
+                </button>
+            </a>
         </div>
     </div>
-
-
     <!-- Modal ingresar categoria -->
     <div class="modal fade" id="categoria" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -47,7 +51,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary newsletter-btn" data-dismiss="modal">Cancelar</button>
+                        <button type="button" class="newsletter-btn" data-dismiss="modal">Cancelar</button>
                         <button type="submit" class="newsletter-btn">Guardar</button>
                     </div>
                 </form>
@@ -69,102 +73,79 @@
 
                 <form class="form-horizontal" id="agregarProductoForm" method="Post" enctype="multipart/form-data" action="<?php echo base_url() ?>/productosadmin/NuevoProducto">
                     <?php csrf_field(); ?>
-
                     <div class="modal-body">
+                        <div class="container">
+                        </div>
                         <div class="row">
                             <div class="col-sm-12">
-                                <fieldset>
-                                    <div class="form-group">
-                                        <label class="control-label" for="nombre_producto"><span class="require">*</span>Nombre producto</label>
-                                        <div class="col-sm-10">
+                                <fieldset class="field-config">
+                                    <div class="col-sm-4">
+                                            <label class="control-label" for="nombre_producto"><span class="require">*</span>Nombre producto</label>
                                             <input type="text" class="form-control" id="nombre_producto" name="nombre_producto" placeholder="Ingese nombre producto">
                                             <label for="" id="lbNomPro"></label>
-                                        </div>
                                     </div>
-                                    <div class="form-group">
-                                        <label class="control-label" for="marca"><span class="require">*</span>Marca</label>
-                                        <div class="col-sm-10">
+                                    <div class="col-sm-4">
+                                            <label class="control-label" for="marca"><span class="require">*</span>Marca</label>
                                             <input type="text" class="form-control" id="marca" name="marca" placeholder="Ingrese nombre marca">
                                             <label for="" id="lbMarca"></label>
+                                    </div>
+                                    <div class="col-sm-4">
+                                            <label class="control-label" for="categoria"><span class="require">*</span>Categoria</label>
+                                            <div class=" checkbox-form">
+                                                <select id="categoria" name="categoria" class="form-control" required>
+                                                    <option value="">Seleccione</option>
+                                                    <?php foreach ($categorias as $categoria) { ?>
+                                                        <option value="<?php echo $categoria['id_categoria']; ?>"><?php echo $categoria['nombre_categoria']; ?></option>
+                                                    <?php } ?>
+
+                                                </select>
+                                                <label for="" id="lbCategoria"></label>
                                         </div>
                                     </div>
 
-                                    <div class="form-group">
-                                        <label class="control-label" for="categoria"><span>*</span>Categoria</label>
-                                        <div class=" checkbox-form col-sm-10">
-                                            <select id="categoria" name="categoria" required>
-                                                <option value="">Seleccione</option>
-                                                <?php foreach ($categorias as $categoria) { ?>
-                                                    <option value="<?php echo $categoria['id_categoria']; ?>"><?php echo $categoria['nombre_categoria']; ?></option>
-                                                <?php } ?>
-
-                                            </select>
-                                            <label for="" id="lbCategoria"></label>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="col-sm-10">
+                                    <div class="col-sm-9">
+                                            <label class="control-label" for="number"><span class="require">*</span>Im&aacute;gen del producto</label>
                                             <img src="" class="img-responsive" />
                                             <input type="file" class="form-control" id="imagen" name="imagen">
                                             <label for="" id="lbImagen"></label>
-                                        </div>
                                     </div>
-                                    <div class="form-group">
-                                        <label class="control-label" for="number"><span class="require">*</span>Precio venta</label>
-                                        <div class="col-sm-10">
-                                            <input type="number" class="form-control" id="precio_venta" name="precio_venta" placeholder="Ingreso precio venta">
+                                    <div class="col-sm-4">
+                                            <label class="control-label" for="number"><span class="require">*</span>Precio venta</label>
+                                            <input type="number" class="form-control" id="precio_venta" name="precio_venta" placeholder="Ingreso precio venta" min="0" max="9999999">
                                             <label for="" id="lbPreVenta"></label>
-                                        </div>
                                     </div>
-                                    <div class="form-group">
-                                        <label class="control-label" for="number"><span class="require">*</span>Prectio costo</label>
-                                        <div class="col-sm-10">
-                                            <input type="number" class="form-control" id="precio_costo" name="precio_costo" placeholder="Ingrese precio costo">
+                                    <div class="col-sm-4">
+                                            <label class="control-label" for="number"><span class="require">*</span>Prectio costo</label>
+                                            <input type="number" class="form-control" id="precio_costo" name="precio_costo" placeholder="Ingrese precio costo" min="0" max="9999999">
                                             <label for="" id="lbPreCosto"></label>
-                                        </div>
                                     </div>
-                                    <div class="form-group">
-                                        <label class="control-label" for="number"><span class="require">*</span>Fecha de vencimiento</label>
-                                        <div class="col-sm-10">
+                                    <div class="col-sm-4">
+                                            <label class="control-label" for="number"><span class="require">*</span>Fecha de vencimiento</label>
                                             <input type="date" class="form-control" id="fecha_vencimiento" name="fecha_vencimiento" placeholder="Fecha de vencimiento">
                                             <label for="" id="lbFecNacimiento"></label>
-                                        </div>
                                     </div>
-                                    <div class="form-group">
-                                        <label class="control-label" for="number"><span class="require">*</span>Stock</label>
-                                        <div class="col-sm-10">
-                                            <input type="number" class="form-control" id="stock" name="stock" placeholder="Ingrese existencia">
+                                    <div class="col-sm-4">
+                                            <label class="control-label" for="number"><span class="require">*</span>Stock</label>
+                                            <input type="number" class="form-control" id="stock" name="stock" placeholder="Ingrese existencia" min="1" max="999">
                                             <label for="" id="lbStock"></label>
-                                        </div>
                                     </div>
-
-                                    <div class="form-group">
-                                        <label class="control-label" for="number"><span class="require">*</span>Stock critico</label>
-                                        <div class="col-sm-10">
-                                            <input type="number" class="form-control" id="stock_critico" name="stock_critico" placeholder="Ingrese existencia criticas">
+                                    <div class="col-sm-4">
+                                            <label class="control-label" for="number"><span class="require">*</span>Stock critico</label>
+                                            <input type="number" class="form-control" id="stock_critico" name="stock_critico" placeholder="Ingrese existencia criticas"  min="0" max="500">
                                             <label for="" id="lbStockCri"></label>
-                                        </div>
                                     </div>
-                                    <div class="form-group">
-                                        <label class="control-label" for="number"><span class="require">*</span>Descripcion</label>
-                                        <div class="col-sm-10">
+                                    <div class="col-sm-12">
+                                            <label class="control-label" for="number"><span class="require">*</span>Descripci&oacute;n</label>
                                             <label for="descripcion" class="form-label"></label>
-                                            <textarea class="form-control" id="descripcion" name="descripcion" rows="3"></textarea>
+                                            <textarea class="form-control" id="descripcion" name="descripcion" rows="3" maxlength="190"></textarea>
                                             <label for="" id="lbDescri"></label>
-                                        </div>
                                     </div>
-
                                 </fieldset>
-
-
                             </div>
-
                         </div>
-
-
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary newsletter-btn" id="botton1" data-dismiss="modal">Cancelar</button>
+                        <button type="button" class="newsletter-btn" data-dismiss="modal">Cancelar</button>
                         <button id="succes_produc" type="submit" class="newsletter-btn" value="enviar datos">Guardar</button>
                     </div>
                 </form>
@@ -193,11 +174,15 @@
                         <td><?php echo $producto['precio_venta']; ?></td>
                         <td><?php echo $producto['stock']; ?></td>
                         <td><?php echo $producto['categoria']; ?></td>
-                        <td><a class="view" href="<?php echo base_url() . '/productosadmin/editar/' . $producto['id_producto']; ?>"> <i class="fa fa-pencil"></i></a>
+                        <td>
+                            <a class="view" href="<?php echo base_url() . '/productosadmin/editar/' . $producto['id_producto']; ?>">
+                                <i class="fa fa-pencil"></i>
+                            </a>
                         </td>
-                        <td><a class="view" data-href="<?php echo base_url() . '/productosadmin/eliminarProducto/' . $producto['id_producto']; ?>" data-toggle="modal" data-target="#Eliminar">
-                                <i class="fa fa-trash"></i></a>
-
+                        <td>
+                            <a href="#" class="view rojo" data-href="<?php echo base_url() . '/productosadmin/eliminarProducto/' . $producto['id_producto']; ?>" data-toggle="modal" data-target="#Eliminar">
+                                <i class="fa fa-trash"></i>
+                            </a>
                         </td>
                     </tr>
                 <?php } ?>
@@ -225,7 +210,6 @@
         </div>
     </div>
 </div>
-<script src="<?php echo base_url() ?>/js/ajax-mail.js"></script>
 <script src="<?php echo base_url(); ?>/js/vendor/jquery-3.6.0.min.js"></script>
 <script>
     $("#agregarProductoForm").submit(function(e) {
@@ -290,7 +274,7 @@
             return false;
         } else if (descri == '') {
             setTimeout(function() {
-                $("#lbDescri").html("<span style='color:red;'> complete el campo descripcion </span>").fadeOut(10000);
+                $("#lbDescri").html("<span style='color:red;'> complete el campo descripción </span>").fadeOut(10000);
             }, 0);
 
             $("#descripcion").focus();
@@ -311,7 +295,7 @@
                     "imagen": img,
                 },
                 success: function(data) {
-
+                    console.log(data);
                 }
             });
         }

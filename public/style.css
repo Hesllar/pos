@@ -1229,6 +1229,7 @@ ul.ht-dropdown.dropdown-style-two li {
     color: #fff;
 }
 
+
 .actions-secondary a {
     width: 33px;
 }
@@ -2024,6 +2025,12 @@ ul.ht-dropdown.dropdown-style-two li {
 
 .review-title span {
     font-weight: 500;
+}
+
+.field-config {
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
 }
 
 .riview-field input,
@@ -4139,6 +4146,11 @@ legend {
     text-transform: capitalize;
 }
 
+
+.rojo {
+    background: #f13506fb !important;
+}
+
 .view-alerta {
     background: hsl(0, 87%, 38%) none repeat scroll 0 0;
     color: #fff;
@@ -4152,7 +4164,7 @@ legend {
   padding: 5px 12px;
   text-transform: capitalize;
 }
-.view:hover,.view:focus,.show-btn:hover,.view-cart:hover,.view-cart:focus{
+.view:hover,.view:focus,.show-btn:hover,.view-cart:hover,.view-cart:focus,.rojo:hover,.rojo:focus{
     color: #fff;
     background: #1a1a1a;
 }
