@@ -153,7 +153,6 @@ function buscarProveedor(e, tagId) {
         var cantidad = $(".base-" + id_producto).text();
         var cantiSoli = Number(cantidad) + Number($("#cantidad").val());
         var subtotal = Number($(".total-" + id_producto).text().replace('$ ', ''));
-        console.log(subtotal);
         var sumarSubtotal = subtotal + Number($('#subtotal').val());
 
         $('.cantidad-' + id_producto).val(cantiSoli).text(cantiSoli);
@@ -263,13 +262,53 @@ function buscarProveedor(e, tagId) {
 
     //Zona de edicion
 
-    
+
+    function actualizarTotalEdit() {
+        var aux = 0;
+        $('.sub-total-table').each(function(index, elem) {
+            aux = parseInt(aux) + parseInt($(elem).val());
+           
+        });
+         console.log(aux);
+
+        $('#hidden-total').val(aux);
+        $('#cantidad-total').text('$ ' + aux);
+    }
+
+    function agregarProductoEdit(){
+        var id_producto = $('#id_prod').val();
+        var id_pro = document.querySelectorAll('#lista-producto tr');
+        var arrayLista = [];
+        id_pro.forEach((tr, i) =>{
+        arrayLista.push(tr.id);
+    });
+
+    if(arrayLista.includes(id_producto)){
+        console.log('actualiza');
+    }else{
+        arrayLista.push(id_producto);    
+    }
+}
+
 
     if($("#tablaProducto").length > 0){
-        actualizarTotal();
-
-        $('.cambiarCantidad').change( function(){
-            console.log(event);
+        
+       actualizarTotalEdit();   
+        $('.cambiarCantidad').change( function(event){
+            var subtotal = $('#hidden-total').val()
+            const entrada = event.target;
+            var id_pro = document.querySelectorAll('#lista-producto tr');
+             id_pro.forEach((tr, i) =>{
+                 var ent = entrada.id.replace('c-', '');
+                 var precio = tr.querySelector('.precio_costo').textContent;
+                 if(tr.id == ent){
+                    var suma = precio * entrada.value;
+                    $('.produc_id-' + tr.id).text(suma);      
+            }
         });
+        var ent = entrada.id.replace('c-', '');
+        console.log($('.produc_id-' + ent));
+    });
+    
 
-    }
+}
