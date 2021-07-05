@@ -111,6 +111,7 @@ class ProductosAdmin extends BaseController
         $output = [];
         foreach ($arr as $key => $a) {
             $temp = [];
+            $a['categoria'] = $this->categorias->where('id_categoria', $a['categoria'])->First()['nombre_categoria'];
             $html = array("btn_accion" => "<div class='actions-secondary bg-no'>
                     <a class='borders-a-s' href='".base_url()."/productosadmin/editar/".$a['id_producto']."'>
                     <i class='fa fa-pencil'></i>
