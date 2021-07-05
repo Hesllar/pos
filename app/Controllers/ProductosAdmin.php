@@ -338,10 +338,22 @@ class ProductosAdmin extends BaseController
                 'cat' => $categoria, 'fecha_venci' => $fecha_venci
             ];
         }
+        $estados = [
+            'e_venta' => '',
+            'e_producto' => 'active',
+            'e_ordencompra' => '',
+            'e_usuario' => '',
+            'e_notacredito' => '',
+            'e_config' => '',
+            'e_estadistica' => '',
+            'e_tipomoneda' => ''
+        ];
 
         #$this->load->view('administrador/productos_admin', $data);
         echo view('header', $data);
+        echo view('administrador/panel_header', $estados);
         echo view('administrador/editar_producto');
+        echo view('administrador/panel_footer');
         echo view('footer');
     }
     //Funcion empleado
