@@ -127,7 +127,7 @@
                 <label for="" id="lbGiroEmp"></label>
             </div>
             <div class="pull-center col-md-4">
-                <button type="button" id="agregarProTabla" class="btn btn-secondary btn-buscar" onclick="agregarProducto()" style="margin-top: 33px;">
+                <button type="button" id="agregarProTabla" class="btn btn-secondary btn-buscar" onclick="agregarProductoEdit()" style="margin-top: 33px;">
                     <i class="fa fa-plus"></i>&nbsp;Agregar
                 </button>
             </div>
@@ -150,10 +150,10 @@
                     <tr id="<?php echo $pro['id_pro'] ?>">
                         <td><?php echo $pro['nombre']; ?></td>
                         <td><?php echo $pro['marca']; ?></td>
-                        <td><?php echo $pro['precio']; ?></td>
-                        <td><input class="cambiarCantidad" type="number" value="<?php echo $pro['cantidad']; ?>" min=0></td>
+                        <td class="precio_costo"><?php echo $pro['precio']; ?></td>
+                        <td><input class="cambiarCantidad" id="c-<?php echo $pro['id_pro'] ?>" type="number" value="<?php echo $pro['cantidad']; ?>" min=0></td>
                         <td><input class="sub-total-table" type="hidden" value="<?php echo $pro['total']; ?>" id="hidden-sub-total-<?php echo $pro['id_pro'] ?>">
-                            <span id="<?php echo $pro['total']; ?>"><?php echo $pro['total']; ?></span>
+                            <span class="produc_id-<?php echo $pro['id_pro'] ?>" id="<?php echo $pro['total']; ?>"><?php echo $pro['total']; ?></span>
                         </td>
                         <td>
                             <button type="button" class="btn btn-sm btn-danger" onclick="eliminarProducto(<?php echo $pro['id_pro'] ?>)">
@@ -162,21 +162,10 @@
                         </td>
                     </tr>
                 <?php } ?>
-
             </tbody>
         </table>
     </div>
     <div class="row" id="div-total">
-        <div class="col-md-12">
-            <br>
-            <input type="hidden" name="total" id="hidden-total" value="0">
-            <span class="span-total">TOTAL: </span><span id="cantidad-total" class="span-total"></span>
-            <br>
-            <button type="button" onclick="generarOrden()" class="newsletter-btn">Solicitar</button>
-        </div>
-    </div>
-
-    <div class="row" style="display: none" id="div-total">
         <div class="col-md-12">
             <br>
             <input type="hidden" name="total" id="hidden-total" value="0">
