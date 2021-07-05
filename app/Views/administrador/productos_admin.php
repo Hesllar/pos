@@ -1,7 +1,9 @@
+<!-- Comienzo panel PRODUCTOS -->
 <div id="productos" class="tab-pane active">
     <h3>Productos</h3>
+    <!-- Comienzo botones cabecera -->
     <div class="d-flex justify-content-between margin-top 15">
-        <!-- Botón para agergar productos-->
+        <!-- Botón para agregar productos-->
         <div class="pull-right">
             <button type="button" class="btn-submit" data-toggle="modal" data-target="#AgregarProducto">
                 <i class="fa fa-plus"></i>
@@ -24,7 +26,26 @@
                 </button>
             </a>
         </div>
-    </div>
+    </div><!-- //.Fin botones cabecera -->
+
+    <!-- Panel Productos -->
+    <div class="row pt-30">
+        <div class="table responsive">
+            <table id="tabla-productos" class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th># Registro</th>
+                        <th>Nombre</th>
+                        <th>Precio</th>
+                        <th>Stock</th>
+                        <th>Categor&iacute;a</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div><!-- //.Fin Panel PRODUCTOS -->
+    <!-- VENTANAS EMERGENTES -->
     <!-- Modal ingresar categoria -->
     <div class="modal fade" id="categoria" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -57,9 +78,7 @@
                 </form>
             </div>
         </div>
-    </div>
-
-
+    </div><!-- //.Fin Modal ingresar categoria -->
     <!-- Modal ingreso producto -->
     <div class="modal fade" id="AgregarProducto" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
@@ -70,7 +89,6 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-
                 <form class="form-horizontal" id="agregarProductoForm" method="Post" enctype="multipart/form-data" action="<?php echo base_url() ?>/productosadmin/NuevoProducto">
                     <?php csrf_field(); ?>
                     <div class="modal-body">
@@ -103,11 +121,25 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-sm-9">
+                                    <div class="col-sm-8">
                                         <label class="control-label" for="number"><span class="require">*</span>Im&aacute;gen del producto</label>
                                         <img src="" class="img-responsive" />
                                         <input type="file" class="form-control" id="imagen" name="imagen">
                                         <label for="" id="lbImagen"></label>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <label class="control-label" for="proveedor"><span class="require">*</span>Proveedor</label>
+                                        <div class=" checkbox-form">
+                                            <select id="proveedor" name="proveedor" class="form-control" required>
+                                                <option value="001">Seleccione Proveedor</option>
+                                                <option value="000">Sin proveedor asociado</option>
+                                                <?php foreach ($proveedores as $proveedor) { ?>
+                                                    <option value="<?php echo $proveedor['id_proveedor']; ?>"><?php echo $proveedor['rubro']; ?></option>
+                                                <?php } ?>
+
+                                            </select>
+                                            <label for="" id="lbProveedor"></label>
+                                        </div>
                                     </div>
                                     <div class="col-sm-4">
                                         <label class="control-label" for="number"><span class="require">*</span>Precio venta</label>
@@ -152,56 +184,8 @@
 
             </div>
         </div>
-    </div>
-    <div id="row">
-        <table id="tabla-productos" class="table table-striped table-bordered">
-            <thead>
-                <tr>
-                    <th># Registro</th>
-                    <th>Nombre</th>
-                    <th>Precio</th>
-                    <th>Stock</th>
-                    <th>Categor&iacute;a</th>
-                    <th>Acciones</th>
-                </tr>
-            </thead>
-        </table>
-    </div>
-    <div class="table-responsive">
-        <table class="table" > 
-            <thead>
-                <tr>
-                    <th># Registro</th>
-                    <th>Nombre</th>
-                    <th>Precio</th>
-                    <th>Stock</th>
-                    <th>Categor&iacute;a</th>
-                    <th>Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php foreach ($datos as $producto) { ?>
-                    <tr>
-                        <td><?php echo $producto['n_registro']; ?></td>
-                        <td><?php echo $producto['nombre']; ?></td>
-                        <td><?php echo $producto['precio_venta']; ?></td>
-                        <td><?php echo $producto['stock']; ?></td>
-                        <td><?php echo $producto['categoria']; ?></td>
-                        <td>
-                            <a class="view" href="<?php echo base_url() . '/productosadmin/editar/' . $producto['id_producto']; ?>">
-                                <i class="fa fa-pencil"></i>
-                            </a>
-                        </td>
-                        <td>
-                            <a href="#" class="view rojo" data-href="<?php echo base_url() . '/productosadmin/eliminarProducto/' . $producto['id_producto']; ?>" data-toggle="modal" data-target="#Eliminar">
-                                <i class="fa fa-trash"></i>
-                            </a>
-                        </td>
-                    </tr>
-                <?php } ?>
-            </tbody>
-        </table>
-    </div>
+    </div><!-- //.Fin Modal ingreso producto -->
+    <!-- //.Fin VENTANAS EMERGENTES -->
 </div>
 <!-- Modal -->
 <div class="modal fade" id="Eliminar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -223,96 +207,9 @@
         </div>
     </div>
 </div>
-<script src="<?php echo base_url(); ?>/js/vendor/jquery-3.6.0.min.js"></script>
 <script>
-    $("#agregarProductoForm").submit(function(e) {
-        var fun = "funregistrar";
-        var nomProducto = $("#nombre_producto").val();
-        var marca = $("#marca").val();
-        var precVenta = $("#precio_venta").val();
-        var precCosto = $("#precio_costo").val();
-        var stock = $("#stock").val();
-        var stockCritico = $("#stock_critico").val();
-        var descri = $("#descripcion").val();
-        var img = $("#imagen").val();
-
-        if (nomProducto == '') {
-            setTimeout(function() {
-                $("#lbNomPro").html("<span style='color:red;'> Complete el campo nombre producto </span>").fadeOut(10000);
-            }, 0);
-
-            $("#nombre_producto").focus();
-            return false;
-        } else if (marca == '') {
-            setTimeout(function() {
-                $("#lbMarca").html("<span style='color:red;'> Complete el campo marca </span>").fadeOut(10000);
-            }, 0);
-
-            $("#marca").focus();
-            return false;
-        } else if (precVenta == '') {
-            setTimeout(function() {
-                $("#lbPreVenta").html("<span style='color:red;'> Complete el campo precio venta </span>").fadeOut(10000);
-            }, 0);
-
-            $("#precio_venta").focus();
-            return false;
-        } else if (precCosto == '') {
-            setTimeout(function() {
-                $("#lbPreCosto").html("<span style='color:red;'> complete el campo precio costo </span>").fadeOut(10000);
-            }, 0);
-
-            $("#precio_costo").focus();
-            return false;
-        } else if (stock == '') {
-            setTimeout(function() {
-                $("#lbStock").html("<span style='color:red;'> complete el campo stock </span>").fadeOut(10000);
-            }, 0);
-
-            $("#stock").focus();
-            return false;
-        } else if (stockCritico == '') {
-            setTimeout(function() {
-                $("#lbStockCri").html("<span style='color:red;'> complete el campo stock critico </span>").fadeOut(10000);
-            }, 0);
-
-            $("#stock_critico").focus();
-            return false;
-        } else if (img == '') {
-            setTimeout(function() {
-                $("#lbImagen").html("<span style='color:red;'> complete el campo de imagen </span>").fadeOut(10000);
-            }, 0);
-
-            $("#imagen").focus();
-            return false;
-        } else if (descri == '') {
-            setTimeout(function() {
-                $("#lbDescri").html("<span style='color:red;'> complete el campo descripción </span>").fadeOut(10000);
-            }, 0);
-
-            $("#descripcion").focus();
-            return false;
-        } else {
-            $.ajax({
-                url: "<?php echo base_url(); ?>/productosadmin/NuevoProducto",
-                method: "POST",
-                data: {
-                    "funcion": fun,
-                    "nombres": nomProducto,
-                    "marca": marca,
-                    "precVenta": precVenta,
-                    "precCosto": precCosto,
-                    "stock": stock,
-                    "stockCritico": stockCritico,
-                    "descri": descri,
-                    "imagen": img,
-                },
-                success: function(data) {
-                    console.log(data);
-                }
-            });
-        }
-    });
     var arrt = [<?php echo json_encode($test); ?>];
-    window.addEventListener("load",function(){actualizarTabla(<?php echo json_encode($test); ?>);});
+    window.addEventListener("load", function() {
+        actualizarTabla(<?php echo json_encode($test); ?>);
+    });
 </script>

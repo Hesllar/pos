@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use App\Controllers\DetalleProducto;
+use App\Controllers\OrdenesCompra;
 use App\Models\ProductosAdminModel;
 use App\Models\ConfiguracionModel;
 use App\Models\CategoriaModel;
@@ -25,10 +26,12 @@ class ProductosAdmin extends BaseController
     protected $reglas;
     protected $session;
     protected $proveedor;
+    protected $orden;
 
     public function __construct()
     {
         $this->detalle_orden = new DetalleOrdenCompraModel;
+        $this->orden = new OrdenesCompra;
         $this->detalle_productoModel = new DetalleProductoModel;
         $this->productos = new ProductosAdminModel;
         $this->configuracion = new ConfiguracionModel;
@@ -73,9 +76,17 @@ class ProductosAdmin extends BaseController
         $data = ['titulo' => 'Productos', 'datos' => $productos]; */
         $categorias = $this->categorias->findAll();
         $productos = $this->productos->orderProducto($this->session->id_sucursal_fk);
+        $proveedores = $this->proveedor->findAll();
 
         $configuracion = $this->configuracion->First();
-        $data = ['titulo' => 'Productos', 'datos' => $productos, 'configuracion' => $configuracion, 'categorias' => $categorias, 'test' => $this->arrayFormat($productos), 'scripts' => base_url('js/productos-admin.js')];
+        $data = [
+            'titulo' => 'Productos',
+            'datos' => $productos,
+            'configuracion' => $configuracion,
+            'categorias' => $categorias,
+            'proveedores' => $proveedores,
+            'test' => $this->arrayFormat($productos),
+            'scripts' => base_url('js/productos-admin.js')];
 
 
         $estados = [
@@ -95,22 +106,28 @@ class ProductosAdmin extends BaseController
         echo view('administrador/panel_footer');
         echo view('footer', $data);
     }
+
     public function arrayFormat($arr){
         $output = [];
         foreach ($arr as $key => $a) {
             $temp = [];
-            $html = array("btn_accion" => "<a class='view' href='".$a['id_producto']."'>
+            $html = array("btn_accion" => "<div class='actions-secondary bg-no'>
+                    <a class='borders-a-s' href='".base_url()."/productosadmin/editar/".$a['id_producto']."'>
                     <i class='fa fa-pencil'></i>
                     </a>
-                    <a href='#' class='view rojo'>
+                   
+                    <a href='#' id='baja-".$a['id_producto']."' class='borders-a-s delete'
+                    data-href='". base_url() . "/productosadmin/eliminarProducto/" . $a['id_producto'] ."' 
+                    data-toggle='modal' data-target='#Eliminar'>
                     <i class='fa fa-trash'></i>
-                    </a>");
+                    </a></div>");
             unset($a['id_producto'],$a['imagen'],$a['descripcion']);
             array_merge($a,$html);
             array_push($output, array_merge($a,$html));
         }
         return $output;
     }
+
     // Funcion del administrador
     public function NuevoProducto()
     {
@@ -139,38 +156,21 @@ class ProductosAdmin extends BaseController
             $img->move('img/productos', $newName);
         }
 
-        /*
+        function recortarNumero($numero){
+            strlen($numero) > 3 ? 
+            $numero = substr($numero,-3,strlen($numero)) : null;
+            return (int)$numero;
+        }
 
-999, los primeros tres dígitos corresponden al ID del Proveedor.
-- 999, los tres siguientes dígitos corresponden a la familia del producto, 
-como por ejemplo Clavos.
-- 99999999, los siguientes 8 dígitos corresponden a la fecha de vencimiento, ymd dmy
-si no tienen fecha de vencimiento se debe llenar con ceros.
-Docente Diseñador Antonio Velásquez Revisor metodológico Paulina Sanhueza
-- 999, los siguientes tres dígitos corresponden a un número secuencial que 
-corresponde al tipo de producto. Por ejemplo: Clavo de 1”.
------
-Buscar en Productos ultimoID, capturarlo se le suma 1
-Capturar IDcategoria
-Capturar Fecha y pasarla a string
-Buscar en el detalle de orden de compra IDproducto, capturar IDorden
-Buscar en Orden de compra IDorden, capturar proveedorFK
------
-Buscar en
-        */
         $ultimoProducto = $this->productos->orderBy('id_producto','DESC')->First();
-        $idProveedor = null;
+        $idProveedor = $this->request->getPost('proveedor');
         $idCategoria = $this->request->getPost('categoria');
         $fechaVencimiento = $this->request->getPost('fecha_vencimiento');
         $nSecuencial = $ultimoProducto['id_producto'];
-
-        if(strlen($nSecuencial) > 3){
-            $nSecuencial = substr($nSecuencial,-3,strlen($nSecuencial));
-        }
+        $nSecuencial = recortarNumero($nSecuencial) + 1;
         $stringFecha = str_replace('-','',$fechaVencimiento);
-        $registro = 'sec:'.$nSecuencial.' fecha1:'.$stringFecha.' fecha2:'.$fechaVencimiento.' cat:'.$idCategoria;
-
-        echo $registro;
+        $stringFecha == '' ? $stringFecha = '00000000' : null ;
+        $registro = $idProveedor . $idCategoria . $stringFecha . $nSecuencial;
 
         if ($this->session->id_sucursal_fk == 1) {
             $this->productos->save([
@@ -179,7 +179,7 @@ Buscar en
                 //'id_producto' => $this->request->getPost('Codigo_barra'),
                 'nombre' => $this->request->getPost('nombre_producto'),
                 'marca' => $this->request->getPost('marca'),
-                'descripcion' => $registro,//$this->request->getPost('descripcion'),
+                'descripcion' => $this->request->getPost('descripcion'),
                 'precio_venta' => $this->request->getPost('precio_venta'),
                 'precio_costo' => $this->request->getPost('precio_costo'),
                 'stock' => $this->request->getPost('stock'),
@@ -196,7 +196,7 @@ Buscar en
                 //'id_producto' => $this->request->getPost('Codigo_barra'),
                 'nombre' => $this->request->getPost('nombre_producto'),
                 'marca' => $this->request->getPost('marca'),
-                'descripcion' => $registro,//$this->request->getPost('descripcion'),
+                'descripcion' => $this->request->getPost('descripcion'),
                 'precio_venta' => $this->request->getPost('precio_venta'),
                 'precio_costo' => $this->request->getPost('precio_costo'),
                 'stock' => $this->request->getPost('stock'),
@@ -237,15 +237,16 @@ Buscar en
             $newName = $img->getName();
             $img->move('img/productos', $newName);
         }
+
         $ultimoProducto = $this->productos->orderBy('id_producto','DESC')->First();
-        $idProveedor = null;
+        $idProveedor = $this->request->getPost('proveedor');
         $idCategoria = $this->request->getPost('categoria');
         $fechaVencimiento = $this->request->getPost('fecha_vencimiento');
-        $stringVencimiento = null;
         $nSecuencial = $ultimoProducto['id_producto'];
-
-        $registro = 'sec:'.$nSecuencial.' fecha:'.$fechaVencimiento.' cat:'.$idCategoria;
-        echo $registro;
+        $nSecuencial = recortarNumero($nSecuencial) + 1;
+        $stringFecha = str_replace('-','',$fechaVencimiento);
+        $stringFecha == '' ? $stringFecha = '00000000' : null ;
+        $registro = $idProveedor . $idCategoria . $stringFecha . $nSecuencial;
 
 
 
