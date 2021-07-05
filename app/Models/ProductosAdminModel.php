@@ -45,7 +45,7 @@ class ProductosAdminModel extends Model
 
     public function orderProducto($id_sucur)
     {
-        $this->select('id_producto, nombre,CONCAT("$",FORMAT(precio_venta,"")) AS precio_venta, stock, categoria, imagen, precio_venta, descripcion');
+        $this->select('id_producto, n_registro, nombre,CONCAT("$",FORMAT(precio_venta,"")) AS precio_venta, stock, categoria, imagen, precio_venta, descripcion');
         $this->where('estado', 1);
         $this->where('id_sucursal_fk', $id_sucur);
         $this->where('stock >', 0);
@@ -55,7 +55,7 @@ class ProductosAdminModel extends Model
     }
     public function orderProductoDelete($id_sucur)
     {
-        $this->select('id_producto, nombre,CONCAT("$",FORMAT(precio_venta,"")) AS precio_venta, stock, categoria,detalle_fk');
+        $this->select('id_producto, n_registro, nombre,CONCAT("$",FORMAT(precio_venta,"")) AS precio_venta, stock, categoria,detalle_fk');
         $this->where('estado', 0);
         $this->where('id_sucursal_fk', $id_sucur);
         $this->orderBy('id_producto', 'DESC');
@@ -64,7 +64,7 @@ class ProductosAdminModel extends Model
     }
     public function orderAllProducto()
     {
-        $this->select('id_producto, nombre,CONCAT("$",FORMAT(precio_venta,"")) AS precio_venta, stock, categoria, imagen, precio_venta, descripcion');
+        $this->select('id_producto, n_registro, nombre,CONCAT("$",FORMAT(precio_venta,"")) AS precio_venta, stock, categoria, imagen, precio_venta, descripcion');
         $this->where('estado', 1);
         $this->where('stock >', 0);
         $this->orderBy('id_producto', 'DESC');

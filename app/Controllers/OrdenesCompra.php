@@ -146,4 +146,10 @@ class OrdenesCompra extends BaseController
 
 		return $datos;
 	}
+
+	public function buscarOrdenPorDetalleProveedor($productoID){
+		$ultimoDetalleOrdenProducto = $this->detalle->where('id_producto_pk', $productoID)->orderBy('n_orden_pk','DESC')->First();
+		$ordenSeleccionada = $this->ordenescompra->where('id_orden', $ultimoDetalleOrdenProducto['n_orden_pk'])->First();
+		return $ordenSeleccionada['proveedor_fk'];
+	}
 }
