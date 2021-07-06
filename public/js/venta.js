@@ -65,6 +65,18 @@ $(document).ready(function () {
     
 });
 
+tablaBoletas.on('page.dt',function(){
+    $('html, body').animate({scrollTop:200}, 'slow');
+});
+tablaFacturas.on('page.dt',function(){
+    $('html, body').animate({scrollTop:100}, 'slow');
+});
+
+$('.page-link').on('click', function () {
+    console.log('ANDA');
+    document.getElementById('btnBoletas').scrollIntoView();
+});
+
 function rellenarDT(tipo_comprobante) {
     $.ajax({
         url: "/pos/public/Ventas/rellenoDatatables/" + tipo_comprobante,
@@ -137,46 +149,7 @@ function notificaciones(mensaje, titulo = null, icono = 'error') {
         })
     }
 }
-/*
-    $(document).ready(function() {
 
-    });
-
-    function bpp(codigo) {
-
-        alert('Run function bpp');
-        $.ajax({
-            url: "/ventas/anularventa/" + codigo,
-            datatype: 'json',
-            success: function(resultado) {
-                alert('FInishes');
-                alert(resultado.datos.id_venta);
-                //$("#resultado").html(resultado.datos.id_venta);
-                //$("#IdBoleta").html(resultado.datos.id_venta);
-            }
-        })
-    };
-    */
-
-//jQuery("#resultado").html('response');
-/*
-function anular(id_venta) {
-    alert('Si');
-    if (id_venta != null) {
-        $.ajax({
-            url: "" + id_venta,
-            type: "POST",
-            dataType: 'json',
-            data: {
-                'id_venta': id_venta
-            },
-            success: function(respuesta) {
-                alert('FInishes');
-            }
-        });
-    }
-}
-*/
 function todo(id_venta) {
     obtnDatos(id_venta);
     obtnDatosPro(id_venta);
