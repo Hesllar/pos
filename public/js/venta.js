@@ -1,9 +1,14 @@
 var tablaFacturas = $('#tabla-facturas').DataTable({
-    "buttons": [
-        'pdfHtml5'
+    "bAutoWidth": false,
+    "aaSorting": [ [0,'desc'] ],
+    dom: 'Bflrtip',
+    buttons: [
+        'copy', 'excel', 'csv', 'pdfHtml5'
     ],
     "columnDefs": [
-    { "className": "dt-center", "targets": "_all" },],
+        { "className": "pro-content align-middle", "targets": "_all" },
+        { "targets": [1,5], "width": "150px" },
+    ],
     "language": {
         "emptyTable": "Sin datos disponibles...",
         "lengthMenu": "Mostrando _MENU_ registros por página",
@@ -18,17 +23,22 @@ var tablaFacturas = $('#tabla-facturas').DataTable({
             "next": "Siguiente",
             "previous": "Anterior"
         },
+        "buttons": {
+            "copy": 'Copiar'
+        }
     }
 });
 
 var tablaBoletas = $('#tabla-boletas').DataTable({
-    dom: 'Bfrtip',
+    "aaSorting": [ [0,'desc'] ],
+    dom: 'Bflrtip',
     buttons: [
-        'copy', 'excel', 'pdf', 'csv'
+        'copy', 'excel', 'csv', 'pdfHtml5'
     ],
-    
-    "columnDefs": [{ "width": "30%", "targets": 1 },
-    { "className": "dt-center", "targets": "_all" }],
+    "columnDefs": [
+        { "className": "pro-content align-middle", "targets": "_all" },
+        { "targets": [1,5], "width": "150px" },
+    ],
     "language": {
         "emptyTable": "Sin datos disponibles...",
         "lengthMenu": "Mostrando _MENU_ registros por página",
@@ -43,39 +53,41 @@ var tablaBoletas = $('#tabla-boletas').DataTable({
             "next": "Siguiente",
             "previous": "Anterior"
         },
+        "buttons": {
+            "copy": 'Copiar'
+        }
     }
 });
 
-rellenarDT('Factura');
-rellenarDT('Boleta');
+$(document).ready(function () {
+    rellenarDT('Boleta');
+    rellenarDT('Factura');
+    
+});
 
 function rellenarDT(tipo_comprobante) {
     $.ajax({
         url: "/pos/public/Ventas/rellenoDatatables/" + tipo_comprobante,
         method: "POST",
         dataType: "JSON",
-        success: function(arrayVentas) {
-            //$.noConflict(); //Algo pasó con JS, para evitar conflictos usé esta función
-            tipo_comprobante === 'Factura' ? 
-                tablaFacturas.clear().draw() :
-                tablaBoletas.clear().draw() ;
-            tipo_comprobante === 'Factura' ? 
-                tablaFacturas.rows.add(arrayVentas).draw() :
-                tablaBoletas.rows.add(arrayVentas).draw() ;
-
-            tablaFacturas.clear().draw(); //Vaciando DataTable
-            tablaFacturas.rows.add(arrayVentas).draw(); //Dibujando array en Tabla
-
+        success: function (arrayVentas) {
+            if (tipo_comprobante === 'Factura') {
+                tablaFacturas.clear().draw();
+                tablaFacturas.rows.add(arrayVentas).draw();
+            } else if (tipo_comprobante === 'Boleta') {
+                tablaBoletas.clear().draw();
+                tablaBoletas.rows.add(arrayVentas).draw();
+            }
         }
     });
 }
 
-$('.delete').on('click', function() {
+$('.delete').on('click', function () {
     codigo = $(this).attr("id");
     anularVenta(codigo);
 });
 
-$('.btn-anular').on('click', function() {
+$('.btn-anular').on('click', function () {
     codigo = $(this).attr("id");
     anularVenta(codigo);
 });
@@ -89,40 +101,40 @@ function anulacion(codigo) {
         confirmButtonText: `Anular venta`,
         denyButtonText: `Cancelar`,
         confirmButtonColor: '#f1ac06'
-      }).then((result) => {
+    }).then((result) => {
         if (result.isConfirmed) {
-          $.ajax({
-            url: "/pos/public/Ventas/anularVenta/" + codigo,
-            success: function(resultado) {
-                rellenarDT('Factura');
-                rellenarDT('Boleta');
-                notificaciones('Venta anulada', titulo = null, icono = 'success');
-            }
-        });
+            $.ajax({
+                url: "/pos/public/Ventas/anularVenta/" + codigo,
+                success: function (resultado) {
+                    rellenarDT('Factura');
+                    rellenarDT('Boleta');
+                    notificaciones('Venta anulada', titulo = null, icono = 'success');
+                }
+            });
         } else if (result.isDenied) {
-          Swal.fire('Operación cancelada', '', 'info')
+            Swal.fire('Operación cancelada', '', 'info')
         }
-      })
+    })
 }
 
 function notificaciones(mensaje, titulo = null, icono = 'error') {
     titulo === null ? ventanaS() : ventanaM();
-    function ventanaS(){
+    function ventanaS() {
         Swal.fire({
             icon: icono,
             title: mensaje,
             focusConfirm: false,
             confirmButtonColor: '#f1ac06'
-          })
+        })
     }
-    function ventanaM(){
+    function ventanaM() {
         Swal.fire({
             icon: icono,
             title: titulo,
             text: mensaje,
             focusConfirm: false,
             confirmButtonColor: '#f1ac06'
-          })
+        })
     }
 }
 /*
@@ -179,8 +191,8 @@ function obtnDatos(id_venta) {
     $.ajax({
         url: "/pos/public/Ventas/datosBoleta/" + id_venta,
         dataType: 'json',
-        success: function(respuesta) {
-            $('.btn-anular').attr('id',respuesta.datos.id_venta); 
+        success: function (respuesta) {
+            $('.btn-anular').attr('id', respuesta.datos.id_venta);
             $("#idBoleta").val(respuesta.datos.id_venta);
             $("#fecha_emision").val(respuesta.datos.fecha_venta);
             $("#rut_user").val(respuesta.datos.rut);
@@ -195,9 +207,9 @@ function obtnDatosPro(id_venta) {
         url: "/pos/public/Ventas/datosProductoBoleta/" + id_venta,
 
         dataType: 'json',
-        success: function(respuesta) {
+        success: function (respuesta) {
             $('.listProduct').html('')
-            $.each(respuesta.datos, function(i, value) {
+            $.each(respuesta.datos, function (i, value) {
                 $('.listProduct').append('<tr>\
                 <td>' + value['nombre'] + '</td>\
                 <td>' + value['cantidad'] + '</td>\
@@ -214,7 +226,7 @@ function obtDatosEmp(id_venta) {
     $.ajax({
         url: "/pos/public/Empresas/datosEmp/" + id_venta,
         dataType: 'json',
-        success: function(resp) {
+        success: function (resp) {
             if (resp.datos != null) {
                 $("#rut_emp").val(resp.datos.rut_emp);
                 $("#social").val(resp.datos.social);
@@ -233,7 +245,7 @@ function obtDatosEmpleado(id_venta) {
     $.ajax({
         url: "/pos/public/Ventas/datosEmpleado/" + id_venta,
         dataType: 'json',
-        success: function(resp) {
+        success: function (resp) {
             console.log(resp);
             if (resp.datos != null) {
                 $("#nom_empleado").val(resp.datos.nom_empleado);
@@ -246,7 +258,7 @@ function obtDatosDespacho(id_venta) {
     $.ajax({
         url: "/pos/public/Ventas/datosDespacho/" + id_venta,
         dataType: 'json',
-        success: function(resp) {
+        success: function (resp) {
 
             if (resp.datos != null) {
                 if (resp.datos.est_desp == 1) {
