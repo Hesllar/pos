@@ -45,6 +45,9 @@
      <link rel="stylesheet" href="<?php echo base_url(); ?>/css/toastr.min.css">
      <!-- datatables css -->
      <link rel="stylesheet" href="<?php echo base_url(); ?>/DataTables/datatables.min.css">
+     <link rel="stylesheet" href="<?php echo base_url(); ?>/DataTables/DataTables-1.10.25/css/dataTables.bootstrap4.min.css">
+     <link rel="stylesheet" href="<?php echo base_url(); ?>/DataTables/Buttons-1.7.1/css/buttons.bootstrap4.min.css">
+     <link rel="stylesheet" href="<?php echo base_url(); ?>/DataTables/Buttons-1.7.1/css/buttons.dataTables.min.css">
 
 
      <!-- jquery 3.12.4 
