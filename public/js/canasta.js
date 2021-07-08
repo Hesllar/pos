@@ -384,15 +384,6 @@ function realizarCompraWeb() {
     //Venta ID
     var fk_comuna = $('#comuna').val();
 
-
-
-
-    //Recibir cliente
-
-
-    //Productos
-
-    alert('Venta realizada');
     $.ajax({
         url: "http://localhost/pos/public/Ventas/RealizarVentaWeb",
         method: "POST",
@@ -427,7 +418,14 @@ function realizarCompraWeb() {
                 },
                 dataType: 'JSON',
                 success: function() {
-                    window.location.href = "http://localhost/pos/public/Ventas/pagComprobante";
+                    Swal.fire({
+                        text: 'Venta realizada exitosamente',
+                        icon: 'success',
+                    }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = "http://localhost/pos/public/Ventas/pagComprobante";
+                    }
+                });
                 },
             });
         },
