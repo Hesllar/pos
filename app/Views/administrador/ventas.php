@@ -281,8 +281,8 @@ $session = session();
     <div class="row">
         <div class="col-sm-12">
             <ul class="main-thumb-desc nav">
-                <li><a class="active" data-toggle="tab" href="#boletas">Boletas</a></li>
-                <li><a data-toggle="tab" href="#facturas">Facturas</a></li>
+                <li><a id="btnBoletas" class="active" data-toggle="tab" href="#boletas">Boletas</a></li>
+                <li><a id="btnFacturas" data-toggle="tab" href="#facturas">Facturas</a></li>
             </ul>
             <!-- Product Thumbnail Tab Content Start -->
             <div class="tab-content thumb-content border-default">

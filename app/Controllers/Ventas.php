@@ -25,6 +25,8 @@ class Ventas extends BaseController
 	protected $response;
 	protected $session;
 	protected $productos;
+	protected $empleados;
+	protected $usuarios;
 
 	public function __construct()
 	{
@@ -551,16 +553,24 @@ class Ventas extends BaseController
 			}
 
 			$val['estado_venta'] == 1 ?
-			$eVenta = 'Realizada' :
-			$eVenta = 'Anulada';
+			$eVenta = 'Realizada <i class="fa fa-check-circle text-success"></i>' :
+			$eVenta = 'Anulada <i class="fa fa-times-circle text-danger"></i>';
+
+			
+			
+			$datosPersonales = $this->usuarios->obtnDatos(
+				$this->usuarios->buscarPorId(
+					$this->empleados->buscarPorId($val['empleado_fk'])['usuario_fk']
+				)['rut_fk']
+			);
 
 			$arrTemp = [
 				$val['id_venta'],
 				$val['fecha_venta'],
-				'$'.$valor_total,
+				'$'.number_format($valor_total, 0, "", "."),
 				$despacho,
 				$eVenta,
-				$val['empleado_fk'],
+				$datosPersonales['nombres'].' '.$datosPersonales['apellidos'],
 				$this->btnAccion($val['id_venta'], $val['estado_venta'])
 			];
 			array_push($arraySalida, $arrTemp);
