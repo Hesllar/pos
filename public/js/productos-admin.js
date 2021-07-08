@@ -66,24 +66,14 @@ $("#agregarProductoForm").submit(function(e) {
         $("#descripcion").focus();
         return false;
     } else {
-        $.ajax({
-            url: "<?php echo base_url(); ?>/productosadmin/NuevoProducto",
-            method: "POST",
-            data: {
-                "funcion": fun,
-                "nombres": nomProducto,
-                "marca": marca,
-                "precVenta": precVenta,
-                "precCosto": precCosto,
-                "stock": stock,
-                "stockCritico": stockCritico,
-                "descri": descri,
-                "imagen": img,
-            },
-            success: function(data) {
-                console.log(data);
-            }
-        });
+        Swal.fire({
+                    text: 'Producto ingresado correctamente',
+                    icon: 'success',
+                    }).then((result) => {
+                    if (result.isConfirmed) {
+                         window.location.href = '/pos/public/productosadmin';
+                    }
+                });
     }
 });	
 

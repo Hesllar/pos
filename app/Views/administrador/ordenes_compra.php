@@ -30,7 +30,7 @@
                         <td><?php echo $orden['valor_total']; ?></td>
                         <td><?php echo $orden['estado_orden']; ?></td>
                         <td><a class="view" href="<?php echo base_url() . '/OrdenesCompra/editarOrden/' . $orden['id_orden'] ?>"> <i class="fa fa-pencil"></i></a>
-                        <td><a class="view" data-href="<?php echo base_url() . '/OrdenesCompra/eliminarOrden/' . $orden['id_orden'] . '/' . $orden['id_orden'];  ?>" data-toggle="modal" data-target="#Eliminar">
+                        <td><a class="view" href="#" data-href="<?php echo base_url() . '/OrdenesCompra/eliminarOrden/' . $orden['id_orden'] . '/' . $orden['id_orden'];  ?>" data-toggle="modal" data-target="#Eliminar">
                                 <i class="fa fa-trash"></i></a>
                         </td>
                     </tr>

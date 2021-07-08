@@ -114,6 +114,16 @@ class OrdenesCompra extends BaseController
 		return redirect()->to(base_url() . '/OrdenesCompra');
 	}
 
+	public function eliminarOrdenDetalle($idOrdenDetalle, $id_producto)
+	{
+		$where = "n_orden_pk = '$idOrdenDetalle' AND  id_producto_pk ='$id_producto'";
+		$datosDetalle = $this->detalle->where($where)->first();
+		if ($datosDetalle != null) {
+			$this->detalle->where($where)->delete();
+			return json_encode('Pancho');
+		}
+	}
+
 	public function editarOrden($idOrden)
 	{
 
@@ -122,7 +132,7 @@ class OrdenesCompra extends BaseController
 		$orden = $this->ordenescompra->allDatosProv($idOrden);
 
 		$productos = $this->productos->findAll();
-		$listado = $this->cargarProductosSoli($idOrden);
+		//$listado = $this->cargarProductosSoli($idOrden);
 
 		$data = [
 			'datos' => $orden,
@@ -147,9 +157,59 @@ class OrdenesCompra extends BaseController
 		return $datos;
 	}
 
-	public function buscarOrdenPorDetalleProveedor($productoID){
-		$ultimoDetalleOrdenProducto = $this->detalle->where('id_producto_pk', $productoID)->orderBy('n_orden_pk','DESC')->First();
+	public function buscarOrdenPorDetalleProveedor($productoID)
+	{
+		$ultimoDetalleOrdenProducto = $this->detalle->where('id_producto_pk', $productoID)->orderBy('n_orden_pk', 'DESC')->First();
 		$ordenSeleccionada = $this->ordenescompra->where('id_orden', $ultimoDetalleOrdenProducto['n_orden_pk'])->First();
 		return $ordenSeleccionada['proveedor_fk'];
+	}
+
+	public function actualizarOrden()
+	{
+		$this->request = \Config\Services::request();
+		$this->ordenescompra->update(
+			$this->request->getVar('id_orden'),
+			[
+				'valor_neto' => $this->request->getVar('neto'),
+				'valor_iva' => $this->request->getVar('iva'),
+				'valor_total' => $this->request->getVar('valorTotal'),
+				'proveedor_fk' => $this->request->getVar('id_prov'),
+			]
+		);
+	}
+	public function actualizarDetalleOrden($id_orden)
+	{
+		$this->request = \Config\Services::request();
+		$lista = $this->request->getVar('lista');
+		$productosBd = $this->detalle->select('id_producto_pk')->where('n_orden_pk', $id_orden)->findAll();
+		$booll = false;
+		foreach ($lista as $producto) {
+			$booll = false;
+			foreach ($productosBd as $prodBd) {
+				//echo json_encode($producto[0] . $prodBd['id_producto_pk']);
+				if ($producto[0] == $prodBd['id_producto_pk']) {
+					$booll = true;
+					$where = "n_orden_pk = '$id_orden' AND  id_producto_pk ='$producto[0]'";
+					$this->detalle->update(
+						$this->detalle->where($where)->first(),
+						[
+							'cantidad' => $producto[1],
+							'precio_costo' => $producto[2],
+							'valor_total' => $producto[3]
+						]
+					);
+				}
+			}
+			if ($booll == false) {
+				$this->detalle->save([
+					'n_orden_pk' => $id_orden,
+					'id_producto_pk' => $producto[0],
+					'cantidad' => $producto[1],
+					'cantidad_recibida' => 0,
+					'precio_costo' => $producto[2],
+					'valor_total' => $producto[3]
+				]);
+			}
+		}
 	}
 }
