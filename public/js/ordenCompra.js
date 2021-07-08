@@ -186,12 +186,14 @@ function buscarProveedor(e, tagId) {
 
     function generarOrden() {
         var input_prove = document.getElementById('id_prove').value;
-        var input_produc = document.getElementById('id_prod').value;
+        var rut_emp = $('#rut_emp').val();
         var valorTotal = $('#hidden-total').val();
         var neto = (valorTotal - (valorTotal * 0.19));
         var iva = valorTotal * 0.19;
         var id_prov = $('#id_proveedor').val();
-        if (input_prove != '' && input_produc != '') {
+        var tabla = document.querySelectorAll('#lista-producto tr');
+        //console.log(tabla);
+        if (tabla.length > 0 &&  input_prove != ''  && rut_emp != '') {
             $.ajax({
                 url: '/pos/public/OrdenesCompra/generarOrden',
                 method: "POST",
@@ -202,8 +204,6 @@ function buscarProveedor(e, tagId) {
                     id_prov: id_prov
                 },
                 success: function(data) {
-                    var lista = document.querySelector('#lista-producto');
-                    console.log(lista);
                     var listaTr = document.querySelectorAll('#lista-producto tr');
                     var arrayLista = [];
                     listaTr.forEach((tr, i) => {
@@ -239,56 +239,78 @@ function buscarProveedor(e, tagId) {
                 }
             });
         } else {
-            alert('Debe completar los campos');
+            Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Debe rellenar los campos solicitados o llenar la tabla de productos',
+                    });
         }
     }
 
-    /*function obtDtsProve(){
-        var id_prov = $('#id_prove_edit').val();
-        console.log(id_prov);
-        //var id_orden = $('#id_orden_edit').val();
-        
-        $.ajax({
-            url: '/pos/public/OrdenesCompra/datosProvEdit',
-            method:"POST",
-            dataType: "json",
-            data:{
-                prove:id_prov
-            },
-            success: function(){
-
-            }
-        });
-    }*/
-
-    //Zona de edicion
-
-
-    
-
+    const contenedorProductosOrdenEdit = document.querySelector('#lista-producto');
+    const arrayProductosEdit = [];
     function agregarProductoEdit(){
         var id_producto = $('#id_prod').val();
         var id_pro = document.querySelectorAll('#lista-producto tr');
-        var arrayLista = [];
         id_pro.forEach((tr, i) =>{
-        arrayLista.push(tr.id);
+        arrayProductosEdit.push(tr.id);
     });
 
-    if(arrayLista.includes(id_producto)){
+    if(arrayProductosEdit.includes(id_producto)){
         console.log('actualiza');
     }else{
-        arrayLista.push(id_producto);    
+        agregarProductotablaEdit(id_producto);
+        arrayProductosEdit.push(id_producto);    
+        console.log('Agrega');
     }
-}
+    }
 
+    function agregarProductotablaEdit()
+    {
+        var id_producto = $("#id_producto").val();
+        var nombre = $("#nombre").val();
+        var marca = $("#marca").val();
+        var precio_costo = $("#precio_costo").val().replace('$', '');
+        var cantidad = $("#cantidad").val();
+        var subtotal = $("#subtotal").val();
+        var hiddenTotal = $('#hidden-total').val();
+        const productoEnFila = document.createElement('tr');
 
-    if($("#tablaProducto").length > 0){
-        
-       actualizarTotal();   
-        $('.cambiarCantidad').change( function(event){
+        productoEnFila.setAttribute('id',  id_producto);
+        const contenedor = `
+            <th>${nombre}</th>
+            <th>${marca}</th>
+            <th class="precio_costo">
+             ${precio_costo}
+            </th>
+            <th>
+                <input class="cambiarCantidad" onchange="cambiar(event)" id="c-${id_producto}" type="number"  value="${cantidad}" min=0>
+            </th>
+            <th>
+                <input class="sub-total-table" type="hidden" value="${subtotal}" id="hidden-sub-total-${id_producto}">
+                <span class="produc_id-${id_producto}" id="${subtotal}">${subtotal}</span>
+
+            </th>
+            <th>
+                <button type="button" class="btn btn-sm btn-danger" onclick="eliminarProdEdit(${id_producto})">
+                    <i class="fa fa-trash"></i>
+                </button>
+            </th> `;
+        productoEnFila.innerHTML = contenedor;
+        contenedorProductosOrdenEdit.append(productoEnFila);
+        arrayProductosEdit.push(id_producto);
+
+        var newTotal = parseInt(hiddenTotal) + parseInt(subtotal);
+
+        $('#hidden-total').val(newTotal);
+        $('#cantidad-total').text('$ ' + newTotal);
+
+    }
+
+    function cambiar(event){
             const entrada = event.target;
+            console.log(entrada.value, 'entrada' );
             var id_pro = document.querySelectorAll('#lista-producto tr');
-            var total = 0;
              id_pro.forEach((tr, i) =>{
                  var ent = entrada.id.replace('c-', '');
                  var precio = tr.querySelector('.precio_costo').textContent;
@@ -303,7 +325,115 @@ function buscarProveedor(e, tagId) {
         //$('#cantidad-total').text(total);
         var ent = entrada.id.replace('c-', '');
         
-    });
-    
+    }
+
+    if($("#tablaProducto").length > 0){
+        
+       actualizarTotal();   
+
+
+    function generarOrdenEdit(){
+        var tabla = document.querySelectorAll('#lista-producto tr');
+        var id_orden = document.getElementById('id_orden_edit').value;
+        var input_prove = document.getElementById('id_prove').value;
+        var valorTotal = $('#hidden-total').val();
+        var neto = (valorTotal - (valorTotal * 0.19));
+        var iva = valorTotal * 0.19;
+        if (input_prove != '' && tabla.length > 0) {
+            $.ajax({
+                url: '/pos/public/OrdenesCompra/actualizarOrden',
+                method: "POST",
+                data: {
+                    valorTotal: valorTotal,
+                    neto: neto,
+                    iva: iva,
+                    id_prov: input_prove,
+                    id_orden:id_orden,
+                },
+                success: function(data) {
+                    var listaTr = document.querySelectorAll('#lista-producto tr');
+                    var arrayLista = [];
+                    listaTr.forEach((tr, i) => {
+                        var sacarPeso = tr.querySelector('.precio_costo').textContent.replace('$ ', '');
+                       
+                        var sacarPesoTotal = tr.querySelector('.produc_id-'+ tr.id).textContent.replace('$ ', '');
+                        
+                        var arraTemp = [tr.id, tr.querySelector('.cambiarCantidad').value, sacarPeso, sacarPesoTotal];
+                        arrayLista.push(arraTemp);
+                    });
+                    console.log(arrayLista)
+                    $.ajax({
+                        url: '/pos/public/OrdenesCompra/actualizarDetalleOrden/' + id_orden,
+                        method: "POST",
+                        dataType: "JSON",
+                        data: {
+                            lista: arrayLista,
+                        },
+                        success: function() {
+                            
+                        }
+                    });
+                     Swal.fire({
+                        text: 'Orden editada correctamente',
+                        icon: 'success',
+                    }).then((result) => {
+                    if (result.isConfirmed) {
+                
+                         window.location.href = '/pos/public/ordenescompra';
+                     
+                    }
+                });
+                   
+                }
+            });
+        } else {
+            Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Debe rellenar los campos solicitados o llenar la tabla de productos',
+                    });
+        }
+
+        
+    }
+
+
+    function eliminarProdEdit(id)
+    {
+        eliminarProducto(id);
+        
+        var id_orden = document.getElementById('id_orden_edit').value;
+
+        $.ajax({
+            url: '/pos/public/OrdenesCompra/eliminarOrdenDetalle/' + id_orden + '/' + id,
+            method: "POST",
+            dataType:"JSON",
+            success: function(data)
+            {
+                console.log(data);
+            }
+        })
+    }
+
+    function validarIngresoProducto()
+    {
+        var nombre = $("#nombre").val();
+        var marca = $("#marca").val();
+        var precio_costo = $("#precio_costo").val();
+        var cantidad = $("#cantidad").val();
+        var subtotal = $("#subtotal").val();
+
+        if(nombre == '' || marca == '' || precio_costo == '' || cantidad == '' || subtotal == ''){
+            Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Debe rellenar los campos solicitados',
+                    });
+        }
+        else{
+            agregarProducto(event);
+        }
+    }
+
 
 }

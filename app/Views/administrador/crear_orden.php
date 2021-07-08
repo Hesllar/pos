@@ -126,7 +126,7 @@
                 <label for="" id="lbGiroEmp"></label>
             </div>
             <div class="pull-center col-md-4">
-                <button type="button" id="agregarProTabla" class="btn btn-secondary btn-buscar" onclick="agregarProducto()" style="margin-top: 33px;">
+                <button type="button" id="agregarProTabla" class="btn btn-secondary btn-buscar" onclick="validarIngresoProducto()" style="margin-top: 33px;">
                     <i class="fa fa-plus"></i>&nbsp;Agregar
                 </button>
             </div>
