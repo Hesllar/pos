@@ -504,47 +504,4 @@ class Usuarios extends BaseController
 
 		return ['nombre_usuario' => $nick, 'password' => $pss];
 	}
-
-
-
-
-	/*public function insertarNvl($id)
-	{
-		$this->nivel->save(['nivel_acceso' => $id]);
-	}
-	
-
-
-
-	public function guardarComuna($id)
-	{
-		$this->request = \Config\Services::request();
-		$this->region->guardarRegion(
-			$this->request->getPost('region_fk')
-		);
-		$this->comuna->save([
-			'nombre_comuna' => $id
-		]);
-	}
-	public function guardarRegion($id)
-	{
-		$this->region->save([
-			'nombre_region' => $id
-		]);
-	}*/
 }
-
-/*
-<div class="form-row">
-            <div class="form-group col-md-12">
-                <label for="comuna">*Comuna</label>
-                <select name="comuna" id="comuna">
-                    <option value="">Seleccione</option>
-                    <?php foreach ($comuna as $comunas) { ?>
-                        <option value="<?php echo $comunas['id_comuna'] ?>"><?php echo $comunas['nombre_comuna'] ?> </option>
-                    <?php } ?>
-                </select>
-            </div>
-        </div>
-			
-		*/

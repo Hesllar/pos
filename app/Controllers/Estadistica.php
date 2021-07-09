@@ -8,7 +8,9 @@ use App\Models\ProductosAdminModel;
 use App\Models\VentaModel;
 use App\Models\SesionModel;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
-use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+//use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+
+use \PhpOffice\PhpSpreadsheet\IOFactory;
 
 
 class Estadistica extends BaseController
@@ -306,8 +308,8 @@ class Estadistica extends BaseController
         if ($this->request->getPost('buscar') == 1) {
             $this->cargarVentaPeriodo();
         } else {
-            $phpExcel = new Spreadsheet();
-            $hoja = $phpExcel->getActiveSheet();
+            $spreadsheet = new Spreadsheet();
+            $hoja = $spreadsheet->getActiveSheet();
 
             $hoja->mergeCells('C3:E3');
             $hoja->getStyle('C5:H5')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
@@ -411,10 +413,12 @@ class Estadistica extends BaseController
                 \PhpOffice\PhpSpreadsheet\Cell\DataType::TYPE_FORMULA
             );
 
+            header('Content-Type: application/vnd.ms-excel');
+            header('Content-Disposition: attachment;filename="Reporte venta.xls"');
+            header('Cache-Control: max-age=0');
 
-            $writer = new Xlsx($phpExcel);
-            $writer->save('C:\Users\hesll\Desktop/' . 'reporte_ventas.xls');
-            return redirect()->to(base_url() . '/Estadistica');
+            $writer = IOFactory::createWriter($spreadsheet, 'Xls');
+            $writer->save('php://output');
         }
     }
 
@@ -481,9 +485,12 @@ class Estadistica extends BaseController
             \PhpOffice\PhpSpreadsheet\Cell\DataType::TYPE_FORMULA
         );
 
-        $writer = new Xlsx($phpExcel);
-        $writer->save("reporte_stock_productos.xlsx");
-        return redirect()->to(base_url() . '/Estadistica');
+        header('Content-Type: application/vnd.ms-excel');
+        header('Content-Disposition: attachment;filename="Reporte productos.xls"');
+        header('Cache-Control: max-age=0');
+
+        $writer = IOFactory::createWriter($phpExcel, 'Xls');
+        $writer->save('php://output');
     }
 
     public function datos()

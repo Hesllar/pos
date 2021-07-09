@@ -27,7 +27,7 @@
     <div class="row">
         <div class="col-md-4">
             <input type="hidden" id="nvl_acces" value="<?php echo $user->nvl_acceso_fk; ?>">
-            <input type="hidden" id="id_empleado" name="id_empleado">
+            <input type="hidden" id="id_empleado" name="id_empleado" value="<?php echo $user->id_usuario ?>">
             <input type="hidden" id="id_proveedor" name="id_proveedor">
             <input type="text" class="form-control" id="id_prove" name="id_prove" placeholder="Ingrese ID de Proveedor" autofocus>
             <label for="id_prove" id="resultado_error" style="color: red"></label>

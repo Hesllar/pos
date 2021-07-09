@@ -190,7 +190,7 @@ function obtnDatosPro(id_venta) {
                 <td>' + value['precio_iva'] + '</td>\
                 <td>' + value['precio_venta'] + '</td>\
                 ')
-            })
+            });
         }
     });
 }
