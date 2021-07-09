@@ -113,7 +113,7 @@
                                                                         </div>
                                                                     </div>
                                                                     <div class="form-group">
-                                                                        <label class="control-label" for="number"><span class="require">*</span>Prectio costo</label>
+                                                                        <label class="control-label" for="number"><span class="require">*</span>Precio costo</label>
                                                                         <div class="col-sm-10">
                                                                             <input type="number" class="form-control" id="precio_costo" name="precio_costo" placeholder="Ingrese precio costo" required>
                                                                         </div>

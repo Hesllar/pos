@@ -62,4 +62,15 @@ class ProveedorModel extends Model
         $this->where('id_proveedor', $id_prov);
         return $this->first();
     }*/
+
+    public function proveedorDadoBaja() {
+
+        $this->select('dp.nombres as Nombre, dp.apellidos as Apellido, us.nom_usuario as Nombre_Usuario, emp.rut_empresa as Rut_Empresa, emp.dvempresa as DV_Empresa, us.id_usuario as id_usuario');
+        $this->join('usuario as us', 'proveedor.usuario_fk = us.id_usuario');
+        $this->join('datos_personales as dp', 'us.rut_fk = dp.rut');
+        $this->join('empresa as emp', 'dp.rut = emp.DATOS_PERSONALES_rut');
+        $this->where('us.nvl_acceso_fk', 50);
+        $this->where('us.estado_usuario', 0);
+        return $this->findAll();
+    }
 }

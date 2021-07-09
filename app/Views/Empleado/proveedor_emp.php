@@ -9,7 +9,7 @@
         </div>
 
         <div class="pull-right ">
-            <a href=""> <button type="button" class="btn-submit">
+            <a href="<?php echo base_url()?>/Proveedor/pagProveedorDadoBaja"> <button type="button" class="btn-submit">
                     Pro. eliminados </button> </a>
 
         </div>
@@ -212,7 +212,7 @@
                         <td><?php echo $proveedor['rubro']; ?></td>
                         <td><a class="view" href=""> <i class="fa fa-pencil"></i></a>
                         </td>
-                        <td><a class="view" data-href="" data-toggle="modal" data-target="#Eliminar">
+                        <td><a class="view" data-href="<?php echo base_url().'/Proveedor/ProveedorDadoBaja/'.$proveedor['id_usuario']?> " data-toggle="modal" data-target="#Eliminar">
                                 <i class="fa fa-trash"></i></a>
 
                         </td>
@@ -227,13 +227,13 @@
     <div class="modal-dialog modal-md" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Eliminar producto</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Eliminar proveedor</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <p>¿Desea dar de baja este producto?</p>
+                <p>¿Desea dar de baja este proveedor?</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>

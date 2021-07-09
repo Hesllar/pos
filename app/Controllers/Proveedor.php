@@ -210,7 +210,7 @@ class Proveedor extends BaseController
 		}
 
 		$this->request = \Config\Services::request();
-		$this->datospersonalesmodel->select('CONCAT(e.rut_empresa, "-", e.dvempresa) AS rut_emp, e.razon_social AS razon, e.giro AS giro, p.rubro AS rubro, p.id_proveedor AS id_proveedor');
+		$this->datospersonalesmodel->select('CONCAT(e.rut_empresa, "-", e.dvempresa) AS rut_emp, u.id_usuario as id_usuario, e.razon_social AS razon, e.giro AS giro, p.rubro AS rubro, p.id_proveedor AS id_proveedor');
 		$this->datospersonalesmodel->join('empresa as e', 'datos_personales.rut=e.DATOS_PERSONALES_rut');
 		$this->datospersonalesmodel->join('usuario as u', 'datos_personales.rut=u.rut_fk');
 		$this->datospersonalesmodel->join('proveedor as p', 'u.id_usuario=p.usuario_fk');
@@ -332,5 +332,22 @@ class Proveedor extends BaseController
 		echo view('proovedor_view');
 		echo view('administrador/panel_footer');
 		echo view('footer');
+	}
+
+	public function pagProveedorDadoBaja()
+	{
+		$configuracion = $this->configuracion->First();
+		$proveedorBaja = $this->proveedor->proveedorDadoBaja();
+		$data = ['configuracion' => $configuracion, 'datos' => $proveedorBaja];
+		echo view('header', $data);
+		echo view('empleado/proveedores_eliminados_emp');
+		echo view('footer');
+
+	}
+
+	public function ProveedorDadoBaja($id_proveedor, $est = 0) {
+		$this->request = \Config\Services::request();
+		$this->usuarioModal->update($id_proveedor, ['estado_usuario' => $est]);
+		return redirect()->to(base_url() . '/Proveedor');
 	}
 }
