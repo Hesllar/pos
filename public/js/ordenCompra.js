@@ -183,8 +183,9 @@ function buscarProveedor(e, tagId) {
         $('#' + id).remove();
         actualizarTotal();
     }
-
+ 
     function generarOrden() {
+        var id_user = $('#id_empleado').val();
         var input_prove = document.getElementById('id_prove').value;
         var rut_emp = $('#rut_emp').val();
         var valorTotal = $('#hidden-total').val();
@@ -192,6 +193,7 @@ function buscarProveedor(e, tagId) {
         var iva = valorTotal * 0.19;
         var id_prov = $('#id_proveedor').val();
         var tabla = document.querySelectorAll('#lista-producto tr');
+
         //console.log(tabla);
         if (tabla.length > 0 &&  input_prove != ''  && rut_emp != '') {
             $.ajax({
@@ -201,7 +203,8 @@ function buscarProveedor(e, tagId) {
                     valorTotal: valorTotal,
                     neto: neto,
                     iva: iva,
-                    id_prov: id_prov
+                    id_prov: id_prov,
+                    id_user:id_user
                 },
                 success: function(data) {
                     var listaTr = document.querySelectorAll('#lista-producto tr');
@@ -212,6 +215,7 @@ function buscarProveedor(e, tagId) {
                         var arraTemp = [tr.querySelector('.base').id, tr.querySelector('.base').textContent, sacarPeso, sacarPesoTotal];
                         arrayLista.push(arraTemp);
                     });
+                   
 
                     $.ajax({
                         url: '/pos/public/OrdenesCompra/generarDetalleOrd',
@@ -436,4 +440,56 @@ function buscarProveedor(e, tagId) {
     }
 
 
+
+
 }
+
+function vistaOrden(id_orden)
+{
+
+    $.ajax({
+        url: '/pos/public/OrdenesCompra/allDatosProvView/'+ id_orden,
+        method: "POST",
+        dataType: "JSON",
+        success: function(data){
+            $('#idOrden').val(data.datos.id_orden);
+            $('#fecha_emision').val(data.datos.fecha_emision);
+            $('#rubro').val(data.datos.rubro);
+            $('#fono').val(data.datos.telefono);
+            $('#social').val(data.datos.razon);
+            $('#giro').val(data.datos.giro);
+            $('#rut_emp').val(data.datos.rut_emp);
+            $('#Iva').val(data.datos.valor_iva);
+            $('#subtotal').val(data.datos.valor_neto);
+            $('#totales').val(data.datos.valor_total);
+        } 
+    });
+    $.ajax({
+        url: '/pos/public/OrdenesCompra/dtsSolicitante/'+ id_orden,
+        method: "POST",
+        dataType: "JSON",
+        success: function(data){
+            $('#nom_empleado').val(data.datos.solicitante);
+        
+        } 
+    });
+    $.ajax({
+        url: '/pos/public/OrdenesCompra/dtsDetallePro/'+ id_orden,
+        method: "POST",
+        dataType: "JSON",
+        success: function(data){
+            $('.listProduct').html('')
+            $.each(data.datos, function (i, value) {
+                $('.listProduct').append('<tr>\
+                <td>' + value['nombre_pro'] + '</td>\
+                <td>' + value['cantidad'] + '</td>\
+                <td>' + value['precio_costo'] + '</td>\
+                <td>' + value['valor_total'] + '</td>\
+                ')
+            });
+        
+        } 
+    })
+    
+}
+
