@@ -76,12 +76,7 @@
                                                             <div class="col-sm-12">
 
                                                                 <fieldset>
-                                                                    <div class="form-group">
-                                                                        <label class="control-label" for="nombre_producto"><span class="require">*</span>Codigo de barra</label>
-                                                                        <div class="col-sm-10">
-                                                                            <input type="text" class="form-control" id="Codigo_barra" name="Codigo_barra" placeholder="Ingese nombre producto">
-                                                                        </div>
-                                                                    </div>
+
                                                                     <div class="form-group">
                                                                         <label class="control-label" for="nombre_producto"><span class="require">*</span>Nombre producto</label>
                                                                         <div class="col-sm-10">
@@ -118,7 +113,7 @@
                                                                         </div>
                                                                     </div>
                                                                     <div class="form-group">
-                                                                        <label class="control-label" for="number"><span class="require">*</span>Prectio costo</label>
+                                                                        <label class="control-label" for="number"><span class="require">*</span>Precio costo</label>
                                                                         <div class="col-sm-10">
                                                                             <input type="number" class="form-control" id="precio_costo" name="precio_costo" placeholder="Ingrese precio costo" required>
                                                                         </div>
@@ -126,7 +121,7 @@
                                                                     <div class="form-group">
                                                                         <label class="control-label" for="number"><span class="require">*</span>Fecha de vencimiento</label>
                                                                         <div class="col-sm-10">
-                                                                            <input type="date" class="form-control" id="fecha_vencimiento" name="fecha_vencimiento" placeholder="Fecha de vencimiento" required>
+                                                                            <input type="date" class="form-control" id="fecha_vencimiento" name="fecha_vencimiento" placeholder="Fecha de vencimiento">
                                                                         </div>
                                                                     </div>
                                                                     <div class="form-group">

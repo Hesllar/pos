@@ -4,16 +4,19 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use App\Controllers\DetalleProducto;
+use App\Controllers\OrdenesCompra;
 use App\Models\ProductosAdminModel;
 use App\Models\ConfiguracionModel;
 use App\Models\CategoriaModel;
 use App\Controllers\Categorias;
 use App\Models\DetalleProductoModel;
-
-
+use App\Models\DetalleOrdenCompraModel;
+use App\Models\ProovedorModel;
+use App\Models\ProveedorModel;
 
 class ProductosAdmin extends BaseController
 {
+    protected $detalle_orden;
     protected $productos;
     protected $categorias;
     protected $request;
@@ -22,16 +25,20 @@ class ProductosAdmin extends BaseController
     protected $categoria;
     protected $reglas;
     protected $session;
+    protected $proveedor;
+    protected $orden;
 
     public function __construct()
     {
-
+        $this->detalle_orden = new DetalleOrdenCompraModel;
+        $this->orden = new OrdenesCompra;
         $this->detalle_productoModel = new DetalleProductoModel;
         $this->productos = new ProductosAdminModel;
         $this->configuracion = new ConfiguracionModel;
         $this->categorias = new CategoriaModel;
         $this->detalle_producto = new DetalleProducto;
         $this->categoria = new Categorias;
+        $this->proveedor = new ProveedorModel;
         $this->session = session();
         helper(['form', 'upload']);
         /*$this->reglas = [
@@ -69,9 +76,17 @@ class ProductosAdmin extends BaseController
         $data = ['titulo' => 'Productos', 'datos' => $productos]; */
         $categorias = $this->categorias->findAll();
         $productos = $this->productos->orderProducto($this->session->id_sucursal_fk);
+        $proveedores = $this->proveedor->findAll();
 
         $configuracion = $this->configuracion->First();
-        $data = ['titulo' => 'Productos', 'datos' => $productos, 'configuracion' => $configuracion, 'categorias' => $categorias];
+        $data = [
+            'titulo' => 'Productos',
+            'datos' => $productos,
+            'configuracion' => $configuracion,
+            'categorias' => $categorias,
+            'proveedores' => $proveedores,
+            'test' => $this->arrayFormat($productos),
+            'scripts' => base_url('js/productos-admin.js')];
 
 
         $estados = [
@@ -81,7 +96,8 @@ class ProductosAdmin extends BaseController
             'e_usuario' => '',
             'e_notacredito' => '',
             'e_config' => '',
-            'e_estadistica' => ''
+            'e_estadistica' => '',
+            'e_tipomoneda' => ''
         ];
 
         echo view('header', $data);
@@ -90,6 +106,29 @@ class ProductosAdmin extends BaseController
         echo view('administrador/panel_footer');
         echo view('footer', $data);
     }
+
+    public function arrayFormat($arr){
+        $output = [];
+        foreach ($arr as $key => $a) {
+            $temp = [];
+            $a['categoria'] = $this->categorias->where('id_categoria', $a['categoria'])->First()['nombre_categoria'];
+            $html = array("btn_accion" => "<div class='actions-secondary bg-no'>
+                    <a class='borders-a-s' href='".base_url()."/productosadmin/editar/".$a['id_producto']."'>
+                    <i class='fa fa-pencil'></i>
+                    </a>
+                   
+                    <a href='#' id='baja-".$a['id_producto']."' class='borders-a-s delete'
+                    data-href='". base_url() . "/productosadmin/eliminarProducto/" . $a['id_producto'] ."' 
+                    data-toggle='modal' data-target='#Eliminar'>
+                    <i class='fa fa-trash'></i>
+                    </a></div>");
+            unset($a['id_producto'],$a['imagen'],$a['descripcion']);
+            array_merge($a,$html);
+            array_push($output, array_merge($a,$html));
+        }
+        return $output;
+    }
+
     // Funcion del administrador
     public function NuevoProducto()
     {
@@ -118,10 +157,26 @@ class ProductosAdmin extends BaseController
             $img->move('img/productos', $newName);
         }
 
+        function recortarNumero($numero){
+            strlen($numero) > 3 ? 
+            $numero = substr($numero,-3,strlen($numero)) : null;
+            return (int)$numero;
+        }
+
+        $ultimoProducto = $this->productos->orderBy('id_producto','DESC')->First();
+        $idProveedor = $this->request->getPost('proveedor');
+        $idCategoria = $this->request->getPost('categoria');
+        $fechaVencimiento = $this->request->getPost('fecha_vencimiento');
+        $nSecuencial = $ultimoProducto['id_producto'];
+        $nSecuencial = recortarNumero($nSecuencial) + 1;
+        $stringFecha = str_replace('-','',$fechaVencimiento);
+        $stringFecha == '' ? $stringFecha = '00000000' : null ;
+        $registro = $idProveedor . $idCategoria . $stringFecha . $nSecuencial;
 
         if ($this->session->id_sucursal_fk == 1) {
             $this->productos->save([
                 'imagen' => $newName,
+                'n_registro' => $registro,
                 //'id_producto' => $this->request->getPost('Codigo_barra'),
                 'nombre' => $this->request->getPost('nombre_producto'),
                 'marca' => $this->request->getPost('marca'),
@@ -130,7 +185,7 @@ class ProductosAdmin extends BaseController
                 'precio_costo' => $this->request->getPost('precio_costo'),
                 'stock' => $this->request->getPost('stock'),
                 'stock_critico' => $this->request->getPost('stock_critico'),
-                'categoria' => $this->request->getPost('categoria'),
+                'categoria' => $idCategoria,
                 'detalle_fk' => $this->detalle_producto->buscarId(),
                 'estado' => 1,
                 'id_sucursal_fk' => 1
@@ -138,6 +193,7 @@ class ProductosAdmin extends BaseController
         } else {
             $this->productos->save([
                 'imagen' => $newName,
+                'n_registro' => $registro,
                 //'id_producto' => $this->request->getPost('Codigo_barra'),
                 'nombre' => $this->request->getPost('nombre_producto'),
                 'marca' => $this->request->getPost('marca'),
@@ -152,7 +208,7 @@ class ProductosAdmin extends BaseController
                 'id_sucursal_fk' => 2
             ]);
         }
-
+        
         return redirect()->to(base_url() . '/productosadmin');
     }
 
@@ -183,23 +239,53 @@ class ProductosAdmin extends BaseController
             $img->move('img/productos', $newName);
         }
 
+        $ultimoProducto = $this->productos->orderBy('id_producto','DESC')->First();
+        $idProveedor = $this->request->getPost('proveedor');
+        $idCategoria = $this->request->getPost('categoria');
+        $fechaVencimiento = $this->request->getPost('fecha_vencimiento');
+        $nSecuencial = $ultimoProducto['id_producto'];
+        $nSecuencial = recortarNumero($nSecuencial) + 1;
+        $stringFecha = str_replace('-','',$fechaVencimiento);
+        $stringFecha == '' ? $stringFecha = '00000000' : null ;
+        $registro = $idProveedor . $idCategoria . $stringFecha . $nSecuencial;
 
 
 
-        $this->productos->save([
-            'imagen' => $newName,
-            //'id_producto' => $this->request->getPost('Codigo_barra'),
-            'nombre' => $this->request->getPost('nombre_producto'),
-            'marca' => $this->request->getPost('marca'),
-            'descripcion' => $this->request->getPost('descripcion'),
-            'precio_venta' => $this->request->getPost('precio_venta'),
-            'precio_costo' => $this->request->getPost('precio_costo'),
-            'stock' => $this->request->getPost('stock'),
-            'stock_critico' => $this->request->getPost('stock_critico'),
-            'categoria' => $this->request->getPost('categoria'),
-            'detalle_fk' => $this->detalle_producto->buscarId(),
-            'estado' => 1,
-        ]);
+        if ($this->session->id_sucursal_fk == 1) {
+            $this->productos->save([
+                'imagen' => $newName,
+                'n_registro' => $registro,
+                //'id_producto' => $this->request->getPost('Codigo_barra'),
+                'nombre' => $this->request->getPost('nombre_producto'),
+                'marca' => $this->request->getPost('marca'),
+                'descripcion' => $this->request->getPost('descripcion'),
+                'precio_venta' => $this->request->getPost('precio_venta'),
+                'precio_costo' => $this->request->getPost('precio_costo'),
+                'stock' => $this->request->getPost('stock'),
+                'stock_critico' => $this->request->getPost('stock_critico'),
+                'categoria' => $this->request->getPost('categoria'),
+                'detalle_fk' => $this->detalle_producto->buscarId(),
+                'estado' => 1,
+                'id_sucursal_fk' => 1
+            ]);
+        } else {
+            $this->productos->save([
+                'imagen' => $newName,
+                'n_registro' => $registro,
+                //'id_producto' => $this->request->getPost('Codigo_barra'),
+                'nombre' => $this->request->getPost('nombre_producto'),
+                'marca' => $this->request->getPost('marca'),
+                'descripcion' => $this->request->getPost('descripcion'),
+                'precio_venta' => $this->request->getPost('precio_venta'),
+                'precio_costo' => $this->request->getPost('precio_costo'),
+                'stock' => $this->request->getPost('stock'),
+                'stock_critico' => $this->request->getPost('stock_critico'),
+                'categoria' => $this->request->getPost('categoria'),
+                'detalle_fk' => $this->detalle_producto->buscarId(),
+                'estado' => 1,
+                'id_sucursal_fk' => 2
+            ]);
+        }
 
         return redirect()->to(base_url() . '/Productos/productoEmp');
     }
@@ -252,10 +338,22 @@ class ProductosAdmin extends BaseController
                 'cat' => $categoria, 'fecha_venci' => $fecha_venci
             ];
         }
+        $estados = [
+            'e_venta' => '',
+            'e_producto' => 'active',
+            'e_ordencompra' => '',
+            'e_usuario' => '',
+            'e_notacredito' => '',
+            'e_config' => '',
+            'e_estadistica' => '',
+            'e_tipomoneda' => ''
+        ];
 
         #$this->load->view('administrador/productos_admin', $data);
         echo view('header', $data);
+        echo view('administrador/panel_header', $estados);
         echo view('administrador/editar_producto');
+        echo view('administrador/panel_footer');
         echo view('footer');
     }
     //Funcion empleado
@@ -398,7 +496,7 @@ class ProductosAdmin extends BaseController
             return redirect()->to(base_url() . '/Acceder');
         }
         $this->request = \Config\Services::request();
-        $productos = $this->productos->where('estado', 0)->findAll();
+        $productos = $this->productos->orderProductoDelete($this->session->id_sucursal_fk);
         $configuracion = $this->configuracion->First();
         $data = ['datos' => $productos, 'configuracion' => $configuracion,];
 
@@ -416,15 +514,15 @@ class ProductosAdmin extends BaseController
         $this->productos->update($id, ['estado' => $estado]);
         return redirect()->to(base_url() . '/productosadmin/pagEliminarPro ');
     }
-    public function eliminar($id)
+    public function eliminar($id, $id_detalle)
     {
         if (!isset($this->session->id_usuario)) {
             return redirect()->to(base_url() . '/Acceder');
         }
         $this->request = \Config\Services::request();
         //$producto_eliminado = $this->productos->where('id_producto', $id)->first();
-        //$this->detalle_productoModel->where('id_detalle_prod', $producto_eliminado['detalle_fk'])->delete();
         $this->productos->where('id_producto', $id)->delete();
+        $this->detalle_productoModel->where('id_detalle_prod', $id_detalle)->delete();
         return redirect()->to(base_url() . '/productosadmin/pagEliminarPro ');
     }
 }

@@ -69,6 +69,8 @@
  <!-- Wrapper End -->
  <!-- jquery 3.12.4 -->
  <script src="<?php echo base_url(); ?>/js/vendor/jquery-3.6.0.min.js"></script>
+ <!-- DataTables js -->
+ <script src="<?php echo base_url(); ?>/DataTables/datatables.min.js"></script>
  <!-- mobile menu js  -->
  <script src="<?php echo base_url(); ?>/js/jquery.meanmenu.min.js"></script>
  <!-- scroll-up js -->
@@ -88,6 +90,8 @@
  <script src="<?php echo base_url(); ?>/js/jquery.fancybox.min.js"></script>
  <!-- bootstrap -->
  <script src="<?php echo base_url(); ?>/js/bootstrap.min.js"></script>
+
+ <script src="<?php echo base_url(); ?>/js/bootstrap-tooltip.js"></script>
  <!-- popper -->
  <script src="<?php echo base_url(); ?>/js/popper.js"></script>
  <!-- plugins -->
@@ -102,6 +106,8 @@
  <script src="<?php echo base_url() ?>/js/ajax-mail.js"></script>
  <!-- Modal de alerta-->
  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
 
  <script>
      $('#Eliminar').on('show.bs.modal', function(e) {
@@ -127,6 +133,9 @@
          toastr.success("Producto agregado correctamente");
      }
  </script>
+ <?php
+    isset($scripts) ? print_r('<script src="'.$scripts.'"></script>') : null;
+ ?>
 
  </body>
 
