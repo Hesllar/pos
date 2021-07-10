@@ -27,8 +27,17 @@
                         <td><?php echo $orden['fecha_emision']; ?></td>
                         <td><?php echo $orden['empleado_fk']; ?></td>
                         <td><?php echo $orden['proveedor_fk']; ?></td>
-                        <td><?php echo $orden['valor_total']; ?></td>
-                        <td><?php echo $orden['estado_orden']; ?></td>
+                        <td><?php echo "$" . number_format($orden['valor_total'], 0)  ?></td>
+                        <?php if ($orden['estado_orden'] == 0) {
+                        ?>
+                            <td>En proceso</td>
+                        <?php
+                        } else {
+                        ?>
+                            <td>Enviada</td>
+                        <?php
+                        }
+                        ?>
                         <td><a class="view" data-toggle="modal" href="#detalleOrden" onclick="vistaOrden(<?php echo $orden['id_orden'] ?>)"><i class="fa fa-eye"></i></a></td>
                         <td><a class="view" href="<?php echo base_url() . '/OrdenesCompra/editarOrden/' . $orden['id_orden'] ?>"> <i class="fa fa-pencil"></i></a></td>
                         <td><a class="view" href="#" data-href="<?php echo base_url() . '/OrdenesCompra/eliminarOrden/' . $orden['id_orden'] . '/' . $orden['id_orden'];  ?>" data-toggle="modal" data-target="#Eliminar">
@@ -187,9 +196,6 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn-estilo btn-cancelar" data-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn-estilo btn-cancelar btn-anular" data-dismiss="modal">Anular
-                    venta</button>
                 <button type="button" class="btn-estilo btn-aceptar" data-dismiss="modal">Aceptar</button>
             </div>
         </div>

@@ -214,6 +214,7 @@ $session = session();
                                                         </h5>
                                                     </div>
                                                     <div id="despacho" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                                                        <input type="hidden" id="id_despacho">
                                                         <div class="card-body">
                                                             <div class="row">
                                                                 <div class="form-group col-sm-4">
@@ -244,6 +245,17 @@ $session = session();
                                                                     <span class="fuente-titulo">Costo de env&iacute;o</span>
                                                                     <div class="col-sm-12">
                                                                         <span class="fuente-parrafo"><input type="text" id="costo_envio" disabled></span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group col-sm-4">
+                                                                    <div class="col-sm-12">
+                                                                        <div class="pull-left">
+                                                                            <a href="#">
+                                                                                <button type="button" class="btn-submit" onclick="generarDespacho()">
+                                                                                    Generar orden
+                                                                                </button>
+                                                                            </a>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -287,35 +299,35 @@ $session = session();
             <!-- Product Thumbnail Tab Content Start -->
             <div class="tab-content thumb-content border-default">
                 <div id="boletas" class="tab-pane in active">
-                        <table id="tabla-boletas" class="table table-striped table-bordered">
-                            <thead>
-                                <tr>
-                                    <th>N° Venta</th>
-                                    <th>Fecha</th>
-                                    <th>Total</th>
-                                    <th>¿Despacho?</th>
-                                    <th>Estado</th>
-                                    <th>Vendedor</th>
-                                    <th>Acciones</th>
-                                </tr>
-                            </thead>
-                        </table>
+                    <table id="tabla-boletas" class="table table-striped table-bordered">
+                        <thead>
+                            <tr>
+                                <th>N° Venta</th>
+                                <th>Fecha</th>
+                                <th>Total</th>
+                                <th>¿Despacho?</th>
+                                <th>Estado</th>
+                                <th>Vendedor</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                    </table>
                 </div>
 
                 <div id="facturas" class="tab-pane">
-                        <table id="tabla-facturas" class="table table-striped table-bordered">
-                            <thead>
-                                <tr>
-                                    <th>N° Venta</th>
-                                    <th>Fecha</th>
-                                    <th>Total</th>
-                                    <th>¿Despacho?</th>
-                                    <th>Estado</th>
-                                    <th>Vendedor</th>
-                                    <th>Acciones</th>
-                                </tr>
-                            </thead>
-                        </table>
+                    <table id="tabla-facturas" class="table table-striped table-bordered">
+                        <thead>
+                            <tr>
+                                <th>N° Venta</th>
+                                <th>Fecha</th>
+                                <th>Total</th>
+                                <th>¿Despacho?</th>
+                                <th>Estado</th>
+                                <th>Vendedor</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                    </table>
                 </div>
             </div>
             <!-- Product Thumbnail Tab Content End -->
@@ -326,4 +338,3 @@ $session = session();
 </div>
 <!-- Product Thumbnail Description End -->
 </div>
-

@@ -75,7 +75,7 @@ $user_session = session();
                                                         <?php
                                                         } else {
                                                         ?>
-                                                            <a href=" <?php echo base_url() ?>/acceder" class="add-cart">Iniciar sesion</a>
+                                                            <button class="add-cart" id="noLogin" onclick="logearse()">Añadir al carrito</button>
                                                         <?php
                                                         } ?>
                                                     </div>

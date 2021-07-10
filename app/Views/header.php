@@ -52,7 +52,8 @@
 
      <!-- jquery 3.12.4 
 
-     <script src="<?php // echo base_url(); ?>/js/vendor/jquery-1.12.4.min.js"></script>-->
+     <script src="<?php // echo base_url(); 
+                    ?>/js/vendor/jquery-1.12.4.min.js"></script>-->
      <!-- modernizr js -->
      <script src="<?php echo base_url(); ?>/js/vendor/modernizr-2.8.3.min.js"></script>
 
@@ -73,14 +74,6 @@
                          <!-- Header Top left Start -->
                          <!-- Header Top left End -->
                          <!-- Search Box Start -->
-                         <div class="col-lg-4 col-md-6 ml-auto mr-auto">
-                             <div class="search-box-view">
-                                 <form action="#">
-                                     <input type="text" class="email" placeholder="Buscar Producto" name="product">
-                                     <button type="submit" class="submit"></button>
-                                 </form>
-                             </div>
-                         </div>
                          <!-- Search Box End -->
                          <!-- Header Top Right Start -->
                          <div class="col-lg-4 col-md-12">

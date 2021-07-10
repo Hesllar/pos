@@ -26,7 +26,7 @@
 
     <div class="row">
         <div class="col-md-4">
-            <input type="hidden" id="nvl_acces" value="<?php echo $user->nvl_acceso_fk; ?>">
+            <input type="hidden" id="nvl_acces_edit" value="<?php echo $user->nvl_acceso_fk; ?>">
             <input type="hidden" id="id_empleado" name="id_empleado">
             <input type="hidden" id="id_proveedor" name="id_proveedor">
             <input type="hidden" id="id_orden_edit" name="id_orden_edit" value="<?php echo $datos['id_orden'] ?>">

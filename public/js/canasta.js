@@ -418,14 +418,14 @@ function realizarCompraWeb() {
                 },
                 dataType: 'JSON',
                 success: function() {
-                    Swal.fire({
-                        text: 'Venta realizada exitosamente',
-                        icon: 'success',
-                    }).then((result) => {
-                    if (result.isConfirmed) {
-                        window.location.href = "http://localhost/pos/public/Ventas/pagComprobante";
-                    }
+                 Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: 'Venta realizada exitosamente',
+                    showConfirmButton: false,
+                    timer: 1500
                 });
+               setTimeout(() => {window.location.href = 'http://localhost/pos/public/Ventas/pagComprobante';}, 1500);
                 },
             });
         },

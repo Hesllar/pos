@@ -263,7 +263,8 @@ class Ventas extends BaseController
 		dp.estado_despacho AS est_desp,
 		c.nombre_comuna AS nombre_comuna, 
 		CONCAT("$", FORMAT(cc.costo_comuna, "")) AS costo_comuna, 
-		CONCAT("$", FORMAT((total + costo_comuna), "")) AS totales');
+		CONCAT("$", FORMAT((total + costo_comuna), "")) AS totales,
+		dp.id_despacho AS id_despacho');
 		$this->ventas->join('despacho AS dp', 'venta.id_venta=dp.venta_fk');
 		$this->ventas->join('costo_comuna AS cc', 'dp.costo_comuna_fk=cc.id_costo');
 		$this->ventas->join('comuna AS c', 'cc.comuna_fk=c.id_comuna');
@@ -340,11 +341,22 @@ class Ventas extends BaseController
 	{
 		$a = $this->obtenerUltimoIdCom();
 		$e = $a['id_venta'];
-		$this->ventas->select('dp.fecha_entrega AS fecha_entrega,dp.nombre_recibe AS nom_recibe,dp.telefono AS telefono, dp.estado_despacho AS est_desp,
-		c.nombre_comuna AS nombre_comuna, cc.costo_comuna AS costo_comuna, (total + costo_comuna) AS totales, despacho');
+		$this->ventas->select('dp.fecha_entrega AS fecha_entrega,
+		dp.nombre_recibe AS nom_recibe,
+		dp.telefono AS telefono, 
+		dp.estado_despacho AS est_desp,
+		c.nombre_comuna AS nombre_comuna, 
+		cc.costo_comuna AS costo_comuna, 
+		CONCAT("$",FORMAT((total + costo_comuna), "")) AS totales, 
+		despacho, 
+		dp.id_despacho as id_despacho,
+		id_venta,
+		tipo_comprobante,
+		r.nombre_region AS region');
 		$this->ventas->join('despacho AS dp', 'venta.id_venta=dp.venta_fk');
 		$this->ventas->join('costo_comuna AS cc', 'dp.costo_comuna_fk=cc.id_costo');
 		$this->ventas->join('comuna AS c', 'cc.comuna_fk=c.id_comuna');
+		$this->ventas->join('region AS r', 'c.region_fk=r.id_region');
 		$this->ventas->where('id_venta', $e);
 		return $this->ventas->first();
 	}
@@ -376,8 +388,11 @@ class Ventas extends BaseController
 		$a = $this->obtenerUltimoIdCom();
 		$e = $a['id_venta'];
 		$this->request = \Config\Services::request();
-		$this->ventas->select('p.nombre AS nombre,dv.cantidad AS cantidad,CONCAT("$",FORMAT(ROUND(cantidad * (p.precio_venta - (p.precio_venta * 0.19)),0), "")) AS precio_neto,
-		CONCAT("$", FORMAT(ROUND(cantidad * (p.precio_venta * 0.19),0), "")) AS precio_iva, CONCAT("$",FORMAT((p.precio_venta * cantidad), "")) AS precio_venta');
+		$this->ventas->select('p.nombre AS nombre,
+		dv.cantidad AS cantidad,
+		CONCAT("$",FORMAT(ROUND(cantidad * (p.precio_venta - (p.precio_venta * 0.19)),0), "")) AS precio_neto,
+		CONCAT("$", FORMAT(ROUND(cantidad * (p.precio_venta * 0.19),0), "")) AS precio_iva, 
+		CONCAT("$",FORMAT((p.precio_venta * cantidad), "")) AS precio_venta');
 		$this->ventas->join('detalle_venta AS dv', 'venta.id_venta=dv.id_venta_pk');
 		$this->ventas->join('usuario AS u', 'venta.cliente_fk=u.id_usuario');
 		$this->ventas->join('producto AS p', 'dv.id_producto_pk=p.id_producto');
@@ -405,100 +420,84 @@ class Ventas extends BaseController
 		$tipo = $datosUser['tipo_comprobante'];
 		$pdf = new \FPDF('P', 'mm', 'letter');
 		$pdf->AddPage();
-		$pdf->SetMargins(30, 10, 10);
+		$pdf->SetMargins(10, 10, 400);
 		$pdf->SetTitle("Comprobante");
-		$pdf->SetFont("Arial", 'B', 10);
-		$pdf->Image("img/logo/logo1.png", 20, 7);
+		$pdf->Image("img/logo/logo1.png", 10, 7);
 		$pdf->SetDrawColor(247, 10, 10);
 		$pdf->Cell(140);
+		$pdf->SetFont("Helvetica", 'B', 10);
 		$pdf->MultiCell(50, 5, "               FermApp
 		       Rut: 57.103.331-3
 		    Tipo de comprobante:
 			              $tipo", 'LRTB', 'L');
-		$pdf->Cell(4);
-		$pdf->SetDrawColor(9, 120, 212);
-		$pdf->Cell(10, 5, utf8_decode("Detalle de la venta"), 0, 1, 'C');
-		$pdf->Ln(5);
-		$pdf->Cell(6);
-		$pdf->Cell(10, 5, utf8_decode(" N° de venta:"), 0, 1, 'C');
-		$pdf->Cell(5);
-		$pdf->Cell(10, 5, utf8_decode($datosUser['id_venta']), 0, 1, "C");
-		$pdf->Ln(5);
-		$pdf->Cell(6);
-		$pdf->Cell(5, 5, utf8_decode("Fecha de emision:"), 0, 1, 'C');
-		$pdf->Cell(6);
-		$pdf->Cell(5, 5, $datosUser['fecha_venta'], 0, 1, "C");
-		$pdf->Ln(-10);
-		$pdf->Cell(130);
-		$pdf->Cell(5, 5, utf8_decode("Rut cliente:"), 0, 1, "C");
-		$pdf->Cell(130);
-		$pdf->Cell(5, 5, $datosUser['rut'], 0, 1, 'C');
-		$pdf->Ln(10);
-		$pdf->Cell(9);
-		$pdf->Cell(-6, 5, utf8_decode("Nombre cliente:"), 0, 1, 'C');
-		$pdf->Cell(9);
-		$pdf->Cell(-6, 5, $datosUser['nombres'], 0, 1, 'C');
-		$pdf->Ln(10);
-		$pdf->Cell(11);
-		$pdf->Cell(-6, 5, utf8_decode("Nombre empleado:"), 0, 1, 'C');
-		$pdf->Cell(11);
-		$pdf->Cell(-6, 5, $datosEmp['nom_empleado'], 0, 1, 'C');
-		$pdf->Ln(7);
+		$pdf->SetDrawColor(214, 137, 16);
+		$pdf->SetFont("Helvetica", 'B', 25);
+		$pdf->Cell(200, 10, utf8_decode("Detalle de la venta"), 0, 1, 'C');
+		$pdf->Ln();
+		$pdf->SetFont("Helvetica", 'B', 14);
+		$pdf->Cell(200, 10, utf8_decode("Datos venta"), 1, 0, 'C');
+		$pdf->Ln();
+		$pdf->SetFont("Helvetica", 'B', 12);
+		$pdf->Cell(100, 10, utf8_decode("Número de venta: " . $datosUser['id_venta']), 1, 0, "C");
+		$pdf->Cell(100, 10, utf8_decode("Fecha de emision: " . $datosUser['fecha_venta']), 1, 0, 'C');
+		$pdf->Ln();
+		$pdf->Cell(100, 10, utf8_decode("Rut cliente: " . $datosUser['rut']), 1, 0, "C");
+		$pdf->Cell(100, 10, utf8_decode("Nombre cliente: " . $datosUser['nombres']), 1, 0, 'C');
+		$pdf->Ln();
+		$pdf->Cell(200, 10, utf8_decode("Nombre empleado: " . $datosEmp['nom_empleado']), 1, 0, 'C');
+		$pdf->Ln();
 		if ($datosEmpresa != null) {
-			$pdf->Cell(6);
-			$pdf->Cell(-6, 5, utf8_decode("Rut empresa:"), 0, 1, 'C');
-			$pdf->Cell(5);
-			$pdf->Cell(-6, 5, $datosEmpresa['rut_emp'], 0, 1, 'C');
-			$pdf->Ln(-10);
-			$pdf->Cell(80);
-			$pdf->Cell(-6, 5, utf8_decode("Razón social:"), 0, 1, 'C');
-			$pdf->Cell(80);
-			$pdf->Cell(-6, 5, $datosEmpresa['social'], 0, 1, 'C');
-			$pdf->Ln(-10);
-			$pdf->Cell(160);
-			$pdf->Cell(-6, 5, utf8_decode("Giro:"), 0, 1, 'C');
-			$pdf->Cell(160);
-			$pdf->Cell(-6, 5, $datosEmpresa['giro'], 0, 1, 'C');
+			$pdf->SetFont("Helvetica", 'B', 14);
+			$pdf->Cell(200, 10, utf8_decode("Datos empresa"), 1, 0, 'C');
+			$pdf->Ln();
+			$pdf->SetFont("Helvetica", 'B', 13);
+			$pdf->Cell(100, 10, utf8_decode("Rut empresa: " . $datosEmpresa['rut_emp']), 1, 0, 'C');
+			$pdf->Cell(100, 10, utf8_decode("Giro: " . $datosEmpresa['giro']), 1, 0, 'C');
+			$pdf->Ln();
+			$pdf->Cell(200, 10, utf8_decode("Razón social: " . $datosEmpresa['social']), 1, 0, 'C');
+			$pdf->Ln();
 		}
 
-		$pdf->Ln(5);
+		//$pdf->Ln(5);
 		if ($datosDespacho != null) {
-			$pdf->Cell(6);
-			$pdf->Cell(-6, 5, utf8_decode("Fecha entrega"), 0, 1, 'C');
-			$pdf->Cell(6);
-			$pdf->Cell(-6, 5, $datosDespacho['fecha_entrega'], 0, 1, 'C');
-			$pdf->Ln(-10);
-			$pdf->Cell(160);
-			$pdf->Cell(-6, 5, utf8_decode("Recibe"), 0, 1, 'C');
-			$pdf->Cell(160);
-			$pdf->Cell(-6, 5, utf8_decode($datosDespacho['nom_recibe']), 0, 1, 'C');
-			$pdf->Ln(10);
-			$pdf->Cell(6);
-			$pdf->Cell(-6, 5, utf8_decode("Comuna de envio"), 0, 1, 'C');
-			$pdf->Cell(6);
-			$pdf->Cell(-6, 5, utf8_decode($datosDespacho['nombre_comuna']), 0, 1, 'C');
-			$pdf->Ln(-10);
-			$pdf->Cell(80);
-			$pdf->Cell(-6, 5, utf8_decode("costo envio"), 0, 1, 'C');
-			$pdf->Cell(80);
-			$pdf->Cell(-6, 5, utf8_decode("$" . number_format($datosDespacho['costo_comuna'], 0)), 0, 1, 'C');
+			$costoDespacho = $datosDespacho['costo_comuna'];
+			$pdf->SetFont("Helvetica", 'B', 14);
+			$pdf->Cell(200, 10, utf8_decode("Datos despacho"), 1, 0, 'C');
+			$pdf->Ln();
+			$pdf->SetFont("Helvetica", 'B', 12);
+			$pdf->Cell(100, 10, utf8_decode("Número de venta: " . $datosDespacho['id_venta']), 1, 0, "C");
+			$pdf->Cell(100, 10, utf8_decode("Número de despacho: " . $datosDespacho['id_despacho']), 1, 0, "C");
+			$pdf->Ln();
+			$pdf->Cell(100, 10, utf8_decode("Tipo de comprobante: " . $datosDespacho['tipo_comprobante']), 1, 0, "C");
+			$pdf->Cell(100, 10, utf8_decode("Recibe: " . $datosDespacho['nom_recibe']), 1, 0, "C");
+			$pdf->Ln();
+			$pdf->Cell(100, 10, utf8_decode("Fecha de entrega: " . $datosDespacho['fecha_entrega']), 1, 0, "C");
+			$pdf->Cell(100, 10, utf8_decode("Region: " . $datosDespacho['region']), 1, 0, "C");
+			$pdf->Ln();
+			$pdf->Cell(100, 10, utf8_decode("Comuna: " . $datosDespacho['nombre_comuna']), 1, 0, "C");
+			$pdf->Cell(100, 10, utf8_decode("Costo envio: " . "$" . number_format($costoDespacho, 0)), 1, 0, "C");
+			$pdf->Ln();
 		}
-		$pdf->Ln(5);
-		$pdf->Cell(2);
-		$pdf->Cell(60, 5, utf8_decode("Nombre poducto"), 1, 0, "C");
-		$pdf->Cell(20, 5, utf8_decode("Cantidad"), 1, 0, "C");
-		$pdf->Cell(25, 5, utf8_decode("precio_neto"), 1, 0, "C");
-		$pdf->Cell(25, 5, utf8_decode("precio_iva"), 1, 0, "C");
-		$pdf->Cell(25, 5, utf8_decode("precio_venta"), 1, 0, "C");
+		$pdf->SetDrawColor(0, 0, 0);
+		$pdf->SetFont("Helvetica", 'B', 14);
+		$pdf->Cell(200, 10, utf8_decode("Productos"), 1, 0, "C");
+		$pdf->SetFont("Helvetica", 'B', 10);
+		$pdf->Ln();
+		//$pdf->Ln(5);
+		$pdf->SetFont("Helvetica", 'B', 13);
+		$pdf->Cell(60, 10, utf8_decode("Nombre producto"), 1, 0, "C");
+		$pdf->Cell(35, 10, utf8_decode("Cantidad"), 1, 0, "C");
+		$pdf->Cell(35, 10, utf8_decode("Precio neto"), 1, 0, "C");
+		$pdf->Cell(35, 10, utf8_decode("Precio iva"), 1, 0, "C");
+		$pdf->Cell(35, 10, utf8_decode("Precio venta"), 1, 0, "C");
 		$datosProductos = $this->datosProductoComprobanteUser();
 		foreach ($datosProductos as $product) {
 			$pdf->Ln();
-			$pdf->Cell(2);
-			$pdf->Cell(60, 5, $product['nombre'], 1, 0, "C");
-			$pdf->Cell(20, 5, $product['cantidad'], 1, 0, "C");
-			$pdf->Cell(25, 5, $product['precio_neto'], 1, 0, "C");
-			$pdf->Cell(25, 5, $product['precio_iva'], 1, 0, "C");
-			$pdf->Cell(25, 5, $product['precio_venta'], 1, 0, "C");
+			$pdf->Cell(60, 10, $product['nombre'], 1, 0, "C");
+			$pdf->Cell(35, 10, $product['cantidad'], 1, 0, "C");
+			$pdf->Cell(35, 10, $product['precio_neto'], 1, 0, "C");
+			$pdf->Cell(35, 10, $product['precio_iva'], 1, 0, "C");
+			$pdf->Cell(35, 10, $product['precio_venta'], 1, 0, "C");
 		}
 		if ($datosDespacho == null) {
 			$valor = $datosUser['total'];
@@ -508,9 +507,10 @@ class Ventas extends BaseController
 			$subtotal = "$" . number_format($suma, 0);
 		}
 
-		$pdf->Ln(5);
-		$pdf->Cell(107);
-		$pdf->MultiCell(50, 5, "Subtotal:        |       $subtotal", 'LRTB', 'L');
+		$pdf->Ln();
+		$pdf->Cell(130);
+		$pdf->Cell(35, 10, utf8_decode("Total"), 1, 0, "C");
+		$pdf->Cell(35, 10, utf8_decode($subtotal), 1, 0, "C");
 
 
 		$this->response->setHeader('Content-Type', 'application/pdf');
@@ -524,40 +524,40 @@ class Ventas extends BaseController
 		return json_encode($arrayDT);
 	}
 
-	public function btnAccion($idVenta, $estado){
+	public function btnAccion($idVenta, $estado)
+	{
 		$divHeader = '<div class="actions-secondary bg-no">';
 		$divFooter = '</div>';
-		$btnVer = '<a class="borders-a-s" data-toggle="modal" href="#detalle" onclick="todo('.$idVenta.')">
+		$btnVer = '<a class="borders-a-s" data-toggle="modal" href="#detalle" onclick="todo(' . $idVenta . ')">
 					<i class="fa fa-eye"></i></a>';
-		$btnAnular = '<a class="borders-a-s delete" onclick="anulacion('.$idVenta.')" href="#" id="'.$idVenta.'">
+		$btnAnular = '<a class="borders-a-s delete" onclick="anulacion(' . $idVenta . ')" href="#" id="' . $idVenta . '">
 					<i class="fa fa-ban"></i></a>';
 
-		if($estado == 1){
-			return $divHeader.$btnVer.$btnAnular.$divFooter;
-		}else{
-			return $divHeader.$btnVer.$divFooter;
+		if ($estado == 1) {
+			return $divHeader . $btnVer . $btnAnular . $divFooter;
+		} else {
+			return $divHeader . $btnVer . $divFooter;
 		}
-                                            
 	}
 
 	public function objToDT($arr)
 	{
 		$arraySalida = [];
 		foreach ($arr as $i => $val) {
-			if($val['despacho'] == 1){
+			if ($val['despacho'] == 1) {
 				$valor_total = $this->valorDespacho($val['id_venta']) + (int)$val['total'];
 				$despacho = 'Sí';
-			}else{
+			} else {
 				$valor_total = (int)$val['total'];
 				$despacho = 'No';
 			}
 
 			$val['estado_venta'] == 1 ?
-			$eVenta = 'Realizada <i class="fa fa-check-circle text-success"></i>' :
-			$eVenta = 'Anulada <i class="fa fa-times-circle text-danger"></i>';
+				$eVenta = 'Realizada <i class="fa fa-check-circle text-success"></i>' :
+				$eVenta = 'Anulada <i class="fa fa-times-circle text-danger"></i>';
 
-			
-			
+
+
 			$datosPersonales = $this->usuarios->obtnDatos(
 				$this->usuarios->buscarPorId(
 					$this->empleados->buscarPorId($val['empleado_fk'])['usuario_fk']
@@ -567,10 +567,10 @@ class Ventas extends BaseController
 			$arrTemp = [
 				$val['id_venta'],
 				$val['fecha_venta'],
-				'$'.number_format($valor_total, 0, "", "."),
+				'$' . number_format($valor_total, 0, "", "."),
 				$despacho,
 				$eVenta,
-				$datosPersonales['nombres'].' '.$datosPersonales['apellidos'],
+				$datosPersonales['nombres'] . ' ' . $datosPersonales['apellidos'],
 				$this->btnAccion($val['id_venta'], $val['estado_venta'])
 			];
 			array_push($arraySalida, $arrTemp);
@@ -582,5 +582,97 @@ class Ventas extends BaseController
 	{
 		$desp = $this->despacho->where('venta_fk', $venta_fk)->First();
 		return (int)$desp['costo_despacho'];
+	}
+
+	public function datosDespachoView($id_compro)
+	{
+		$this->ventas->select('fecha_venta AS fecha_entrega,
+		dp.nombre_recibe AS nom_recibe,
+		dp.telefono AS telefono, 
+		dp.estado_despacho AS est_desp,
+		c.nombre_comuna AS nombre_comuna, 
+		CONCAT("$",FORMAT(cc.costo_comuna, "")) AS costo_comuna, 
+		CONCAT("$",FORMAT((total + costo_comuna), "")) AS totales, 
+		despacho, 
+		dp.id_despacho as id_despacho,
+		id_venta,
+		tipo_comprobante,
+		r.nombre_region AS region');
+		$this->ventas->join('despacho AS dp', 'venta.id_venta=dp.venta_fk');
+		$this->ventas->join('costo_comuna AS cc', 'dp.costo_comuna_fk=cc.id_costo');
+		$this->ventas->join('comuna AS c', 'cc.comuna_fk=c.id_comuna');
+		$this->ventas->join('region AS r', 'c.region_fk=r.id_region');
+		$this->ventas->where('id_venta', $id_compro);
+		return $this->ventas->first();
+	}
+	public function datosProductoView($id_orden)
+	{
+		$this->ventas->select('p.nombre AS nombre,
+		dv.cantidad AS cantidad,
+		CONCAT("$",FORMAT(ROUND(cantidad * (p.precio_venta - (p.precio_venta * 0.19)),0), "")) AS precio_neto,
+		CONCAT("$", FORMAT(ROUND(cantidad * (p.precio_venta * 0.19),0), "")) AS precio_iva, 
+		CONCAT("$",FORMAT((p.precio_venta * cantidad), "")) AS precio_venta');
+		$this->ventas->join('detalle_venta AS dv', 'venta.id_venta=dv.id_venta_pk');
+		$this->ventas->join('usuario AS u', 'venta.cliente_fk=u.id_usuario');
+		$this->ventas->join('producto AS p', 'dv.id_producto_pk=p.id_producto');
+		$this->ventas->where('id_venta', $id_orden);
+		$this->ventas->groupBy('nombre');
+		return $this->ventas->findAll();
+	}
+
+	public function generarDespacho($id_orden)
+	{
+		$this->response = \Config\Services::response();
+		$this->request = \Config\Services::request();
+		$datosDespacho = $this->datosDespachoView($id_orden);
+		$datosProductos = $this->datosProductoView($id_orden);
+		$pdf = new \FPDF('P', 'mm', 'Letter');
+		$pdf->AddPage();
+		$pdf->SetMargins(10, 10, 40);
+		$pdf->SetFont("Helvetica", 'B', 25);
+		$pdf->Image("img/logo/logo1.png", 10, 7);
+		$pdf->Cell(200, 10, utf8_decode("Orden de despacho"), 0, 1, 'C');
+		$pdf->Ln(10);
+		$pdf->SetFont("Helvetica", 'B', 17);
+		$pdf->SetDrawColor(214, 137, 16);
+		$pdf->Cell(200, 10, utf8_decode("Datos envio"), 1, 0, "C");
+		$pdf->Ln();
+		$pdf->SetFont("Helvetica", 'B', 12);
+		$pdf->Cell(100, 10, utf8_decode("Número de venta: " . $datosDespacho['id_venta']), 1, 0, "C");
+		$pdf->Cell(100, 10, utf8_decode("Número de despacho: " . $datosDespacho['id_despacho']), 1, 0, "C");
+		$pdf->Ln();
+		$pdf->Cell(100, 10, utf8_decode("Tipo de comprobante: " . $datosDespacho['tipo_comprobante']), 1, 0, "C");
+		$pdf->Cell(100, 10, utf8_decode("Recibe: " . $datosDespacho['nom_recibe']), 1, 0, "C");
+		$pdf->Ln();
+		$pdf->Cell(100, 10, utf8_decode("Fecha de entrega: " . $datosDespacho['fecha_entrega']), 1, 0, "C");
+		$pdf->Cell(100, 10, utf8_decode("Region: " . $datosDespacho['region']), 1, 0, "C");
+		$pdf->Ln();
+		$pdf->Cell(100, 10, utf8_decode("Comuna: " . $datosDespacho['nombre_comuna']), 1, 0, "C");
+		$pdf->Cell(100, 10, utf8_decode("Costo envio: " . $datosDespacho['costo_comuna']), 1, 0, "C");
+		$pdf->Ln();
+		$pdf->SetDrawColor(0, 0, 0);
+		$pdf->SetFont("Helvetica", 'B', 17);
+		$pdf->Cell(200, 10, utf8_decode("Productos"), 1, 0, "C");
+		$pdf->Ln();
+		$pdf->SetFont("Helvetica", 'B', 13);
+		$pdf->Cell(60, 10, utf8_decode("Nombre producto"), 1, 0, "C");
+		$pdf->Cell(35, 10, utf8_decode("Cantidad"), 1, 0, "C");
+		$pdf->Cell(35, 10, utf8_decode("Precio neto"), 1, 0, "C");
+		$pdf->Cell(35, 10, utf8_decode("Precio iva"), 1, 0, "C");
+		$pdf->Cell(35, 10, utf8_decode("Precio venta"), 1, 0, "C");
+		foreach ($datosProductos as $product) {
+			$pdf->Ln();
+			$pdf->Cell(60, 10, $product['nombre'], 1, 0, "C");
+			$pdf->Cell(35, 10, $product['cantidad'], 1, 0, "C");
+			$pdf->Cell(35, 10, $product['precio_neto'], 1, 0, "C");
+			$pdf->Cell(35, 10, $product['precio_iva'], 1, 0, "C");
+			$pdf->Cell(35, 10, $product['precio_venta'], 1, 0, "C");
+		}
+		$pdf->Ln();
+		$pdf->Cell(130);
+		$pdf->Cell(35, 10, utf8_decode("Total"), 1, 0, "C");
+		$pdf->Cell(35, 10, utf8_decode($datosDespacho['totales']), 1, 0, "C");
+		$this->response->setHeader('Content-Type', 'application/pdf');
+		$pdf->Output('ordendedespacho.pdf', 'I');
 	}
 }

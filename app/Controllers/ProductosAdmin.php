@@ -86,7 +86,8 @@ class ProductosAdmin extends BaseController
             'categorias' => $categorias,
             'proveedores' => $proveedores,
             'test' => $this->arrayFormat($productos),
-            'scripts' => base_url('js/productos-admin.js')];
+            'scripts' => base_url('js/productos-admin.js')
+        ];
 
 
         $estados = [
@@ -107,24 +108,25 @@ class ProductosAdmin extends BaseController
         echo view('footer', $data);
     }
 
-    public function arrayFormat($arr){
+    public function arrayFormat($arr)
+    {
         $output = [];
         foreach ($arr as $key => $a) {
             $temp = [];
             $a['categoria'] = $this->categorias->where('id_categoria', $a['categoria'])->First()['nombre_categoria'];
             $html = array("btn_accion" => "<div class='actions-secondary bg-no'>
-                    <a class='borders-a-s' href='".base_url()."/productosadmin/editar/".$a['id_producto']."'>
+                    <a class='borders-a-s' href='" . base_url() . "/productosadmin/editar/" . $a['id_producto'] . "'>
                     <i class='fa fa-pencil'></i>
                     </a>
                    
-                    <a href='#' id='baja-".$a['id_producto']."' class='borders-a-s delete'
-                    data-href='". base_url() . "/productosadmin/eliminarProducto/" . $a['id_producto'] ."' 
+                    <a href='#' id='baja-" . $a['id_producto'] . "' class='borders-a-s delete'
+                    data-href='" . base_url() . "/productosadmin/eliminarProducto/" . $a['id_producto'] . "' 
                     data-toggle='modal' data-target='#Eliminar'>
                     <i class='fa fa-trash'></i>
                     </a></div>");
-            unset($a['id_producto'],$a['imagen'],$a['descripcion']);
-            array_merge($a,$html);
-            array_push($output, array_merge($a,$html));
+            unset($a['id_producto'], $a['imagen'], $a['descripcion']);
+            array_merge($a, $html);
+            array_push($output, array_merge($a, $html));
         }
         return $output;
     }
@@ -157,20 +159,21 @@ class ProductosAdmin extends BaseController
             $img->move('img/productos', $newName);
         }
 
-        function recortarNumero($numero){
-            strlen($numero) > 3 ? 
-            $numero = substr($numero,-3,strlen($numero)) : null;
+        function recortarNumero($numero)
+        {
+            strlen($numero) > 3 ?
+                $numero = substr($numero, -3, strlen($numero)) : null;
             return (int)$numero;
         }
 
-        $ultimoProducto = $this->productos->orderBy('id_producto','DESC')->First();
+        $ultimoProducto = $this->productos->orderBy('id_producto', 'DESC')->First();
         $idProveedor = $this->request->getPost('proveedor');
         $idCategoria = $this->request->getPost('categoria');
         $fechaVencimiento = $this->request->getPost('fecha_vencimiento');
         $nSecuencial = $ultimoProducto['id_producto'];
         $nSecuencial = recortarNumero($nSecuencial) + 1;
-        $stringFecha = str_replace('-','',$fechaVencimiento);
-        $stringFecha == '' ? $stringFecha = '00000000' : null ;
+        $stringFecha = str_replace('-', '', $fechaVencimiento);
+        $stringFecha == '' ? $stringFecha = '00000000' : null;
         $registro = $idProveedor . $idCategoria . $stringFecha . $nSecuencial;
 
         if ($this->session->id_sucursal_fk == 1) {
@@ -208,7 +211,6 @@ class ProductosAdmin extends BaseController
                 'id_sucursal_fk' => 2
             ]);
         }
-        
         return redirect()->to(base_url() . '/productosadmin');
     }
 
@@ -239,14 +241,14 @@ class ProductosAdmin extends BaseController
             $img->move('img/productos', $newName);
         }
 
-        $ultimoProducto = $this->productos->orderBy('id_producto','DESC')->First();
+        $ultimoProducto = $this->productos->orderBy('id_producto', 'DESC')->First();
         $idProveedor = $this->request->getPost('proveedor');
         $idCategoria = $this->request->getPost('categoria');
         $fechaVencimiento = $this->request->getPost('fecha_vencimiento');
         $nSecuencial = $ultimoProducto['id_producto'];
         $nSecuencial = recortarNumero($nSecuencial) + 1;
-        $stringFecha = str_replace('-','',$fechaVencimiento);
-        $stringFecha == '' ? $stringFecha = '00000000' : null ;
+        $stringFecha = str_replace('-', '', $fechaVencimiento);
+        $stringFecha == '' ? $stringFecha = '00000000' : null;
         $registro = $idProveedor . $idCategoria . $stringFecha . $nSecuencial;
 
 

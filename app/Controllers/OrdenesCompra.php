@@ -79,6 +79,7 @@ class OrdenesCompra extends BaseController
 		echo view('administrador/ordenes_compra');
 		echo view('administrador/panel_footer');
 		echo view('footer');
+		echo view('ordenjs');
 	}
 	public function empleadoFk($id_user)
 	{
@@ -98,7 +99,7 @@ class OrdenesCompra extends BaseController
 			'valor_neto' => $this->request->getVar('neto'),
 			'valor_iva' => $this->request->getVar('iva'),
 			'valor_total' => $this->request->getVar('valorTotal'),
-			'estado_orden' => 1,
+			'estado_orden' => 0,
 			'empleado_fk' => $this->empleadoFk($this->request->getVar('id_user')),
 			'proveedor_fk' => $this->request->getVar('id_prov'),
 		]);
