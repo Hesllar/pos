@@ -1,5 +1,4 @@
 $("#agregarProductoForm").submit(function(e) {
-    var fun = "funregistrar";
     var nomProducto = $("#nombre_producto").val();
     var marca = $("#marca").val();
     var precVenta = $("#precio_venta").val();
@@ -67,13 +66,12 @@ $("#agregarProductoForm").submit(function(e) {
         return false;
     } else {
         Swal.fire({
-                    text: 'Producto ingresado correctamente',
-                    icon: 'success',
-                    }).then((result) => {
-                    if (result.isConfirmed) {
-                         window.location.href = '/pos/public/productosadmin';
-                    }
-                });
+        position: 'center',
+        icon: 'success',
+        title: 'Producto agregado correctamente',
+        showConfirmButton: false,
+        timer: 1500
+        });
     }
 });	
 
@@ -121,5 +119,24 @@ $("#agregarProductoForm").submit(function(e) {
     tablaProd.rows.add(arraySeteado).draw();
     console.log(arraySeteado);
  }
+
+function logearse()
+{
+        Swal.fire({
+        text: 'Para realizar una compra debe iniciar sesion',
+        icon: 'info',
+        showDenyButton: true,
+        showCancelButton: false,
+        confirmButtonText: `Iniciar sesion`,
+        denyButtonText: `Cancelar`,
+        confirmButtonColor: '#f1ac06'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            window.location.href= '/pos/public/Acceder'
+        } else if (result.isDenied) {
+            close();
+        }
+    })
+}
 
  

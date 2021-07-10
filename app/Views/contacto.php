@@ -14,38 +14,36 @@
                 <h3>Contactanos</h3>
                 <br>
                 <p class="text-capitalize mb-40">Completa el formulario de contacto.</p>
-                <form id="contact-form" class="contact-form" action="mail.php" method="post">
-                    <div class="address-wrapper">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="address-fname">
-                                    <input type="text" name="name" placeholder="Nombre">
-                                </div>
+                <div class="address-wrapper">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="address-fname">
+                                <input type="text" id="nombre" name="nombre" placeholder="Nombre">
                             </div>
-                            <div class="col-md-6">
-                                <div class="address-email">
-                                    <input type="email" name="email" placeholder="Email">
-                                </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="address-email">
+                                <input type="email" id="email" name="email" placeholder="Email">
                             </div>
-                            <div class="col-sm-12">
-                                <div class="address-subject">
-                                    <input type="text" name="subject" placeholder="Asunto">
-                                </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="address-subject">
+                                <input type="text" id="asunto" name="asunto" placeholder="Asunto">
                             </div>
-                            <div class="col-sm-12">
-                                <div class="address-textarea">
-                                    <textarea name="message" placeholder="Escribe tu mensaje"></textarea>
-                                </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="address-textarea">
+                                <textarea name="mensaje" id="mensaje" placeholder="Escribe tu mensaje"></textarea>
                             </div>
                         </div>
                     </div>
-                    <p class="form-message ml-15"></p>
-                    <div class="col-xs-12 footer-content mail-content">
-                        <div class="send-email">
-                            <input type="submit" value="Enviar" class="submit">
-                        </div>
+                </div>
+                <p class="form-message ml-15"></p>
+                <div class="col-xs-12 footer-content mail-content">
+                    <div class="send-email">
+                        <input type="button" value="Enviar" class="submit" onclick="alertaContacto()">
                     </div>
-                </form>
+                </div>
             </div>
         </div>
     </div>

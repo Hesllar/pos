@@ -228,18 +228,21 @@ function buscarProveedor(e, tagId) {
 
                         }
                     });
-                    Swal.fire({
-                        text: 'Orden generada correctamente',
-                        icon: 'success',
-                    }).then((result) => {
-                    if (result.isConfirmed) {
-                        $('#nvl_acces').val() == 10 ? 
-                         window.location.href = '/pos/public/ordenescompra':
-                         window.location.href = '/pos/public/ordenescompra/traerOrden';
-                    } 
+                 Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: 'Orden generada correctamente',
+                    showConfirmButton: false,
+                    timer: 1500
                 });
-
-                   
+                    if ($('#nvl_acces').val() == 10) {
+                          setTimeout(() => {window.location.href = '/pos/public/ordenescompra';}, 1500);
+                         
+                    }else{
+                    
+                        setTimeout(() => {window.location.href = '/pos/public/ordenescompra/traerOrden';}, 1500);
+                    } 
+                    
                 }
             });
         } else {
@@ -334,7 +337,7 @@ function buscarProveedor(e, tagId) {
     if($("#tablaProducto").length > 0){
         
        actualizarTotal();   
-
+        console.log($('#nvl_acces_edit').val());
 
     function generarOrdenEdit(){
         var tabla = document.querySelectorAll('#lista-producto tr');
@@ -365,7 +368,6 @@ function buscarProveedor(e, tagId) {
                         var arraTemp = [tr.id, tr.querySelector('.cambiarCantidad').value, sacarPeso, sacarPesoTotal];
                         arrayLista.push(arraTemp);
                     });
-                    console.log(arrayLista)
                     $.ajax({
                         url: '/pos/public/OrdenesCompra/actualizarDetalleOrden/' + id_orden,
                         method: "POST",
@@ -377,16 +379,20 @@ function buscarProveedor(e, tagId) {
                             
                         }
                     });
-                     Swal.fire({
-                        text: 'Orden editada correctamente',
-                        icon: 'success',
-                    }).then((result) => {
-                    if (result.isConfirmed) {
-                
-                         window.location.href = '/pos/public/ordenescompra';
-                     
-                    }
+                    Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: 'Orden editada correctamente',
+                    showConfirmButton: false,
+                    timer: 1500
                 });
+                    if ($('#nvl_acces_edit').val() == 10) {
+                          setTimeout(() => {window.location.href = '/pos/public/ordenescompra';}, 1500);
+                         
+                    }else{
+                    
+                        setTimeout(() => {window.location.href = '/pos/public/ordenescompra/traerOrden';}, 1500);
+                    } 
                    
                 }
             });
@@ -438,10 +444,6 @@ function buscarProveedor(e, tagId) {
             agregarProducto(event);
         }
     }
-
-
-
-
 }
 
 function vistaOrden(id_orden)
@@ -491,5 +493,43 @@ function vistaOrden(id_orden)
         } 
     })
     
+}
+
+
+function alertaContacto(){
+    var nombre = $('#nombre').val();
+    var email = $('#email').val();
+    var asunto = $('#asunto').val();
+    var mensaje = $('#mensaje').val();
+    if(nombre !='' && email != '' && asunto != '' && mensaje != ''){
+        $.ajax({
+            url: '/pos/public/Contacto/agregarMensaje',
+            method: "POST",
+            data:{
+                nombre:nombre,
+                email:email,
+                asunto:asunto,
+                mensaje:mensaje,
+            },
+            success: function(){
+                Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: 'Mensaje enviado correctamente',
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+               setTimeout(() => {window.location.href = '/pos/public/contacto';}, 1500);
+            }
+        });
+    }else{
+        Swal.fire({
+        position: 'center',
+        icon: 'error',
+        title: 'Debe rellenar los campos',
+        showConfirmButton: false,
+        timer: 1500
+        });
+    }  
 }
 

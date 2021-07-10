@@ -37,7 +37,13 @@ class Productos extends BaseController
         }
         $categorias = $this->categorias->findAll();
         $configuracion = $this->configuracion->First();
-        $data = ['titulo' => 'Productos', 'datos' => $productos, 'categorias' => $categorias, 'configuracion' => $configuracion];
+        $data = [
+            'titulo' => 'Productos',
+            'datos' => $productos,
+            'categorias' => $categorias,
+            'configuracion' => $configuracion,
+            'scripts' => base_url('js/productos-admin.js')
+        ];
 
         echo view('header', $data);
         echo view('Productos/Productos', $data);
