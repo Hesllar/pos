@@ -190,7 +190,7 @@ function obtnDatosPro(id_venta) {
                 <td>' + value['precio_iva'] + '</td>\
                 <td>' + value['precio_venta'] + '</td>\
                 ')
-            })
+            });
         }
     });
 }
@@ -245,6 +245,7 @@ function obtDatosDespacho(id_venta) {
                 $("#fecha_entrega").val(resp.datos.fecha_entrega);
                 $("#fecha_entrega").val(resp.datos.fecha_entrega);
                 $("#totales").val(resp.datos.totales);
+                $("#id_despacho").val(resp.datos.id_despacho);
                 document.getElementById("despacho").style.display = ""
                 document.getElementById("total-des").style.display = ""
             } else {
@@ -253,4 +254,16 @@ function obtDatosDespacho(id_venta) {
             }
         }
     });
+}
+
+function generarDespacho()
+{
+    var id_orden = $('#idBoleta').val();
+    $.ajax({
+        url: "/pos/public/Ventas/generarDespacho/" + id_orden,
+        method: "POST",
+        success:function(){
+            window.location = "/pos/public/Ventas/generarDespacho/" + id_orden;
+        }
+    })
 }

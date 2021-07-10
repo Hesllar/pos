@@ -22,14 +22,15 @@ class OrdenCompraModel extends Model
         'estado_orden',
         'conversion_moneda',
         'empleado_fk',
-        'proveedor_fk'
+        'proveedor_fk',
+        'fecha_emision',
+        'fecha_update'
     ];
 
     protected $useTimestamps = false;
 
-    protected $createdField  = 'fecha_emision';
-    /*
-    protected $updatedField  = 'fecha_entrega';
+    /*protected $createdField  = 'fecha_emision';
+    protected $updatedField  = 'fecha_update';
     protected $deletedField  = 'deleted_at';
     */
 
@@ -54,6 +55,7 @@ class OrdenCompraModel extends Model
         $this->where('id_orden', $orden);
         return $this->first();
     }
+
 
     public function obtProductosSoli($id_orden)
     {

@@ -171,9 +171,9 @@
                                             <tbody>
                                                 <?php foreach ($datos as $producto) { ?>
                                                     <tr>
-                                                        <td><?php echo $producto['id_producto']; ?></td>
+                                                        <td><?php echo $producto['n_registro']; ?></td>
                                                         <td><?php echo $producto['nombre']; ?></td>
-                                                        <td>$<?php echo $producto['precio_venta']; ?></td>
+                                                        <td><?php echo "$" . number_format($producto['precio_venta'], 0)  ?></td>
                                                         <td><?php echo $producto['stock']; ?></td>
                                                         <td><?php echo $producto['categoria']; ?></td>
                                                         <td><a class="view" href="<?php echo base_url() . '/productosadmin/editarEmp/' . $producto['id_producto']; ?>"

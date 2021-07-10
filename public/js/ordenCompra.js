@@ -183,8 +183,9 @@ function buscarProveedor(e, tagId) {
         $('#' + id).remove();
         actualizarTotal();
     }
-
+ 
     function generarOrden() {
+        var id_user = $('#id_empleado').val();
         var input_prove = document.getElementById('id_prove').value;
         var rut_emp = $('#rut_emp').val();
         var valorTotal = $('#hidden-total').val();
@@ -192,6 +193,7 @@ function buscarProveedor(e, tagId) {
         var iva = valorTotal * 0.19;
         var id_prov = $('#id_proveedor').val();
         var tabla = document.querySelectorAll('#lista-producto tr');
+
         //console.log(tabla);
         if (tabla.length > 0 &&  input_prove != ''  && rut_emp != '') {
             $.ajax({
@@ -201,7 +203,8 @@ function buscarProveedor(e, tagId) {
                     valorTotal: valorTotal,
                     neto: neto,
                     iva: iva,
-                    id_prov: id_prov
+                    id_prov: id_prov,
+                    id_user:id_user
                 },
                 success: function(data) {
                     var listaTr = document.querySelectorAll('#lista-producto tr');
@@ -212,6 +215,7 @@ function buscarProveedor(e, tagId) {
                         var arraTemp = [tr.querySelector('.base').id, tr.querySelector('.base').textContent, sacarPeso, sacarPesoTotal];
                         arrayLista.push(arraTemp);
                     });
+                   
 
                     $.ajax({
                         url: '/pos/public/OrdenesCompra/generarDetalleOrd',
@@ -224,18 +228,21 @@ function buscarProveedor(e, tagId) {
 
                         }
                     });
-                    Swal.fire({
-                        text: 'Orden generada correctamente',
-                        icon: 'success',
-                    }).then((result) => {
-                    if (result.isConfirmed) {
-                        $('#nvl_acces').val() == 10 ? 
-                         window.location.href = '/pos/public/ordenescompra':
-                         window.location.href = '/pos/public/ordenescompra/traerOrden';
-                    } 
+                 Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: 'Orden generada correctamente',
+                    showConfirmButton: false,
+                    timer: 1500
                 });
-
-                   
+                    if ($('#nvl_acces').val() == 10) {
+                          setTimeout(() => {window.location.href = '/pos/public/ordenescompra';}, 1500);
+                         
+                    }else{
+                    
+                        setTimeout(() => {window.location.href = '/pos/public/ordenescompra/traerOrden';}, 1500);
+                    } 
+                    
                 }
             });
         } else {
@@ -330,7 +337,7 @@ function buscarProveedor(e, tagId) {
     if($("#tablaProducto").length > 0){
         
        actualizarTotal();   
-
+        console.log($('#nvl_acces_edit').val());
 
     function generarOrdenEdit(){
         var tabla = document.querySelectorAll('#lista-producto tr');
@@ -361,7 +368,6 @@ function buscarProveedor(e, tagId) {
                         var arraTemp = [tr.id, tr.querySelector('.cambiarCantidad').value, sacarPeso, sacarPesoTotal];
                         arrayLista.push(arraTemp);
                     });
-                    console.log(arrayLista)
                     $.ajax({
                         url: '/pos/public/OrdenesCompra/actualizarDetalleOrden/' + id_orden,
                         method: "POST",
@@ -373,16 +379,20 @@ function buscarProveedor(e, tagId) {
                             
                         }
                     });
-                     Swal.fire({
-                        text: 'Orden editada correctamente',
-                        icon: 'success',
-                    }).then((result) => {
-                    if (result.isConfirmed) {
-                
-                         window.location.href = '/pos/public/ordenescompra';
-                     
-                    }
+                    Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: 'Orden editada correctamente',
+                    showConfirmButton: false,
+                    timer: 1500
                 });
+                    if ($('#nvl_acces_edit').val() == 10) {
+                          setTimeout(() => {window.location.href = '/pos/public/ordenescompra';}, 1500);
+                         
+                    }else{
+                    
+                        setTimeout(() => {window.location.href = '/pos/public/ordenescompra/traerOrden';}, 1500);
+                    } 
                    
                 }
             });
@@ -434,6 +444,92 @@ function buscarProveedor(e, tagId) {
             agregarProducto(event);
         }
     }
-
-
 }
+
+function vistaOrden(id_orden)
+{
+
+    $.ajax({
+        url: '/pos/public/OrdenesCompra/allDatosProvView/'+ id_orden,
+        method: "POST",
+        dataType: "JSON",
+        success: function(data){
+            $('#idOrden').val(data.datos.id_orden);
+            $('#fecha_emision').val(data.datos.fecha_emision);
+            $('#rubro').val(data.datos.rubro);
+            $('#fono').val(data.datos.telefono);
+            $('#social').val(data.datos.razon);
+            $('#giro').val(data.datos.giro);
+            $('#rut_emp').val(data.datos.rut_emp);
+            $('#Iva').val(data.datos.valor_iva);
+            $('#subtotal').val(data.datos.valor_neto);
+            $('#totales').val(data.datos.valor_total);
+        } 
+    });
+    $.ajax({
+        url: '/pos/public/OrdenesCompra/dtsSolicitante/'+ id_orden,
+        method: "POST",
+        dataType: "JSON",
+        success: function(data){
+            $('#nom_empleado').val(data.datos.solicitante);
+        
+        } 
+    });
+    $.ajax({
+        url: '/pos/public/OrdenesCompra/dtsDetallePro/'+ id_orden,
+        method: "POST",
+        dataType: "JSON",
+        success: function(data){
+            $('.listProduct').html('')
+            $.each(data.datos, function (i, value) {
+                $('.listProduct').append('<tr>\
+                <td>' + value['nombre_pro'] + '</td>\
+                <td>' + value['cantidad'] + '</td>\
+                <td>' + value['precio_costo'] + '</td>\
+                <td>' + value['valor_total'] + '</td>\
+                ')
+            });
+        
+        } 
+    })
+    
+}
+
+
+function alertaContacto(){
+    var nombre = $('#nombre').val();
+    var email = $('#email').val();
+    var asunto = $('#asunto').val();
+    var mensaje = $('#mensaje').val();
+    if(nombre !='' && email != '' && asunto != '' && mensaje != ''){
+        $.ajax({
+            url: '/pos/public/Contacto/agregarMensaje',
+            method: "POST",
+            data:{
+                nombre:nombre,
+                email:email,
+                asunto:asunto,
+                mensaje:mensaje,
+            },
+            success: function(){
+                Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: 'Mensaje enviado correctamente',
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+               setTimeout(() => {window.location.href = '/pos/public/contacto';}, 1500);
+            }
+        });
+    }else{
+        Swal.fire({
+        position: 'center',
+        icon: 'error',
+        title: 'Debe rellenar los campos',
+        showConfirmButton: false,
+        timer: 1500
+        });
+    }  
+}
+
