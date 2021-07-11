@@ -578,7 +578,7 @@ $user_session = session();
     </div>
     <!-- Wrapper End -->
     <!-- jquery 3.12.4 -->
-    <script src="js/vendor/jquery-1.12.4.min.js"></script>
+    <script src="<?php echo base_url(); ?>/js/vendor/jquery-3.6.0.min.js"></script>
     <!-- mobile menu js  -->
     <script src="js/jquery.meanmenu.min.js"></script>
     <!-- scroll-up js -->
