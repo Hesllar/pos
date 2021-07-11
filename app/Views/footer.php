@@ -134,8 +134,8 @@
      }
  </script>
  <?php
-    isset($scripts) ? print_r('<script src="'.$scripts.'"></script>') : null;
- ?>
+    isset($scripts) ? print_r('<script src="' . $scripts . '"></script>') : null;
+    ?>
 
  </body>
 
