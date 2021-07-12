@@ -71,14 +71,14 @@ $user_session = session();
                         <div class="pull-right">
                             <div class="product-header">
 
-                            <i class="fa fa-user"></i>
-                            Vendedor: 
-                            <?php
-                            print_r($user_session->nom_usuario);
-                            $id_user = $user_session->id_usuario;
-                            echo '<input type="hidden" id="id_usuario" value="'. $id_user .'">';
-                            ?>
-                            <input type="hidden" id="id_empleado" value="301">
+                                <i class="fa fa-user"></i>
+                                Vendedor:
+                                <?php
+                                print_r($user_session->nom_usuario);
+                                $id_user = $user_session->id_usuario;
+                                echo '<input type="hidden" id="id_usuario" value="' . $id_user . '">';
+                                ?>
+                                <input type="hidden" id="id_empleado" value="301">
 
                             </div>
                             <div class="pro-content">
