@@ -69,6 +69,7 @@ class Proveedor extends BaseController
 		echo view('Empleado/proveedor_emp');
 		echo view('administrador/panel_footer');
 		echo view('footer');
+		echo view('validarFormujs');
 	}
 
 	public function insertarProveedor()
