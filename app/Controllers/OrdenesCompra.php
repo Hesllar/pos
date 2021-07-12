@@ -69,10 +69,8 @@ class OrdenesCompra extends BaseController
 		$data = ['ordenCompra' => $ordenescompra, 'configuracion' => $configuracion];
 		$estados = [
 			'e_producto' => '',
-			'e_ordencompra' => '',
+			'e_ordencompra' => 'active',
 			'e_proveedor' => '',
-			'e_config' => 'active',
-			'e_estadistica' => ''
 		];
 		echo view('header', $data);
 		echo view('Empleado/panel_header_emp', $estados);

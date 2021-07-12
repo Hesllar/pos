@@ -210,7 +210,7 @@
                         <td><?php echo $proveedor['razon']; ?></td>
                         <td><?php echo $proveedor['giro']; ?></td>
                         <td><?php echo $proveedor['rubro']; ?></td>
-                        <td><a class="view" href=""> <i class="fa fa-pencil"></i></a>
+                        <td><a class="view" href="<?php echo base_url().'/Proveedor/pagEditarProveedor/'.$proveedor['id_proveedor']?>"> <i class="fa fa-pencil"></i></a>
                         </td>
                         <td><a class="view" data-href="<?php echo base_url().'/Proveedor/ProveedorDadoBaja/'.$proveedor['id_usuario']?> " data-toggle="modal" data-target="#Eliminar">
                                 <i class="fa fa-trash"></i></a>
