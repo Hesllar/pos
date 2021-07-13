@@ -95,6 +95,12 @@ body {
     border-bottom: 1px solid #0e0e0e;
     padding-bottom: 10px;
 }
+
+.b-bottom {
+    border-bottom: 1px solid #ebebeb;
+    padding-bottom: 10px;
+}
+
 #border-formi{
     padding: 15px;
     border: #000;
@@ -919,6 +925,20 @@ ul.ht-dropdown.dropdown-style-two li {
     font-size: 14px;
 }
 
+.prev-valor {
+    margin-top: -5;
+    text-decoration:line-through;
+    color: #666;
+    font-weight: normal;
+    font-size: 12px;
+}
+
+.icon-input {
+    padding-top: 12px;
+    padding-left: 6px;
+    color: #666;
+}
+
 .sticker-new, .sticker-sale {
     background: #f1ac06;
     border-radius: 2px;
@@ -1618,6 +1638,10 @@ ul.ht-dropdown.dropdown-style-two li {
 .grid-list-view.f-left, .breadcrumb-list-item.f-left {
   margin-top: 8px;
 }
+
+.m-top {
+    margin-top: 8px;
+  }
 
 .main-shop-page .grid-list-view li a.active,
 .breadcrumb-list-item li a.active,
@@ -3112,6 +3136,10 @@ p.checkout-coupon input[type="submit"] {
 .submit-comment .submit:hover {
     background: #f1ac06;
     color: #fff;
+}
+
+.titulo-recepcion {
+    font-weight: 500;
 }
 
 .recent-post .sidebar-title {
