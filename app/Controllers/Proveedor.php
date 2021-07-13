@@ -176,34 +176,6 @@ class Proveedor extends BaseController
 		return $BuscarIdUsuario['id_usuario'];
 	}
 
-	/*public function editarProveedor($id, $valid = null)
-	{
-
-		$productos = $this->productos->where('id_producto', $id)->first();
-		$categoria = $this->categoria->buscarId($productos['categoria']);
-		$fecha_venci = $this->detalle_producto->obtFechaVenci($productos['detalle_fk']);
-		$configuracion = $this->configuracion->First();
-		$categorias = $this->categorias->findAll();
-		if ($valid != null) {
-
-			$data = [
-				'datos' => $productos, 'configuracion' => $configuracion, 'categorias' => $categorias,
-				'cat' => $categoria, 'fecha_venci' => $fecha_venci, 'validation' => $valid
-			];
-		} else {
-			$data = [
-				'datos' => $productos, 'configuracion' => $configuracion, 'categorias' => $categorias,
-				'cat' => $categoria, 'fecha_venci' => $fecha_venci
-			];
-		}
-
-		#$this->load->view('administrador/productos_admin', $data);
-		echo view('header', $data);
-		echo view('administrador/editar_producto');
-		echo view('footer');
-	}*/
-
-
 	public function dtsProveedor($id_sucur)
 	{
 		if (!isset($this->session->id_usuario)) {
@@ -211,7 +183,11 @@ class Proveedor extends BaseController
 		}
 
 		$this->request = \Config\Services::request();
-		$this->datospersonalesmodel->select('CONCAT(e.rut_empresa, "-", e.dvempresa) AS rut_emp, e.razon_social AS razon, e.giro AS giro, p.rubro AS rubro, p.id_proveedor AS id_proveedor');
+		$this->datospersonalesmodel->select('CONCAT(e.rut_empresa, "-", e.dvempresa) AS rut_emp, 
+		e.razon_social AS razon, 
+		e.giro AS giro, 
+		p.rubro AS rubro, 
+		p.id_proveedor AS id_proveedor');
 		$this->datospersonalesmodel->join('empresa as e', 'datos_personales.rut=e.DATOS_PERSONALES_rut');
 		$this->datospersonalesmodel->join('usuario as u', 'datos_personales.rut=u.rut_fk');
 		$this->datospersonalesmodel->join('proveedor as p', 'u.id_usuario=p.usuario_fk');
@@ -333,5 +309,6 @@ class Proveedor extends BaseController
 		echo view('proovedor_view');
 		echo view('administrador/panel_footer');
 		echo view('footer');
+		echo view('ordenjs');
 	}
 }
