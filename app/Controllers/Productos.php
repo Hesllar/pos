@@ -57,10 +57,9 @@ class Productos extends BaseController
         $configuracion = $this->configuracion->First();
         $data = ['titulo' => 'Productos', 'datos' => $productos, 'categorias' => $categorias, 'configuracion' => $configuracion];
         $estados = [
-            'e_producto' => '',
+            'e_producto' => 'active',
             'e_ordencompra' => '',
             'e_proveedor' => '',
-            'e_config' => 'active'
         ];
         echo view('header', $data);
         echo view('Empleado/panel_header_emp', $estados);

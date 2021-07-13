@@ -66,4 +66,34 @@ class ProveedorModel extends Model
         $this->where('id_proveedor', $id_prov);
         return $this->first();
     }*/
+
+    public function proveedorDadoBaja() {
+
+        $this->select('dp.nombres as Nombre, dp.apellidos as Apellido, us.nom_usuario as Nombre_Usuario, emp.rut_empresa as Rut_Empresa, emp.dvempresa as DV_Empresa, us.id_usuario as id_usuario');
+        $this->join('usuario as us', 'proveedor.usuario_fk = us.id_usuario');
+        $this->join('datos_personales as dp', 'us.rut_fk = dp.rut');
+        $this->join('empresa as emp', 'dp.rut = emp.DATOS_PERSONALES_rut');
+        $this->where('us.nvl_acceso_fk', 50);
+        $this->where('us.estado_usuario', 0);
+        return $this->findAll();
+    }
+
+    public function editarProveedor($id_prov) {
+
+        $this->select('us.nom_usuario as nom_usuario, 
+                        rubro, 
+                        emp.giro as giro, 
+                        emp.razon_social as razon_social,
+                        emp.telefono as telefono,
+                        dp.correo as email, 
+                        dp.celular as celular,
+                        id_proveedor,
+                        usuario_fk as id_usuario,
+                        us.rut_fk as rut_usuario');
+        $this->join('usuario as us', 'proveedor.usuario_fk = us.id_usuario');
+        $this->join('datos_personales as dp', 'us.rut_fk = dp.rut');
+        $this->join('empresa as emp', 'dp.rut = emp.DATOS_PERSONALES_rut');
+        $this->where('id_proveedor', $id_prov);
+        return $this->first();
+    }
 }

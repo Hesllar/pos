@@ -147,7 +147,7 @@
                                         <label for="" id="lbPreVenta"></label>
                                     </div>
                                     <div class="col-sm-4">
-                                        <label class="control-label" for="number"><span class="require">*</span>Prectio costo</label>
+                                        <label class="control-label" for="number"><span class="require">*</span>Precio costo</label>
                                         <input type="number" class="form-control" id="precio_costo" name="precio_costo" placeholder="Ingrese precio costo" min="0" max="9999999">
                                         <label for="" id="lbPreCosto"></label>
                                     </div>
