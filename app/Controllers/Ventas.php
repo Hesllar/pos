@@ -675,4 +675,20 @@ class Ventas extends BaseController
 		$this->response->setHeader('Content-Type', 'application/pdf');
 		$pdf->Output('ordendedespacho.pdf', 'I');
 	}
+
+	//Historial de compras cliente
+
+	public function pagMisCompras()
+	{
+		$misCompras = $this->ventas->historialCompras($this->session->id_usuario);
+		$configuracion = $this->configuracion->First();
+		$data = [
+			'configuracion' => $configuracion,
+			'compras' => $misCompras
+		];
+		echo view('header', $data);
+		echo view('mis_compras');
+		echo view('footer');
+		echo view('ventajs');
+	}
 }

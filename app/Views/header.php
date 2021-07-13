@@ -141,6 +141,12 @@
                                             ?>
                                              <li><a href="<?php echo base_url(); ?>/productosAdmin">Administración</a></li>
                                          <?php } ?>
+                                         <?php
+
+                                            if ($user_session->nvl_acceso_fk == 40) {
+                                            ?>
+                                             <li><a href="<?php echo base_url(); ?>/Ventas/pagMisCompras">Mis compras</a></li>
+                                         <?php } ?>
                                      </ul>
                                  </nav>
                              </div>
