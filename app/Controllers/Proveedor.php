@@ -61,8 +61,7 @@ class Proveedor extends BaseController
 		$estados = [
 			'e_producto' => '',
 			'e_ordencompra' => '',
-			'e_proveedor' => '',
-			'e_config' => 'active'
+			'e_proveedor' => 'active',
 		];
 		echo view('header', $data);
 		echo view('Empleado/panel_header_emp', $estados);
@@ -211,7 +210,12 @@ class Proveedor extends BaseController
 		}
 
 		$this->request = \Config\Services::request();
-		$this->datospersonalesmodel->select('CONCAT(e.rut_empresa, "-", e.dvempresa) AS rut_emp, e.razon_social AS razon, e.giro AS giro, p.rubro AS rubro, p.id_proveedor AS id_proveedor');
+		$this->datospersonalesmodel->select('CONCAT(e.rut_empresa, "-", e.dvempresa) AS rut_emp, 
+												u.id_usuario as id_usuario, 
+												e.razon_social AS razon, 
+												e.giro AS giro, 
+												p.rubro AS rubro, 
+												p.id_proveedor AS id_proveedor');
 		$this->datospersonalesmodel->join('empresa as e', 'datos_personales.rut=e.DATOS_PERSONALES_rut');
 		$this->datospersonalesmodel->join('usuario as u', 'datos_personales.rut=u.rut_fk');
 		$this->datospersonalesmodel->join('proveedor as p', 'u.id_usuario=p.usuario_fk');
@@ -325,13 +329,72 @@ class Proveedor extends BaseController
 		$configuracion = $this->configuracion->First();
 		$data = ['configuracion' => $configuracion, 'datos' => $orden_compra];
 		$estados = [
-			'e_ordencompra' => '',
-			'e_config' => 'active'
+			'e_ordencompra' => 'active',
 		];
 		echo view('header', $data);
 		echo view('panel_header_prov', $estados);
 		echo view('proovedor_view');
 		echo view('administrador/panel_footer');
 		echo view('footer');
+	}
+
+	public function pagProveedorDadoBaja()
+	{
+		$configuracion = $this->configuracion->First();
+		$proveedorBaja = $this->proveedor->proveedorDadoBaja();
+		$data = ['configuracion' => $configuracion, 'datos' => $proveedorBaja];
+		echo view('header', $data);
+		echo view('empleado/proveedores_eliminados_emp');
+		echo view('footer');
+
+	}
+
+	public function ProveedorDadoBaja($id_proveedor, $est = 0) {
+		$this->request = \Config\Services::request();
+		$this->usuarioModal->update($id_proveedor, ['estado_usuario' => $est]);
+		return redirect()->to(base_url() . '/Proveedor');
+	}
+
+	public function pagEditarProveedor($id_proveedor) {
+
+		$configuracion = $this->configuracion->First();
+		$datosprov = $this->proveedor->editarProveedor($id_proveedor);
+		$data = ['configuracion' => $configuracion, 'datos' => $datosprov];
+		$estados = [
+			'e_producto' => '',
+			'e_proveedor' => 'active',
+			'e_ordencompra' => '',
+			
+		];
+		echo view('header', $data);
+		echo view('empleado/panel_header_emp', $estados);
+		echo view('empleado/editar_proveedor_emp');
+		echo view('administrador/panel_footer');
+		echo view('footer');
+	}
+	
+	public function actualizarProveedor() {
+
+		$this->request = \Config\Services::request();
+		$this->proveedor->update($this->request->getPost('id_proveedor'), [
+			'rubro' => $this->request->getPost('rubro'),
+		]);
+
+		$this->usuarioModal->update($this->request->getPost('id_usuario'), [
+			'nom_usuario' => $this->request->getPost('nom_usuario'),
+		]);
+
+		$this->datospersonalesmodel->update($this->request->getPost('rut_usuario'), [
+			'celular' => $this->request->getPost('celular'),
+			'correo' => $this->request->getPost('email')
+		]);
+
+		$this->empresa->update($this->empresa->where('DATOS_PERSONALES_rut', $this->request->getPost('rut_usuario'))->First(), [
+			'razon_social' => $this->request->getPost('razon'),
+			'giro' => $this->request->getPost('giro'),
+			'telefono' => $this->request->getPost('telefono')
+		]);
+
+		return redirect()->to(base_url() . '/Proveedor');
 	}
 }

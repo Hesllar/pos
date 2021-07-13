@@ -455,7 +455,12 @@ class Usuarios extends BaseController
 			return redirect()->to(base_url() . '/Acceder');
 		}
 		$this->usuarioModal->update($id, ['estado_usuario' => $estado]);
-		return redirect()->to(base_url() . '/Usuarios/pagEliminarUsuario ');
+		if ($this->session->nvl_acceso_fk == 10) {
+			return redirect()->to(base_url() . '/Usuarios/pagEliminarUsuario ');			
+		} else {
+			return redirect()->to(base_url() . '/Proveedor/pagProveedorDadoBaja ');
+		}
+		
 	}
 
 
