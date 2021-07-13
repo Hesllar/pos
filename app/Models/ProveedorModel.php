@@ -36,7 +36,11 @@ class ProveedorModel extends Model
 
     public function ordenDatos($id_user)
     {
-        $this->select('fecha_emision,valor_total,estado_orden,dt.nombres AS nombres');
+        $this->select('fecha_emision,
+        valor_total,
+        estado_orden,
+        dt.nombres AS nombres,
+        oc.id_orden as id_orden');
         $this->join('orden_de_compra as oc', 'proveedor.id_proveedor=oc.proveedor_fk');
         $this->join('empleado as e', 'oc.empleado_fk=e.id_empleado');
         $this->join('usuario as u', 'e.usuario_fk=u.id_usuario');
