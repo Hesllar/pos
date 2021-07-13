@@ -272,8 +272,6 @@ $session = session();
 
                                         </fieldset>
                                     </form>
-
-
                                 </div>
                             </div>
                             <div class="modal-footer">

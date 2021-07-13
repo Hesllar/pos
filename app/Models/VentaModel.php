@@ -56,7 +56,11 @@ class VentaModel extends Model
 
     public function ventasXEmpleado()
     {
-        $this->select('CONCAT(d.nombres," ",d.apellidos) AS nombre,CONCAT(d.rut, "-",d.dv) AS rut,empleado_fk AS empleado, CONCAT("$",FORMAT(sum(total),"")) AS total, count(id_venta) AS venta');
+        $this->select('CONCAT(d.nombres," ",d.apellidos) AS nombre,
+        CONCAT(d.rut, "-",d.dv) AS rut,
+        empleado_fk AS empleado, 
+        CONCAT("$",FORMAT(sum(total),"")) AS total, 
+        count(id_venta) AS venta');
         $this->join('empleado as e', 'venta.empleado_fk=e.id_empleado');
         $this->join('usuario as u', 'e.usuario_fk=u.id_usuario');
         $this->join('datos_personales as d', 'u.rut_fk=d.rut');
@@ -67,7 +71,12 @@ class VentaModel extends Model
     {
         $where = "DATE(fecha_venta) >= '$fecha_inicio' AND DATE(fecha_venta) <='$fecha_termino'";
 
-        $this->select('fecha_venta,CONCAT(dt.nombres," ",dt.apellidos) AS nombres,tipo_comprobante,total,f.tipo_pago AS tipo_pago, id_venta, SUM(dv.cantidad) AS cantidad');
+        $this->select('fecha_venta,
+        CONCAT(dt.nombres," ",dt.apellidos) AS nombres,
+        tipo_comprobante,
+        total,
+        f.tipo_pago AS tipo_pago, 
+        id_venta, SUM(dv.cantidad) AS cantidad');
         $this->join('usuario AS u', 'venta.cliente_fk=u.id_usuario');
         $this->join('datos_personales AS dt', 'u.rut_fk=dt.rut');
         $this->join('forma_pago AS f', 'venta.forma_pago_fk=f.id_forma_pago');
@@ -78,10 +87,28 @@ class VentaModel extends Model
     public function datosProducXPeriodo($fecha_inicio, $fecha_termino)
     {
         $where = "DATE(fecha_venta) >= '$fecha_inicio' AND DATE(fecha_venta) <='$fecha_termino'";
-        $this->select('v.id_venta_pk AS id_venta ,p.nombre AS nombre ,p.precio_venta AS precio');
+        $this->select('v.id_venta_pk AS id_venta,
+        p.nombre AS nombre,
+        p.precio_venta AS precio');
         $this->join('detalle_venta AS  v', 'venta.id_venta=v.id_venta_pk');
         $this->join('producto AS p', 'v.id_producto_pk=p.id_producto');
         $this->orderBy('id_venta', 'ASC');
         return $this->where($where)->findAll();
+    }
+
+    public function historialCompras($id_cliente)
+    {
+        $this->select('id_venta, 
+        CONCAT(dp.nombres," ",dp.apellidos) as nombre,
+        SUM(dv.cantidad) AS cantidad,
+        tipo_comprobante,
+        CONCAT("$", FORMAT(total, "")) as total,
+        fecha_venta');
+        $this->join('usuario as u', 'venta.cliente_fk=u.id_usuario');
+        $this->join('datos_personales as dp', 'u.rut_fk=dp.rut');
+        $this->join('detalle_venta as dv', 'venta.id_venta=dv.id_venta_pk');
+        $this->where('cliente_fk', $id_cliente);
+        $this->groupBy('id_venta');
+        return $this->findAll();
     }
 }
