@@ -7,6 +7,7 @@
                     <th>Cliente</th>
                     <th>Número de productos</th>
                     <th>Tipo de comprobante</th>
+                    <th>Despacho</th>
                     <th>Total</th>
                     <th>Fecha de compra</th>
                     <th>Acciones</th>
@@ -22,6 +23,20 @@
                             <td><?php echo $compra['nombre']; ?></td>
                             <td><?php echo $compra['cantidad']; ?></td>
                             <td><?php echo $compra['tipo_comprobante']; ?></td>
+                            <?php
+                            if ($compra['despacho'] == 1) {
+
+                            ?>
+                                <td>Si</td>
+                            <?php
+                            } else {
+
+                            ?>
+                                <td>No</td>
+                            <?php
+                            }
+                            ?>
+
                             <td><?php echo $compra['total']; ?></td>
                             <td><?php echo $compra['fecha_venta']; ?></td>
                             <td><a class="view" data-toggle="modal" href="#detalle" onclick="todo(<?php echo $compra['id_venta']; ?>)"><i class="fa fa-eye"></i></a>
