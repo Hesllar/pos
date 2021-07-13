@@ -44,6 +44,7 @@ class Registro extends BaseController
 		echo view('header', $data);
 		echo view('registro');
 		echo view('footer');
+		echo view('validarFormujs');
 	}
 	public function registroUsuario()
 	{

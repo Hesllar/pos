@@ -95,6 +95,7 @@ class Usuarios extends BaseController
 		echo view('administrador/usuarios');
 		echo view('administrador/panel_footer');
 		echo view('footer');
+		echo view('validarFormujs');
 	}
 
 
