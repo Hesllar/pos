@@ -11,7 +11,6 @@ use App\Models\CategoriaModel;
 use App\Controllers\Categorias;
 use App\Models\DetalleProductoModel;
 use App\Models\DetalleOrdenCompraModel;
-use App\Models\ProovedorModel;
 use App\Models\ProveedorModel;
 
 class ProductosAdmin extends BaseController

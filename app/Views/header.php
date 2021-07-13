@@ -31,6 +31,7 @@
      <link rel="stylesheet" href="<?php echo base_url(); ?>/css/jquery-ui.min.css">
      <!-- fontawesome css -->
      <link rel="stylesheet" href="<?php echo base_url(); ?>/css/font-awesome.min.css">
+     <link rel="stylesheet" href="<?php echo base_url(); ?>/css/all.min.css">
      <!-- fancybox css -->
      <link rel="stylesheet" href="<?php echo base_url(); ?>/css/jquery.fancybox.css">
      <!-- bootstrap css -->

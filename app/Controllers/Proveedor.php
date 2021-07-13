@@ -71,6 +71,18 @@ class Proveedor extends BaseController
 		echo view('footer');
 	}
 
+	public function buscarPorId($idProveedor){
+		$prov = $this->proveedor->where('id_proveedor', $idProveedor)->First();
+		$usr = $this->usuarioModal->where('id_usuario', $prov['usuario_fk'])->First();
+		$dt = $this->datospersonalesmodel->where('rut', $usr['rut_fk'])->First();
+		return array('id_proveedor' => $prov['id_proveedor'], 
+		'rubro' => $prov['rubro'], 
+		'rut' => number_format($dt['rut'], 0 , "", "."), 
+		'dv' => $dt['dv'], 
+		'nombre' => $dt['nombres'] . ' ' .$dt['apellidos'],
+	);
+	}
+
 	public function insertarProveedor()
 	{
 		if (!isset($this->session->id_usuario)) {
