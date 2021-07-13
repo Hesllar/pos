@@ -103,7 +103,8 @@ class VentaModel extends Model
         SUM(dv.cantidad) AS cantidad,
         tipo_comprobante,
         CONCAT("$", FORMAT(total, "")) as total,
-        fecha_venta');
+        fecha_venta,
+        despacho');
         $this->join('usuario as u', 'venta.cliente_fk=u.id_usuario');
         $this->join('datos_personales as dp', 'u.rut_fk=dp.rut');
         $this->join('detalle_venta as dv', 'venta.id_venta=dv.id_venta_pk');
