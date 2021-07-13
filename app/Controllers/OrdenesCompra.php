@@ -125,7 +125,11 @@ class OrdenesCompra extends BaseController
 	{
 		$this->detalle->where('n_orden_pk', $idOrdenDetalle)->delete();
 		$this->ordenescompra->where('id_orden', $idOrden)->delete();
-		return redirect()->to(base_url() . '/OrdenesCompra');
+		if ($this->session->nvl_acceso_fk == 10) {
+			return redirect()->to(base_url() . '/OrdenesCompra');
+		} else {
+			return redirect()->to(base_url() . '/OrdenesCompra/traerOrden');
+		}
 	}
 
 	public function eliminarOrdenDetalle($idOrdenDetalle, $id_producto)
