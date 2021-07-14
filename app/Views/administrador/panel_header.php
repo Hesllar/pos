@@ -18,6 +18,7 @@
                                 <li><a class="<?php echo $e_producto; ?>" href="<?php echo base_url() ?>/productosadmin">Productos</a></li>
                                 <li><a class="<?php echo $e_venta; ?>" href="<?php echo base_url() ?>/ventas">Ventas</a></li>
                                 <li><a class="<?php echo $e_ordencompra; ?>" href="<?php echo base_url() ?>/ordenescompra">Ordenes de compra</a></li>
+                                <li><a class="<?php isset($e_recepcion) ? print_r($e_recepcion) : null; ?>" href="<?php echo base_url() ?>/RecepcionProductos">Recepción de productos</a></li>
                                 <li><a class="<?php echo $e_usuario; ?>" href="<?php echo base_url() ?>/usuarios">Usuarios</a></li>
                                 <li><a class="<?php echo $e_notacredito; ?>" href="<?php echo base_url() ?>/notascredito" hidden>Notas de cr&eacute;dito</a></li>
                                 <li><a class="<?php echo $e_estadistica; ?>" href="<?php echo base_url() ?>/Estadistica">Reportes</a></li>
