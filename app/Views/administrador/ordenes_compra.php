@@ -31,22 +31,22 @@
                         <?php
                         switch ($orden['estado_orden']) {
                             case 0: ?>
-                                <td>En proceso</td>
+                                <td>En proceso <i class="fas fa-info-circle text-warning"></i></td>
                             <?php
                                 break;
                             case 1:
                             ?>
-                                <td>Enviada</td>
+                                <td>Enviada <i class="fas fa-arrow-alt-circle-up text-info"></i></td>
                             <?php
                                 break;
                             case 2:
                             ?>
-                                <td>Recepcionada</td>
+                                <td>Recepcionada <i class="fas fa-check-circle text-success"></i></td>
                             <?php
                                 break;
                             default:
                             ?>
-                                <td>Sin información</td>
+                                <td>Sin información <i class="fas fa-info-circle text-warning"></i></td>
                         <?php
                                 break;
                         }
