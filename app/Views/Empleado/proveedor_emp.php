@@ -9,7 +9,7 @@
         </div>
 
         <div class="pull-right ">
-            <a href="<?php echo base_url()?>/Proveedor/pagProveedorDadoBaja"> <button type="button" class="btn-submit">
+            <a href="<?php echo base_url() ?>/Proveedor/pagProveedorDadoBaja"> <button type="button" class="btn-submit">
                     Pro. eliminados </button> </a>
 
         </div>
@@ -183,7 +183,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary newsletter-btn" id="botton1" data-dismiss="modal">Cancelar</button>
+                        <button type="button" class="newsletter-btn" id="botton1" data-dismiss="modal">Cancelar</button>
                         <button type="submit" class="newsletter-btn" value="enviar datos">Guardar</button>
                     </div>
                 </form>
@@ -210,9 +210,9 @@
                         <td><?php echo $proveedor['razon']; ?></td>
                         <td><?php echo $proveedor['giro']; ?></td>
                         <td><?php echo $proveedor['rubro']; ?></td>
-                        <td><a class="view" href="<?php echo base_url().'/Proveedor/pagEditarProveedor/'.$proveedor['id_proveedor']?>"> <i class="fa fa-pencil"></i></a>
+                        <td><a class="view" href="<?php echo base_url() . '/Proveedor/pagEditarProveedor/' . $proveedor['id_proveedor'] ?>"> <i class="fas fa-pencil-alt"></i></a>
                         </td>
-                        <td><a class="view" data-href="<?php echo base_url().'/Proveedor/ProveedorDadoBaja/'.$proveedor['id_usuario']?> " data-toggle="modal" data-target="#Eliminar">
+                        <td><a class="view" href="#" data-href="<?php echo base_url() . '/Proveedor/ProveedorDadoBaja/' . $proveedor['id_usuario'] ?> " data-toggle="modal" data-target="#Eliminar">
                                 <i class="fa fa-trash"></i></a>
 
                         </td>

@@ -194,6 +194,7 @@ class OrdenesCompra extends BaseController
 				'valor_iva' => $this->request->getVar('iva'),
 				'valor_total' => $this->request->getVar('valorTotal'),
 				'proveedor_fk' => $this->request->getVar('id_prov'),
+				'estado_orden' => 0
 			]
 		);
 	}
@@ -274,5 +275,20 @@ class OrdenesCompra extends BaseController
 		$this->detalle->where('n_orden_pk', $id_orden);
 		$datos['datos'] = $this->detalle->findAll();
 		return json_encode($datos);
+	}
+
+	public function enviarOrden($id_orden)
+	{
+		$this->ordenescompra->update(
+			$this->ordenescompra->where('id_orden', $id_orden)->first(),
+			[
+				'estado_orden' => 1
+			]
+		);
+		if ($this->session->nvl_acceso_fk == 10) {
+			return redirect()->to(base_url() . '/OrdenesCompra');
+		} else {
+			return redirect()->to(base_url() . '/OrdenesCompra/traerOrden');
+		}
 	}
 }

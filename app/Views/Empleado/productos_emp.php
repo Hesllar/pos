@@ -177,7 +177,7 @@
                                                         <td><?php echo $producto['stock']; ?></td>
                                                         <td><?php echo $producto['categoria']; ?></td>
                                                         <td><a class="view" href="<?php echo base_url() . '/productosadmin/editarEmp/' . $producto['id_producto']; ?>"
-                                                         > <i class="fa fa-pencil"></i></a>
+                                                         > <i class="fas fa-pencil-alt"></i></a>
                                                         </td>
                                                     </tr>
                                                 <?php } ?>

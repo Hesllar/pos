@@ -19,9 +19,12 @@ class RecepcionProductos extends BaseController
 	protected $proveedor;
 	protected $productos;
 	protected $request;
+	protected $session;
+
 
 	public function __construct()
 	{
+		$this->session = session();
 		$this->configuracion = new ConfiguracionModel;
 		$this->orden_compra = new OrdenCompraModel;
 		$this->detalle_orden = new DetalleOrdenCompraModel;
@@ -118,7 +121,7 @@ class RecepcionProductos extends BaseController
 		$orden['valor_total'] = '$' . number_format($orden['valor_total'], 0, "", ".");
 		$orden['empleado_fk'] = $this->empleados->buscarNombrePorId($orden['empleado_fk']);
 		$orden['proveedor_fk'] = $this->proveedor->buscarPorId($orden['proveedor_fk']);
-		
+
 
 		return $orden;
 	}
@@ -127,7 +130,7 @@ class RecepcionProductos extends BaseController
 	{
 		$detalle = $this->detalle_orden->where('n_orden_pk', $id)->findAll();
 		$detalleTabla = [];
-		
+
 		foreach ($detalle as $i => $d) {
 			$prod = $this->productos->buscarNombrePorId($d['id_producto_pk']);
 			$arrTemp = array(
@@ -135,13 +138,13 @@ class RecepcionProductos extends BaseController
 				$prod['nombre'],
 				$prod['marca'],
 				$d['cantidad'],
-				"<input type='number' id='cr-".$d['id_producto_pk']."' value= '0' 
-				class='form-control c-recibida text-center' min='0' max='".$d['cantidad']."'>",
+				"<input type='number' id='cr-" . $d['id_producto_pk'] . "' value= '0' 
+				class='form-control c-recibida text-center' min='0' max='" . $d['cantidad'] . "'>",
 				"<div style='position: absolute;'><i class='fas fa-dollar-sign icon-input'></i></div>
-				<input type='text' id='pc-".$d['id_producto_pk']."' value='" . number_format($d['precio_costo'], 0, "", ".") ."' 
+				<input type='text' id='pc-" . $d['id_producto_pk'] . "' value='" . number_format($d['precio_costo'], 0, "", ".") . "' 
 				class='form-control text-center sap' disabled>",
-				'<span id="va-'.$d['id_producto_pk'].'" class="prev-valor"></span>
-				<span id="vt-'.$d['id_producto_pk'].'">$' . number_format($d['valor_total'], 0, "", ".") .'</span>',
+				'<span id="va-' . $d['id_producto_pk'] . '" class="prev-valor"></span>
+				<span id="vt-' . $d['id_producto_pk'] . '">$' . number_format($d['valor_total'], 0, "", ".") . '</span>',
 				$d['precio_costo'],
 				$d['precio_costo'] * $d['cantidad'],
 				0,
@@ -153,7 +156,8 @@ class RecepcionProductos extends BaseController
 		return json_encode($detalleTabla);
 	}
 
-	public function confirmar(){
+	public function confirmar()
+	{
 		$this->request = \Config\Services::request(); //Inicializando peticion js
 		$arrayProductos = $this->request->getVar('arrayOrdenDetalle'); //Recibiendo array productos
 		$nOrden = $this->request->getVar('orden');
@@ -162,6 +166,6 @@ class RecepcionProductos extends BaseController
 			$ar = ['cantidad_recibida' => $cantidad, 'valor_total' => $p[9]];
 			$this->detalle_orden->update($p[10], $ar);
 		}
-		$this->orden_compra->update($nOrden,['estado_orden' => 2]);
+		$this->orden_compra->update($nOrden, ['estado_orden' => 2]);
 	}
 }
