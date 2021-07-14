@@ -11,7 +11,6 @@ use App\Models\CategoriaModel;
 use App\Controllers\Categorias;
 use App\Models\DetalleProductoModel;
 use App\Models\DetalleOrdenCompraModel;
-use App\Models\ProovedorModel;
 use App\Models\ProveedorModel;
 
 class ProductosAdmin extends BaseController
@@ -110,20 +109,27 @@ class ProductosAdmin extends BaseController
 
     public function arrayFormat($arr)
     {
+
         $output = [];
         foreach ($arr as $key => $a) {
+            if ($this->session->nvl_acceso_fk == 20) {
+                $btn = '';
+            } else {
+                $btn = "<a href='#' id='baja-" . $a['id_producto'] . "' class='borders-a-s delete'
+                    data-href='" . base_url() . "/productosadmin/eliminarProducto/" . $a['id_producto'] . "' 
+                    data-toggle='modal' data-target='#Eliminar'>
+                    <i class='fa fa-trash'></i>
+                    </a>";
+            }
+
             $temp = [];
             $a['categoria'] = $this->categorias->where('id_categoria', $a['categoria'])->First()['nombre_categoria'];
             $html = array("btn_accion" => "<div class='actions-secondary bg-no'>
                     <a class='borders-a-s' href='" . base_url() . "/productosadmin/editar/" . $a['id_producto'] . "'>
-                    <i class='fa fa-pencil'></i>
+                    <i class='fas fa-pencil-alt'></i>
                     </a>
-                   
-                    <a href='#' id='baja-" . $a['id_producto'] . "' class='borders-a-s delete'
-                    data-href='" . base_url() . "/productosadmin/eliminarProducto/" . $a['id_producto'] . "' 
-                    data-toggle='modal' data-target='#Eliminar'>
-                    <i class='fa fa-trash'></i>
-                    </a></div>");
+                   " . $btn . "
+                    </div>");
             unset($a['id_producto'], $a['imagen'], $a['descripcion']);
             array_merge($a, $html);
             array_push($output, array_merge($a, $html));

@@ -204,7 +204,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary newsletter-btn" id="botton1" data-dismiss="modal">Cancelar</button>
+                        <button type="button" class="newsletter-btn" data-dismiss="modal">Cancelar</button>
                         <button type="submit" class="newsletter-btn" value="enviar datos">Guardar</button>
                     </div>
                 </form>
@@ -234,8 +234,8 @@
                         <td><?php echo $usuario['rut']; ?></td>
                         <td><?php echo $usuario['correo']; ?></td>
                         <td><?php echo $usuario['nivel_acceso']; ?></td>
-                        <td><a class="view" href="<?php echo base_url() . '/Usuarios/editarUsuario/' . $usuario['id_usuario']; ?>"> <i class="fa fa-pencil"></i></a>
-                        <td><a class="view" data-href="<?php echo base_url() . '/Usuarios/darBajaUsuario/' . $usuario['id_usuario']; ?>" data-toggle="modal" data-target="#Eliminar">
+                        <td><a class="view" href="<?php echo base_url() . '/Usuarios/editarUsuario/' . $usuario['id_usuario']; ?>"> <i class="fas fa-pencil-alt"></i></a>
+                        <td><a class="view" href="#" data-href="<?php echo base_url() . '/Usuarios/darBajaUsuario/' . $usuario['id_usuario']; ?>" data-toggle="modal" data-target="#Eliminar">
                                 <i class="fa fa-trash"></i></a>
                         </td>
                     </tr>

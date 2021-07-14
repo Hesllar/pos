@@ -43,7 +43,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary newsletter-btn" data-dismiss="modal">Cancelar</button>
+                        <button type="button" class="newsletter-btn" data-dismiss="modal">Cancelar</button>
                         <button type="submit" class="newsletter-btn" value="enviar datos">Guardar</button>
                     </div>
                 </form>
@@ -65,7 +65,7 @@
                     <tr>
                         <td><?php echo $dtsMoneda['nombre_moneda']; ?></td>
                         <td><?php echo $dtsMoneda['valor_moneda']; ?></td>
-                        <td><a class="view" href="<?php echo base_url() . '/Moneda/editarMoneda/' . $dtsMoneda['id_moneda']; ?>"> <i class="fa fa-pencil"></i></a>
+                        <td><a class="view" href="<?php echo base_url() . '/Moneda/editarMoneda/' . $dtsMoneda['id_moneda']; ?>"> <i class="fas fa-pencil-alt"></i></a>
                         </td>
                     </tr>
                 <?php } ?>

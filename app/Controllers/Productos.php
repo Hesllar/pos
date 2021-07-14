@@ -72,4 +72,9 @@ class Productos extends BaseController
     {
         return json_encode($this->productos->findAll());
     }
+
+    public function buscarNombrePorId($id)
+    {
+        return $this->productos->where('id_producto' , $id)->First();
+    }
 }
