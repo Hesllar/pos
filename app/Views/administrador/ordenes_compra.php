@@ -28,18 +28,39 @@
                         <td><?php echo $orden['empleado_fk']; ?></td>
                         <td><?php echo $orden['proveedor_fk']; ?></td>
                         <td><?php echo "$" . number_format($orden['valor_total'], 0)  ?></td>
-                        <?php if ($orden['estado_orden'] == 0) {
-                        ?>
-                            <td>En proceso</td>
                         <?php
-                        } else {
-                        ?>
-                            <td>Enviada</td>
+                        switch ($orden['estado_orden']) {
+                            case 0: ?>
+                                <td>En proceso <i class="fas fa-info-circle text-warning"></i></td>
+                            <?php
+                                break;
+                            case 1:
+                            ?>
+                                <td>Enviada <i class="fas fa-arrow-alt-circle-up text-info"></i></td>
+                            <?php
+                                break;
+                            case 2:
+                            ?>
+                                <td>Recepcionada <i class="fas fa-check-circle text-success"></i></td>
+                            <?php
+                                break;
+                            default:
+                            ?>
+                                <td>Sin información <i class="fas fa-info-circle text-warning"></i></td>
                         <?php
+                                break;
                         }
                         ?>
+                        <td>
+                            <?php
+                            $boton = "<a class='view' href=' " .  base_url() . "/OrdenesCompra/enviarOrden/" . $orden['id_orden'] . " '> <i class='fa fa-paper-plane'></i></a>";
+                            $orden['estado_orden'] == 0 ?
+
+                                print_r($boton) : null;
+                            ?>
+
                         <td><a class="view" data-toggle="modal" href="#detalleOrden" onclick="vistaOrden(<?php echo $orden['id_orden'] ?>)"><i class="fa fa-eye"></i></a></td>
-                        <td><a class="view" href="<?php echo base_url() . '/OrdenesCompra/editarOrden/' . $orden['id_orden'] ?>"> <i class="fa fa-pencil"></i></a></td>
+                        <td><a class="view" href="<?php echo base_url() . '/OrdenesCompra/editarOrden/' . $orden['id_orden'] ?>"> <i class="fas fa-pencil-alt"></i></a></td>
                         <td><a class="view" href="#" data-href="<?php echo base_url() . '/OrdenesCompra/eliminarOrden/' . $orden['id_orden'] . '/' . $orden['id_orden'];  ?>" data-toggle="modal" data-target="#Eliminar">
                                 <i class="fa fa-trash"></i></a>
                         </td>

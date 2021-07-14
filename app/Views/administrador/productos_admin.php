@@ -1,4 +1,9 @@
 <!-- Comienzo panel PRODUCTOS -->
+<?php
+
+$user_session = session();
+?>
+
 <div id="productos" class="tab-pane active">
     <h3>Productos</h3>
     <!-- Comienzo botones cabecera -->
@@ -18,14 +23,21 @@
             </button>
         </div>
         <!-- Botón para ir a la pagina de productos eliminados -->
-        <div class="pull-right ">
-            <a href="<?php echo base_url(); ?>/productosadmin/pagEliminarPro">
-                <button type="button" class="btn-submit">
-                    <i class="fa fa-trash"></i>
-                    Pro. eliminados
-                </button>
-            </a>
-        </div>
+        <?php
+        if ($user_session->nvl_acceso_fk != 20) {
+        ?>
+            <div class="pull-right ">
+                <a href="<?php echo base_url(); ?>/productosadmin/pagEliminarPro">
+                    <button type="button" class="btn-submit">
+                        <i class="fa fa-trash"></i>
+                        Pro. eliminados
+                    </button>
+                </a>
+            </div>
+        <?php
+        }
+        ?>
+
     </div><!-- //.Fin botones cabecera -->
 
     <!-- Panel Productos -->
